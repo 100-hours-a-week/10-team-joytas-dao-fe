@@ -1,0 +1,11 @@
+Model Information:
+* title:	Room 01 / MagicaVoxel
+* source:	https://sketchfab.com/3d-models/room-01-magicavoxel-cbebf8f78edb4f80ac18b54f6771a90b
+* author:	moyicat (https://sketchfab.com/moyicat)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Room 01 / MagicaVoxel" (https://sketchfab.com/3d-models/room-01-magicavoxel-cbebf8f78edb4f80ac18b54f6771a90b) by moyicat (https://sketchfab.com/moyicat) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

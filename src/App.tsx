@@ -10,6 +10,7 @@ import FirstProfile from './pages/user/FirstProfile'
 import ModifyProfile from './pages/user/ModifyProfile'
 import UserDelete from './pages/user/UserDelete'
 import NewLounge from './pages/lounge/NewLounge'
+import CreateMyRoom from './pages/myRoom/CreateMyRoom'
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
           <Route path={URL.privacy} element={<Privacy />}></Route>
           <Route path={URL.firstProfile} element={<FirstProfile />}></Route>
           <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
+
+          <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>

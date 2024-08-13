@@ -10,6 +10,7 @@ const URL = {
   users: '/users',
   myRoom: '/myRoom',
   newLounge: '/lounge/new',
+  createMyRoom: '/myRooom/generate',
 }
 
 export { URL }
