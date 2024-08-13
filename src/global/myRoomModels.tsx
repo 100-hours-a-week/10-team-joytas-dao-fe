@@ -1,8 +1,8 @@
-import { MyRoomModel1 } from '../assets/models/MyRoomModel1.jsx'
-import { MyRoomModel2 } from '../assets/models/MyRoomModel2.jsx'
-import { MyRoomModel3 } from '../assets/models/MyRoomModel3.jsx'
-import { MyRoomModel4 } from '../assets/models/MyRoomModel4.jsx'
-import { MyRoomModel5 } from '../assets/models/MyRoomModel5.jsx'
+import { MyRoomModel1 } from '../assets/models/MyRoomModel1.tsx'
+import { MyRoomModel2 } from '../assets/models/MyRoomModel2.tsx'
+import { MyRoomModel3 } from '../assets/models/MyRoomModel3.tsx'
+import { MyRoomModel4 } from '../assets/models/MyRoomModel4.tsx'
+import { MyRoomModel5 } from '../assets/models/MyRoomModel5.tsx'
 
 import myRoomThumbnail1 from '../assets/images/myRoom_thumnails/myRoomModel1.png'
 import myRoomThumbnail2 from '../assets/images/myRoom_thumnails/myRoomModel2.png'
