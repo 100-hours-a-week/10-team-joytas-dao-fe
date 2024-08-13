@@ -1,0 +1,11 @@
+Model Information:
+* title:	Low Poly Planet Earth
+* source:	https://sketchfab.com/3d-models/low-poly-planet-earth-7b1dc4f802a54a6297e7a46888a85f77
+* author:	Jacobs Development (https://sketchfab.com/Jacobs_Development)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Low Poly Planet Earth" (https://sketchfab.com/3d-models/low-poly-planet-earth-7b1dc4f802a54a6297e7a46888a85f77) by Jacobs Development (https://sketchfab.com/Jacobs_Development) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
