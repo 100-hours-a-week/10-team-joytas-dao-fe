@@ -81,7 +81,7 @@ export const NicknameContainer = styled.div`
 export const NicknameTitle = styled.div`
   width: 100%;
   margin-left: 10px;
-  margin-top; 20px;
+  margin-top: 20px;
 `
 
 export const NicknameInput = styled.input`
