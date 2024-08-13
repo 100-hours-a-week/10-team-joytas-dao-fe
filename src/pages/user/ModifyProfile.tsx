@@ -17,7 +17,9 @@ import { URL } from '../../static'
 
 export default function ModifyProfile() {
   const navigate = useNavigate()
-  const handleClickStart = () => {}
+  const handleClickConfirm = () => {
+    navigate(-1)
+  }
   const handleClickDelete = () => {
     navigate(URL.delete)
   }
@@ -39,7 +41,7 @@ export default function ModifyProfile() {
             maxLength={10}
           />
         </NicknameContainer>
-        <ModifyConfirmButton onClick={handleClickStart}>
+        <ModifyConfirmButton onClick={handleClickConfirm}>
           수정하기
         </ModifyConfirmButton>
         <DeleteButton onClick={handleClickDelete}>회원탈퇴</DeleteButton>

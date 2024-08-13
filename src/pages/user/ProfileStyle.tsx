@@ -106,12 +106,9 @@ export const StartButtonContainer = styled.button`
   width: 130px;
   height: 50px;
   border-radius: 30px;
-  margin: 20px auto;
+  margin: 60px auto;
   border: 1px dotted gray;
   background-color: transparent;
-  position: absolute;
-  bottom: 130px;
-  left: 185px;
 `
 
 export const RocketImage = styled.img`
