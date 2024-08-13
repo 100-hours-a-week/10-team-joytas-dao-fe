@@ -9,6 +9,7 @@ const URL = {
   main: '/main',
   users: '/users',
   myRoom: '/myRoom',
+  newLounge: '/lounge/new',
 }
 
 export { URL }
