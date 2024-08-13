@@ -13,6 +13,7 @@ import NewLounge from './pages/lounge/NewLounge'
 import CreateMyRoom from './pages/myRoom/CreateMyRoom'
 import NewObjet from './pages/objet/NewObjet'
 import Lounge from './pages/lounge/Lounge'
+import MyRoom from './pages/myRoom/MyRoom'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path={URL.firstProfile} element={<FirstProfile />}></Route>
           <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
           <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
+          <Route path={URL.myRoom} element={<MyRoom />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>
