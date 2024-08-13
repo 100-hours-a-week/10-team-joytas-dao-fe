@@ -33,9 +33,10 @@ function Model1({ position }: ModelProps) {
   const ref = useRef<Group>(null)
 
   useFrame(() => {
-    ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
+    if (ref.current) {
+      ref.current.rotation.y += 0.01
+    }
   })
-
   return (
     <group position={position}>
       <group ref={ref}>
@@ -52,9 +53,10 @@ function Model2({ position }: ModelProps) {
   const ref = useRef<Group>(null)
 
   useFrame(() => {
-    ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
+    if (ref.current) {
+      ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
+    }
   })
-
   return (
     <group position={position}>
       <group ref={ref}>
@@ -71,7 +73,9 @@ function Model3({ position }: ModelProps) {
   const ref = useRef<Group>(null)
 
   useFrame(() => {
-    ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
+    if (ref.current) {
+      ref.current.rotation.y += 0.01
+    }
   })
 
   return (
@@ -88,10 +92,12 @@ function Model3({ position }: ModelProps) {
 
 function Model4({ position }: ModelProps) {
   const navigate = useNavigate()
-  const ref = useRef<THREE.Group>(null)
+  const ref = useRef<Group>(null)
 
   useFrame(() => {
-    ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
+    if (ref.current) {
+      ref.current.rotation.y += 0.01
+    }
   })
 
   const handleClick = () => {
