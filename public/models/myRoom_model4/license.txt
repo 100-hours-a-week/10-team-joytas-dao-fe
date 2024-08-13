@@ -1,0 +1,11 @@
+Model Information:
+* title:	Librarian's Room
+* source:	https://sketchfab.com/3d-models/librarians-room-5363dd8100c64cb2a99b5619b7d78610
+* author:	daydev (https://sketchfab.com/daydev)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Librarian's Room" (https://sketchfab.com/3d-models/librarians-room-5363dd8100c64cb2a99b5619b7d78610) by daydev (https://sketchfab.com/daydev) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
