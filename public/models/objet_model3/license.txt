@@ -1,0 +1,11 @@
+Model Information:
+* title:	Barbotan meteorite (NHMW-MIN-A143)
+* source:	https://sketchfab.com/3d-models/barbotan-meteorite-nhmw-min-a143-30addb6f75c44df6957e1932cf9ac406
+* author:	Natural History Museum Vienna (https://sketchfab.com/NHMWien)
+
+Model License:
+* license type:	CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
+* requirements:	Author must be credited. No commercial use.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Barbotan meteorite (NHMW-MIN-A143)" (https://sketchfab.com/3d-models/barbotan-meteorite-nhmw-min-a143-30addb6f75c44df6957e1932cf9ac406) by Natural History Museum Vienna (https://sketchfab.com/NHMWien) licensed under CC-BY-NC-4.0 (http://creativecommons.org/licenses/by-nc/4.0/)
