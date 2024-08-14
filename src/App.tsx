@@ -40,7 +40,7 @@ const Main = styled.div`
   width: 390px;
   height: 844px;
   margin: auto;
-  border: 1px solid gray;
+  border: 1px solid #404040;
   overflow: hidden;
   background-color: black;
 `
