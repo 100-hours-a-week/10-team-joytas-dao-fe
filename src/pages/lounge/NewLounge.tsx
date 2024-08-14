@@ -8,10 +8,7 @@ import Layout from '../../components/Layout'
 import left from '../../assets/images/left.png'
 import right from '../../assets/images/right.png'
 import {
-  Main,
-  Title,
   Input,
-  SubTitle,
   Container,
   InputTitle,
   InputContainer,
@@ -21,6 +18,11 @@ import {
   ChooseButton,
   ModelIndexText, // 스타일 추가
 } from './LoungeStyles'
+import {
+  GloablContainer16,
+  GlobalSubTitle,
+  GlobalTitle,
+} from '../../global/globalStyles'
 
 export default function NewLounge() {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
@@ -42,9 +44,9 @@ export default function NewLounge() {
 
   return (
     <Layout>
-      <Main>
-        <Title>어떤 라운지인가요?</Title>
-        <SubTitle>라운지 정보를 입력해주세요!</SubTitle>
+      <GloablContainer16>
+        <GlobalTitle>어떤 라운지인가요?</GlobalTitle>
+        <GlobalSubTitle>라운지 정보를 입력해주세요!</GlobalSubTitle>
         <Container>
           <InputContainer>
             <InputTitle>라운지 이름</InputTitle>
@@ -72,7 +74,7 @@ export default function NewLounge() {
             <MoveIcon src={right} onClick={handleRightClick} />
           </ChooseContainer>
         </Container>
-      </Main>
+      </GloablContainer16>
     </Layout>
   )
 }
