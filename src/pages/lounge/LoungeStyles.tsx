@@ -95,3 +95,38 @@ export const ModelIndexText = styled.div`
   margin-top: 10px;
   color: rgba(255, 255, 255, 0.6);
 `
+
+export const TopContainer = styled.div`
+  padding-top: 70px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+`
+
+export const IconContainer = styled.div`
+  display: flex;
+  gap: 15px;
+`
+
+export const InviteIcon = styled.img`
+  width: 24px;
+  cursor: pointer;
+  height: 24px;
+`
+
+export const Icon = styled.img`
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+`
+
+export const LoungeTitle = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+`
+
+export const Objets = styled.div`
+  margin-top: 30px;
+  width: 100%;
+  height: 575px;
+`
