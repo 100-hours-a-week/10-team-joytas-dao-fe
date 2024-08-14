@@ -1,6 +1,5 @@
-import { OrbitControls } from '@react-three/drei'
-import { Canvas, useFrame, useThree } from '@react-three/fiber'
-
+import { Canvas, useThree } from '@react-three/fiber'
+import { FlyControls } from '@react-three/drei'
 import * as THREE from 'three'
 import { ObjetModel1 } from '../../assets/models/ObjetModel1'
 import { ObjetModel2 } from '../../assets/models/ObjetModel2'
@@ -18,25 +17,32 @@ function RandomModels({ onModelClick }: RandomModelsProps) {
     const availableModels = [ObjetModel1, ObjetModel2, ObjetModel3]
     const generatedModels = []
 
-    for (let i = 0; i < 100; i++) {
-      const ModelComponent =
-        availableModels[Math.floor(Math.random() * availableModels.length)]
+    for (let i = 0; i < 200; i++) {
+      const num = Math.floor(Math.random() * availableModels.length)
+      const ModelComponent = availableModels[num]
       const mesh = new THREE.Group()
       mesh.position.set(
-        Math.random() * 800 - 400,
-        Math.random() * 800 - 400,
-        Math.random() * 800 - 400
+        Math.random() * 600 - 300,
+        Math.random() * 600 - 300,
+        Math.random() * 600 - 300
       )
       mesh.rotation.set(
         Math.random() * 2 * Math.PI,
         Math.random() * 2 * Math.PI,
         Math.random() * 2 * Math.PI
       )
-      mesh.scale.set(
-        Math.random() + 0.5,
-        Math.random() + 0.5,
-        Math.random() + 0.5
-      )
+
+      switch (num) {
+        case 0:
+          mesh.scale.set(19.2, 19.2, 19.2)
+          break
+        case 1:
+          mesh.scale.set(3, 3, 3)
+          break
+        case 2:
+          mesh.scale.set(0.258, 0.258, 0.258)
+          break
+      }
       mesh.userData = { onClick: () => onModelClick(mesh) }
       generatedModels.push({ ModelComponent, mesh })
     }
@@ -76,27 +82,20 @@ function LoungeObjets() {
   const refGroup = useRef<THREE.Group>(null)
   const targetPositionRef = useRef(new THREE.Vector3())
 
-  useFrame(() => {
-    if (controlsRef.current) {
-      controlsRef.current.update()
-    }
-  })
-
   const handleModelClick = (model: THREE.Group) => {
-    const offset = 10 // Distance from the object
+    const offset = 1 // Distance from the object
     model.getWorldPosition(targetPositionRef.current)
     camera.position.set(
       targetPositionRef.current.x + offset,
       targetPositionRef.current.y + offset,
       targetPositionRef.current.z + offset
     )
-    if (controlsRef.current) {
-      controlsRef.current.target.copy(targetPositionRef.current)
-    }
+    console.log('hi')
   }
 
   useEffect(() => {
     gl.domElement.style.cursor = 'pointer'
+
     const handleClick = (event: MouseEvent) => {
       const mouse = new THREE.Vector2()
       mouse.x = (event.clientX / window.innerWidth) * 2 - 1
@@ -115,6 +114,7 @@ function LoungeObjets() {
     }
 
     gl.domElement.addEventListener('click', handleClick)
+
     return () => {
       gl.domElement.removeEventListener('click', handleClick)
     }
@@ -122,9 +122,9 @@ function LoungeObjets() {
 
   return (
     <>
-      <OrbitControls ref={controlsRef} />
+      <FlyControls ref={controlsRef} movementSpeed={30} rollSpeed={0.2} />
       <ambientLight intensity={3} />
-      <directionalLight position={[2, 1, 3]} intensity={0.5} />
+      <directionalLight position={[2, 1, 3]} intensity={1} />
       <group ref={refGroup}>
         <RandomModels onModelClick={handleModelClick} />
       </group>
@@ -132,7 +132,6 @@ function LoungeObjets() {
   )
 }
 
-// Canvas로 LoungeObjets 컴포넌트를 감쌉니다
 export default function App() {
   return (
     <Canvas>
