@@ -577,4 +577,4 @@ export function MyRoomModel4(props: MyRoomModel4Props) {
   )
 }
 
-useGLTF.preload('/scene.gltf')
+useGLTF.preload('/models/myRoom_model4/scene.gltf')
