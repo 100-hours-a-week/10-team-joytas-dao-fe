@@ -13,6 +13,7 @@ const URL = {
   createMyRoom: '/myRooom/generate',
   newObjet: '/objet/new',
   myLounge: '/lounge/my',
+  loungeInvite: '/lounge/invite',
 }
 
 export { URL }
