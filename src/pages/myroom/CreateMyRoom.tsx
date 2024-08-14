@@ -1,6 +1,5 @@
 import Layout from '../../components/Layout.js'
 import {
-  Container,
   CreateBtn,
   MyRoomList,
   MyRoomName,
@@ -13,6 +12,7 @@ import { OrbitControls } from '@react-three/drei'
 
 import { useEffect, useState } from 'react'
 import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
+import { GloablContainer32 } from '../../global/globalStyles.tsx'
 
 export default function CreateMyRoom() {
   const [selectedModelId, setSelectedModelId] = useState(1)
@@ -25,7 +25,7 @@ export default function CreateMyRoom() {
   return (
     <Layout>
       <>
-        <Container>
+        <GloablContainer32>
           <Title>내가 선택한 마이룸은...</Title>
           <MyRoomPreviewWrapper>
             <Canvas camera={{ position: selectedModel?.camera }}>
@@ -38,7 +38,7 @@ export default function CreateMyRoom() {
             </Canvas>
             <MyRoomName>{selectedModel?.name}</MyRoomName>
           </MyRoomPreviewWrapper>
-        </Container>
+        </GloablContainer32>
         <MyRoomList>
           {modelList.map((model) => (
             <MyRoomThumbnail

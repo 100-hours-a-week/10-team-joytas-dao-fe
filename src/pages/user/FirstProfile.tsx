@@ -1,5 +1,4 @@
 import {
-  Main,
   Title,
   SubTitle,
   ProfileContainer,
@@ -15,11 +14,12 @@ import {
 } from './ProfileStyle'
 import profile from '../../assets/images/profile.png'
 import rocket from '../../assets/images/rocket.png'
+import { GloablContainer32 } from '../../global/globalStyles'
 
 export default function FirstProfile() {
   const handleClickStart = () => {}
   return (
-    <Main>
+    <GloablContainer32>
       <Title>
         <div>잠깐! </div>
         <div>프로필 설정을 해주세요!</div>
@@ -44,6 +44,6 @@ export default function FirstProfile() {
         <RocketImage src={rocket} />
         START
       </StartButtonContainer>
-    </Main>
+    </GloablContainer32>
   )
 }
