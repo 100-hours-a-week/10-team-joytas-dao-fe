@@ -4,8 +4,7 @@ import {
   SubTitle,
   TopContainer,
   IconContainer,
-  InviteIcon,
-  MakeIcon,
+  Icon,
   LoungeTitle,
   Objets,
 } from './LoungeStyles'
@@ -20,8 +19,8 @@ export default function Lounge() {
         <TopContainer>
           <LoungeTitle>Mental 404</LoungeTitle>
           <IconContainer>
-            <InviteIcon src={invite} />
-            <MakeIcon src={plus} />
+            <Icon src={invite} />
+            <Icon src={plus} />
           </IconContainer>
         </TopContainer>
         <SubTitle>친구를 초대하고 오브제로 추억을 공유해보세요!</SubTitle>
