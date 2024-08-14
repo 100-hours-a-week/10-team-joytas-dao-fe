@@ -90,7 +90,6 @@ function LoungeObjets() {
       targetPositionRef.current.y + offset,
       targetPositionRef.current.z + offset
     )
-    console.log('hi')
   }
 
   useEffect(() => {
