@@ -1,8 +1,5 @@
 import Layout from '../../components/Layout'
 import {
-  Main,
-  Title,
-  SubTitle,
   Container,
   ObjetModel,
   ModelIndexText,
@@ -18,6 +15,11 @@ import { Vector3, Group, Box3 } from 'three'
 import { ObjetModel1 } from '../../assets/models/ObjetModel1'
 import { ObjetModel2 } from '../../assets/models/ObjetModel2'
 import { ObjetModel3 } from '../../assets/models/ObjetModel3'
+import {
+  GloablContainer16,
+  GlobalSubTitle,
+  GlobalTitle,
+} from '../../global/globalStyles'
 
 export default function NewObjet() {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
@@ -39,9 +41,11 @@ export default function NewObjet() {
 
   return (
     <Layout>
-      <Main>
-        <Title>어떤 오브제인가요?</Title>
-        <SubTitle>공유하고 싶은 추억을 오브제로 만들어보세요!</SubTitle>
+      <GloablContainer16>
+        <GlobalTitle>어떤 오브제인가요?</GlobalTitle>
+        <GlobalSubTitle>
+          공유하고 싶은 추억을 오브제로 만들어보세요!
+        </GlobalSubTitle>
         <Container>
           <ObjetModel>
             <Canvas
@@ -61,7 +65,7 @@ export default function NewObjet() {
             <MoveIcon src={right} onClick={handleRightClick} />
           </ChooseContainer>
         </Container>
-      </Main>
+      </GloablContainer16>
     </Layout>
   )
 }

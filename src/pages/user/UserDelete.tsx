@@ -1,6 +1,6 @@
 import Layout from '../../components/Layout'
+import { GloablContainer32 } from '../../global/globalStyles'
 import {
-  Main,
   Title,
   SubTitle,
   CheckboxGroup,
@@ -45,7 +45,7 @@ export default function UserDelete() {
 
   return (
     <Layout>
-      <Main>
+      <GloablContainer32>
         <Title>회원탈퇴</Title>
         <SubTitle>탈퇴 이유</SubTitle>
         <CheckboxGroup>
@@ -99,7 +99,7 @@ export default function UserDelete() {
           />
           <Button onClick={handleSubmit}>제출</Button>
         </DetailReason>
-      </Main>
+      </GloablContainer32>
     </Layout>
   )
 }

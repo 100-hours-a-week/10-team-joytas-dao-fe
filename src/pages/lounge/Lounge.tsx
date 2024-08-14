@@ -1,7 +1,5 @@
 import Layout from '../../components/Layout'
 import {
-  Main,
-  SubTitle,
   TopContainer,
   IconContainer,
   Icon,
@@ -11,11 +9,12 @@ import {
 import invite from '../../assets/images/invite.png'
 import plus from '../../assets/images/plus.png'
 import LoungeObjets from './LoungeObjets'
+import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
 
 export default function Lounge() {
   return (
     <Layout>
-      <Main>
+      <GloablContainer16>
         <TopContainer>
           <LoungeTitle>Mental 404</LoungeTitle>
           <IconContainer>
@@ -23,11 +22,13 @@ export default function Lounge() {
             <Icon src={plus} />
           </IconContainer>
         </TopContainer>
-        <SubTitle>친구를 초대하고 오브제로 추억을 공유해보세요!</SubTitle>
+        <GlobalSubTitle>
+          친구를 초대하고 오브제로 추억을 공유해보세요!
+        </GlobalSubTitle>
         <Objets>
           <LoungeObjets />
         </Objets>
-      </Main>
+      </GloablContainer16>
     </Layout>
   )
 }

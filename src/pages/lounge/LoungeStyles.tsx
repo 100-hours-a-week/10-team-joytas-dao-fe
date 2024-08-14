@@ -1,25 +1,5 @@
 import styled from 'styled-components'
 
-export const Main = styled.div`
-  width: 100%;
-  height: 100%;
-  padding: 0 16px;
-  box-sizing: border-box;
-  color: white;
-`
-
-export const Title = styled.div`
-  padding-top: 70px;
-  font-size: 20px;
-  font-weight: bold;
-`
-
-export const SubTitle = styled.div`
-  margin-top: 10px;
-  font-size: 12px;
-  font-weight: semi-bold;
-`
-
 export const LoungeList = styled.div``
 
 export const Container = styled.div`
