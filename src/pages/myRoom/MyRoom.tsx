@@ -17,7 +17,7 @@ import checkIcon from '../../assets/images/check.png'
 
 import { useEffect, useRef, useState } from 'react'
 import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
-import { GloablContainer32 } from '../../global/globalStyles.tsx'
+import { GloablContainer16 } from '../../global/globalStyles.tsx'
 import { ObjetModel1 } from '../../assets/models/ObjetModel1.tsx'
 import { Group } from 'three'
 
@@ -47,7 +47,7 @@ export default function MyRoom() {
 
   return (
     <Layout>
-      <GloablContainer32>
+      <GloablContainer16>
         <TitleWrapper>
           {isEditing ? (
             <>
@@ -97,7 +97,7 @@ export default function MyRoom() {
           </Canvas>
           <MyRoomName>내 오브제 조회</MyRoomName>
         </ObjetWrapper>
-      </GloablContainer32>
+      </GloablContainer16>
     </Layout>
   )
 }

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const GloablContainer16 = styled.div`
   width: 100%;
-  height: 100%;
+  height: 625px;
   padding: 0 16px;
   box-sizing: border-box;
   color: white;

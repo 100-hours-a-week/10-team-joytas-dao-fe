@@ -16,12 +16,14 @@ import Lounge from './pages/lounge/Lounge'
 import MyRoom from './pages/myRoom/MyRoom'
 import UserInvite from './pages/user/UserInvite'
 import ObjetCall from './pages/objet/ObjetCall'
+import Home from './pages/home/Home'
 
 function App() {
   return (
     <BrowserRouter>
       <Main>
         <Routes>
+          <Route path={URL.main} element={<Home />}></Route>
           <Route path={URL.home} element={<Login />}></Route>
           <Route path={URL.lounge} element={<LoungeListPage />}></Route>
           <Route path={URL.newLounge} element={<NewLounge />}></Route>

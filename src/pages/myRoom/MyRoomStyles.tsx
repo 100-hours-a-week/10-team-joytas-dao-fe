@@ -5,13 +5,12 @@ export const TitleWrapper = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  margin-top: 100px;
-  padding-right: 32px;
+  padding-top: 70px;
 `
 
 export const Title = styled.span`
   color: white;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: bold;
   max-width: 220px;
   margin-right: 20px;
@@ -44,7 +43,7 @@ export const MyRoomTitleInput = styled.input`
   width: 220px;
   color: white;
   background-color: transparent;
-  font-size: 23px;
+  font-size: 20px;
   font-weight: bold;
   max-width: 230px;
   outline: none;
