@@ -14,6 +14,7 @@ const URL = {
   newObjet: '/objet/new',
   myLounge: '/lounge/my',
   loungeInvite: '/lounge/invite',
+  objetCall: '/objet/call',
 }
 
 export { URL }

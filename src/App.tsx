@@ -15,6 +15,7 @@ import NewObjet from './pages/objet/NewObjet'
 import Lounge from './pages/lounge/Lounge'
 import MyRoom from './pages/myRoom/MyRoom'
 import UserInvite from './pages/user/UserInvite'
+import ObjetCall from './pages/objet/ObjetCall'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
           <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
           <Route path={URL.myRoom} element={<MyRoom />}></Route>
           <Route path={URL.loungeInvite} element={<UserInvite />}></Route>
+          <Route path={URL.objetCall} element={<ObjetCall />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>
