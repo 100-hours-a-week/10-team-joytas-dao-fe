@@ -10,16 +10,29 @@ import invite from '../../assets/images/invite.png'
 import plus from '../../assets/images/plus.png'
 import LoungeObjets from './LoungeObjets'
 import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
+import { useNavigate } from 'react-router-dom'
+import { URL } from '../../static'
 
 export default function Lounge() {
+  const navigate = useNavigate()
   return (
     <Layout>
       <GloablContainer16>
         <TopContainer>
           <LoungeTitle>Mental 404</LoungeTitle>
           <IconContainer>
-            <Icon src={invite} />
-            <Icon src={plus} />
+            <Icon
+              src={invite}
+              onClick={() => {
+                navigate(URL.loungeInvite)
+              }}
+            />
+            <Icon
+              src={plus}
+              onClick={() => {
+                navigate(URL.newObjet)
+              }}
+            />
           </IconContainer>
         </TopContainer>
         <GlobalSubTitle>
