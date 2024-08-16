@@ -30,12 +30,7 @@ export const HeaderLeft = styled.div`
   gap: 15px;
 `
 
-export const AlarmIcon = styled.img`
-  cursor: pointer;
-  width: 20px;
-`
-
-export const MenuIcon = styled.img`
+export const Icon = styled.img`
   cursor: pointer;
   width: 20px;
 `
