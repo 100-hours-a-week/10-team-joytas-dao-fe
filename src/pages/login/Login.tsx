@@ -13,8 +13,11 @@ import login1 from '../../assets/images/login1.png'
 import login2 from '../../assets/images/login2.png'
 import login from '../../assets/images/login.png'
 import { URL } from '../../static'
+import { useNavigate } from 'react-router-dom'
 
 export default function Login() {
+  const navigate = useNavigate()
+
   return (
     <Main>
       <LoginImagDiv>
@@ -24,7 +27,7 @@ export default function Login() {
       <LoginImagDiv2>
         <LoginImage1 src={login2} />
       </LoginImagDiv2>
-      <LoginButton>
+      <LoginButton onClick={() => navigate(URL.main)}>
         <img src={login} />
       </LoginButton>
       <Bottom>
