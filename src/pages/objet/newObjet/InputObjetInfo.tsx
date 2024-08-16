@@ -3,13 +3,16 @@ import { InputItem } from '../../../components/objet/InputItem'
 import {
   ChooseContainer,
   GenerateButton,
-  Icon,
   ObjetImgPreview,
-  Tag,
   TagWrapper,
   UploadButton,
 } from '../ObjetStyles'
-import closeIcon from '../../../assets/images/close.png'
+import { Tag, Mentions } from 'antd'
+import { CloseCircleOutlined } from '@ant-design/icons'
+import { random } from 'lodash'
+import type { MentionsProps } from 'antd'
+
+const MOCK_USERS = ['jamie', 'erica', 'jun', 'hong', 'jikky']
 
 export default function InputObjetInfo() {
   const [form, setForm] = useState({
@@ -18,6 +21,24 @@ export default function InputObjetInfo() {
     objetDescription: '',
     objetImage: '',
   })
+  const colors = [
+    'magenta',
+    'red',
+    'volcano',
+    'orange',
+    'gold',
+    'lime',
+    'green',
+    'cyan',
+    'blue',
+    'geekblue',
+    'purple',
+  ]
+  const onSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
+    if (newPrefix) {
+      return MOCK_USERS.filter((user) => user.includes(newPrefix))
+    }
+  }
 
   const handleInputChange = (field: string, value: string) => {
     setForm((prevForm) => ({ ...prevForm, [field]: value }))
@@ -34,23 +55,42 @@ export default function InputObjetInfo() {
     <>
       <InputItem
         label='오브제 멤버'
+        className='member'
         input={
           <>
-            <input
-              onChange={(e) => handleInputChange('objetMember', e.target.value)}
+            <Mentions
+              variant='borderless'
+              onSearch={onSearch}
+              options={(MOCK_USERS || []).map((value) => ({
+                key: value,
+                value,
+                label: value,
+              }))}
             />
             <TagWrapper>
-              <Tag>
-                태그1 <Icon src={closeIcon} alt='close' />
+              <Tag
+                closeIcon={<CloseCircleOutlined />}
+                color={colors[random(0, colors.length - 1)]}
+              >
+                태그1
               </Tag>
-              <Tag>
-                태그1 <Icon src={closeIcon} alt='close' />
+              <Tag
+                closeIcon={<CloseCircleOutlined />}
+                color={colors[random(0, colors.length - 1)]}
+              >
+                태그1
               </Tag>
-              <Tag>
-                태그1 <Icon src={closeIcon} alt='close' />
+              <Tag
+                closeIcon={<CloseCircleOutlined />}
+                color={colors[random(0, colors.length - 1)]}
+              >
+                태그1
               </Tag>
-              <Tag>
-                태그1 <Icon src={closeIcon} alt='close' />
+              <Tag
+                closeIcon={<CloseCircleOutlined />}
+                color={colors[random(0, colors.length - 1)]}
+              >
+                태그1
               </Tag>
             </TagWrapper>
           </>
@@ -73,10 +113,9 @@ export default function InputObjetInfo() {
         longtext={true}
         input={
           <>
-            <input
-              type='text'
+            <textarea
               value={form.objetDescription}
-              placeholder='오브제 설명을 입력해주세요. (최대 200글자)'
+              placeholder='오브제 설명을 입력해주세요.'
               onChange={(e) =>
                 handleInputChange('objetDescription', e.target.value)
               }
@@ -90,9 +129,11 @@ export default function InputObjetInfo() {
         img={true}
         input={
           <>
-            <UploadButton type='button' onClick={handleUploadClick}>
-              이미지 업로드
-            </UploadButton>
+            <label htmlFor='objetImage'>
+              <UploadButton type='button' onClick={handleUploadClick}>
+                이미지 업로드
+              </UploadButton>
+            </label>
             <input
               type='file'
               accept='.jpeg, .jpg, .png, .gif, .webp'
@@ -112,7 +153,7 @@ export default function InputObjetInfo() {
         helperText='최대 25MB까지 첨부 가능합니다.'
       />
 
-      <ChooseContainer style={{ marginTop: '95px' }}>
+      <ChooseContainer>
         <GenerateButton>생성하기</GenerateButton>
       </ChooseContainer>
     </>
