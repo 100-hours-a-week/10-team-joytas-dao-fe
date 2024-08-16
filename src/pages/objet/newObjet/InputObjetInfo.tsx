@@ -1,19 +1,19 @@
 import { useState } from 'react'
-import { InputItem } from '../../components/objet/InputItem'
+import { InputItem } from '../../../components/objet/InputItem'
 import {
   ChooseContainer,
   GenerateButton,
   Icon,
-  ObjetImg,
+  ObjetImgPreview,
   Tag,
   TagWrapper,
   UploadButton,
-} from './ObjetStyles'
-import closeIcon from '../../assets/images/close.png'
+} from '../ObjetStyles'
+import closeIcon from '../../../assets/images/close.png'
 
 export default function InputObjetInfo() {
   const [form, setForm] = useState({
-    objetMember: '',
+    objetMember: [],
     objetName: '',
     objetDescription: '',
     objetImage: '',
@@ -26,7 +26,7 @@ export default function InputObjetInfo() {
   const handleUploadClick = () => {
     const fileInput = document.getElementById('objetImage')
     if (fileInput) {
-      fileInput.click() // 파일 선택 창을 엽니다.
+      fileInput.click()
     }
   }
 
@@ -62,6 +62,7 @@ export default function InputObjetInfo() {
           <input
             type='text'
             value={form.objetName}
+            placeholder='오브제 이름을 입력해주세요.'
             onChange={(e) => handleInputChange('objetName', e.target.value)}
           />
         }
@@ -75,6 +76,7 @@ export default function InputObjetInfo() {
             <input
               type='text'
               value={form.objetDescription}
+              placeholder='오브제 설명을 입력해주세요. (최대 200글자)'
               onChange={(e) =>
                 handleInputChange('objetDescription', e.target.value)
               }
@@ -103,7 +105,7 @@ export default function InputObjetInfo() {
               }}
             />
             {form.objetImage && (
-              <ObjetImg src={form.objetImage} alt='오브제 이미지' />
+              <ObjetImgPreview src={form.objetImage} alt='오브제 이미지' />
             )}
           </>
         }

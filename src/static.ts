@@ -15,6 +15,9 @@ const URL = {
   myLounge: '/lounge/my',
   loungeInvite: '/lounge/invite',
   objetCall: '/objet/call',
+  objetDetail: '/objet',
+  objetUpdate: '/objet/update',
+  objetChatting: '/objet/chatting',
 }
 
 export { URL }
