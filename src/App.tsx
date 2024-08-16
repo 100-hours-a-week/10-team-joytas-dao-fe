@@ -18,6 +18,7 @@ import UserInvite from './pages/user/UserInvite'
 import ObjetCall from './pages/objet/ObjetCall'
 import ObjetDetail from './pages/objet/ObjetDetail'
 import Home from './pages/home/Home'
+import UpdateObjet from './pages/objet/UpdateObjet'
 
 function App() {
   return (
@@ -40,6 +41,7 @@ function App() {
           <Route path={URL.loungeInvite} element={<UserInvite />}></Route>
           <Route path={URL.objetCall} element={<ObjetCall />}></Route>
           <Route path={URL.objetDetail} element={<ObjetDetail />}></Route>
+          <Route path={URL.objetUpdate} element={<UpdateObjet />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>

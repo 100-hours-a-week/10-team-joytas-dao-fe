@@ -1,17 +1,41 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
-export const UpperContainer = styled.div`
+// 공통 스타일
+
+const flexCenter = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+const flexColumn = css`
+  display: flex;
+  flex-direction: column;
+`
+
+const flexRow = css`
   display: flex;
   flex-direction: row;
+`
+
+const commonBoxStyles = css`
+  background-color: transparent;
+  border-radius: 12px;
+  border: 1px solid #e0e0e0;
+  color: gray;
+`
+
+// 컴포넌트 스타일
+
+export const UpperContainer = styled.div`
+  ${flexRow}
   align-items: center;
   margin-bottom: 20px;
 `
 
 export const ObjetModel = styled.div`
+  ${flexCenter}
   margin-top: 30px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
   width: 100%;
   border-radius: 10px;
   height: 240px;
@@ -21,16 +45,6 @@ export const MiniObjetModel = styled.div`
   width: 40px;
   height: 40px;
   margin: 70px 0 0 50px;
-`
-
-export const ChooseContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  gap: 20px;
-  height: 40px;
-  margin: 10px auto;
 `
 
 export const MoveIcon = styled.img`
@@ -45,7 +59,7 @@ export const ChooseButton = styled.button`
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.3);
   color: white;
-  border: 0;
+  border: none;
 `
 
 export const ModelIndexText = styled.div`
@@ -56,40 +70,50 @@ export const ModelIndexText = styled.div`
 `
 
 export const Container = styled.div`
+  ${flexColumn}
   width: 100%;
+  height: 540px;
   margin-top: 70px;
   box-sizing: border-box;
-  gap: 30px;
-  display: flex;
-  flex-direction: column;
+  gap: 2px;
+  position: relative;
 `
 
 export const ItemWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
+  ${flexRow}
+  align-items: flex-start;
   margin-bottom: 13px;
   width: 100%;
 `
 
 export const ItemLabel = styled.span`
-  display: flex;
-  flex-direction: row;
+  ${flexRow}
   width: 90px;
   font-size: 13px;
   font-weight: semi-bold;
-  margin-right: 20px;
+  margin: 10px 20px 0 0;
 `
 
-export const InputBox = styled.div<{ longtext?: boolean; img?: boolean }>`
-  width: 250px;
-  height: ${(props) => (props.longtext ? '90px' : '40px')};
-  border-radius: 12px;
-  background-color: transparent;
-  border: 1px solid #e0e0e0;
-  color: gray;
+export const ItemInput = styled.div``
 
-  input {
+export const InputBox = styled.div<{
+  className?: string
+  longtext?: boolean
+  img?: boolean
+}>`
+  ${() => commonBoxStyles}
+  width: ${(props) => (props.img ? '120px' : '220px')};
+  height: ${(props) => {
+    if (props.longtext) return '90px'
+    if (props.img && props.className === 'updateImg') return '120px'
+    if (props.img && props.className !== 'updateImg') return 'auto'
+    return '40px'
+  }};
+  ${(props) => props.className === 'member' && 'margin-bottom: 30px;'}
+  ${(props) => props.img && 'position: relative;'}
+
+  input,
+  textarea {
     background-color: transparent;
     padding: 10px;
     border: none;
@@ -98,28 +122,32 @@ export const InputBox = styled.div<{ longtext?: boolean; img?: boolean }>`
     height: 100%;
     color: white;
     box-sizing: border-box;
+  }
+
+  input {
     display: ${(props) => (props.img ? 'none' : 'block')};
   }
 
-  .placeholder {
-    color: #888;
-    font-size: 14px;
+  textarea {
+    resize: none;
+    overflow-wrap: break-word;
+    white-space: pre-wrap;
+    vertical-align: top;
   }
 `
 
 export const ObjetImgPreview = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 120px;
+  height: 120px;
   object-fit: cover;
   margin-bottom: 10px;
+  position: relative;
 `
 
 export const RedText = styled.span`
-  font-size: 10px;
+  font-size: 11px;
   color: red;
 `
-
-export const GenerateButton = styled(ChooseButton)``
 
 export const UploadButton = styled.button`
   cursor: pointer;
@@ -132,27 +160,32 @@ export const UploadButton = styled.button`
   text-align: center;
 `
 
+export const ImageOverlay = styled.div`
+  ${flexCenter}
+  width: 120px;
+  height: 120px;
+  background: #4646465c;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  label {
+    &:hover {
+      color: white;
+      cursor: pointer;
+    }
+  }
+`
+
 export const TagWrapper = styled.div`
   display: flex;
-  gap: 10px;
   margin-top: 8px;
   overflow-x: scroll;
   width: 220px;
-`
-
-export const Tag = styled.span`
-  padding: 3px 10px;
-  border-radius: 10px;
-  background-color: rgba(255, 255, 255, 0.3);
-  color: white;
-  font-size: 12px;
-  border: 1px solid #e0e0e0;
-  width: fit-content;
-
-  display: flex;
-  flex-direction: row;
-  white-space: nowrap;
-  align-items: center;
 `
 
 export const Icon = styled.img`
@@ -168,10 +201,23 @@ export const Icon = styled.img`
   }
 `
 
+export const ChooseContainer = styled.div`
+  ${flexCenter}
+  flex-direction: row;
+  gap: 20px;
+  height: 40px;
+  margin: 10px auto;
+  position: absolute;
+  bottom: 2%;
+  width: 100%;
+`
+
+export const GenerateButton = styled(ChooseButton)``
+
 // 오브제 상세 조회, 오브제 음성 통화
 
 export const TopContainer = styled.div`
-  display: flex;
+  ${flexRow}
   height: fit-content;
   padding-top: 30px;
   justify-content: space-between;
@@ -195,19 +241,16 @@ export const CallTitle = styled.div`
 `
 
 export const CallSubTitle = styled.div`
-  display: flex;
+  ${flexRow}
   align-items: center;
   gap: 20px;
-  justify-content: flex-start;
   color: white;
   margin-top: 10px;
   font-size: 12px;
 `
 
 export const ObjetMaker = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  ${flexCenter}
   gap: 10px;
 `
 
@@ -216,9 +259,8 @@ export const Name = styled.div`
 `
 
 export const ObjetActive = styled.div`
-  display: flex;
+  ${flexCenter}
   gap: 10px;
-  align-items: center;
 `
 
 export const Active = styled.div`
@@ -229,10 +271,9 @@ export const Active = styled.div`
 `
 
 export const ObjetDetailContainer = styled.div`
+  ${flexColumn}
   width: 100%;
   height: 370px;
-  display: flex;
-  flex-direction: column;
   align-items: center;
   padding-top: 20px;
 `
@@ -253,10 +294,9 @@ export const ObjetDescription = styled.div`
 `
 
 export const CommunityContainer = styled.div`
+  ${flexColumn}
   width: 100%;
   height: 250px;
-  display: flex;
-  flex-direction: column;
   justify-content: center;
   background-color: #383838;
   gap: 20px;
@@ -264,16 +304,14 @@ export const CommunityContainer = styled.div`
 `
 
 export const ChattingsWrapper = styled.div`
+  ${flexColumn}
   width: 100%;
   height: 130px;
-  display: flex;
-  flex-direction: column;
   gap: 13px;
 `
 
 export const GoToBtnWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
+  ${flexRow}
   justify-content: center;
   gap: 20px;
 `
@@ -283,13 +321,11 @@ export const CallToast = styled.div`
   width: 130px;
   height: 30px;
   border-radius: 20px;
-
   color: black;
   font-size: 14px;
-
   display: none;
   text-align: center;
-
+  position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);

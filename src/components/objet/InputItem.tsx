@@ -1,5 +1,6 @@
 import {
   InputBox,
+  ItemInput,
   ItemLabel,
   ItemWrapper,
   RedText,
@@ -7,6 +8,7 @@ import {
 
 interface ItemProps {
   label: string
+  className?: string
   longtext?: boolean
   img?: boolean
   input: JSX.Element
@@ -15,6 +17,7 @@ interface ItemProps {
 
 export function InputItem({
   label,
+  className,
   longtext,
   img,
   input,
@@ -26,10 +29,12 @@ export function InputItem({
         {label}
         <RedText>*</RedText>
       </ItemLabel>
-      <InputBox longtext={longtext} img={img}>
-        {input}
+      <ItemInput>
+        <InputBox className={className} longtext={longtext} img={img}>
+          {input}
+        </InputBox>
         <RedText>{helperText}</RedText>
-      </InputBox>
+      </ItemInput>
     </ItemWrapper>
   )
 }
