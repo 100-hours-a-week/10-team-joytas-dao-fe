@@ -1,16 +1,16 @@
-import Layout from '../../components/Layout'
-import { Container, MiniObjetModel, UpperContainer } from './ObjetStyles'
+import Layout from '../../../components/Layout.tsx'
+import { Container, MiniObjetModel, UpperContainer } from '../ObjetStyles.tsx'
 import {
   GloablContainer16,
   GlobalSubTitle,
   GlobalTitle,
-} from '../../global/globalStyles'
+} from '../../../global/globalStyles.tsx'
 import { useRef, useState } from 'react'
 import SelectObjetType from './SelectObjetType'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Group } from 'three'
-import { ObjetModel1 } from '../../assets/models/ObjetModel1.tsx'
+import { ObjetModel1 } from '../../../assets/models/ObjetModel1.tsx'
 import InputObjetInfo from './InputObjetInfo.tsx'
 
 export default function NewObjet() {

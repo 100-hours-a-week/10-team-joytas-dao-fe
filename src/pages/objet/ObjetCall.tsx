@@ -1,18 +1,9 @@
 import Layout from '../../components/Layout'
 import { GloablContainer16 } from '../../global/globalStyles'
 import {
-  CallTitle,
-  CallSubTitle,
-  ObjetMaker,
-  ObjetActive,
-  Active,
-  Name,
   MicButton,
   CallButton,
   Icon,
-  TopContainer,
-  LeftContainer,
-  RightContainer,
   MiddleContainer,
   BottomContainer,
   CallProfile,
@@ -23,6 +14,17 @@ import mute from '../../assets/images/mute.png'
 import unmute from '../../assets/images/unmute.png'
 import quitCall from '../../assets/images/quitCall.png'
 import { useState } from 'react'
+import {
+  TopContainer,
+  LeftContainer,
+  RightContainer,
+  CallTitle,
+  CallSubTitle,
+  ObjetMaker,
+  ObjetActive,
+  Active,
+  Name,
+} from './ObjetStyles'
 
 export default function ObjetCall() {
   const [muted, setMuted] = useState(false)

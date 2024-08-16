@@ -107,7 +107,7 @@ export const InputBox = styled.div<{ longtext?: boolean; img?: boolean }>`
   }
 `
 
-export const ObjetImg = styled.img`
+export const ObjetImgPreview = styled.img`
   width: 100px;
   height: 100px;
   object-fit: cover;
@@ -126,7 +126,7 @@ export const UploadButton = styled.button`
   width: 100%;
   height: 40px;
   border-radius: 10px;
-  background-color: transparent; /* 원하는 색상으로 변경 가능 */
+  background-color: transparent;
   color: white;
   border: 1px solid #e0e0e0;
   text-align: center;
@@ -160,4 +160,137 @@ export const Icon = styled.img`
   height: 10px;
   margin-left: 5px;
   cursor: pointer;
+
+  &.menu {
+    margin-left: 20px;
+    width: 5px;
+    height: 20px;
+  }
+`
+
+// 오브제 상세 조회, 오브제 음성 통화
+
+export const TopContainer = styled.div`
+  display: flex;
+  height: fit-content;
+  padding-top: 30px;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  width: 100%;
+`
+
+export const LeftContainer = styled.div`
+  width: fit-content;
+`
+
+export const RightContainer = styled.div`
+  width: fit-content;
+`
+
+export const CallTitle = styled.div`
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+`
+
+export const CallSubTitle = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  justify-content: flex-start;
+  color: white;
+  margin-top: 10px;
+  font-size: 12px;
+`
+
+export const ObjetMaker = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+`
+
+export const Name = styled.div`
+  color: gray;
+`
+
+export const ObjetActive = styled.div`
+  display: flex;
+  gap: 10px;
+  align-items: center;
+`
+
+export const Active = styled.div`
+  background-color: #00ff0a;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+`
+
+export const ObjetDetailContainer = styled.div`
+  width: 100%;
+  height: 370px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+`
+
+export const ObjetImg = styled.img`
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  margin: 10px 0;
+`
+
+export const ObjetDescription = styled.div`
+  margin: 20px 0;
+  height: 120px;
+  overflow-y: scroll;
+  color: white;
+  font-size: 14px;
+`
+
+export const CommunityContainer = styled.div`
+  width: 100%;
+  height: 250px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #383838;
+  gap: 20px;
+  border-radius: 10px 10px 0 0;
+`
+
+export const ChattingsWrapper = styled.div`
+  width: 100%;
+  height: 130px;
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+`
+
+export const GoToBtnWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 20px;
+`
+
+export const CallToast = styled.div`
+  background-color: #d9d9d9;
+  width: 130px;
+  height: 30px;
+  border-radius: 20px;
+
+  color: black;
+  font-size: 14px;
+
+  display: none;
+  text-align: center;
+
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `

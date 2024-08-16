@@ -11,11 +11,12 @@ import ModifyProfile from './pages/user/ModifyProfile'
 import UserDelete from './pages/user/UserDelete'
 import NewLounge from './pages/lounge/NewLounge'
 import CreateMyRoom from './pages/myRoom/CreateMyRoom'
-import NewObjet from './pages/objet/NewObjet'
+import NewObjet from './pages/objet/newObjet/NewObjet'
 import Lounge from './pages/lounge/Lounge'
 import MyRoom from './pages/myRoom/MyRoom'
 import UserInvite from './pages/user/UserInvite'
 import ObjetCall from './pages/objet/ObjetCall'
+import ObjetDetail from './pages/objet/ObjetDetail'
 import Home from './pages/home/Home'
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
           <Route path={URL.myRoom} element={<MyRoom />}></Route>
           <Route path={URL.loungeInvite} element={<UserInvite />}></Route>
           <Route path={URL.objetCall} element={<ObjetCall />}></Route>
+          <Route path={URL.objetDetail} element={<ObjetDetail />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>

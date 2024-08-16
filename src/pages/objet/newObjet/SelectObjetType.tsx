@@ -4,15 +4,15 @@ import {
   ChooseContainer,
   MoveIcon,
   ChooseButton,
-} from './ObjetStyles'
-import left from '../../assets/images/left.png'
-import right from '../../assets/images/right.png'
+} from '../ObjetStyles'
+import left from '../../../assets/images/left.png'
+import right from '../../../assets/images/right.png'
 import { useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
-import { ObjetModel1 } from '../../assets/models/ObjetModel1'
-import { ObjetModel2 } from '../../assets/models/ObjetModel2'
-import { ObjetModel3 } from '../../assets/models/ObjetModel3'
+import { ObjetModel1 } from '../../../assets/models/ObjetModel1'
+import { ObjetModel2 } from '../../../assets/models/ObjetModel2'
+import { ObjetModel3 } from '../../../assets/models/ObjetModel3'
 
 export default function SelectObjetType() {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
