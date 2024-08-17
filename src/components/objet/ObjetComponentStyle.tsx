@@ -53,26 +53,6 @@ export const CommunityBtn = styled.button`
   }
 `
 
-// 채팅
-
-export const Chat = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 0 25px;
-
-  img {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-  }
-
-  span {
-    font-size: 14px;
-    margin-left: 10px;
-  }
-`
-
 // 모달
 
 export const DeleteModalContainer = styled.div`
