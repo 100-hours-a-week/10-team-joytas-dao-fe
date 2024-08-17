@@ -195,9 +195,25 @@ export const Icon = styled.img`
   cursor: pointer;
 
   &.menu {
-    margin-left: 20px;
     width: 5px;
     height: 20px;
+    opacity: 70%;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 100%;
+    }
+  }
+
+  &.leave {
+    width: 20px;
+    height: 20px;
+    opacity: 70%;
+    cursor: pointer;
+
+    &:hover {
+      opacity: 100%;
+    }
   }
 `
 
@@ -231,7 +247,10 @@ export const LeftContainer = styled.div`
 `
 
 export const RightContainer = styled.div`
+  ${flexRow}
+  align-items: center;
   width: fit-content;
+  gap: 10px;
 `
 
 export const CallTitle = styled.div`
@@ -308,6 +327,7 @@ export const ChattingsWrapper = styled.div`
   width: 100%;
   height: 130px;
   gap: 13px;
+  padding: 0 20px;
 `
 
 export const GoToBtnWrapper = styled.div`
@@ -329,4 +349,57 @@ export const CallToast = styled.div`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+`
+
+// 채팅
+
+export const ChatContainer = styled.div`
+  ${flexColumn}
+  width: 100%;
+  height: 100%;
+
+  margin-top: 30px;
+`
+
+export const ChatsWrapper = styled.div`
+  ${flexColumn}
+  width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+`
+
+export const ChatInputBox = styled.div`
+  width: 100%;
+  position: relative;
+  margin: 10px 0 20px 0;
+`
+
+export const ChatInput = styled.input`
+  ${flexRow}
+  height: 45px;
+  width: 100%;
+
+  background-color: #d9d9d9;
+  border-radius: 10px;
+  color: black;
+  padding: 10px 50px 10px 10px;
+
+  position: relative;
+  box-sizing: border-box;
+`
+
+export const ChatSendButton = styled.img`
+  position: absolute;
+  right: 20px;
+  top: 50%;
+
+  width: 16px;
+  height: 16px;
+
+  transform: translateY(-50%);
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
 `
