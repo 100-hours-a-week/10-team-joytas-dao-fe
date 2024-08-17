@@ -1,29 +1,24 @@
-import Layout from '../../components/Layout'
 import {
-  Container,
   ObjetModel,
   ModelIndexText,
   ChooseContainer,
   MoveIcon,
   ChooseButton,
-} from './Style'
-import left from '../../assets/images/left.png'
-import right from '../../assets/images/right.png'
+} from '../ObjetStyles'
+import left from '../../../assets/images/left.png'
+import right from '../../../assets/images/right.png'
 import { useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
-import { ObjetModel1 } from '../../assets/models/ObjetModel1'
-import { ObjetModel2 } from '../../assets/models/ObjetModel2'
-import { ObjetModel3 } from '../../assets/models/ObjetModel3'
-import {
-  GloablContainer16,
-  GlobalSubTitle,
-  GlobalTitle,
-} from '../../global/globalStyles'
+import { ObjetModel1 } from '../../../assets/models/ObjetModel1'
+import { ObjetModel2 } from '../../../assets/models/ObjetModel2'
+import { ObjetModel3 } from '../../../assets/models/ObjetModel3'
 
-export default function NewObjet() {
+export default function SelectObjetType() {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
   const models = [Model1, Model2, Model3]
+
+  const CurrentModel = models[currentModelIndex]
 
   const handleLeftClick = () => {
     setCurrentModelIndex((prevIndex) =>
@@ -37,36 +32,26 @@ export default function NewObjet() {
     )
   }
 
-  const CurrentModel = models[currentModelIndex]
-
   return (
-    <Layout>
-      <GloablContainer16>
-        <GlobalTitle>어떤 오브제인가요?</GlobalTitle>
-        <GlobalSubTitle>
-          공유하고 싶은 추억을 오브제로 만들어보세요!
-        </GlobalSubTitle>
-        <Container>
-          <ObjetModel>
-            <Canvas
-              style={{ width: '100%', height: '100%' }}
-              camera={{ position: [0, 0, 4], fov: 50 }} // 카메라 위치와 시야각(fov) 설정
-            >
-              <ambientLight intensity={5} />
-              <CurrentModel position={new Vector3(0, 0, 0)} />
-            </Canvas>
-          </ObjetModel>
-          <ModelIndexText>
-            {currentModelIndex + 1} / {models.length}
-          </ModelIndexText>
-          <ChooseContainer>
-            <MoveIcon src={left} onClick={handleLeftClick} />
-            <ChooseButton>선택</ChooseButton>
-            <MoveIcon src={right} onClick={handleRightClick} />
-          </ChooseContainer>
-        </Container>
-      </GloablContainer16>
-    </Layout>
+    <>
+      <ObjetModel>
+        <Canvas
+          style={{ width: '100%', height: '100%' }}
+          camera={{ position: [0, 0, 4], fov: 50 }} // 카메라 위치와 시야각(fov) 설정
+        >
+          <ambientLight intensity={5} />
+          <CurrentModel position={new Vector3(0, 0, 0)} />
+        </Canvas>
+      </ObjetModel>
+      <ModelIndexText>
+        {currentModelIndex + 1} / {models.length}
+      </ModelIndexText>
+      <ChooseContainer>
+        <MoveIcon src={left} onClick={handleLeftClick} />
+        <ChooseButton>선택</ChooseButton>
+        <MoveIcon src={right} onClick={handleRightClick} />
+      </ChooseContainer>
+    </>
   )
 }
 
