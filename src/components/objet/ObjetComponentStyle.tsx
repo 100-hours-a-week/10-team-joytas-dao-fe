@@ -110,7 +110,7 @@ export const DeleteModalContents = styled.div`
     display: block;
   }
 
-  .modal-btn-container {
+  .btnContainer {
     display: flex;
     flex-direction: row;
     gap: 20px;

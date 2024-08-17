@@ -9,7 +9,6 @@ import {
 } from '../ObjetStyles'
 import { Tag, Mentions } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
-import { random } from 'lodash'
 import type { MentionsProps } from 'antd'
 
 const MOCK_USERS = ['jamie', 'erica', 'jun', 'hong', 'jikky']
@@ -21,19 +20,6 @@ export default function InputObjetInfo() {
     objetDescription: '',
     objetImage: '',
   })
-  const colors = [
-    'magenta',
-    'red',
-    'volcano',
-    'orange',
-    'gold',
-    'lime',
-    'green',
-    'cyan',
-    'blue',
-    'geekblue',
-    'purple',
-  ]
   const onSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
     if (newPrefix) {
       return MOCK_USERS.filter((user) => user.includes(newPrefix))
@@ -70,25 +56,29 @@ export default function InputObjetInfo() {
             <TagWrapper>
               <Tag
                 closeIcon={<CloseCircleOutlined />}
-                color={colors[random(0, colors.length - 1)]}
+                color='white'
+                style={{ color: 'black' }}
               >
                 태그1
               </Tag>
               <Tag
                 closeIcon={<CloseCircleOutlined />}
-                color={colors[random(0, colors.length - 1)]}
+                color='white'
+                style={{ color: 'black' }}
               >
                 태그1
               </Tag>
               <Tag
                 closeIcon={<CloseCircleOutlined />}
-                color={colors[random(0, colors.length - 1)]}
+                color='white'
+                style={{ color: 'black' }}
               >
                 태그1
               </Tag>
               <Tag
                 closeIcon={<CloseCircleOutlined />}
-                color={colors[random(0, colors.length - 1)]}
+                color='white'
+                style={{ color: 'black' }}
               >
                 태그1
               </Tag>

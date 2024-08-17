@@ -6,6 +6,7 @@ interface ChattingProps {
   userId: number
   profileImg: string
   content: string
+  datetime?: string
 }
 
 export function ChattingPreview({
@@ -16,9 +17,14 @@ export function ChattingPreview({
   datetime,
 }: ChattingProps) {
   return (
+    // { datetime !== undefined ? (
+
     <Chat>
       <img src={sampleImg} alt='profile' />
       <span>{content}</span>
     </Chat>
+    // ): (
+    // )
+    // }
   )
 }
