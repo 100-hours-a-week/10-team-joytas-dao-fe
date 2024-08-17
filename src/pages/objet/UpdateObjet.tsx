@@ -23,7 +23,6 @@ import { ObjetModel1 } from '../../assets/models/ObjetModel1.tsx'
 import { Mentions, Tag } from 'antd'
 import type { MentionsProps } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
-import { random } from 'lodash'
 import sampleImg from '../../assets/images/sampleObjet.png'
 
 const MOCK_USERS = ['jamie', 'erica', 'jun', 'hong', 'jikky']
@@ -36,20 +35,6 @@ export default function UpdateObjet() {
     objetImage: '',
   })
   const [isSelected, setIsSelected] = useState(true)
-  const colors = [
-    'magenta',
-    'red',
-    'volcano',
-    'orange',
-    'gold',
-    'lime',
-    'green',
-    'cyan',
-    'blue',
-    'geekblue',
-    'purple',
-  ]
-
   const onSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
     if (newPrefix) {
       return MOCK_USERS.filter((user) => user.includes(newPrefix))
@@ -121,12 +106,12 @@ export default function UpdateObjet() {
                 />
                 <TagWrapper>
                   {form.objetMember.map(({ nickname, id }) => {
-                    const randomColor = colors[random(0, colors.length - 1)]
                     return (
                       <Tag
                         key={id}
                         closeIcon={<CloseCircleOutlined />}
-                        color={randomColor}
+                        color='white'
+                        style={{ color: 'black' }}
                       >
                         {nickname}
                       </Tag>

@@ -32,7 +32,7 @@ export function DeleteModal({ onClose }: DeleteProps) {
         <span>
           한 번 삭제한 오브제는 <br /> 복구할 수 없습니다.
         </span>
-        <div className='modal-btn-container'>
+        <div className='btnContainer'>
           <DeleteModalButton className='cancel' onClick={onClose}>
             취소
           </DeleteModalButton>
