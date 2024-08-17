@@ -5,21 +5,20 @@ interface ChattingProps {
   userName: string
   userId: number
   profileImg: string
-  text: string
-  datetime: string
+  content: string
 }
 
 export function ChattingPreview({
   userName,
   userId,
   profileImg,
-  text,
+  content,
   datetime,
 }: ChattingProps) {
   return (
     <Chat>
       <img src={sampleImg} alt='profile' />
-      <span>{text}</span>
+      <span>{content}</span>
     </Chat>
   )
 }

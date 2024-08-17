@@ -178,5 +178,4 @@ export const ModalBackdrop = styled.div`
   background-color: rgba(0, 0, 0, 0.5);
   position: fixed;
   z-index: 5;
-  display: none;
 `

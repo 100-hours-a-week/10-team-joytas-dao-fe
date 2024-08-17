@@ -54,7 +54,7 @@ export default function ObjetDetail() {
   return (
     <Layout>
       <>
-        <ModalBackdrop />
+        {isDeleteModalVisible && <ModalBackdrop />}
 
         <GloablContainer16>
           <TopContainer>
