@@ -9,6 +9,8 @@ import {
   Icon,
 } from '../../pages/user/UserListStyle'
 import PickImg from '../../assets/images/pick.png'
+import { useNavigate } from 'react-router-dom'
+import { URL } from '../../static'
 
 interface UserListProps {
   type: string
@@ -16,11 +18,12 @@ interface UserListProps {
 }
 
 export default function UserListItem({ type, user }: UserListProps) {
+  const navigate = useNavigate()
   const PickUser = () => {}
 
   return (
     <UserListItemContainer>
-      <ProfileContainer>
+      <ProfileContainer onClick={() => navigate(URL.userDetail)}>
         <ProfileImageContainer>
           <ProfileImage />
           <ProfileActive />

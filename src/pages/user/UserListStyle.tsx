@@ -55,6 +55,8 @@ export const UserListItemContainer = styled.div`
 export const ProfileContainer = styled.div`
   display: flex;
   align-items: center;
+
+  cursor: pointer;
 `
 
 export const ProfileImageContainer = styled.div`
@@ -114,7 +116,7 @@ export const Icon = styled.img`
 `
 
 export const Toast = styled.div`
-  width: fit-content;
+  width: auto;
   height: 30px;
   padding: 5px 15px;
   box-sizing: border-box;
@@ -122,15 +124,22 @@ export const Toast = styled.div`
   display: flex;
   align-items: center;
   z-index: 1000;
+  white-space: nowrap;
 
   color: black;
   font-size: 12px;
 
   border-radius: 20px;
-  position: fixed;
-  top: 50%;
+  position: absolute;
+  bottom: 3%;
   left: 50%;
   transform: translate(-50%, -50%);
+`
+
+export const FullContainerForToast = styled.div`
+  width: 100%;
+  height: 100%;
+  position: relative;
 `
 
 export const MyRoomContainer = styled.div`
