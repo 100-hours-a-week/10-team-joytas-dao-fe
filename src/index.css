@@ -15,17 +15,16 @@ body {
 }
 /* 스크롤바 스타일 */
 ::-webkit-scrollbar {
-  width: 12px;
+  width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: black; /* 스크롤바 트랙 배경 */
+  background: transparent; /* 스크롤바 트랙 배경 */
 }
 
 ::-webkit-scrollbar-thumb {
   background-color: #333; /* 스크롤바 색상 */
   border-radius: 10px; /* 스크롤바 둥글게 */
-  border: 3px solid #1e1e1e; /* 스크롤바와 트랙 사이의 여백 */
 }
 
 ::-webkit-scrollbar-thumb:hover {
