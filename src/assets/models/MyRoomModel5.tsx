@@ -4,7 +4,9 @@ import { GroupProps } from '@react-three/fiber'
 interface MyRoomModel5Props extends GroupProps {}
 
 export function MyRoomModel5(props: MyRoomModel5Props) {
-  const { nodes, materials } = useGLTF('models/myRoom_model5/scene.gltf') as any
+  const { nodes, materials } = useGLTF(
+    '/models/myRoom_model5/scene.gltf'
+  ) as any
   return (
     <group {...props} dispose={null}>
       <mesh
@@ -176,4 +178,4 @@ export function MyRoomModel5(props: MyRoomModel5Props) {
   )
 }
 
-useGLTF.preload('models/myRoom_model5/scene.gltf')
+useGLTF.preload('/models/myRoom_model5/scene.gltf')

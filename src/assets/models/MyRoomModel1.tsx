@@ -5,7 +5,7 @@ import { useGLTF } from '@react-three/drei'
 interface MyRoomModel1Props extends React.ComponentProps<'group'> {}
 
 export function MyRoomModel1(props: MyRoomModel1Props) {
-  const { nodes, materials } = useGLTF('models/myRoom_model1/scene.gltf')
+  const { nodes, materials } = useGLTF('/models/myRoom_model1/scene.gltf')
   return (
     <group {...props} dispose={null}>
       <group rotation={[-Math.PI / 2, 0, 0]}>
@@ -19,4 +19,4 @@ export function MyRoomModel1(props: MyRoomModel1Props) {
   )
 }
 
-useGLTF.preload('models/myRoom_model1/scene.gltf')
+useGLTF.preload('/models/myRoom_model1/scene.gltf')
