@@ -132,3 +132,15 @@ export const Toast = styled.div`
   left: 50%;
   transform: translate(-50%, -50%);
 `
+
+export const MyRoomContainer = styled.div`
+  width: 100%;
+  height: auto;
+  padding: 0 32px;
+  box-sizing: border-box;
+
+  margin: 90px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
