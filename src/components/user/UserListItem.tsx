@@ -29,9 +29,9 @@ export default function UserListItem({ type, user }: UserListProps) {
       </ProfileContainer>
       {type === 'lounge' ? (
         <InviteButton>초대하기</InviteButton>
-      ) : (
+      ) : type === 'users' ? (
         <Icon src={PickImg} onClick={PickUser} />
-      )}
+      ) : null}
     </UserListItemContainer>
   )
 }
