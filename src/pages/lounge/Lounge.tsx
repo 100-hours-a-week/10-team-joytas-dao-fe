@@ -39,7 +39,7 @@ export default function Lounge() {
           친구를 초대하고 오브제로 추억을 공유해보세요!
         </GlobalSubTitle>
         <Objets>
-          <LoungeObjets />
+          <LoungeObjets type='lounge' objetsList={[]} />
         </Objets>
       </GloablContainer16>
     </Layout>

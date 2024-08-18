@@ -10,6 +10,11 @@ interface RandomModelsProps {
   onModelClick: (model: THREE.Group) => void
 }
 
+interface ObjetsProps {
+  type: string
+  objetsList: []
+}
+
 function RandomModels({ onModelClick }: RandomModelsProps) {
   const groupRef = useRef<THREE.Group>(null)
 
@@ -131,7 +136,7 @@ function LoungeObjets() {
   )
 }
 
-export default function App() {
+export default function App({ type, objetsList }: ObjetsProps) {
   return (
     <Canvas>
       <LoungeObjets />

@@ -19,6 +19,7 @@ import ObjetCall from './pages/objet/ObjetCall'
 import ObjetDetail from './pages/objet/ObjetDetail'
 import Home from './pages/home/Home'
 import UpdateObjet from './pages/objet/UpdateObjet'
+import MyRoomObjet from './pages/myRoom/MyRoomObjets'
 import ObjetChatting from './pages/objet/ObjetChatting'
 
 function App() {
@@ -43,6 +44,7 @@ function App() {
           <Route path={URL.objetCall} element={<ObjetCall />}></Route>
           <Route path={URL.objetDetail} element={<ObjetDetail />}></Route>
           <Route path={URL.objetUpdate} element={<UpdateObjet />}></Route>
+          <Route path={URL.myRoomObjet} element={<MyRoomObjet />}></Route>
           <Route path={URL.objetChatting} element={<ObjetChatting />}></Route>
         </Routes>
       </Main>

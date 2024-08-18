@@ -28,8 +28,8 @@ import { useNavigate } from 'react-router-dom'
 import { URL } from '../../static'
 import { useState } from 'react'
 import { ChatMessage } from '../../components/objet/Chat'
-import { DeleteModal, MenuModal } from '../../components/objet/Modal'
-import { ModalBackdrop } from '../../components/objet/ObjetComponentStyle'
+import { DeleteModal, MenuModal } from '../../components/Modal'
+import { ModalBackdrop } from '../../components/ModalStyle'
 
 export default function ObjetDetail() {
   const name = 'jamie'
