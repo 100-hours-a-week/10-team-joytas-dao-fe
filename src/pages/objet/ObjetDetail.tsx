@@ -27,7 +27,7 @@ import GoCommunityBtn from '../../components/objet/GoCommunityBtn'
 import { useNavigate } from 'react-router-dom'
 import { URL } from '../../static'
 import { useState } from 'react'
-import { ChattingPreview } from '../../components/objet/Chatting'
+import { ChatMessage } from '../../components/objet/Chat'
 import { DeleteModal, MenuModal } from '../../components/objet/Modal'
 import { ModalBackdrop } from '../../components/objet/ObjetComponentStyle'
 
@@ -115,19 +115,19 @@ export default function ObjetDetail() {
           </ObjetDetailContainer>
           <CommunityContainer>
             <ChattingsWrapper>
-              <ChattingPreview
+              <ChatMessage
                 userName='jamie'
                 userId={3}
                 profileImg='../../assets/images/sampleObjet.png'
                 content='안녕 제이미'
               />
-              <ChattingPreview
+              <ChatMessage
                 userName='jamie'
                 userId={3}
                 profileImg='../../assets/images/sampleObjet.png'
                 content='안녕 제이미'
               />
-              <ChattingPreview
+              <ChatMessage
                 userName='jamie'
                 userId={3}
                 profileImg='../../assets/images/sampleObjet.png'
