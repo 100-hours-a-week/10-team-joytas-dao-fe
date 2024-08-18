@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-export const SearchTitle = styled.div`
+export const SearchTitle = styled.div<{ type: 'lounge' | 'users' }>`
   padding-top: 50px;
-  font-size: 20px;
-  font-weight: bold;
+  font-size: ${(props) => (props.type === 'lounge' ? '20px' : '12px')};
+  font-weight: ${(props) => (props.type === 'lounge' ? 'bold' : 'regular')};
 `
 
 export const SearchUserInput = styled.input`
@@ -18,7 +18,7 @@ export const SearchUserInput = styled.input`
   border-radius: 10px;
 `
 
-export const SearchResults = styled.div`
+export const UserListContainer = styled.div`
   width: 100%;
   margin-top: 20px;
   height: 584px;
@@ -30,7 +30,20 @@ export const SearchResults = styled.div`
   padding-bottom: 10px;
 `
 
-export const SearchContainer = styled.div`
+export const UserListBlanckText = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  color: #6a6a6a;
+  font-size: 18px;
+  line-height: 30px;
+`
+
+export const UserListItemContainer = styled.div`
   width: 100%;
   padding: 0 5px;
   box-sizing: border-box;
@@ -80,4 +93,42 @@ export const InviteButton = styled.button`
   height: 25px;
   font-size: 10px;
   border-radius: 15px;
+
+  opacity: 70%;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 100%;
+  }
+`
+
+export const Icon = styled.img`
+  width: 35px;
+  height: 35px;
+  opacity: 70%;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 100%;
+  }
+`
+
+export const Toast = styled.div`
+  width: fit-content;
+  height: 30px;
+  padding: 5px 15px;
+  box-sizing: border-box;
+  background-color: #fbfbfb;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+
+  color: black;
+  font-size: 12px;
+
+  border-radius: 20px;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 `
