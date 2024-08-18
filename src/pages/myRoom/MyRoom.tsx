@@ -20,11 +20,13 @@ import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
 import { GloablContainer16 } from '../../global/globalStyles.tsx'
 import { ObjetModel1 } from '../../assets/models/ObjetModel1.tsx'
 import { Group } from 'three'
+import { useNavigate } from 'react-router-dom'
 
 export default function MyRoom() {
   const [myRoomName, setMyRoomName] = useState('')
   const [myRoomModel, setMyRoomModel] = useState<MyRoomModel>(modelList[0])
   const [isEditing, setIsEditing] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     const myRoomData = {
@@ -43,7 +45,9 @@ export default function MyRoom() {
     setIsEditing(false)
   }
 
-  const handleNavigate = () => {}
+  const handleNavigate = () => {
+    navigate('/myRoom/objet')
+  }
 
   return (
     <Layout>
