@@ -10,7 +10,7 @@ const URL = {
   users: '/users',
   myRoom: '/myRoom',
   newLounge: '/lounge/new',
-  createMyRoom: '/myRooom/generate',
+  createMyRoom: '/myRoom/generate',
   newObjet: '/objet/new',
   myLounge: '/lounge/my',
   loungeInvite: '/lounge/invite',
@@ -18,6 +18,7 @@ const URL = {
   objetDetail: '/objet',
   objetUpdate: '/objet/update',
   objetChatting: '/objet/chatting',
+  myRoomObjet: '/myRoom/objet',
 }
 
 export { URL }
