@@ -14,13 +14,14 @@ import CreateMyRoom from './pages/myRoom/CreateMyRoom'
 import NewObjet from './pages/objet/newObjet/NewObjet'
 import Lounge from './pages/lounge/Lounge'
 import MyRoom from './pages/myRoom/MyRoom'
-import UserInvite from './pages/user/UserInvite'
+import UserList from './pages/user/UserList'
 import ObjetCall from './pages/objet/ObjetCall'
 import ObjetDetail from './pages/objet/ObjetDetail'
 import Home from './pages/home/Home'
 import UpdateObjet from './pages/objet/UpdateObjet'
 import MyRoomObjet from './pages/myRoom/MyRoomObjets'
 import ObjetChatting from './pages/objet/ObjetChatting'
+import UserDetail from './pages/user/UserDetail'
 
 function App() {
   return (
@@ -40,12 +41,14 @@ function App() {
           <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
           <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
           <Route path={URL.myRoom} element={<MyRoom />}></Route>
-          <Route path={URL.loungeInvite} element={<UserInvite />}></Route>
+          <Route path={URL.loungeInvite} element={<UserList />}></Route>
           <Route path={URL.objetCall} element={<ObjetCall />}></Route>
           <Route path={URL.objetDetail} element={<ObjetDetail />}></Route>
           <Route path={URL.objetUpdate} element={<UpdateObjet />}></Route>
           <Route path={URL.myRoomObjet} element={<MyRoomObjet />}></Route>
           <Route path={URL.objetChatting} element={<ObjetChatting />}></Route>
+          <Route path={URL.users} element={<UserList />}></Route>
+          <Route path={URL.userDetail} element={<UserDetail />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>
