@@ -36,7 +36,7 @@ export function ChatMessage({
       </MyChat>
     ) : (
       <Chat>
-        <img src={sampleImg} alt='profile' />
+        <img src={sampleImg || profileImg} alt='profile' />
         <ChatContents>
           <UserName>{userName}</UserName>
           <ContentsAndDatetime>

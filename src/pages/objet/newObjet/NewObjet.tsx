@@ -5,7 +5,7 @@ import {
   GlobalSubTitle,
   GlobalTitle,
 } from '../../../global/globalStyles.tsx'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import SelectObjetType from './SelectObjetType'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
@@ -15,6 +15,10 @@ import InputObjetInfo from './InputObjetInfo.tsx'
 
 export default function NewObjet() {
   const [isSelected, setIsSelected] = useState(true)
+
+  useEffect(() => {
+    setIsSelected(true)
+  })
 
   return (
     <Layout>
