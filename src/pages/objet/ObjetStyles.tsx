@@ -27,6 +27,14 @@ const commonBoxStyles = css`
 
 // 컴포넌트 스타일
 
+export const ObjetCallContainer = styled.div`
+  width: 100%;
+  height: 724px;
+  padding: 0 16px;
+  box-sizing: border-box;
+  color: white;
+`
+
 export const UpperContainer = styled.div`
   ${flexRow}
   align-items: center;

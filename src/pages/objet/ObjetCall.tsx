@@ -1,12 +1,10 @@
 import Layout from '../../components/Layout'
-import { GloablContainer16 } from '../../global/globalStyles'
 import {
   MicButton,
   CallButton,
   Icon,
   MiddleContainer,
   BottomContainer,
-  CallProfile,
 } from './ObjetCallStyle'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
@@ -15,6 +13,7 @@ import unmute from '../../assets/images/unmute.png'
 import quitCall from '../../assets/images/quitCall.png'
 import { useState } from 'react'
 import {
+  ObjetCallContainer,
   TopContainer,
   LeftContainer,
   RightContainer,
@@ -25,13 +24,14 @@ import {
   Active,
   Name,
 } from './ObjetStyles'
+import VideoContainer from '../../components/call/VideoContainer'
 
 export default function ObjetCall() {
   const [muted, setMuted] = useState(false)
   const name = 'jamie'
   return (
     <Layout>
-      <GloablContainer16>
+      <ObjetCallContainer>
         <TopContainer>
           <LeftContainer>
             <CallTitle>굳나잇 지키 오브제</CallTitle>
@@ -65,15 +65,7 @@ export default function ObjetCall() {
           </RightContainer>
         </TopContainer>
         <MiddleContainer>
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
-          <UserProfile />
+          <VideoContainer />
         </MiddleContainer>
         <BottomContainer>
           <MicButton>
@@ -86,11 +78,7 @@ export default function ObjetCall() {
             <Icon src={quitCall} />
           </CallButton>
         </BottomContainer>
-      </GloablContainer16>
+      </ObjetCallContainer>
     </Layout>
   )
-}
-
-function UserProfile() {
-  return <CallProfile></CallProfile>
 }

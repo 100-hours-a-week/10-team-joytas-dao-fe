@@ -3,10 +3,10 @@ import styled from 'styled-components'
 export const MiddleContainer = styled.div`
   margin: 40px auto 0;
   border-radius: 10px;
-  height: fit-content;
-  max-height: 625px;
+  height: 475px;
   display: grid;
   grid-template-columns: repeat(3, 90px);
+  grid-template-rows: repeat(3, 90px);
   grid-gap: 27px;
 `
 
@@ -17,7 +17,6 @@ export const CallProfile = styled.div`
   height: 80px;
   border: 5px solid lightgray;
   background-color: gray;
-
   &:last-child {
     border: 5px solid #00ff0a;
   }
@@ -27,8 +26,7 @@ export const BottomContainer = styled.div`
   width: fit-content;
   display: flex;
   gap: 30px;
-
-  margin: 140px auto 0;
+  margin: 20px auto 0;
 `
 
 export const MicButton = styled.button`
