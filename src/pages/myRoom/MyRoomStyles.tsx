@@ -98,7 +98,7 @@ export const CreateBtn = styled.button`
   width: 110px;
   height: 50px;
   background-color: #575fff;
-  border-radius: 5px;
+  border-radius: 10px;
   color: white;
   font-size: 16px;
   font-weight: bold;
