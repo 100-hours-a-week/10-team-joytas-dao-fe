@@ -20,9 +20,11 @@ const pc_config = {
     },
   ],
 }
+
+// 로컬 환경 소켓 서버
 // const SOCKET_SERVER_URL = 'https://localhost:8083'
 
-// 배포 환경
+// 배포 환경 소켓 서버
 const SOCKET_SERVER_URL =
   'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
 
