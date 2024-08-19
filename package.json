@@ -18,10 +18,11 @@
     "gltfjsx": "^6.5.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-query": "^3.39.3",
     "react-router-dom": "^6.26.0",
+    "socket.io-client": "2.3.0",
     "styled-components": "^6.1.12",
     "three": "^0.167.1",
-    "socket.io-client": "2.3.0",
     "three-stdlib": "^2.32.2"
   },
   "devDependencies": {
