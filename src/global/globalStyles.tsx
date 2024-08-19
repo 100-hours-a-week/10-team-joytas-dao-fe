@@ -26,3 +26,16 @@ export const GlobalSubTitle = styled.div`
   font-size: 12px;
   font-weight: semi-bold;
 `
+
+export const GlobalBlankContainerText = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+
+  color: #6a6a6a;
+  font-size: 18px;
+  line-height: 30px;
+`

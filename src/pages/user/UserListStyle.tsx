@@ -30,19 +30,6 @@ export const UserListContainer = styled.div`
   padding-bottom: 10px;
 `
 
-export const UserListBlanckText = styled.div`
-  width: 100%;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-
-  color: #6a6a6a;
-  font-size: 18px;
-  line-height: 30px;
-`
-
 export const UserListItemContainer = styled.div`
   width: 100%;
   padding: 0 5px;
