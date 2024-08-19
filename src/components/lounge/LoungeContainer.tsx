@@ -69,7 +69,7 @@ export default function LoungeContainer({
           <Model
             key={lounge.lounge_id}
             type={lounge.type}
-            position={new Vector3(0, 0, 0)} // Position can also be customized
+            position={new Vector3(0, 0, 0)}
             label={lounge.name}
           />
         ))}
