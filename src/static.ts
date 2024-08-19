@@ -1,4 +1,4 @@
-const URL = {
+export const URL = {
   home: '/',
   lounge: '/lounge',
   terms: '/terms',
@@ -20,6 +20,14 @@ const URL = {
   objetChatting: '/objet/chatting',
   myRoomObjet: '/myRoom/objet',
   userDetail: '/users/user',
+  notification: '/notification',
 }
 
-export { URL }
+export const KAKAO_AUTH = 'https://api.joytas.kro.kr/oauth2/authorization/kakao'
+
+export const BACK_HOST = 'https://api.joytas.kro.kr'
+
+export const APIs = {
+  profile: `${BACK_HOST}/api/v1/users/me`,
+  reissueToken: `${BACK_HOST}/api/v1/auth/reissue`,
+}
