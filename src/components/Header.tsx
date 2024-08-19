@@ -21,7 +21,7 @@ export default function Header() {
           src={logo}
         />
         <HeaderLeft>
-          <Icon src={bell} />
+          <Icon src={bell} onClick={() => navigate(URL.notification)} />
           <Icon onClick={() => setMenuOpen(!menuOpen)} src={burger} />
         </HeaderLeft>
       </HeaderContainer>

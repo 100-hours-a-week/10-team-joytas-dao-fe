@@ -22,6 +22,7 @@ import UpdateObjet from './pages/objet/UpdateObjet'
 import MyRoomObjet from './pages/myRoom/MyRoomObjets'
 import ObjetChatting from './pages/objet/ObjetChatting'
 import UserDetail from './pages/user/UserDetail'
+import Notification from './pages/notification/Notification'
 
 function App() {
   return (
@@ -49,6 +50,7 @@ function App() {
           <Route path={URL.objetChatting} element={<ObjetChatting />}></Route>
           <Route path={URL.users} element={<UserList />}></Route>
           <Route path={URL.userDetail} element={<UserDetail />}></Route>
+          <Route path={URL.notification} element={<Notification />}></Route>
         </Routes>
       </Main>
     </BrowserRouter>
