@@ -38,6 +38,14 @@ export const IconWithBorder = styled(Icon)`
   border-radius: 50%;
 `
 
+export const StyledGloablContainer32 = styled.div`
+  width: 100%;
+  height: 490px;
+  padding: 0 32px;
+  box-sizing: border-box;
+  color: white;
+`
+
 export const MyRoomTitleInput = styled.input`
   border: none;
   width: 220px;
@@ -79,8 +87,15 @@ export const MyRoomThumbnail = styled.img`
   cursor: pointer;
 `
 
-export const CreateBtn = styled.button`
+export const BtnContainer = styled.div`
   width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+
+export const CreateBtn = styled.button`
+  width: 110px;
   height: 50px;
   background-color: #575fff;
   border-radius: 5px;
@@ -88,7 +103,7 @@ export const CreateBtn = styled.button`
   font-size: 16px;
   font-weight: bold;
   cursor: pointer;
-  margin-top: 50px;
+  margin-top: 40px;
 `
 
 export const ObjetWrapper = styled.div`
