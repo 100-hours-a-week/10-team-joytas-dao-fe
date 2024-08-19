@@ -46,31 +46,24 @@ export const StyledHr = styled.hr`
   width: 315px;
 `
 
-export const ProfileImg = styled.img`
+export const ProfileImg = styled.span`
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  background-color: white;
+  font-size: 25px;
 `
 
-export const NotificationContent = styled.div`
+export const NotiContents = styled.span`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 250px;
+  width: 240px;
   gap: 2px;
-`
-
-export const NotiTitle = styled.span`
   font-size: 11px;
-  font-weight: bold;
-  white-space: break-spaces;
-`
 
-export const NotiContents = styled.span`
-  font-size: 10px;
-  white-space: break-spaces;
+  word-wrap: break-word;
+  word-break: keep-all;
+  white-space: normal;
 `
 
 export const NotiDatetime = styled.span`
