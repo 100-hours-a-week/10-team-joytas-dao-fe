@@ -12,13 +12,13 @@ import ObjetPreview from '../../components/objet/ObjetPreview'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import type { Profile } from '../../types/ProfileType'
-import { APIs } from '../../static'
+import { APIs, URL } from '../../static'
 
 export default function Home() {
-  const [name, setName] = useState('') // 프로필 이름을 저장할 상태
+  const [name, setName] = useState('')
   const navigate = useNavigate()
 
-  const fetchProfile = async (): Promise<Profile> => {
+  const fetchProfile = async (): Promise<Profile | undefined> => {
     try {
       let response = await fetch(APIs.profile, {
         headers: {
@@ -27,7 +27,6 @@ export default function Home() {
       })
 
       if (response.status === 401) {
-        // 토큰 재발급 요청
         const reissueResponse = await fetch(APIs.reissueToken, {
           method: 'POST',
           credentials: 'include',
@@ -42,6 +41,7 @@ export default function Home() {
 
           // 새로운 토큰으로 프로필 재요청
           response = await fetch(APIs.profile, {
+            credentials: 'include',
             headers: {
               Authorization: `Bearer ${reissueData.data.access_token}`,
             },
@@ -59,7 +59,7 @@ export default function Home() {
       return responseData.data
     } catch (error) {
       console.error('Failed to fetch profile', error)
-      return { id: 0, name: '', profile: '' } // 오류 발생 시 기본값 반환
+      navigate(URL.home)
     }
   }
 
@@ -67,15 +67,14 @@ export default function Home() {
     const getProfile = async () => {
       const profile = await fetchProfile()
       if (profile) {
-        setName(profile.name) // 받아온 프로필 데이터의 이름을 상태에 저장
+        setName(profile.nickname)
       } else {
-        // 오류 처리 또는 다른 로직
-        navigate('/login') // 예를 들어, 로그인 페이지로 리디렉트
+        navigate(URL.home)
       }
     }
 
     getProfile()
-  }, []) // 빈 의존성 배열로 컴포넌트 마운트 시 한 번만 실행
+  }, [])
 
   return (
     <Layout>
