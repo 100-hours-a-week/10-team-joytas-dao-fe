@@ -55,6 +55,9 @@ export default function UpdateObjet() {
         '지키 맛점잠 지키 맛점잠 지키 맛점잠 지키 맛점잠 지키 맛점잠 지키 맛점잠',
       objetImage: sampleImg,
     })
+
+    // TODO: delete me
+    setIsSelected(true)
   }, [])
 
   const handleInputChange = (field: string, value: string) => {
