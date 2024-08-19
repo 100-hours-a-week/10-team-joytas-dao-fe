@@ -1,12 +1,14 @@
 import Layout from '../../components/Layout'
 import UserListItem from '../../components/user/UserListItem'
-import { GloablContainer16 } from '../../global/globalStyles'
+import {
+  GloablContainer16,
+  GlobalBlankContainerText,
+} from '../../global/globalStyles'
 import {
   FullContainerForToast,
   SearchTitle,
   SearchUserInput,
   Toast,
-  UserListBlanckText,
   UserListContainer,
 } from './UserListStyle'
 import { useState } from 'react'
@@ -51,10 +53,10 @@ export default function UserList() {
           <UserListContainer>
             {type === 'lounge' &&
               (userList.length === 0 ? (
-                <UserListBlanckText>
+                <BlankContainerText>
                   검색 결과가 <br />
                   없습니다.
-                </UserListBlanckText>
+                </BlankContainerText>
               ) : (
                 userList.map((user) => (
                   <UserListItem key={user.id} type={type} user={user} />
@@ -62,9 +64,9 @@ export default function UserList() {
               ))}
             {type === 'users' &&
               (searchUser.length === 0 ? (
-                <UserListBlanckText>
+                <GlobalBlankContainerText>
                   추억을 공유할 <br /> 유저를 찾아보세요!
-                </UserListBlanckText>
+                </GlobalBlankContainerText>
               ) : (
                 userList.map((user) => (
                   <UserListItem key={user.id} type={type} user={user} />

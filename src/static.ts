@@ -20,6 +20,7 @@ const URL = {
   objetChatting: '/objet/chatting',
   myRoomObjet: '/myRoom/objet',
   userDetail: '/users/user',
+  notification: '/notification',
 }
 
 export { URL }

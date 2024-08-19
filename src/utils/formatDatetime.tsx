@@ -17,3 +17,13 @@ export const formatDatetime = (datetime: string) => {
 
   return `${year}년 ${month}월 ${day}일\n${period} ${timeString}`
 }
+
+export const extractTime = (datetime: string) => {
+  const dateObj = new Date(datetime)
+  const hours = dateObj.getHours()
+
+  // 24시간제로 표시
+  const timeString = `${hours}시`
+
+  return timeString
+}
