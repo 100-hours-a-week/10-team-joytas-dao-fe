@@ -1,18 +1,19 @@
 import Layout from '../../components/Layout.js'
 import {
+  BtnContainer,
   CreateBtn,
   MyRoomList,
   MyRoomName,
   MyRoomPreviewWrapper,
   MyRoomThumbnail,
-  Title,
+  StyledGloablContainer32,
 } from './MyRoomStyles.tsx'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 
 import { useEffect, useState } from 'react'
 import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
-import { GloablContainer32 } from '../../global/globalStyles.tsx'
+import { GlobalSubTitle, GlobalTitle } from '../../global/globalStyles.tsx'
 
 export default function CreateMyRoom() {
   const [selectedModelId, setSelectedModelId] = useState(1)
@@ -25,8 +26,11 @@ export default function CreateMyRoom() {
   return (
     <Layout>
       <>
-        <GloablContainer32>
-          <Title>내가 선택한 마이룸은...</Title>
+        <StyledGloablContainer32>
+          <GlobalTitle>마이룸 디자인을 선택해주세요!</GlobalTitle>
+          <GlobalSubTitle>
+            마이룸 별명은 생성 이후 수정할 수 있습니다.
+          </GlobalSubTitle>
           <MyRoomPreviewWrapper>
             <Canvas camera={{ position: selectedModel?.camera }}>
               <OrbitControls
@@ -38,7 +42,7 @@ export default function CreateMyRoom() {
             </Canvas>
             <MyRoomName>{selectedModel?.name}</MyRoomName>
           </MyRoomPreviewWrapper>
-        </GloablContainer32>
+        </StyledGloablContainer32>
         <MyRoomList>
           {modelList.map((model) => (
             <MyRoomThumbnail
@@ -50,7 +54,9 @@ export default function CreateMyRoom() {
           ))}
         </MyRoomList>
 
-        <CreateBtn>생성하기</CreateBtn>
+        <BtnContainer>
+          <CreateBtn>생성하기</CreateBtn>
+        </BtnContainer>
       </>
     </Layout>
   )
