@@ -11,7 +11,7 @@ import myRoomThumbnail4 from '../assets/images/myRoom_thumnails/myRoomModel4.png
 import myRoomThumbnail5 from '../assets/images/myRoom_thumnails/myRoomModel5.png'
 
 export interface MyRoomModel {
-  id: 1 | 2 | 3 | 4 | 5
+  type: 'R0001' | 'R0002' | 'R0003' | 'R0004' | 'R0005'
   thumbnail: string
   name: string
   camera: [number, number, number]
@@ -22,7 +22,7 @@ export interface MyRoomModel {
 export const modelList: MyRoomModel[] = [
   // TODO: 카메라 각도 조정
   {
-    id: 1,
+    type: 'R0001',
     thumbnail: myRoomThumbnail1,
     name: '준투의 방',
     camera: [40, 20, 50],
@@ -30,7 +30,7 @@ export const modelList: MyRoomModel[] = [
     model: <MyRoomModel1 scale={[1.3, 1.3, 1.3]} />,
   },
   {
-    id: 2,
+    type: 'R0002',
     thumbnail: myRoomThumbnail2,
     name: '제이미의 방',
     camera: [50, 20, 50],
@@ -38,14 +38,14 @@ export const modelList: MyRoomModel[] = [
     model: <MyRoomModel2 scale={[0.04, 0.04, 0.04]} />,
   },
   {
-    id: 3,
+    type: 'R0003',
     thumbnail: myRoomThumbnail3,
     name: '에리카의 방',
     camera: [-20, -50, 40],
     model: <MyRoomModel3 scale={[0.65, 0.65, 0.65]} />,
   },
   {
-    id: 4,
+    type: 'R0004',
     thumbnail: myRoomThumbnail4,
     camera: [-50, 30, 0],
     name: '홍의 방',
@@ -53,7 +53,7 @@ export const modelList: MyRoomModel[] = [
     model: <MyRoomModel4 scale={[0.1, 0.1, 0.1]} />,
   },
   {
-    id: 5,
+    type: 'R0005',
     thumbnail: myRoomThumbnail5,
     camera: [-50, 20, 0],
     name: '지키의 방',
