@@ -26,7 +26,7 @@ import MenuImg from '../../assets/images/menu.png'
 import GoCommunityBtn from '../../components/objet/GoCommunityBtn'
 import { useNavigate } from 'react-router-dom'
 import { URL } from '../../static'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { ChatMessage } from '../../components/objet/Chat'
 import { DeleteModal, MenuModal } from '../../components/Modal'
 import { ModalBackdrop } from '../../components/ModalStyle'
@@ -50,6 +50,11 @@ export default function ObjetDetail() {
       navigate(URL.objetCall)
     }
   }
+
+  // TODO: delete me
+  useEffect(() => {
+    setPeople(3)
+  }, [])
 
   return (
     <Layout>

@@ -12,7 +12,6 @@ interface RandomModelsProps {
 
 interface ObjetsProps {
   type: string
-  objetsList: []
 }
 
 function RandomModels({ onModelClick }: RandomModelsProps) {
@@ -136,10 +135,12 @@ function LoungeObjets() {
   )
 }
 
-export default function App({ type, objetsList }: ObjetsProps) {
+export default function App({ type }: ObjetsProps) {
   return (
-    <Canvas>
-      <LoungeObjets />
-    </Canvas>
+    type === 'lounge' && (
+      <Canvas>
+        <LoungeObjets />
+      </Canvas>
+    )
   )
 }

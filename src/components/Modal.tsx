@@ -1,6 +1,4 @@
 import {
-  BtnContainer,
-  DeleteModalButton,
   DeleteModalContainer,
   DeleteModalContents,
   DeleteModalTitle,
