@@ -16,9 +16,9 @@ export default function LoungeContainer() {
     >
       <ambientLight intensity={1} />
       <group position={[0, 0, 0]}>
-        <Model4 position={new Vector3(-0.9, 1.3, 0)} />
+        <Model4 position={new Vector3(-0.9, 1.4, 0)} />
         <Model2 position={new Vector3(0.9, 1, 0)} />
-        <Model3 position={new Vector3(-0.85, -1.8, 0)} />
+        <Model3 position={new Vector3(-0.85, -1.73, 0)} />
         <Model1 position={new Vector3(0.9, -0.9, 0)} />
       </group>
     </Canvas>
