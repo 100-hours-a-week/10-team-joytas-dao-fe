@@ -50,7 +50,7 @@ export const modelList: MyRoomModel[] = [
     camera: [-50, 30, 0],
     name: '홍의 방',
     targetOrbit: [0, 0, 0],
-    model: <MyRoomModel4 scale={[0.09, 0.09, 0.09]} />,
+    model: <MyRoomModel4 scale={[0.1, 0.1, 0.1]} />,
   },
   {
     id: 5,
