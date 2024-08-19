@@ -92,13 +92,6 @@ export function MyRoomModel5(props: MyRoomModel5Props) {
         scale={[100, 91.583, 100]}
       />
       <mesh
-        geometry={nodes.Curtain_Holder_Curtain_Holder_0.geometry}
-        material={materials.Curtain_Holder}
-        position={[-138.282, 142.671, -35.813]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={100}
-      />
-      <mesh
         geometry={nodes.Coffee_Table_Coffee_Table_0.geometry}
         material={materials.Coffee_Table}
         position={[38.484, 20.127, 76.636]}
@@ -131,41 +124,6 @@ export function MyRoomModel5(props: MyRoomModel5Props) {
         position={[-87.401, 12.526, 117.543]}
         rotation={[-Math.PI / 2, 0, 2.356]}
         scale={8.267}
-      />
-      <mesh
-        geometry={nodes.Ceilling_Light001_Ceilling_Lamp_0.geometry}
-        material={materials.Ceilling_Lamp}
-        position={[83.616, 257.793, 79.076]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={100}
-      />
-      <mesh
-        geometry={nodes.Ceilling_Light002_Ceilling_Lamp_0.geometry}
-        material={materials.Ceilling_Lamp}
-        position={[13.039, 239.985, 84.884]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={100}
-      />
-      <mesh
-        geometry={nodes.Ceilling_Light003_Ceilling_Lamp_0.geometry}
-        material={materials.Ceilling_Lamp}
-        position={[-55.481, 224.37, 52.732]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={100}
-      />
-      <mesh
-        geometry={nodes.Ceilling_Light004_Ceilling_Lamp_0.geometry}
-        material={materials.Ceilling_Lamp}
-        position={[52.58, 239.211, 30.766]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={100}
-      />
-      <mesh
-        geometry={nodes.Ceilling_Light_Ceilling_Lamp_0.geometry}
-        material={materials.Ceilling_Lamp}
-        position={[-18.175, 228.615, 34.155]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={100}
       />
       <mesh
         geometry={nodes.Plant_Stand_Plant_Stand_0.geometry}
