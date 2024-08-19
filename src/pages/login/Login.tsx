@@ -13,10 +13,12 @@ import login1 from '../../assets/images/login1.png'
 import login2 from '../../assets/images/login2.png'
 import login from '../../assets/images/login.png'
 import { URL } from '../../static'
-import { useNavigate } from 'react-router-dom'
+import { KAKAO_AUTH } from '../../static'
 
 export default function Login() {
-  const navigate = useNavigate()
+  const handleClickLogIn = () => {
+    location.href = KAKAO_AUTH
+  }
 
   return (
     <Main>
@@ -27,7 +29,7 @@ export default function Login() {
       <LoginImagDiv2>
         <LoginImage1 src={login2} />
       </LoginImagDiv2>
-      <LoginButton onClick={() => navigate(URL.main)}>
+      <LoginButton onClick={handleClickLogIn}>
         <img src={login} />
       </LoginButton>
       <Bottom>
