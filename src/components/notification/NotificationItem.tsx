@@ -1,33 +1,34 @@
 import {
-  NotiContents,
   NotiDatetime,
-  NotificationContent,
   NotificationItemContainer,
-  NotiTitle,
+  NotiContents,
   ProfileImg,
 } from '../../pages/notification/NotificationStyles'
 import { extractTime } from '../../utils/formatDatetime'
 
 interface NotificationItemProps {
-  title: string
-  contents: string
+  text: string
+  type: string
   datetime: string
 }
 
 export default function NotificationItem({
-  title,
-  contents,
+  text,
+  type,
   datetime,
 }: NotificationItemProps) {
+  const typeEmoji: { [key: string]: string } = {
+    poke: '👉',
+    lounge: '📩',
+    voice: '🎙️',
+    objet: '🪐',
+  }
   const handleOnClick = () => {}
 
   return (
     <NotificationItemContainer onClick={handleOnClick}>
-      <ProfileImg src='' alt='profile' />
-      <NotificationContent>
-        <NotiTitle>{title}</NotiTitle>
-        <NotiContents>{contents}</NotiContents>
-      </NotificationContent>
+      <ProfileImg>{typeEmoji[type]}</ProfileImg>
+      <NotiContents>{text}</NotiContents>
       <NotiDatetime>{extractTime(datetime)}</NotiDatetime>
     </NotificationItemContainer>
   )
