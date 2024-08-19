@@ -30,4 +30,5 @@ export const BACK_HOST = 'https://api.joytas.kro.kr'
 export const APIs = {
   profile: `${BACK_HOST}/api/v1/users/me`,
   reissueToken: `${BACK_HOST}/api/v1/auth/reissue`,
+  loungeList: `${BACK_HOST}/api/v1/lounges`,
 }

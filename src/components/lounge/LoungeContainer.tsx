@@ -7,69 +7,84 @@ import { LoungeModel3 } from '../../assets/models/LoungeModel3'
 import { LoungeModel4 } from '../../assets/models/LoungeModel4'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { LoungeProps } from '../../pages/lounge/LoungeList'
+import { Deem } from '../../pages/lounge/LoungeStyles'
 
-export default function LoungeContainer() {
+interface ModelProps {
+  position: Vector3
+  label: string
+  type: string
+  scale?: [number, number, number]
+  onClick?: () => void
+}
+
+export default function LoungeContainer({
+  loungeList,
+}: {
+  loungeList: LoungeProps[]
+}) {
+  const navigate = useNavigate()
+
+  if (loungeList.length === 0) {
+    return (
+      <Deem>
+        라운지가 없습니다! <br /> 새 라운지를 만들어주세요!
+        <Canvas
+          style={{ width: '326px', height: '600px' }}
+          camera={{ position: [0, 0, 8], fov: 50 }}
+        >
+          <ambientLight intensity={1} />
+          <group position={[0, 0, 0]}>
+            <Model
+              type='L0004'
+              position={new Vector3(0, 0, 0)}
+              label='새 라운지 만들기'
+              scale={[2, 2, 2]}
+              onClick={() => navigate('/lounge/new')}
+            />
+          </group>
+          <Text position={[0, -3, 0]} fontSize={0.7} color='#FFFFFF'>
+            새 라운지 만들기
+          </Text>
+        </Canvas>
+      </Deem>
+    )
+  }
+
   return (
     <Canvas
       style={{ width: '326px', height: '600px' }}
-      camera={{ position: [0, 0, 8], fov: 50 }} // 카메라 위치와 시야각(fov) 설정
+      camera={{ position: [0, 0, 8], fov: 50 }}
     >
       <ambientLight intensity={1} />
       <group position={[0, 0, 0]}>
-        <Model4 position={new Vector3(-0.9, 1.4, 0)} />
-        <Model2 position={new Vector3(0.9, 1, 0)} />
-        <Model3 position={new Vector3(-0.85, -1.73, 0)} />
-        <Model1 position={new Vector3(0.9, -0.9, 0)} />
+        <Model
+          type='L0004'
+          position={new Vector3(-0.9, 1.4, 0)}
+          label='새 라운지 만들기'
+          scale={[0.6, 0.6, 0.6]}
+          onClick={() => navigate('/lounge/new')}
+        />
+        {loungeList.map((lounge) => (
+          <Model
+            key={lounge.lounge_id}
+            type={lounge.type}
+            position={new Vector3(0, 0, 0)} // Position can also be customized
+            label={lounge.name}
+          />
+        ))}
       </group>
     </Canvas>
   )
 }
 
-interface ModelProps {
-  position: Vector3
-}
-
-function Model1({ position }: ModelProps) {
-  const ref = useRef<Group>(null)
-
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.y += 0.01
-    }
-  })
-  return (
-    <group position={position}>
-      <group ref={ref}>
-        <LoungeModel1 scale={[0.4, 0.4, 0.4]} />
-      </group>
-      <Text position={[0, -0.6, 0]} fontSize={0.15} color='#FFFFFF'>
-        조이타스
-      </Text>
-    </group>
-  )
-}
-
-function Model2({ position }: ModelProps) {
-  const ref = useRef<Group>(null)
-
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
-    }
-  })
-  return (
-    <group position={position}>
-      <group ref={ref}>
-        <LoungeModel2 scale={[0.4, 0.4, 0.4]} />
-      </group>
-      <Text position={[0, -0.3, 0]} fontSize={0.15} color='#FFFFFF'>
-        HAEPI
-      </Text>
-    </group>
-  )
-}
-
-function Model3({ position }: ModelProps) {
+function Model({
+  position,
+  type,
+  label,
+  scale = [0.4, 0.4, 0.4],
+  onClick,
+}: ModelProps) {
   const ref = useRef<Group>(null)
 
   useFrame(() => {
@@ -78,42 +93,30 @@ function Model3({ position }: ModelProps) {
     }
   })
 
-  return (
-    <group position={position}>
-      <group ref={ref}>
-        <LoungeModel3 scale={[0.4, 0.4, 0.4]} />
-      </group>
-      <Text position={[0, 0.2, 0]} fontSize={0.15} color='#FFFFFF'>
-        신이에요
-      </Text>
-    </group>
-  )
-}
-
-function Model4({ position }: ModelProps) {
-  const navigate = useNavigate()
-  const ref = useRef<Group>(null)
-
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.y += 0.01
-    }
-  })
-
-  const handleClick = () => {
-    navigate('/lounge/new') // 클릭 시 네비게이션
+  let ModelComponent
+  switch (type) {
+    case 'L0001':
+      ModelComponent = LoungeModel1
+      break
+    case 'L0002':
+      ModelComponent = LoungeModel2
+      break
+    case 'L0003':
+      ModelComponent = LoungeModel3
+      break
+    case 'L0004':
+    default:
+      ModelComponent = LoungeModel4
+      break
   }
 
   return (
-    <group position={position} onClick={handleClick}>
-      <group ref={ref}>
-        <LoungeModel4 scale={[0.6, 0.6, 0.6]} />
+    <group position={position} onClick={onClick}>
+      <group ref={ref} scale={scale}>
+        <ModelComponent />
       </group>
-      <Text position={[0, -0.7, 0]} fontSize={0.15} color='#FFFFFF'>
-        새 라운지
-      </Text>
-      <Text position={[0, -0.9, 0]} fontSize={0.15} color='#FFFFFF'>
-        만들기
+      <Text position={[0, -0.6, 0]} fontSize={0.15} color='#FFFFFF'>
+        {label}
       </Text>
     </group>
   )
