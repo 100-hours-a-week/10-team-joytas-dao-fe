@@ -168,20 +168,7 @@ export function MyRoomModel4(props: MyRoomModel4Props) {
           material={materials.Table}
         />
       </group>
-      <group
-        position={[-38.039, 54.159, -219.983]}
-        rotation={[-Math.PI / 2, 0, 0]}
-        scale={51.093}
-      >
-        <mesh
-          geometry={nodes.Cube007_Black_0.geometry}
-          material={materials.Black}
-        />
-        <mesh
-          geometry={nodes.Cube007_Images_0.geometry}
-          material={materials.Images}
-        />
-      </group>
+
       <group
         position={[-153.456, 138.613, -31.457]}
         rotation={[-Math.PI / 2, 0, Math.PI / 2]}
@@ -314,20 +301,6 @@ export function MyRoomModel4(props: MyRoomModel4Props) {
         />
       </group>
       <group
-        position={[232.789, -58.793, -230.692]}
-        rotation={[-Math.PI / 2, 0, Math.PI / 2]}
-        scale={161.17}
-      >
-        <mesh
-          geometry={nodes.Book4_Book4_material_0.geometry}
-          material={materials.Book4_material}
-        />
-        <mesh
-          geometry={nodes.Book4_Book4_side_material_0.geometry}
-          material={materials.Book4_side_material}
-        />
-      </group>
-      <group
         position={[-143.294, 64.03, -218.151]}
         rotation={[-Math.PI / 2, 0, 0]}
         scale={416.126}
@@ -454,20 +427,6 @@ export function MyRoomModel4(props: MyRoomModel4Props) {
         <mesh
           geometry={nodes.Book3001_Book3_side_material001_0.geometry}
           material={materials['Book3_side_material.001']}
-        />
-      </group>
-      <group
-        position={[216.493, -73.29, 156.946]}
-        rotation={[-1.905, 0, 1.606]}
-        scale={194.179}
-      >
-        <mesh
-          geometry={nodes.Book4001_Book4_material001_0.geometry}
-          material={materials['Book4_material.001']}
-        />
-        <mesh
-          geometry={nodes.Book4001_Book4_side_material001_0.geometry}
-          material={materials['Book4_side_material.001']}
         />
       </group>
       <group
