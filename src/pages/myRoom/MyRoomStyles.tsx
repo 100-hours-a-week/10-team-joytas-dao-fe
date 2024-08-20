@@ -93,17 +93,16 @@ export const BtnContainer = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 40px;
 `
 
 export const CreateBtn = styled.button`
   width: 110px;
-  height: 50px;
-  background-color: #575fff;
+  height: 40px;
   border-radius: 10px;
   color: white;
-  font-size: 16px;
-  font-weight: bold;
-  margin-top: 40px;
+  background-color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
 `
 
 export const ObjetWrapper = styled.div`

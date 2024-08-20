@@ -10,18 +10,39 @@ import {
 } from './MyRoomStyles.tsx'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-
 import { useEffect, useState } from 'react'
 import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
 import { GlobalSubTitle, GlobalTitle } from '../../global/globalStyles.tsx'
+import { APIs } from '../../static.ts'
 
 export default function CreateMyRoom() {
-  const [selectedModelId, setSelectedModelId] = useState(1)
+  const [selectedModelType, setSelectedModelType] = useState('R0001')
   const [selectedModel, setSelectedModel] = useState<MyRoomModel>()
 
   useEffect(() => {
-    setSelectedModel(modelList.find((model) => model.id === selectedModelId))
-  }, [selectedModelId])
+    setSelectedModel(
+      modelList.find((model) => model.type === selectedModelType)
+    )
+  }, [selectedModelType])
+
+  const handleCreate = async () => {
+    try {
+      const response = await fetch(APIs.myRoom, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({ type: selectedModelType }),
+      })
+
+      const responseData = await response.json()
+      console.log('마이룸 생성 응답: ', responseData)
+    } catch (error) {
+      console.error('마이룸 생성 오류: ', error)
+    }
+  }
 
   return (
     <Layout>
@@ -46,16 +67,16 @@ export default function CreateMyRoom() {
         <MyRoomList>
           {modelList.map((model) => (
             <MyRoomThumbnail
-              key={model.id}
+              key={model.type}
               src={model.thumbnail}
               alt='thumbnail'
-              onClick={() => setSelectedModelId(model.id)}
+              onClick={() => setSelectedModelType(model.type)}
             />
           ))}
         </MyRoomList>
 
         <BtnContainer>
-          <CreateBtn>생성하기</CreateBtn>
+          <CreateBtn onClick={handleCreate}>확인</CreateBtn>
         </BtnContainer>
       </>
     </Layout>

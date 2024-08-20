@@ -49,7 +49,10 @@ function App() {
           <Route path={URL.myRoomObjet} element={<MyRoomObjet />}></Route>
           <Route path={URL.objetChatting} element={<ObjetChatting />}></Route>
           <Route path={URL.users} element={<UserList />}></Route>
-          <Route path={URL.userDetail} element={<UserDetail />}></Route>
+          <Route
+            path={`${URL.userDetail}/:id`}
+            element={<UserDetail />}
+          ></Route>
           <Route path={URL.notification} element={<Notification />}></Route>
         </Routes>
       </Main>

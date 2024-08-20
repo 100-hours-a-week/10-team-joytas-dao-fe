@@ -31,4 +31,5 @@ export const APIs = {
   profile: `${BACK_HOST}/api/v1/users/me`,
   reissueToken: `${BACK_HOST}/api/v1/auth/reissue`,
   loungeList: `${BACK_HOST}/api/v1/lounges`,
+  myRoom: `${BACK_HOST}/api/v1/rooms`,
 }
