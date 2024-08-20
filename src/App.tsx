@@ -37,7 +37,7 @@ function App() {
           <Route path={URL.delete} element={<UserDelete />}></Route>
           <Route path={URL.privacy} element={<Privacy />}></Route>
           <Route path={URL.newObjet} element={<NewObjet />}></Route>
-          <Route path={URL.myLounge} element={<Lounge />}></Route>
+          <Route path={`${URL.lounge}/:id`} element={<Lounge />}></Route>
           <Route path={URL.firstProfile} element={<FirstProfile />}></Route>
           <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
           <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
