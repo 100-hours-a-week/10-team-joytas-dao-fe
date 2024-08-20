@@ -9,7 +9,7 @@ import {
   NicknameTitle,
   ModifyConfirmButton,
   DeleteButton,
-} from './ProfileStyle'
+} from './ProfileStyles'
 import profile from '../../assets/images/profile.png'
 import Layout from '../../components/Layout'
 import { useNavigate } from 'react-router-dom'

@@ -10,7 +10,7 @@ import {
 import { Icon } from './MyRoomStyles'
 import { useState } from 'react'
 import MoreImg from '../../assets/images/more.png'
-import { ModalBackdrop } from '../../components/ModalStyle'
+import { ModalBackdrop } from '../../components/ModalStyles'
 import { LoungeListModal } from '../../components/Modal'
 
 export default function MyRoomObjet() {
