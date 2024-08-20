@@ -3,13 +3,16 @@ import styled from 'styled-components'
 export const LoungeList = styled.div`
   width: 100%;
   height: 605px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
 
 export const Container = styled.div`
   width: 100%;
   margin-top: 50px;
   box-sizing: border-box;
-  gap: 30px;
+  gap: 20px;
   display: flex;
   flex-direction: column;
 `
@@ -23,7 +26,7 @@ export const InputContainer = styled.div`
   display: flex;
   width: 320px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
 `
 
@@ -36,6 +39,22 @@ export const Input = styled.input`
   padding: 5px 10px;
   box-sizing: border-box;
   border: 1px solid gray;
+
+  &::placeholder {
+    font-size: 10px;
+  }
+
+  &:read-only {
+    font-size: 10px;
+    color: gray;
+  }
+`
+
+export const InputInnerContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: self-start;
+  justify-content: first baseline;
 `
 
 export const LoungeModel = styled.div`
@@ -126,4 +145,11 @@ export const Deem = styled.div`
   align-items: center;
   justify-content: center;
   background-color: rgba(0, 0, 0, 0.7);
+`
+
+export const RedText = styled.div`
+  height: 20px;
+  margin-top: 10px;
+  color: #d41313;
+  font-size: 10px;
 `
