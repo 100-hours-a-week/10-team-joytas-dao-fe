@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import backImage from '../../assets/images/back.png'
-import { HeaderDiv, BackImg } from './Styles'
+import { HeaderDiv, BackImg } from './PolicyStyles'
 
 export default function Header() {
   const navigate = useNavigate()

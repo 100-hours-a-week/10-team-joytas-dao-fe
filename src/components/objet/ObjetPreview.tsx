@@ -5,7 +5,7 @@ import {
   ObjetTitle,
   ObjetContent,
   ObjetList,
-} from './ObjetComponentStyle'
+} from './ObjetComponentStyles'
 
 export default function ObjetPreview() {
   return (

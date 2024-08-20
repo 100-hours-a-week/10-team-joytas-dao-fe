@@ -7,7 +7,7 @@ import {
   ProfileNickname,
   InviteButton,
   Icon,
-} from '../../pages/user/UserListStyle'
+} from '../../pages/user/UserListStyles'
 import PickImg from '../../assets/images/pick.png'
 import { useNavigate } from 'react-router-dom'
 import { URL } from '../../static'

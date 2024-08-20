@@ -11,7 +11,7 @@ import {
   NicknameTitle,
   StartButtonContainer,
   RocketImage,
-} from './ProfileStyle'
+} from './ProfileStyles'
 import profile from '../../assets/images/profile.png'
 import rocket from '../../assets/images/footer/rocket.png'
 import { GloablContainer32 } from '../../global/globalStyles'

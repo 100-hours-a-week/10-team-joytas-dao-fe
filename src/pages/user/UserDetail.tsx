@@ -5,7 +5,7 @@ import { GloablContainer16 } from '../../global/globalStyles'
 import { MyRoomPreviewWrapper } from '../myRoom/MyRoomStyles'
 import { OrbitControls } from '@react-three/drei'
 import { modelList } from '../../global/myRoomModels'
-import { MyRoomContainer } from './UserListStyle'
+import { MyRoomContainer } from './UserListStyles'
 
 export default function UserDetail() {
   const myRoomName = "웰컴투 지직키's 홈"
