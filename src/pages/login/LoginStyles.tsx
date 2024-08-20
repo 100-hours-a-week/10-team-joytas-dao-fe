@@ -33,7 +33,6 @@ export const Logo = styled.h2`
 `
 
 export const LoginButton = styled.button`
-  cursor: pointer;
   background-color: #fee500;
   border-radius: 5px;
   font-weight: 600;

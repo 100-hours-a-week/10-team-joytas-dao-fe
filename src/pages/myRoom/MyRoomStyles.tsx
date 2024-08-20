@@ -66,6 +66,7 @@ export const MyRoomPreviewWrapper = styled.div`
   margin-top: 40px;
   height: 310px;
   margin-bottom: 20px;
+  cursor: pointer;
 `
 
 export const MyRoomName = styled.span`
@@ -98,11 +99,10 @@ export const CreateBtn = styled.button`
   width: 110px;
   height: 50px;
   background-color: #575fff;
-  border-radius: 5px;
+  border-radius: 10px;
   color: white;
   font-size: 16px;
   font-weight: bold;
-  cursor: pointer;
   margin-top: 40px;
 `
 

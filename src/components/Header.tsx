@@ -1,4 +1,4 @@
-import { Icon, HeaderContainer, LogoImage, HeaderLeft } from './LayoutStyle'
+import { Icon, HeaderContainer, LogoImage, HeaderLeft } from './LayoutStyles'
 import logo from '../assets/images/logo.png'
 import bell from '../assets/images/bell.png'
 import burger from '../assets/images/burger.png'

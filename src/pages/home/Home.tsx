@@ -68,6 +68,10 @@ export default function Home() {
       const profile = await fetchProfile()
       if (profile) {
         setName(profile.nickname)
+
+        /* TODO: delete below code
+         * 상태관리 라이브러리로 변경 예정 */
+        localStorage.setItem('profile', JSON.stringify(profile))
       } else {
         navigate(URL.home)
       }

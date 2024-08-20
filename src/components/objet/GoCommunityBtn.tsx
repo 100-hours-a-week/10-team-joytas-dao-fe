@@ -1,4 +1,4 @@
-import { CommunityBtn } from './ObjetComponentStyle'
+import { CommunityBtn } from './ObjetComponentStyles'
 
 interface Props {
   text: string

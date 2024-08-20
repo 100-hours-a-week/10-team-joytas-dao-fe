@@ -64,7 +64,6 @@ export const MoveIcon = styled.img`
 `
 
 export const ChooseButton = styled.button`
-  cursor: pointer;
   width: 100px;
   height: 40px;
   border-radius: 10px;

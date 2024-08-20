@@ -29,7 +29,7 @@ import { URL } from '../../static'
 import { useEffect, useState } from 'react'
 import { ChatMessage } from '../../components/objet/Chat'
 import { DeleteModal, MenuModal } from '../../components/Modal'
-import { ModalBackdrop } from '../../components/ModalStyle'
+import { ModalBackdrop } from '../../components/ModalStyles'
 
 export default function ObjetDetail() {
   const name = 'jamie'

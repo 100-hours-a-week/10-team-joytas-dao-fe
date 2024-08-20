@@ -88,7 +88,6 @@ export const NicknameInput = styled.input`
 `
 
 export const StartButtonContainer = styled.button`
-  cursor: pointer;
   color: white;
   display: flex;
   align-items: center;

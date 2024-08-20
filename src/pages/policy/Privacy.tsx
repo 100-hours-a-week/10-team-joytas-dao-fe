@@ -8,7 +8,7 @@ import {
   Text,
   List,
   ListItem,
-} from './Styles'
+} from './PolicyStyles'
 
 export default function Privacy() {
   return (

@@ -34,7 +34,6 @@ export const MicButton = styled.button`
   width: 80px;
   height: 80px;
   background-color: #595959;
-  cursor: pointer;
   border-radius: 50%;
 `
 
@@ -42,7 +41,6 @@ export const CallButton = styled.button`
   border: 0;
   width: 80px;
   height: 80px;
-  cursor: pointer;
   border-radius: 50%;
   background-color: #fa3c3c;
 `

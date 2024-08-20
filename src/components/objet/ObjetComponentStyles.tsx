@@ -45,7 +45,6 @@ export const CommunityBtn = styled.button`
   background-color: #d9d9d9;
   border: 0;
   border-radius: 10px;
-  cursor: pointer;
 
   &:hover {
     transform: scale(1.1);

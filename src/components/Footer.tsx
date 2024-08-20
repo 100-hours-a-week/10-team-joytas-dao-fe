@@ -1,4 +1,4 @@
-import { FooterDiv, IconDiv, IconImg, IconText } from './LayoutStyle'
+import { FooterDiv, IconDiv, IconImg, IconText } from './LayoutStyles'
 import home from '../assets/images/footer/home.png'
 import rocket from '../assets/images/footer/rocket.png'
 import users from '../assets/images/footer/users.png'

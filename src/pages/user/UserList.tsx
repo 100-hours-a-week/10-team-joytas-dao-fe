@@ -10,7 +10,7 @@ import {
   SearchUserInput,
   Toast,
   UserListContainer,
-} from './UserListStyle'
+} from './UserListStyles'
 import { useState } from 'react'
 
 export default function UserList() {
@@ -53,10 +53,10 @@ export default function UserList() {
           <UserListContainer>
             {type === 'lounge' &&
               (userList.length === 0 ? (
-                <BlankContainerText>
+                <GlobalBlankContainerText>
                   검색 결과가 <br />
                   없습니다.
-                </BlankContainerText>
+                </GlobalBlankContainerText>
               ) : (
                 userList.map((user) => (
                   <UserListItem key={user.id} type={type} user={user} />

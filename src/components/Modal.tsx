@@ -8,7 +8,7 @@ import {
   MenuModalContainer,
   ModalButton,
   ModalButtonContainer,
-} from './ModalStyle'
+} from './ModalStyles'
 
 interface MenuProps {
   onClickUpdate: () => void
