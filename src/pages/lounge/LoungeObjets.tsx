@@ -93,7 +93,7 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
   )
 }
 
-function LoungeObjets({ objets }: { objets?: Objet[] }) {
+function LoungeCanvas({ objets }: { objets?: Objet[] }) {
   const { camera, gl, scene } = useThree()
   const controlsRef = useRef<any>(null)
   const refGroup = useRef<THREE.Group>(null)
@@ -148,7 +148,7 @@ function LoungeObjets({ objets }: { objets?: Objet[] }) {
   )
 }
 
-export default function App({ type, objets }: ObjetsProps) {
+export default function LoungeObjets({ type, objets }: ObjetsProps) {
   const navigate = useNavigate()
 
   const handleClickGoObjet = () => {
@@ -172,7 +172,7 @@ export default function App({ type, objets }: ObjetsProps) {
   return (
     type === 'lounge' && (
       <Canvas>
-        <LoungeObjets objets={objets} />
+        <LoungeCanvas objets={objets} />
       </Canvas>
     )
   )
