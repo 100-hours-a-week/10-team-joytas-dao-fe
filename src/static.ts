@@ -32,4 +32,5 @@ export const APIs = {
   reissueToken: `${BACK_HOST}/api/v1/auth/reissue`,
   loungeList: `${BACK_HOST}/api/v1/lounges`,
   generateMyRoom: `${BACK_HOST}/api/v1/rooms`,
+  getMyRoom: `${BACK_HOST}/api/v1/rooms`,
 }
