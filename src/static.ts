@@ -32,3 +32,7 @@ export const APIs = {
   reissueToken: `${BACK_HOST}/api/v1/auth/reissue`,
   loungeList: `${BACK_HOST}/api/v1/lounges`,
 }
+
+export enum API_MESSAGE {
+  LOUNGE_CREATED_SUCCESS = 'LOUNGE_CREATED_SUCCESS',
+}

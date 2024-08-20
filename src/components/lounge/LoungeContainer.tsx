@@ -7,8 +7,10 @@ import { LoungeModel3 } from '../../assets/models/LoungeModel3'
 import { LoungeModel4 } from '../../assets/models/LoungeModel4'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { LoungeProps } from '../../pages/lounge/LoungeList'
 import { Deem } from '../../pages/lounge/LoungeStyles'
+import { useEffect, useState } from 'react'
+import { APIs } from '../../static'
+import LoadingLottie from '../lotties/LoadingLottie'
 
 interface ModelProps {
   position: Vector3
@@ -18,12 +20,54 @@ interface ModelProps {
   onClick?: () => void
 }
 
-export default function LoungeContainer({
-  loungeList,
-}: {
-  loungeList: LoungeProps[]
-}) {
+interface LoungeProps {
+  lounge_id: number
+  name: string
+  type: string
+}
+
+export default function LoungeContainer() {
   const navigate = useNavigate()
+  const [isLoading, setIsLoading] = useState(false)
+  const [loungeList, setLoungeList] = useState<LoungeProps[]>([])
+
+  const getLoungeList = async () => {
+    try {
+      setIsLoading(true)
+      const response = await fetch(APIs.loungeList, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+      if (response.status === 200) {
+        const responseData = await response.json()
+        return responseData.data
+      } else {
+        throw new Error('Failed to fetch lounge list')
+      }
+    } catch (error) {
+      console.error('Failed to fetch lounge list', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    const fetchAndSetLoungeList = async () => {
+      const loungeList = await getLoungeList()
+      if (loungeList) {
+        setLoungeList(loungeList)
+      }
+    }
+
+    fetchAndSetLoungeList()
+  }, [])
+
+  if (isLoading) {
+    return <LoadingLottie />
+  }
 
   if (loungeList.length === 0) {
     return (
@@ -58,13 +102,15 @@ export default function LoungeContainer({
     >
       <ambientLight intensity={1} />
       <group position={[0, 0, 0]}>
-        <Model
-          type='L0004'
-          position={new Vector3(-0.9, 1.4, 0)}
-          label='새 라운지 만들기'
-          scale={[0.6, 0.6, 0.6]}
-          onClick={() => navigate('/lounge/new')}
-        />
+        {loungeList.length >= 3 ? null : (
+          <Model
+            type='L0004'
+            position={new Vector3(-0.9, 1.4, 0)}
+            label='새 라운지 만들기'
+            scale={[0.6, 0.6, 0.6]}
+            onClick={() => navigate('/lounge/new')}
+          />
+        )}
         {loungeList.map((lounge) => (
           <Model
             key={lounge.lounge_id}
