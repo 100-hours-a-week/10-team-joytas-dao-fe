@@ -2,32 +2,76 @@ import { Canvas } from '@react-three/fiber'
 import Layout from '../../components/Layout'
 import UserListItem from '../../components/user/UserListItem'
 import { GloablContainer16 } from '../../global/globalStyles'
-import { MyRoomPreviewWrapper } from '../myRoom/MyRoomStyles'
+import { MyRoomName, MyRoomPreviewWrapper } from '../myRoom/MyRoomStyles'
 import { OrbitControls } from '@react-three/drei'
-import { modelList } from '../../global/myRoomModels'
+import { modelList, MyRoomModel } from '../../global/myRoomModels'
 import { MyRoomContainer } from './UserListStyles'
+import { useEffect, useState } from 'react'
+import { APIs } from '../../static'
+import { useParams } from 'react-router-dom'
+import LoadingLottie from '../../components/lotties/LoadingLottie'
 
 export default function UserDetail() {
-  const myRoomName = "웰컴투 지직키's 홈"
-  const userInfo = { id: 1, userName: '지직지키', profileImg: '' }
-  const myRoomModel = modelList[0]
+  const { id } = useParams<{ id: string }>()
+
+  const profile = JSON.parse(localStorage.getItem('profile') || '')
+
+  const loggedInUserNickname = profile ? profile.nickname : ''
+
+  const [myRoomName, setMyRoomName] = useState('')
+  const [myRoomModel, setMyRoomModel] = useState<MyRoomModel>(modelList[0])
+  const [isLoading, setIsLoading] = useState(true)
+
+  useEffect(() => {
+    fetchMyRoomInfo()
+  }, [])
+
+  const fetchMyRoomInfo = async () => {
+    try {
+      const response = await fetch(`${APIs.myRoom}?user_id=${Number(id)}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      const responseData = await response.json()
+      console.log('마이룸 정보 조회 응답: ', responseData)
+
+      setMyRoomName(
+        responseData.data.my_room_name
+          ? responseData.data.my_room_name
+          : loggedInUserNickname + '의 마이룸'
+      )
+      setMyRoomModel(modelList[responseData.data.type.split('R000')[1]])
+    } catch (error) {
+      console.error('마이룸 정보 조회 오류: ', error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
     <Layout>
       <GloablContainer16>
         <div style={{ height: '80px' }} />
-        <UserListItem type='userDetail' user={userInfo} />
+        <UserListItem type='userDetail' user={profile ? profile : null} />
         <MyRoomContainer>
-          <span>{myRoomName}</span>
           <MyRoomPreviewWrapper>
-            <Canvas camera={{ position: myRoomModel.camera }}>
-              <OrbitControls
-                target={myRoomModel.targetOrbit}
-                enableZoom={false}
-              />
-              <ambientLight intensity={1} />
-              <group rotation-y={-Math.PI / 2}>{myRoomModel.model}</group>
-            </Canvas>
+            {isLoading ? (
+              <LoadingLottie />
+            ) : (
+              <>
+                <Canvas camera={{ position: myRoomModel.camera }}>
+                  <OrbitControls
+                    target={myRoomModel.targetOrbit}
+                    enableZoom={false}
+                  />
+                  <ambientLight intensity={1} />
+                  <group rotation-y={-Math.PI / 2}>{myRoomModel.model}</group>
+                </Canvas>
+                <MyRoomName>{myRoomName}</MyRoomName>
+              </>
+            )}
           </MyRoomPreviewWrapper>
         </MyRoomContainer>
       </GloablContainer16>
