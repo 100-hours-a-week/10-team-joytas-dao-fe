@@ -9,7 +9,7 @@ import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Deem } from '../../pages/lounge/LoungeStyles'
 import { useEffect, useState } from 'react'
-import { APIs } from '../../static'
+import { APIs, URL } from '../../static'
 import LoadingLottie from '../lotties/LoadingLottie'
 
 interface ModelProps {
@@ -84,7 +84,7 @@ export default function LoungeContainer() {
               position={new Vector3(0, 0, 0)}
               label='새 라운지 만들기'
               scale={[2, 2, 2]}
-              onClick={() => navigate('/lounge/new')}
+              onClick={() => navigate(URL.newLounge)}
             />
           </group>
           <Text position={[0, -3, 0]} fontSize={0.7} color='#FFFFFF'>
@@ -109,7 +109,7 @@ export default function LoungeContainer() {
             position={new Vector3(-0.9, 1.4, 0)}
             label='새 라운지 만들기'
             scale={[0.6, 0.6, 0.6]}
-            onClick={() => navigate('/lounge/new')}
+            onClick={() => navigate(URL.newLounge)}
           />
         )}
         {loungeList.map((lounge) => (
