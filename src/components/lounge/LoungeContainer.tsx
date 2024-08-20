@@ -102,7 +102,7 @@ export default function LoungeContainer() {
     >
       <ambientLight intensity={1} />
       <group position={[0, 0, 0]}>
-        {loungeList.length >= 3 ? null : (
+        {loungeList.length >= 4 ? null : (
           <Model
             type='L0004'
             position={new Vector3(-0.9, 1.4, 0)}
