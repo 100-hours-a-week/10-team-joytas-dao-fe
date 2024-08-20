@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Container, VideoContainer, UserLabel } from './VideoStyle'
+import { Container, VideoContainer, UserLabel } from './VideoStyles'
 
 interface Props {
   email: string
