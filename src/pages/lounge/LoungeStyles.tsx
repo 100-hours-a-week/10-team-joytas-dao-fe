@@ -129,6 +129,8 @@ export const LoungeTitle = styled.div`
 export const Objets = styled.div`
   margin-top: 30px;
   width: 100%;
+  display: flex;
+  align-items: center;
   height: 575px;
 `
 
@@ -151,4 +153,40 @@ export const RedTextLong = styled.div`
   margin-top: 10px;
   color: #d41313;
   font-size: 10px;
+`
+
+export const NoDataContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 20px;
+  height: fit-content;
+`
+
+export const InnerText = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+  flex-direction: column;
+`
+
+export const GoObjetButton = styled.button`
+  width: 150px;
+  margin-top: 30px;
+  height: 40px;
+  padding: 5px 8px;
+  background-color: black;
+  opacity: 0.5;
+  color: white;
+  border-radius: 10px;
+  border: 1px dotted white;
+  font-size: 12px;
+
+  &:hover {
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.2);
+  }
 `

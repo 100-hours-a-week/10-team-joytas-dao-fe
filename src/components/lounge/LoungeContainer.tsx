@@ -74,7 +74,7 @@ export default function LoungeContainer() {
       <Deem>
         라운지가 없습니다! <br /> 새 라운지를 만들어주세요!
         <Canvas
-          style={{ width: '326px', height: '600px' }}
+          style={{ width: '324px', height: '600px' }}
           camera={{ position: [0, 0, 8], fov: 50 }}
         >
           <ambientLight intensity={1} />
@@ -98,7 +98,7 @@ export default function LoungeContainer() {
   return (
     // TODO: 라운지 모델 위치 조정 필요
     <Canvas
-      style={{ width: '326px', height: '600px' }}
+      style={{ width: '324px', height: '600px' }}
       camera={{ position: [0, 0, 8], fov: 50 }}
     >
       <ambientLight intensity={1} />
