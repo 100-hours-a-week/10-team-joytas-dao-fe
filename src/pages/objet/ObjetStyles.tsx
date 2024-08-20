@@ -61,7 +61,6 @@ export const MoveIcon = styled.img`
 `
 
 export const ChooseButton = styled.button`
-  cursor: pointer;
   width: 100px;
   height: 40px;
   border-radius: 10px;
@@ -158,7 +157,6 @@ export const RedText = styled.span`
 `
 
 export const UploadButton = styled.button`
-  cursor: pointer;
   width: 100%;
   height: 40px;
   border-radius: 10px;

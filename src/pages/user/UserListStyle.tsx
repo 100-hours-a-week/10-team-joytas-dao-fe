@@ -74,7 +74,6 @@ export const ProfileNickname = styled.div`
 `
 
 export const InviteButton = styled.button`
-  cursor: pointer;
   background-color: transparent;
   color: white;
   border: 1px solid #746b6b;
@@ -84,7 +83,6 @@ export const InviteButton = styled.button`
   border-radius: 15px;
 
   opacity: 70%;
-  cursor: pointer;
 
   &:hover {
     opacity: 100%;
