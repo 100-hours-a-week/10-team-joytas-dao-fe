@@ -89,7 +89,6 @@ export const ChooseButton = styled.button`
   border-radius: 10px;
   background-color: rgba(255, 255, 255, 0.3);
   color: white;
-  border: 0;
 `
 export const ModelIndexText = styled.div`
   text-align: center;
