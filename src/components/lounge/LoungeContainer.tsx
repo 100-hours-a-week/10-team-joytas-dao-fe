@@ -96,6 +96,7 @@ export default function LoungeContainer() {
   }
 
   return (
+    // TODO: 라운지 모델 위치 조정 필요
     <Canvas
       style={{ width: '326px', height: '600px' }}
       camera={{ position: [0, 0, 8], fov: 50 }}
