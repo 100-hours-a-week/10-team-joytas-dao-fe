@@ -7,16 +7,21 @@ import {
   Banner,
   MyObjetContainer,
   MyObjetTitle,
+  LottieContainer,
 } from './HomeStyles'
 import ObjetPreview from '../../components/objet/ObjetPreview'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import type { Profile } from '../../types/ProfileType'
 import { APIs, URL } from '../../static'
+import LoadingLottie from '../../components/lotties/LoadingLottie'
+import NoPrevObjet from '../../components/objet/NoPrevObjet'
 
 export default function Home() {
   const [name, setName] = useState('')
   const navigate = useNavigate()
+  const [objets, setObjets] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
 
   const fetchProfile = async (): Promise<Profile | undefined> => {
     try {
@@ -64,6 +69,32 @@ export default function Home() {
   }
 
   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setIsLoading(true)
+        const response = await fetch(APIs.objetPreview, {
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        })
+
+        if (response.status === 200) {
+          const responseData = await response.json()
+          setObjets(responseData.data?.objets)
+        }
+      } catch (error) {
+        console.error('Failed to fetch objet preview', error)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
     const getProfile = async () => {
       const profile = await fetchProfile()
       if (profile) {
@@ -89,8 +120,16 @@ export default function Home() {
         </Greetings>
         <Banner>광고</Banner>
         <MyObjetContainer>
-          <MyObjetTitle>👀 나에 대한 오브제가 만들어졌어요!</MyObjetTitle>
-          <ObjetPreview />
+          <MyObjetTitle>👀 최근 오브제를 확인해보세요!</MyObjetTitle>
+          {isLoading ? (
+            <LottieContainer>
+              <LoadingLottie />
+            </LottieContainer>
+          ) : objets?.length === 0 || !objets ? (
+            <NoPrevObjet />
+          ) : (
+            <ObjetPreview objets={objets} />
+          )}
         </MyObjetContainer>
       </GloablContainer16>
     </Layout>

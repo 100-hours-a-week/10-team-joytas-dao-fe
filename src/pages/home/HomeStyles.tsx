@@ -18,16 +18,17 @@ export const Nickname = styled.div`
 
 export const Banner = styled.div`
   background-color: grey;
-  margin-top: 10px;
+  margin-top: 20px;
   width: 100%;
   display: flex;
+  margin-top: 20px;
   align-items: center;
   justify-content: center;
   height: 165px;
 `
 
 export const MyObjetContainer = styled.div`
-  margin-top: 30px;
+  margin-top: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -36,4 +37,8 @@ export const MyObjetContainer = styled.div`
 export const MyObjetTitle = styled.div`
   font-size: 14px;
   font-weight: bold;
+`
+
+export const LottieContainer = styled.div`
+  margin-top: 70px;
 `
