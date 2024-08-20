@@ -1,26 +1,26 @@
 import Lottie from 'react-lottie'
 import styled from 'styled-components'
-import loading from '../../assets/lotties/loading.json'
+import noData from '../../assets/lotties/noData.json'
 
 const defaultOptions = {
   loop: true,
   autoplay: true,
-  animationData: loading, // loading.json에서 가져온 데이터
+  animationData: noData,
   rendererSettings: {
     preserveAspectRatio: 'xMidYMid slice',
   },
 }
 
 export const LottieContainer = styled.div`
-  width: 200px;
-  height: 200px;
   margin: 0 auto;
+  /* 여기서 margin-left를 적용합니다 */
+  margin-left: 25px;
 `
 
-export default function LoadingLottie() {
+export default function NoDataLottie() {
   return (
     <LottieContainer>
-      <Lottie options={defaultOptions} height={200} width={200} />
+      <Lottie options={defaultOptions} />
     </LottieContainer>
   )
 }
