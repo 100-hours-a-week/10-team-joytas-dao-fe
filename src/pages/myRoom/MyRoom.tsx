@@ -27,7 +27,6 @@ import LoadingLottie from '../../components/lotties/LoadingLottie.tsx'
 
 export default function MyRoom() {
   const [myRoomId, setMyRoomId] = useState()
-  const [myRoomType, setMyRoomType] = useState()
   const [myRoomName, setMyRoomName] = useState('')
   const [myRoomModel, setMyRoomModel] = useState<MyRoomModel>(modelList[0])
 
@@ -45,7 +44,7 @@ export default function MyRoom() {
 
   const fetchMyRoomInfo = async () => {
     try {
-      const response = await fetch(`${APIs.getMyRoom}?user_id=${userId}`, {
+      const response = await fetch(`${APIs.myRoom}?user_id=${userId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -56,11 +55,10 @@ export default function MyRoom() {
 
       if (!responseData.data.type) {
         alert('마이룸이 없습니다. 마이룸을 생성해주세요!')
-        navigate('/myRoom/generate')
+        navigate(URL.createMyRoom)
       }
 
       setMyRoomId(responseData.data.my_room_id)
-      setMyRoomType(responseData.data.type)
       setMyRoomName(
         responseData.data.my_room_name
           ? responseData.data.my_room_name
@@ -78,8 +76,25 @@ export default function MyRoom() {
     setIsEditing(!isEditing)
   }
 
-  const handleSubmit = () => {
-    setIsEditing(false)
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch(`${APIs.myRoom}/${myRoomId}`, {
+        method: 'PATCH',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({ room_name: myRoomName }),
+      })
+
+      const responseData = await response.json()
+      console.log('마이룸 이름 수정 응답: ', responseData)
+    } catch (error) {
+      console.error('마이룸 이름 수정 오류: ', error)
+    } finally {
+      setIsEditing(false)
+    }
   }
 
   const handleNavigate = () => {
