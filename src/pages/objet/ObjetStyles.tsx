@@ -152,8 +152,8 @@ export const ObjetImgPreview = styled.img`
 `
 
 export const RedText = styled.span`
-  font-size: 11px;
-  color: red;
+  font-size: 10px;
+  color: #d41313;
 `
 
 export const UploadButton = styled.button`
