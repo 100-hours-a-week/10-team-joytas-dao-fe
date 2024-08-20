@@ -27,7 +27,7 @@ export default function CreateMyRoom() {
 
   const handleCreate = async () => {
     try {
-      const response = await fetch(APIs.generateMyRoom, {
+      const response = await fetch(APIs.myRoom, {
         method: 'POST',
         credentials: 'include',
         headers: {
