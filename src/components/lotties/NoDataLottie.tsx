@@ -13,7 +13,6 @@ const defaultOptions = {
 
 export const LottieContainer = styled.div`
   margin: 0 auto;
-  /* 여기서 margin-left를 적용합니다 */
   margin-left: 25px;
 `
 
