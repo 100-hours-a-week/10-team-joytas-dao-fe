@@ -5,7 +5,7 @@ import {
   Icon,
   MiddleContainer,
   BottomContainer,
-} from './ObjetCallStyle'
+} from './ObjetCallStyles'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
 import mute from '../../assets/images/mute.png'

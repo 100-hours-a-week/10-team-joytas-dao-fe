@@ -9,7 +9,7 @@ import {
   TextArea,
   DetailReason,
   Button,
-} from './UserDeleteStyle'
+} from './UserDeleteStyles'
 import { useState } from 'react'
 
 export default function UserDelete() {
