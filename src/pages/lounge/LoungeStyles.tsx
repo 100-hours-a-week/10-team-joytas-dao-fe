@@ -17,8 +17,9 @@ export const Container = styled.div`
   flex-direction: column;
 `
 export const InputTitle = styled.div`
-  font-size: 12px;
+  font-size: 13px;
   font-weight: semi-bold;
+  display: flex;
   color: white;
 `
 
@@ -147,7 +148,7 @@ export const Deem = styled.div`
   background-color: rgba(0, 0, 0, 0.7);
 `
 
-export const RedText = styled.div`
+export const RedTextLong = styled.div`
   height: 20px;
   margin-top: 10px;
   color: #d41313;

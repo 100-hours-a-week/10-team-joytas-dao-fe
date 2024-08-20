@@ -19,19 +19,21 @@ import {
   ChooseButton,
   InputInnerContainer,
   ModelIndexText,
-  RedText,
+  RedTextLong,
 } from './LoungeStyles'
 import {
   GloablContainer16,
   GlobalSubTitle,
   GlobalTitle,
 } from '../../global/globalStyles'
-import { API_MESSAGE, APIs, URL } from '../../static'
+import { RedText } from '../objet/ObjetStyles'
+import { APIs, URL } from '../../static'
 
 export default function NewLounge() {
   const [loungeName, setLoungeName] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
+  const [isClick, setIsClick] = useState(false)
   const models = [Model1, Model2, Model3]
   const navigate = useNavigate()
 
@@ -54,6 +56,7 @@ export default function NewLounge() {
   }
 
   const handleClickSelect = async () => {
+    setIsClick(true)
     const type =
       currentModelIndex === 0
         ? 'L0001'
@@ -81,25 +84,34 @@ export default function NewLounge() {
         }),
       })
 
-      const responseData = await response.json()
-      if (responseData.message === API_MESSAGE.LOUNGE_CREATED_SUCCESS) {
+      if (response.status === 201) {
         alert('라운지 생성 성공!')
+        const responseData = await response.json()
         const loungeId = responseData.data.lounge_id
-        console.log(loungeId)
         navigate(`${URL.lounge}/${loungeId}`, { replace: true })
       }
     } catch (error) {
       console.log('Error: ', error)
+    } finally {
+      setIsClick(false)
     }
   }
 
   const checkLoungeNameValidation = (name: string): boolean => {
-    const regex = /^(?=.*[a-zA-Z가-힣0-9])([a-zA-Z가-힣0-9]|\s(?!\s))*$/
+    const specialCharPattern = /[^\w\s\u3131-\u318E\uAC00-\uD7A3]/
+    const consecutiveSpacesPattern = /\s{2,}/
+
+    const hasSpecialChar = specialCharPattern.test(name)
+    const hasConsecutiveSpaces = consecutiveSpacesPattern.test(name)
+
     if (!name) {
       setErrorMessage('라운지 이름을 2~10자로 입력하세요.')
       return false
-    } else if (!regex.test(name)) {
-      setErrorMessage('특수문자 및 연속된 공백은 사용할 수 없습니다.')
+    } else if (hasSpecialChar) {
+      setErrorMessage('특수문자는 사용할 수 없습니다.')
+      return false
+    } else if (hasConsecutiveSpaces) {
+      setErrorMessage('연속된 공백은 사용할 수 없습니다.')
       return false
     } else {
       setErrorMessage('')
@@ -116,7 +128,10 @@ export default function NewLounge() {
         <GlobalSubTitle>라운지 정보를 입력해주세요!</GlobalSubTitle>
         <Container>
           <InputContainer>
-            <InputTitle>라운지 이름</InputTitle>
+            <InputTitle>
+              라운지 이름
+              <RedText>*</RedText>
+            </InputTitle>
             <InputInnerContainer>
               <Input
                 minLength={2}
@@ -125,7 +140,7 @@ export default function NewLounge() {
                 value={loungeName}
                 onChange={(event) => handleChangeName(event)}
               />
-              <RedText>{errorMessage}</RedText>
+              <RedTextLong>{errorMessage}</RedTextLong>
             </InputInnerContainer>
           </InputContainer>
           <InputContainer>
@@ -146,8 +161,11 @@ export default function NewLounge() {
           </ModelIndexText>
           <ChooseContainer>
             <MoveIcon src={left} onClick={handleLeftClick} />
-            <ChooseButton onClick={() => handleClickSelect()}>
-              선택
+            <ChooseButton
+              disabled={isClick}
+              onClick={() => handleClickSelect()}
+            >
+              확인
             </ChooseButton>
             <MoveIcon src={right} onClick={handleRightClick} />
           </ChooseContainer>
