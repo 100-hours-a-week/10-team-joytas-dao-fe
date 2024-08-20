@@ -8,7 +8,7 @@ import {
   ProfileContainer,
   CategoryList,
   Category,
-} from './MenuStyle'
+} from './MenuStyles'
 import close from '../assets/images/close.png'
 import profile from '../assets/images/profile.png'
 import { URL } from '../static'
