@@ -133,7 +133,6 @@ export const Objets = styled.div`
 `
 
 export const Deem = styled.div`
-  margin-top: 50%;
   cursor: pointer;
   width: 100%;
   text-align: center;
