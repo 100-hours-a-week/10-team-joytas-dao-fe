@@ -120,7 +120,7 @@ export default function Home() {
         </Greetings>
         <Banner>광고</Banner>
         <MyObjetContainer>
-          <MyObjetTitle>👀 최근 오브제를 확인해보세요!</MyObjetTitle>{' '}
+          <MyObjetTitle>👀 최근 오브제를 확인해보세요!</MyObjetTitle>
           {isLoading ? (
             <LottieContainer>
               <LoadingLottie />
