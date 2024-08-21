@@ -22,7 +22,7 @@ export const InnerText = styled.div`
 
 export const GoLoungeButton = styled.div`
   position: relative;
-  z-index: 9999;
+  z-index: 999;
   bottom: -180px;
   left: -45px;
   margin-top: 20px;
