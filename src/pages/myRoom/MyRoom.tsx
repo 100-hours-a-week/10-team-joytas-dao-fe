@@ -34,9 +34,8 @@ export default function MyRoom() {
   const [isEditing, setIsEditing] = useState(false)
   const navigate = useNavigate()
 
-  const profile = localStorage.getItem('profile')
-  const userNickname = profile ? JSON.parse(profile).nickname : ''
-  const userId = profile ? JSON.parse(profile).user_id : 0
+  const userNickname = localStorage.getItem('nickname') || '익명'
+  const userId = localStorage.getItem('userId') || '0'
 
   useEffect(() => {
     fetchMyRoomInfo()

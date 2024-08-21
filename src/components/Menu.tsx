@@ -10,7 +10,6 @@ import {
   Category,
 } from './MenuStyles'
 import close from '../assets/images/close.png'
-import profile from '../assets/images/profile.png'
 import { URL, APIs } from '../static'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
@@ -21,7 +20,8 @@ interface MenuProps {
 
 export default function Menu({ setMenuOpen }: MenuProps) {
   const navigate = useNavigate()
-  const name = 'JunPark'
+  const name = localStorage.getItem('nickname') || '익명'
+  const profileImage = localStorage.getItem('profileImage') || ''
 
   const [isClick, setIsClick] = useState(false)
 
@@ -60,7 +60,7 @@ export default function Menu({ setMenuOpen }: MenuProps) {
         </ButtonContainer>
         <TopContainer>
           <ProfileContainer>
-            <Profile src={profile} />
+            <Profile src={profileImage} />
             <Nickname>{name}</Nickname>
           </ProfileContainer>
         </TopContainer>

@@ -34,4 +34,6 @@ export const APIs = {
   myRoom: `${BACK_HOST}/api/v1/rooms`,
   objetPreview: `${BACK_HOST}/api/v1/objets/me`,
   logout: `${BACK_HOST}/api/v1/auth/logout`,
+  nickname: `${BACK_HOST}/api/v1/users/validate?nickname`,
+  modifyProfile: `${BACK_HOST}/api/v1/users/profile`,
 }
