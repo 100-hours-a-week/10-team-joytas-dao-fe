@@ -38,6 +38,7 @@ interface SharedMembersProps {
 }
 
 export default function UpdateObjet() {
+  const loungeId = useLocation().pathname.split('/')[2]
   const objetId = useLocation().pathname.split('/')[4]
   const navigate = useNavigate()
 
@@ -63,7 +64,7 @@ export default function UpdateObjet() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(APIs.objet + '/' + objetId, {
+      const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -208,7 +209,7 @@ export default function UpdateObjet() {
     }
 
     try {
-      const response = await fetch(APIs.objet + `/${objetId}`, {
+      const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'PATCH',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -220,7 +221,7 @@ export default function UpdateObjet() {
         const data = await response.json()
 
         alert('오브제가 수정되었습니다.')
-        navigate(URL.objet + '/' + data.data.objet_id)
+        navigate(`${URL.lounge}/${loungeId}/objet/${data.data.objet_id}`)
       } else {
         alert('오브제 수정에 실패했습니다. 다시 시도해주세요.')
       }
