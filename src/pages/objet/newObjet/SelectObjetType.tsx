@@ -13,7 +13,6 @@ import { Vector3, Group, Box3 } from 'three'
 import { ObjetModel1 } from '../../../assets/models/ObjetModel1'
 import { ObjetModel2 } from '../../../assets/models/ObjetModel2'
 import { ObjetModel3 } from '../../../assets/models/ObjetModel3'
-import LoadingLottie from '../../../components/lotties/LoadingLottie'
 
 interface ObjetProps {
   setSelectedType: (type: string) => void
@@ -23,7 +22,6 @@ export default function SelectObjetType({ setSelectedType }: ObjetProps) {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
   const models = [Model1, Model2, Model3]
   const modelTypes = ['O0001', 'O0002', 'O0003']
-  const [isLoading, setIsLoading] = useState(false)
 
   const CurrentModel = models[currentModelIndex]
 
@@ -41,10 +39,6 @@ export default function SelectObjetType({ setSelectedType }: ObjetProps) {
 
   const handleSelectClick = () => {
     setSelectedType(modelTypes[currentModelIndex])
-  }
-
-  if (isLoading) {
-    return <LoadingLottie />
   }
 
   return (
