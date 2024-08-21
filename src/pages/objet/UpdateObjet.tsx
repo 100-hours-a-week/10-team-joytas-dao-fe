@@ -24,8 +24,12 @@ import { Mentions, Tag } from 'antd'
 import type { MentionsProps } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import sampleImg from '../../assets/images/sampleObjet.png'
+import { MOCK_USERS } from '../../assets/mock/userData.tsx'
 
-const MOCK_USERS = ['jamie', 'erica', 'jun', 'hong', 'jikky']
+interface SharedMembersProps {
+  user_id: number
+  nickname: string
+}
 
 export default function UpdateObjet() {
   const [form, setForm] = useState({
@@ -37,7 +41,7 @@ export default function UpdateObjet() {
   const [isSelected, setIsSelected] = useState(true)
   const onSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
     if (newPrefix) {
-      return MOCK_USERS.filter((user) => user.includes(newPrefix))
+      return MOCK_USERS.filter((user) => user.nickname.includes(newPrefix))
     }
   }
 
@@ -101,10 +105,10 @@ export default function UpdateObjet() {
                 <Mentions
                   variant='borderless'
                   onSearch={onSearch}
-                  options={(MOCK_USERS || []).map((value) => ({
-                    key: value,
-                    value,
-                    label: value,
+                  options={MOCK_USERS.map((user) => ({
+                    value: user.nickname,
+                    key: user.user_id.toString(),
+                    label: user.nickname,
                   }))}
                 />
                 <TagWrapper>

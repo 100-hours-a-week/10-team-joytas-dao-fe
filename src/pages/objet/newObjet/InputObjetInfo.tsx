@@ -14,29 +14,22 @@ import type { MentionsProps } from 'antd'
 import { OptionProps } from 'antd/es/mentions'
 import { APIs } from '../../../static'
 import { useNavigate } from 'react-router-dom'
+import { MOCK_USERS } from '../../../assets/mock/userData'
 
 interface InputObjetInfoProps {
   selectedType: string
 }
 
-interface SharedMember {
-  id: number
+interface SharedMembersProps {
+  user_id: number
   nickname: string
 }
-
-const MOCK_USERS: SharedMember[] = [
-  { id: 1, nickname: 'jun' },
-  { id: 2, nickname: 'jamie' },
-  { id: 3, nickname: 'erica' },
-  { id: 4, nickname: 'hong' },
-  { id: 5, nickname: 'jikky' },
-]
 
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const loungeId = 1
   const navigate = useNavigate()
 
-  const [sharedMembers, setSharedMembers] = useState<SharedMember[]>([])
+  const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState<File | null>(null)
@@ -65,7 +58,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const onMentionSelect = (option: OptionProps) => {
     setSharedMembers([
       ...sharedMembers,
-      { id: parseInt(option.key, 10), nickname: option.value as string },
+      { user_id: parseInt(option.key, 10), nickname: option.value as string },
     ])
     setMentionValue('')
   }
@@ -163,7 +156,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       formData.append('objet_image', image)
       formData.append(
         'sharers',
-        JSON.stringify(sharedMembers.map((member) => member.id))
+        JSON.stringify(sharedMembers.map((member) => member.user_id))
       )
     }
 
@@ -207,7 +200,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
                 (user) => !sharedMembers.includes(user)
               ).map((user) => ({
                 value: user.nickname,
-                key: user.id.toString(),
+                key: user.user_id.toString(),
                 label: user.nickname,
               }))}
             />
