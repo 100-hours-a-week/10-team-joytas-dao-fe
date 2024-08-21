@@ -11,7 +11,7 @@ import { Avatar } from 'antd'
 import mute from '../../assets/images/mute.png'
 import unmute from '../../assets/images/unmute.png'
 import quitCall from '../../assets/images/quitCall.png'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   ObjetCallContainer,
   TopContainer,
@@ -28,7 +28,15 @@ import VideoContainer from '../../components/call/VideoContainer'
 
 export default function ObjetCall() {
   const [muted, setMuted] = useState(false)
+  const [isActive, setIsActive] = useState(false)
+
   const name = 'jamie'
+
+  // TODO: delete me
+  useEffect(() => {
+    setIsActive(true)
+  }, [])
+
   return (
     <Layout>
       <ObjetCallContainer>
@@ -40,7 +48,7 @@ export default function ObjetCall() {
                 만든이 <Name>{name}</Name>
               </ObjetMaker>
               <ObjetActive>
-                실시간 <Active />
+                실시간 <Active isActive={isActive} />
               </ObjetActive>
             </CallSubTitle>
           </LeftContainer>

@@ -21,10 +21,17 @@ import { ChatMessage } from '../../components/objet/Chat'
 import SendImg from '../../assets/images/send.png'
 import LeaveImg from '../../assets/images/leave.png'
 import { useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
 
 export default function ObjetChatting() {
+  const [isActive, setIsActive] = useState(false)
   const name = 'jamie'
   const navigate = useNavigate()
+
+  // TODO: delete me
+  useEffect(() => {
+    setIsActive(true)
+  }, [])
 
   return (
     <Layout>
@@ -37,7 +44,7 @@ export default function ObjetChatting() {
                 만든이 <Name>{name}</Name>
               </ObjetMaker>
               <ObjetActive>
-                실시간 <Active />
+                실시간 <Active isActive={isActive} />
               </ObjetActive>
             </CallSubTitle>
           </LeftContainer>
