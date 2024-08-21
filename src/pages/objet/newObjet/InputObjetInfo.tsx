@@ -130,8 +130,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   }
 
   const validateImage = (file: File): boolean => {
-    if (file.size > 25 * 1024 * 1024) {
-      setImageErrorMessage('이미지 파일은 최대 25MB까지 첨부 가능합니다.')
+    if (file.size > 1 * 1024 * 1024) {
+      setImageErrorMessage('이미지 파일은 최대 1MB까지 첨부 가능합니다.')
       return false
     }
     setImageErrorMessage('')
