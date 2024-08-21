@@ -299,8 +299,8 @@ export const ObjetActive = styled.div`
   gap: 10px;
 `
 
-export const Active = styled.div`
-  background-color: #00ff0a;
+export const Active = styled.div<{ isActive: boolean }>`
+  background-color: ${(props) => (props.isActive ? '#00ff0a' : '#d9d9d9')};
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -324,6 +324,7 @@ export const ObjetImg = styled.img`
 export const ObjetDescription = styled.div`
   margin: 20px 0;
   height: 120px;
+  width: 100%;
   overflow-y: scroll;
   color: white;
   font-size: 14px;
