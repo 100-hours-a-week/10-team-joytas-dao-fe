@@ -8,6 +8,24 @@ interface WebRTCUser {
   stream: MediaStream
 }
 
+interface SocketError {
+  error: {
+    status: number
+    message: string
+  }
+}
+
+/* 로컬 시그널링 서버 */
+const SOCKET_SERVER_URL = 'https://localhost:8083'
+
+/* 테스트 시그널링 서버 */
+// const SOCKET_SERVER_URL =
+//   'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
+
+/* 배포 시그널링 서버 */
+// const SOCKET_SERVER_URL =
+//   'https:api.joytas.kro.kr/signaling'
+
 const pc_config = {
   iceServers: [
     {
@@ -20,13 +38,6 @@ const pc_config = {
     },
   ],
 }
-
-// 로컬 환경 소켓 서버
-// const SOCKET_SERVER_URL = 'https://localhost:8083'
-
-// 배포 환경 소켓 서버
-const SOCKET_SERVER_URL =
-  'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
 
 const VideoContainer = () => {
   const socketRef = useRef<SocketIOClient.Socket>()
@@ -45,8 +56,14 @@ const VideoContainer = () => {
         },
       })
       localStreamRef.current = localStream
+
       if (localVideoRef.current) localVideoRef.current.srcObject = localStream
-      if (!socketRef.current) return
+
+      if (!socketRef.current?.connected) {
+        console.log('signaling failed')
+        return
+      }
+
       socketRef.current.emit('join_room', {
         room: '1234',
         email: 'jikky.kim',
@@ -107,9 +124,34 @@ const VideoContainer = () => {
     []
   )
 
+  /****** 테스트용 INVALID TOKEN ******/
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEasdasdasdImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
+
+  /****** 테스트용 VALID TOKEN ******/
+  // const token =
+  //   'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEwMDYsInN1YiI6ImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
+
+  /****** 진짜 써야할 토큰 /******/
+  // const token = localStorage.getItem('access_token')
+
+  const objetId = 1
+
   useEffect(() => {
-    socketRef.current = io.connect(SOCKET_SERVER_URL)
+    socketRef.current = io.connect(SOCKET_SERVER_URL, {
+      transports: ['websocket'],
+      query: {
+        token,
+        objetId,
+      },
+    })
+
     getLocalStream()
+
+    socketRef.current.on('error_message', (data: SocketError) => {
+      console.error('Error:', data.error)
+      alert(`Error: ${data.error.message}`)
+    })
 
     socketRef.current.on(
       'all_users',
@@ -213,7 +255,6 @@ const VideoContainer = () => {
         delete pcsRef.current[user.id]
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createPeerConnection, getLocalStream])
 
   return (
