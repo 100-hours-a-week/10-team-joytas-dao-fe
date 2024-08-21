@@ -48,6 +48,10 @@ export default function UpdateObjet() {
   const [image, setImage] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState('')
 
+  const [nameValid, setNameValid] = useState(false)
+  const [descriptionValid, setDescriptionValid] = useState(false)
+  const [imageValid, setImageValid] = useState(false)
+
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
 
   const [mentionValue, setMentionValue] = useState<string>('')
@@ -117,11 +121,11 @@ export default function UpdateObjet() {
     switch (field) {
       case 'objetName':
         setName(value)
-        validateName(value)
+        setNameValid(validateName(value))
         break
       case 'objetDescription':
         setDescription(value)
-        validateDescription(value)
+        setDescriptionValid(validateDescription(value))
         break
       default:
         break
@@ -142,6 +146,7 @@ export default function UpdateObjet() {
       reader.readAsDataURL(file)
 
       setIsImageChanged(true)
+      setImageValid(true)
     }
   }
 
@@ -192,6 +197,15 @@ export default function UpdateObjet() {
       setImageErrorMessage('오브제 이미지를 첨부해주세요.')
     }
 
+    if (
+      sharedMembers.length === 0 ||
+      !nameValid ||
+      !descriptionValid ||
+      !imageValid
+    ) {
+      return
+    }
+
     const formData = new FormData()
     formData.append(
       'sharers',
@@ -202,10 +216,6 @@ export default function UpdateObjet() {
 
     if (isImageChanged && image) {
       formData.append('objet_image', image)
-    }
-
-    for (const [key, value] of formData.entries()) {
-      console.log(key, value)
     }
 
     try {
