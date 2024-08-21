@@ -160,24 +160,24 @@ export default function UpdateObjet() {
               <>
                 <label htmlFor='objetImage'>
                   <ObjetImgPreview src={form.objetImage} alt='profile' />
+                  <ImageOverlay onClick={handleUploadClick}>
+                    <span>변경</span>
+                  </ImageOverlay>
                 </label>
-                <ImageOverlay onClick={handleUploadClick}>
-                  <label htmlFor='profile-image'>변경</label>
-                  <input
-                    type='file'
-                    accept='.jpeg, .jpg, .png, .gif, .webp'
-                    id='objetImage'
-                    onChange={(e) => {
-                      const file = e.target.files?.[0]
-                      if (file) {
-                        setForm({
-                          ...form,
-                          objetImage: URL.createObjectURL(file),
-                        })
-                      }
-                    }}
-                  />
-                </ImageOverlay>
+                <input
+                  type='file'
+                  accept='.jpeg, .jpg, .png, .gif, .webp'
+                  id='objetImage'
+                  onChange={(e) => {
+                    const file = e.target.files?.[0]
+                    if (file) {
+                      setForm({
+                        ...form,
+                        objetImage: URL.createObjectURL(file),
+                      })
+                    }
+                  }}
+                />
               </>
             }
             helperText='최대 25MB까지 첨부 가능합니다.'
