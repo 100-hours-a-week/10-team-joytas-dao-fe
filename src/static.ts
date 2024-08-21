@@ -33,4 +33,5 @@ export const APIs = {
   loungeList: `${BACK_HOST}/api/v1/lounges`,
   myRoom: `${BACK_HOST}/api/v1/rooms`,
   objetPreview: `${BACK_HOST}/api/v1/objets/me`,
+  logout: `${BACK_HOST}/api/v1/auth/logout`,
 }
