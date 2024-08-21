@@ -147,6 +147,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       setImageErrorMessage('오브제 이미지를 첨부해주세요.')
     }
 
+    // TODO: validation check
+
     const formData = new FormData()
     if (image) {
       formData.append('lounge_id', loungeId.toString())

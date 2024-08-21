@@ -49,17 +49,6 @@ export default function ObjetDetail() {
 
   const navigate = useNavigate()
 
-  const handleClickCall = () => {
-    if (callingPeople === 9) {
-      setTimeout(() => {
-        setIsToastVisible(true)
-      }, 2000)
-      setIsToastVisible(false)
-    } else {
-      navigate(URL.objetCall)
-    }
-  }
-
   useEffect(() => {
     fetchData()
   }, [])
@@ -91,6 +80,41 @@ export default function ObjetDetail() {
       }
     } catch (error) {
       console.log('오브제 정보 가져오기 실패: ', error)
+    }
+  }
+
+  const handleDeleteObjet = async () => {
+    try {
+      const response = await fetch(APIs.objet + '/' + objetId, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (response.status === 200) {
+        const data = await response.json()
+        console.log('오브제 삭제 정보: ', data)
+
+        alert('오브제 삭제 성공!')
+        // TODO: 라운지 아이디 가져와서 이동하기
+        navigate(URL.lounge + '/1')
+      }
+    } catch (error) {
+      console.log('오브제 삭제 실패: ', error)
+    }
+  }
+
+  const handleClickCall = () => {
+    if (callingPeople === 9) {
+      setTimeout(() => {
+        setIsToastVisible(true)
+      }, 2000)
+      setIsToastVisible(false)
+    } else {
+      navigate(URL.objetCall)
     }
   }
 
@@ -193,7 +217,10 @@ export default function ObjetDetail() {
           </CommunityContainer>
 
           {isDeleteModalVisible && (
-            <DeleteModal onClose={() => setIsDeleteModalVisible(false)} />
+            <DeleteModal
+              onClose={() => setIsDeleteModalVisible(false)}
+              handleDelete={handleDeleteObjet}
+            />
           )}
           {isToastVisible && <CallToast>방이 가득찼습니다!</CallToast>}
         </GloablContainer16>
