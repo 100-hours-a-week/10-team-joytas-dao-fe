@@ -97,12 +97,19 @@ export default function Home() {
   useEffect(() => {
     const getProfile = async () => {
       const profile = await fetchProfile()
+
+      if (profile?.user_status === 'ACTIVE_FIRST_LOGIN') {
+        navigate(URL.firstProfile)
+      }
+
       if (profile) {
         setName(profile.nickname)
 
         /* TODO: delete below code
          * 상태관리 라이브러리로 변경 예정 */
-        localStorage.setItem('profile', JSON.stringify(profile))
+        localStorage.setItem('nickname', profile.nickname)
+        localStorage.setItem('profileImage', profile.profile_url)
+        localStorage.setItem('userId', `${profile.user_id}`)
       } else {
         navigate(URL.home)
       }

@@ -2,7 +2,6 @@ import { FooterDiv, IconDiv, IconImg, IconText } from './LayoutStyles'
 import home from '../assets/images/footer/home.png'
 import rocket from '../assets/images/footer/rocket.png'
 import users from '../assets/images/footer/users.png'
-import profile from '../assets/images/profile.png'
 import homePurple from '../assets/images/footer/homePurple.png'
 import rocketPurple from '../assets/images/footer/rocketPurple.png'
 import usersPurple from '../assets/images/footer/usersPurple.png'
@@ -12,6 +11,7 @@ import { URL } from '../static'
 export default function Footer() {
   const navigate = useNavigate()
   const pathname = useLocation().pathname
+  const profileImage = localStorage.getItem('profileImage') || ''
 
   return (
     <FooterDiv>
@@ -28,7 +28,7 @@ export default function Footer() {
         <IconText>유저</IconText>
       </IconDiv>
       <IconDiv onClick={() => navigate(URL.myRoom)}>
-        <IconImg src={profile} />
+        <IconImg src={profileImage} />
         <IconText>마이룸</IconText>
       </IconDiv>
     </FooterDiv>
