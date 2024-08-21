@@ -18,18 +18,18 @@ export default function UserList() {
   const [searchUser, setSearchUser] = useState('')
 
   const userList = [
-    { id: 1, userName: '지직지키', profileImg: '' },
-    { id: 2, userName: '지직지키', profileImg: '' },
-    { id: 3, userName: '지직지키', profileImg: '' },
-    { id: 4, userName: '지직지키', profileImg: '' },
-    { id: 5, userName: '지직지키', profileImg: '' },
-    { id: 6, userName: '지직지키', profileImg: '' },
-    { id: 7, userName: '지직지키', profileImg: '' },
-    { id: 8, userName: '지직지키', profileImg: '' },
-    { id: 9, userName: '지직지키', profileImg: '' },
-    { id: 10, userName: '지직지키', profileImg: '' },
-    { id: 11, userName: '지직지키', profileImg: '' },
-    { id: 12, userName: '지직지키', profileImg: '' },
+    { userId: 1, nickname: '지직지키', profileImage: '' },
+    { userId: 2, nickname: '지직지키', profileImage: '' },
+    { userId: 3, nickname: '지직지키', profileImage: '' },
+    { userId: 4, nickname: '지직지키', profileImage: '' },
+    { userId: 5, nickname: '지직지키', profileImage: '' },
+    { userId: 6, nickname: '지직지키', profileImage: '' },
+    { userId: 7, nickname: '지직지키', profileImage: '' },
+    { userId: 8, nickname: '지직지키', profileImage: '' },
+    { userId: 9, nickname: '지직지키', profileImage: '' },
+    { userId: 10, nickname: '지직지키', profileImage: '' },
+    { userId: 11, nickname: '지직지키', profileImage: '' },
+    { userId: 12, nickname: '지직지키', profileImage: '' },
   ]
 
   return (
@@ -59,7 +59,7 @@ export default function UserList() {
                 </GlobalBlankContainerText>
               ) : (
                 userList.map((user) => (
-                  <UserListItem key={user.id} type={type} user={user} />
+                  <UserListItem key={user.userId} type={type} user={user} />
                 ))
               ))}
             {type === 'users' &&
@@ -69,7 +69,7 @@ export default function UserList() {
                 </GlobalBlankContainerText>
               ) : (
                 userList.map((user) => (
-                  <UserListItem key={user.id} type={type} user={user} />
+                  <UserListItem key={user.userId} type={type} user={user} />
                 ))
               ))}
           </UserListContainer>
