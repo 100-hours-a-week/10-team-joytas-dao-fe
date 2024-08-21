@@ -32,6 +32,7 @@ import { ModalBackdrop } from '../../components/ModalStyles'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 
 export default function ObjetDetail() {
+  const loungeId = useLocation().pathname.split('/')[2]
   const objetId = useLocation().pathname.split('/')[4]
   const loggedInUserId = Number(localStorage.getItem('userId')) || 0
   const [isLoading, setIsLoading] = useState(true)
@@ -60,7 +61,7 @@ export default function ObjetDetail() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(APIs.objet + '/' + objetId, {
+      const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -90,7 +91,7 @@ export default function ObjetDetail() {
 
   const handleDeleteObjet = async () => {
     try {
-      const response = await fetch(APIs.objet + '/' + objetId, {
+      const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'DELETE',
         credentials: 'include',
         headers: {
@@ -123,119 +124,125 @@ export default function ObjetDetail() {
     }
   }
 
+  if (isLoading) {
+    return (
+      <Layout>
+        <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
+          <LoadingLottie />
+        </div>
+      </Layout>
+    )
+  }
+
   return (
     <Layout>
-      {isLoading ? (
-        <LoadingLottie />
-      ) : (
-        <>
-          {isDeleteModalVisible && <ModalBackdrop />}
+      <>
+        {isDeleteModalVisible && <ModalBackdrop />}
 
-          <GloablContainer16>
-            <TopContainer>
-              <LeftContainer>
-                <CallTitle>{name}</CallTitle>
-                <CallSubTitle>
-                  <ObjetMaker>
-                    만든이 <Name>{creator}</Name>
-                  </ObjetMaker>
-                  <ObjetActive>
-                    실시간 <Active isActive={isActive} />
-                  </ObjetActive>
-                </CallSubTitle>
-              </LeftContainer>
-              <RightContainer>
-                <Avatar.Group
-                  max={{
-                    count: 3,
-                    style: { color: '#f56a00', backgroundColor: '#fde3cf' },
-                  }}
-                >
-                  <Avatar src='https://api.dicebear.com/7.x/miniavs/svg?seed=2' />
-                  <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                  <Avatar
-                    style={{ backgroundColor: '#87d068' }}
-                    icon={<UserOutlined />}
-                  />
-                  <Avatar
-                    style={{ backgroundColor: '#1677ff' }}
-                    icon={<AntDesignOutlined />}
-                  />
-                </Avatar.Group>
+        <GloablContainer16>
+          <TopContainer>
+            <LeftContainer>
+              <CallTitle>{name}</CallTitle>
+              <CallSubTitle>
+                <ObjetMaker>
+                  만든이 <Name>{creator}</Name>
+                </ObjetMaker>
+                <ObjetActive>
+                  실시간 <Active isActive={isActive} />
+                </ObjetActive>
+              </CallSubTitle>
+            </LeftContainer>
+            <RightContainer>
+              <Avatar.Group
+                max={{
+                  count: 3,
+                  style: { color: '#f56a00', backgroundColor: '#fde3cf' },
+                }}
+              >
+                <Avatar src='https://api.dicebear.com/7.x/miniavs/svg?seed=2' />
+                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
+                <Avatar
+                  style={{ backgroundColor: '#87d068' }}
+                  icon={<UserOutlined />}
+                />
+                <Avatar
+                  style={{ backgroundColor: '#1677ff' }}
+                  icon={<AntDesignOutlined />}
+                />
+              </Avatar.Group>
 
-                {loggedInUserId === creatorId && (
-                  <Icon
-                    className='menu'
-                    src={MenuImg}
-                    onClick={() => setIsMenuModalVisible(!isMenuModalVisible)}
-                  />
-                )}
-              </RightContainer>
-              {isMenuModalVisible && (
-                <MenuModal
-                  onClickUpdate={() =>
-                    navigate(`${URL.objet}/${objetId}/update`)
-                  }
-                  onClickDelete={() => {
-                    setIsDeleteModalVisible(true)
-                    setIsMenuModalVisible(false)
-                  }}
+              {loggedInUserId === creatorId && (
+                <Icon
+                  className='menu'
+                  src={MenuImg}
+                  onClick={() => setIsMenuModalVisible(!isMenuModalVisible)}
                 />
               )}
-            </TopContainer>
-
-            <ObjetDetailContainer>
-              <ObjetImg src={imageUrl} />
-              <ObjetDescription>{description}</ObjetDescription>
-            </ObjetDetailContainer>
-            <CommunityContainer>
-              <ChattingsWrapper>
-                <ChatMessage
-                  userName='jamie'
-                  userId={3}
-                  profileImg='../../assets/images/sampleObjet.png'
-                  content='안녕 제이미'
-                />
-                <ChatMessage
-                  userName='jamie'
-                  userId={3}
-                  profileImg='../../assets/images/sampleObjet.png'
-                  content='안녕 제이미'
-                />
-                <ChatMessage
-                  userName='jamie'
-                  userId={3}
-                  profileImg='../../assets/images/sampleObjet.png'
-                  content='안녕 제이미'
-                />
-              </ChattingsWrapper>
-              <GoToBtnWrapper>
-                <GoCommunityBtn
-                  text='채팅 입장하기'
-                  className='chattings'
-                  onClick={() => {
-                    navigate(URL.objetChatting)
-                  }}
-                />
-                <GoCommunityBtn
-                  text='음성통화'
-                  className='call'
-                  people={callingPeople}
-                  onClick={handleClickCall}
-                />
-              </GoToBtnWrapper>
-            </CommunityContainer>
-
-            {isDeleteModalVisible && (
-              <DeleteModal
-                onClose={() => setIsDeleteModalVisible(false)}
-                handleDelete={handleDeleteObjet}
+            </RightContainer>
+            {isMenuModalVisible && (
+              <MenuModal
+                onClickUpdate={() =>
+                  navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/update`)
+                }
+                onClickDelete={() => {
+                  setIsDeleteModalVisible(true)
+                  setIsMenuModalVisible(false)
+                }}
               />
             )}
-            {isToastVisible && <CallToast>방이 가득찼습니다!</CallToast>}
-          </GloablContainer16>
-        </>
-      )}
+          </TopContainer>
+
+          <ObjetDetailContainer>
+            <ObjetImg src={imageUrl} />
+            <ObjetDescription>{description}</ObjetDescription>
+          </ObjetDetailContainer>
+          <CommunityContainer>
+            <ChattingsWrapper>
+              <ChatMessage
+                userName='jamie'
+                userId={3}
+                profileImg='../../assets/images/sampleObjet.png'
+                content='안녕 제이미'
+              />
+              <ChatMessage
+                userName='jamie'
+                userId={3}
+                profileImg='../../assets/images/sampleObjet.png'
+                content='안녕 제이미'
+              />
+              <ChatMessage
+                userName='jamie'
+                userId={3}
+                profileImg='../../assets/images/sampleObjet.png'
+                content='안녕 제이미'
+              />
+            </ChattingsWrapper>
+            <GoToBtnWrapper>
+              <GoCommunityBtn
+                text='채팅 입장하기'
+                className='chattings'
+                onClick={() => {
+                  navigate(URL.objetChatting)
+                }}
+              />
+              <GoCommunityBtn
+                text='음성통화'
+                className='call'
+                people={callingPeople}
+                onClick={handleClickCall}
+              />
+            </GoToBtnWrapper>
+          </CommunityContainer>
+
+          {isDeleteModalVisible && (
+            <DeleteModal
+              onClose={() => setIsDeleteModalVisible(false)}
+              handleDelete={handleDeleteObjet}
+            />
+          )}
+          {isToastVisible && <CallToast>방이 가득찼습니다!</CallToast>}
+        </GloablContainer16>
+      </>
     </Layout>
   )
 }
