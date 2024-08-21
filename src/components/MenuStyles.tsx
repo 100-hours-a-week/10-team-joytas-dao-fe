@@ -53,11 +53,13 @@ export const CategoryList = styled.div`
   gap: 40px;
 `
 
-export const Category = styled.div`
+export const Category = styled.button`
   font-size: 17px;
   cursor: pointer;
   color: #6d6d6d;
-
+  background-color: transparent;
+  display: flex;
+  align-items: flex-start;
   &:hover {
     color: white;
   }
