@@ -25,7 +25,7 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 import { OptionProps } from 'antd/es/mentions/index'
 import { objetList } from '../../global/objetModels.tsx'
 import { APIs, URL } from '../../static.ts'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { MOCK_USERS } from '../../assets/mock/userData.tsx'
 
 interface ObjetProps {
@@ -38,7 +38,7 @@ interface SharedMembersProps {
 }
 
 export default function UpdateObjet() {
-  const objetId = window.location.pathname.split('/')[2]
+  const objetId = useLocation().pathname.split('/')[4]
   const navigate = useNavigate()
 
   const [type, setType] = useState('')
@@ -55,7 +55,6 @@ export default function UpdateObjet() {
   const [descriptionErrorMessage, setDescriptionErrorMessage] = useState('')
   const [imageErrorMessage, setImageErrorMessage] = useState('')
 
-  // 필드 수정 여부
   const [isImageChanged, setIsImageChanged] = useState(false)
 
   useEffect(() => {
