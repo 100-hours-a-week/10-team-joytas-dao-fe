@@ -4,7 +4,7 @@ import Video from './Video'
 
 interface WebRTCUser {
   id: string
-  email: string
+  nickname: string
   stream: MediaStream
 }
 
@@ -64,9 +64,11 @@ const VideoContainer = () => {
         return
       }
 
-      socketRef.current.emit('join_room', {
-        room: '1234',
-        email: 'jikky.kim',
+      console.log('signaling succeeded')
+
+      socketRef.current.emit('join_objet', {
+        objet_id,
+        nickname,
       })
     } catch (e) {
       console.log(`getUserMedia error: ${e}`)
@@ -74,7 +76,7 @@ const VideoContainer = () => {
   }, [])
 
   const createPeerConnection = useCallback(
-    (socketID: string, email: string) => {
+    (socketID: string, nickname: string) => {
       try {
         const pc = new RTCPeerConnection(pc_config)
 
@@ -99,7 +101,7 @@ const VideoContainer = () => {
               .filter((user) => user.id !== socketID)
               .concat({
                 id: socketID,
-                email,
+                nickname,
                 stream: e.streams[0],
               })
           )
@@ -125,24 +127,25 @@ const VideoContainer = () => {
   )
 
   /****** 테스트용 INVALID TOKEN ******/
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEasdasdasdImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
+  // const token =
+  //   'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEasdasdasdImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
 
   /****** 테스트용 VALID TOKEN ******/
-  // const token =
-  //   'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEwMDYsInN1YiI6ImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
+  const token =
+    'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEwMDYsInN1YiI6ImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
 
   /****** 진짜 써야할 토큰 /******/
   // const token = localStorage.getItem('access_token')
 
-  const objetId = 1
+  const objet_id = 1
+  const nickname = 'joytas'
 
   useEffect(() => {
     socketRef.current = io.connect(SOCKET_SERVER_URL, {
       transports: ['websocket'],
       query: {
         token,
-        objetId,
+        objet_id,
       },
     })
 
@@ -155,10 +158,10 @@ const VideoContainer = () => {
 
     socketRef.current.on(
       'all_users',
-      (allUsers: Array<{ id: string; email: string }>) => {
+      (allUsers: Array<{ id: string; nickname: string }>) => {
         allUsers.forEach(async (user) => {
           if (!localStreamRef.current) return
-          const pc = createPeerConnection(user.id, user.email)
+          const pc = createPeerConnection(user.id, user.nickname)
           if (!(pc && socketRef.current)) return
           pcsRef.current = { ...pcsRef.current, [user.id]: pc }
           try {
@@ -171,7 +174,7 @@ const VideoContainer = () => {
             socketRef.current.emit('offer', {
               sdp: localSdp,
               offerSendID: socketRef.current.id,
-              offerSendEmail: 'offerSend@sample.com',
+              offerSendNickname: nickname,
               offerReceiveID: user.id,
             })
           } catch (e) {
@@ -186,12 +189,12 @@ const VideoContainer = () => {
       async (data: {
         sdp: RTCSessionDescription
         offerSendID: string
-        offerSendEmail: string
+        offerSendNickname: string
       }) => {
-        const { sdp, offerSendID, offerSendEmail } = data
+        const { sdp, offerSendID, offerSendNickname } = data
         console.log('get offer')
         if (!localStreamRef.current) return
-        const pc = createPeerConnection(offerSendID, offerSendEmail)
+        const pc = createPeerConnection(offerSendID, offerSendNickname)
         if (!(pc && socketRef.current)) return
         pcsRef.current = { ...pcsRef.current, [offerSendID]: pc }
         try {
@@ -276,7 +279,7 @@ const VideoContainer = () => {
         autoPlay
       />
       {users.map((user, index) => (
-        <Video key={index} email={user.email} stream={user.stream} />
+        <Video key={index} nickname={user.nickname} stream={user.stream} />
       ))}
     </>
   )
