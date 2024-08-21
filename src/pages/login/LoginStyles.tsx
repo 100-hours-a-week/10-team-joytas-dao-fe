@@ -37,7 +37,7 @@ export const LoginButton = styled.button`
   border-radius: 5px;
   font-weight: 600;
   position: relative;
-  top: -180px;
+  top: -120px;
   border: 0px;
   left: 45px;
   z-index: 10;
@@ -70,7 +70,7 @@ export const Text = styled.div`
   text-decoration: underline lightgray;
   position: relative;
   cursor: pointer;
-  top: -120px;
+  top: -60px;
   font-size: 10px;
   width: fit-content;
   color: lightgray;
