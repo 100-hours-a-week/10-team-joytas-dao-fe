@@ -12,13 +12,12 @@ const positionCenter = css`
 export const DeleteModalContainer = styled.div`
   ${positionCenter}
   display: flex;
-  width: 230px;
-  height: 140px;
+  width: 270px;
   border-radius: 12px;
   background-color: #fff;
   flex-direction: column;
   align-items: center;
-  padding: 30px;
+  padding: 20px 10px;
   color: black;
 `
 
