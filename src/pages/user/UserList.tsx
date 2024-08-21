@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import UserListItem from '../../components/user/UserListItem'
 import {
@@ -14,7 +15,7 @@ import {
 import { useState } from 'react'
 
 export default function UserList() {
-  const type = window.location.pathname.split('/')[1] as 'lounge' | 'users'
+  const type = useLocation().pathname.split('/')[1] as 'lounge' | 'users'
   const [searchUser, setSearchUser] = useState('')
 
   const userList = [
