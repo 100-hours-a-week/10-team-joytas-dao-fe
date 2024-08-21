@@ -33,7 +33,14 @@ export function InputItem({
         <InputBox className={className} longtext={longtext} img={img}>
           {input}
         </InputBox>
-        <RedText>{helperText}</RedText>
+        <RedText
+          style={{
+            marginTop: '10px',
+            width: '218px',
+          }}
+        >
+          {helperText}
+        </RedText>
       </ItemInput>
     </ItemWrapper>
   )

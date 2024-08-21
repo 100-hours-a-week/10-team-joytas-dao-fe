@@ -6,19 +6,26 @@ import {
   GlobalTitle,
 } from '../../../global/globalStyles.tsx'
 import { useEffect, useRef, useState } from 'react'
-import SelectObjetType from './SelectObjetType'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Group } from 'three'
-import { ObjetModel1 } from '../../../assets/models/ObjetModel1.tsx'
+import { objetList } from '../../../global/objetModels.tsx'
 import InputObjetInfo from './InputObjetInfo.tsx'
+import SelectObjetType from './SelectObjetType.tsx'
+
+interface ObjetProps {
+  type: string
+}
 
 export default function NewObjet() {
-  const [isSelected, setIsSelected] = useState(true)
+  const [isSelected, setIsSelected] = useState(false)
+  const [selectedType, setSelectedType] = useState('')
 
   useEffect(() => {
-    setIsSelected(true)
-  })
+    if (selectedType !== '') {
+      setIsSelected(true)
+    }
+  }, [selectedType])
 
   return (
     <Layout>
@@ -35,22 +42,27 @@ export default function NewObjet() {
               <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
                 <OrbitControls enableZoom={false} enableRotate={false} />
                 <ambientLight intensity={1} />
-                <RenderObjet />
+                <RenderObjet type={selectedType} />
               </Canvas>
             )}
           </MiniObjetModel>
         </UpperContainer>
 
         <Container>
-          {isSelected ? InputObjetInfo() : SelectObjetType()}
+          {isSelected ? (
+            <InputObjetInfo selectedType={selectedType} />
+          ) : (
+            <SelectObjetType setSelectedType={setSelectedType} />
+          )}
         </Container>
       </GloablContainer16>
     </Layout>
   )
 }
 
-function RenderObjet() {
+function RenderObjet({ type }: ObjetProps) {
   const ref = useRef<Group>(null)
+  const model = objetList.find((objet) => objet.type === type)?.model
 
   useFrame(() => {
     if (ref.current) {
@@ -60,7 +72,7 @@ function RenderObjet() {
 
   return (
     <group ref={ref} rotation-y={-Math.PI / 2}>
-      <ObjetModel1 scale={[3, 3, 3]} />
+      {model}
     </group>
   )
 }

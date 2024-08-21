@@ -14,9 +14,14 @@ import { ObjetModel1 } from '../../../assets/models/ObjetModel1'
 import { ObjetModel2 } from '../../../assets/models/ObjetModel2'
 import { ObjetModel3 } from '../../../assets/models/ObjetModel3'
 
-export default function SelectObjetType() {
+interface ObjetProps {
+  setSelectedType: (type: string) => void
+}
+
+export default function SelectObjetType({ setSelectedType }: ObjetProps) {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
   const models = [Model1, Model2, Model3]
+  const modelTypes = ['O0001', 'O0002', 'O0003']
 
   const CurrentModel = models[currentModelIndex]
 
@@ -30,6 +35,10 @@ export default function SelectObjetType() {
     setCurrentModelIndex((prevIndex) =>
       prevIndex === models.length - 1 ? 0 : prevIndex + 1
     )
+  }
+
+  const handleSelectClick = () => {
+    setSelectedType(modelTypes[currentModelIndex])
   }
 
   return (
@@ -48,7 +57,7 @@ export default function SelectObjetType() {
       </ModelIndexText>
       <ChooseContainer>
         <MoveIcon src={left} onClick={handleLeftClick} />
-        <ChooseButton>선택</ChooseButton>
+        <ChooseButton onClick={handleSelectClick}>선택</ChooseButton>
         <MoveIcon src={right} onClick={handleRightClick} />
       </ChooseContainer>
     </>

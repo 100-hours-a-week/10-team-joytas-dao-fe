@@ -89,7 +89,7 @@ export const Container = styled.div`
 export const ItemWrapper = styled.div`
   ${flexRow}
   align-items: flex-start;
-  margin-bottom: 13px;
+  margin-bottom: 8px;
   width: 100%;
 `
 
@@ -101,7 +101,9 @@ export const ItemLabel = styled.span`
   margin: 10px 20px 0 0;
 `
 
-export const ItemInput = styled.div``
+export const ItemInput = styled.div`
+  ${flexColumn}
+`
 
 export const InputBox = styled.div<{
   className?: string
@@ -151,9 +153,11 @@ export const ObjetImgPreview = styled.img`
   position: relative;
 `
 
-export const RedText = styled.span`
+export const RedText = styled.div`
+  height: 23px;
   font-size: 10px;
   color: #d41313;
+  text-align: start;
 `
 
 export const UploadButton = styled.button`
@@ -179,9 +183,15 @@ export const ImageOverlay = styled.div`
     cursor: pointer;
   }
 
-  label {
+  span {
+    background-color: #d9d9d9;
+    opacity: 90%;
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 10px;
+
     &:hover {
-      color: white;
+      color: black;
       cursor: pointer;
     }
   }
@@ -192,6 +202,7 @@ export const TagWrapper = styled.div`
   margin-top: 8px;
   overflow-x: scroll;
   width: 220px;
+  height: 32px;
 `
 
 export const Icon = styled.img`

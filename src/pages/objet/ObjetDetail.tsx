@@ -32,6 +32,7 @@ import { DeleteModal, MenuModal } from '../../components/Modal'
 import { ModalBackdrop } from '../../components/ModalStyles'
 
 export default function ObjetDetail() {
+  const objetId = window.location.pathname.split('/')[2]
   const name = 'jamie'
   const [people, setPeople] = useState(2)
   const [isMenuModalVisible, setIsMenuModalVisible] = useState(false)
@@ -101,7 +102,7 @@ export default function ObjetDetail() {
             </RightContainer>
             {isMenuModalVisible && (
               <MenuModal
-                onClickUpdate={() => navigate(URL.objetUpdate)}
+                onClickUpdate={() => navigate(`${URL.objet}/${objetId}`)}
                 onClickDelete={() => {
                   setIsDeleteModalVisible(true)
                   setIsMenuModalVisible(false)

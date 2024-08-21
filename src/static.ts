@@ -15,8 +15,7 @@ export const URL = {
   myLounge: '/lounge/my',
   loungeInvite: '/lounge/invite',
   objetCall: '/objet/call',
-  objetDetail: '/objet',
-  objetUpdate: '/objet/update',
+  objet: '/objet',
   objetChatting: '/objet/chatting',
   myRoomObjet: '/myRoom/objet',
   userDetail: '/users/user',
@@ -36,4 +35,5 @@ export const APIs = {
   logout: `${BACK_HOST}/api/v1/auth/logout`,
   nickname: `${BACK_HOST}/api/v1/users/validate?nickname`,
   modifyProfile: `${BACK_HOST}/api/v1/users/profile`,
+  objet: `${BACK_HOST}/api/v1/objets`,
 }
