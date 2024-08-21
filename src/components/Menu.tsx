@@ -11,8 +11,9 @@ import {
 } from './MenuStyles'
 import close from '../assets/images/close.png'
 import profile from '../assets/images/profile.png'
-import { URL } from '../static'
+import { URL, APIs } from '../static'
 import { useNavigate } from 'react-router-dom'
+import { useState } from 'react'
 
 interface MenuProps {
   setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -21,6 +22,36 @@ interface MenuProps {
 export default function Menu({ setMenuOpen }: MenuProps) {
   const navigate = useNavigate()
   const name = 'JunPark'
+
+  const [isClick, setIsClick] = useState(false)
+
+  const handleClickLogout = async () => {
+    setIsClick(true)
+    try {
+      const response = await fetch(APIs.logout, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (response.status === 200) {
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('profile')
+        alert('로그아웃 성공!')
+        navigate(URL.home)
+      } else {
+        alert('로그아웃 실패')
+      }
+    } catch (error) {
+      console.error('Failed to logout', error)
+    } finally {
+      setIsClick(false)
+    }
+  }
+
   return (
     <>
       <MenuContainer>
@@ -37,7 +68,9 @@ export default function Menu({ setMenuOpen }: MenuProps) {
           <Category onClick={() => navigate(URL.modifyProfile)}>
             프로필 설정
           </Category>
-          <Category>로그아웃</Category>
+          <Category disabled={isClick} onClick={handleClickLogout}>
+            로그아웃
+          </Category>
         </CategoryList>
       </MenuContainer>
     </>
