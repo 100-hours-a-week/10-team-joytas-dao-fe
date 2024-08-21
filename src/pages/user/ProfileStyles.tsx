@@ -38,16 +38,27 @@ export const Profile = styled.img`
   width: 165px;
   height: 165px;
   border-radius: 50%;
+  object-fit: cover;
+`
+
+export const NoProfile = styled.div`
+  width: 165px;
+  height: 165px;
+  border-radius: 50%;
+  background-color: black;
+  border: 1px solid white;
 `
 
 export const ProfileTitle = styled.div`
+  display: flex;
+  align-items: flex-start;
   color: white;
-  margin: 40px 0;
+  margin: 40px 0 20px;
   font-size: 16px;
   font-weight: 500;
 `
 
-export const ModifyButton = styled.div`
+export const ModifyButton = styled.label`
   cursor: pointer;
   width: 60px;
   height: 40px;
@@ -64,7 +75,7 @@ export const ModifyButton = styled.div`
 `
 
 export const NicknameContainer = styled.div`
-  margin-top: 50px;
+  margin-top: 20px;
   padding: 0 64px;
   box-sizing: border-box;
   color: white;
@@ -72,6 +83,8 @@ export const NicknameContainer = styled.div`
 `
 
 export const NicknameTitle = styled.div`
+  display: flex;
+  align-items: flex-start;
   width: 100%;
   margin-left: 10px;
   margin-top: 20px;
@@ -98,7 +111,7 @@ export const StartButtonContainer = styled.button`
   width: 130px;
   height: 50px;
   border-radius: 30px;
-  margin: 60px auto;
+  margin: 40px auto 0;
   border: 1px dotted gray;
   background-color: transparent;
 `
@@ -115,19 +128,21 @@ export const MainTitle = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  padding-top: 140px;
+  padding-top: 100px;
 `
 
 export const ModifyConfirmButton = styled.div`
   cursor: pointer;
-  width: 180px;
-  height: 50px;
+  width: 150px;
+  height: 30px;
   display: flex;
-  margin: 60px auto 0;
+  margin: 20px auto 10px;
   align-items: center;
   justify-content: center;
-  border-radius: 15px;
-  color: white;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 10px;
+  color: #b8b8b8;
   background-color: rgba(255, 255, 255, 0.3);
 `
 
@@ -136,5 +151,9 @@ export const DeleteButton = styled.div`
   color: rgba(255, 255, 255, 0.4);
   width: fit-content;
   margin: 10px auto;
-  font-size: 12px;
+  font-size: 10px;
+`
+
+export const ImageInput = styled.input`
+  display: none;
 `
