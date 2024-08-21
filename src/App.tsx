@@ -44,8 +44,11 @@ function App() {
           <Route path={URL.myRoom} element={<MyRoom />}></Route>
           <Route path={URL.loungeInvite} element={<UserList />}></Route>
           <Route path={URL.objetCall} element={<ObjetCall />}></Route>
-          <Route path={URL.objetDetail} element={<ObjetDetail />}></Route>
-          <Route path={URL.objetUpdate} element={<UpdateObjet />}></Route>
+          <Route path={`${URL.objet}/:id`} element={<ObjetDetail />}></Route>
+          <Route
+            path={`${URL.objet}/:id/update`}
+            element={<UpdateObjet />}
+          ></Route>
           <Route path={URL.myRoomObjet} element={<MyRoomObjet />}></Route>
           <Route path={URL.objetChatting} element={<ObjetChatting />}></Route>
           <Route path={URL.users} element={<UserList />}></Route>
