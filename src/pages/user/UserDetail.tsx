@@ -14,9 +14,11 @@ import LoadingLottie from '../../components/lotties/LoadingLottie'
 export default function UserDetail() {
   const { id } = useParams<{ id: string }>()
 
-  const profile = JSON.parse(localStorage.getItem('profile') || '')
-
-  const loggedInUserNickname = profile ? profile.nickname : ''
+  const profile = {
+    userId: Number(localStorage.getItem('userId')),
+    nickname: localStorage.getItem('nickname') || '익명',
+    profileImage: localStorage.getItem('profileImage') || '',
+  }
 
   const [myRoomName, setMyRoomName] = useState('')
   const [myRoomModel, setMyRoomModel] = useState<MyRoomModel>(modelList[0])
@@ -40,7 +42,7 @@ export default function UserDetail() {
       setMyRoomName(
         responseData.data.my_room_name
           ? responseData.data.my_room_name
-          : loggedInUserNickname + '의 마이룸'
+          : profile.nickname + '의 마이룸'
       )
       setMyRoomModel(modelList[responseData.data.type.split('R000')[1]])
     } catch (error) {
@@ -54,7 +56,7 @@ export default function UserDetail() {
     <Layout>
       <GloablContainer16>
         <div style={{ height: '80px' }} />
-        <UserListItem type='userDetail' user={profile ? profile : null} />
+        <UserListItem type='userDetail' user={profile} />
         <MyRoomContainer>
           <MyRoomPreviewWrapper>
             {isLoading ? (

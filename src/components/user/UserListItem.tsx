@@ -14,7 +14,7 @@ import { URL } from '../../static'
 
 interface UserListProps {
   type: string
-  user: { user_id: number; nickname: string; profile_url: string }
+  user: { userId: number; nickname: string; profileImage: string }
 }
 
 export default function UserListItem({ type, user }: UserListProps) {
@@ -22,11 +22,11 @@ export default function UserListItem({ type, user }: UserListProps) {
   const PickUser = () => {}
 
   const handleUserClick = () => {
-    navigate(`${URL.userDetail}/${user.user_id}`)
+    navigate(`${URL.userDetail}/${user.userId}`)
   }
 
   return (
-    <UserListItemContainer key={user.user_id}>
+    <UserListItemContainer key={user.userId}>
       <ProfileContainer onClick={handleUserClick}>
         <ProfileImageContainer>
           <ProfileImage />
