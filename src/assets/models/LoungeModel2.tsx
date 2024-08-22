@@ -15,7 +15,7 @@ export function LoungeModel2(props: LoungeModel2Props) {
       <mesh
         geometry={nodes.Object_Planet_0.geometry}
         material={materials.Planet}
-        position={[-0.045, 1.247, 0.066]}
+        position={[-0.045, 0.3, 0.066]}
         rotation={[Math.PI, 0, Math.PI]}
       />
     </group>
