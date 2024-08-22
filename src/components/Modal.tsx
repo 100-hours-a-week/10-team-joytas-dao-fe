@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import {
   DeleteModalContainer,
   DeleteModalContents,
   DeleteModalTitle,
   LoungeListModalContainer,
   LoungeListModalContents,
+  LoungeListModalItem,
   LoungeListModalTitle,
   MenuModalContainer,
   ModalButton,
@@ -21,8 +23,17 @@ interface DeleteProps {
   isClick?: boolean
 }
 
+interface Lounge {
+  lounge_id: number
+  name: string
+  type: string
+}
+
 interface LoungeListProps {
   onClose: () => void
+  handleSelectLounge: (loungeId: number) => void
+  selectedLounge: number
+  lounges: Lounge[]
 }
 
 export function MenuModal({ onClickUpdate, onClickDelete }: MenuProps) {
@@ -87,22 +98,42 @@ export function DeleteUserModal({
   )
 }
 
-export function LoungeListModal({ onClose }: LoungeListProps) {
+export function LoungeListModal({
+  onClose,
+  handleSelectLounge,
+  selectedLounge,
+  lounges,
+}: LoungeListProps) {
+  const [selectedLoungeId, setSelectedLoungeId] =
+    useState<number>(selectedLounge)
+
+  const handleSelectItem = () => {
+    if (!selectedLoungeId) {
+      alert('라운지를 선택해주세요.')
+    } else {
+      handleSelectLounge(selectedLoungeId)
+    }
+  }
+
   return (
     <LoungeListModalContainer>
       <LoungeListModalTitle>라운지 목록</LoungeListModalTitle>
       <LoungeListModalContents>
-        <div>라운지1</div>
-        <div>라운지2</div>
-        <div>라운지3</div>
-        <div>라운지4</div>
-        <div>라운지5</div>
+        {lounges.map((lounge) => (
+          <LoungeListModalItem
+            key={lounge.lounge_id}
+            className={selectedLoungeId === lounge.lounge_id ? 'selected' : ''}
+            onClick={() => setSelectedLoungeId(lounge.lounge_id)}
+          >
+            {lounge.name}
+          </LoungeListModalItem>
+        ))}
       </LoungeListModalContents>
       <ModalButtonContainer>
         <ModalButton className='cancel' onClick={onClose}>
           취소
         </ModalButton>
-        <ModalButton className='confirm' onClick={onClose}>
+        <ModalButton className='confirm' onClick={handleSelectItem}>
           선택
         </ModalButton>
       </ModalButtonContainer>

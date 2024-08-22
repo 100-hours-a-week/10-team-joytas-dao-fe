@@ -120,20 +120,29 @@ export const LoungeListModalContents = styled.div`
 
   box-sizing: border-box;
   margin-top: 10px;
-  gap: 10px;
   overflow-y: auto;
   color: black;
 
   border: 0.5px solid #242424;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px 0;
+`
 
-  div {
-    cursor: pointer;
+export const LoungeListModalItem = styled.div`
+  font-size: 15px;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 1px 10px;
+  cursor: pointer;
 
-    &:hover {
-      font-weight: bold;
-    }
+  &.selected {
+    background-color: #d9d9d9;
+    font-weight: bold;
+  }
+
+  &:hover {
+    background-color: #d9d9d9;
+    font-weight: bold;
   }
 `
 
