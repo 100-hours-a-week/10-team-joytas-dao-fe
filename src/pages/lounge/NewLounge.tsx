@@ -37,6 +37,33 @@ export default function NewLounge() {
   const models = [Model1, Model2, Model3]
   const navigate = useNavigate()
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(APIs.loungeList, {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        })
+        if (response.status === 200) {
+          const responseData = await response.json()
+          if (responseData.data.length >= 4) {
+            alert('4개 이상의 라운지를 만들 수 없습니다.')
+            navigate(URL.lounge)
+          }
+        } else {
+          throw new Error('Failed to fetch lounge list')
+        }
+      } catch (error) {
+        console.error('Failed to fetch lounge list', error)
+      }
+    }
+
+    fetchData()
+  }, [])
+
   const nickname = localStorage.getItem('nickname') || '익명'
 
   const handleLeftClick = () => {

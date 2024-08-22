@@ -94,9 +94,20 @@ export default function LoungeContainer() {
       </Deem>
     )
   }
+  const modelLocationWithNew = [
+    new Vector3(0.9, 1.4, 0),
+    new Vector3(-0.9, -1, 0),
+    new Vector3(0.9, -1, 0),
+  ]
+
+  const modelLocation = [
+    new Vector3(-0.9, 1.4, 0),
+    new Vector3(0.9, 1.4, 0),
+    new Vector3(-0.9, -1, 0),
+    new Vector3(0.9, -1, 0),
+  ]
 
   return (
-    // TODO: 라운지 모델 위치 조정 필요
     <Canvas
       style={{ width: '324px', height: '600px', cursor: 'pointer' }}
       camera={{ position: [0, 0, 8], fov: 50 }}
@@ -112,11 +123,15 @@ export default function LoungeContainer() {
             onClick={() => navigate(URL.newLounge)}
           />
         )}
-        {loungeList.map((lounge) => (
+        {loungeList.map((lounge, index) => (
           <Model
             key={lounge.lounge_id}
             type={lounge.type}
-            position={new Vector3(0, 0, 0)}
+            position={
+              loungeList.length < 4
+                ? modelLocationWithNew[index]
+                : modelLocation[index]
+            }
             label={lounge.name}
             onClick={() => navigate(`${URL.lounge}/${lounge.lounge_id}`)}
           />
