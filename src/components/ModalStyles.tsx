@@ -41,6 +41,7 @@ export const DeleteModalContents = styled.div`
 export const ModalButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
   gap: 20px;
   margin-top: 25px;
 `
