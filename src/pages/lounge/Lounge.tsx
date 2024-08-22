@@ -80,7 +80,7 @@ export default function Lounge() {
             <Icon
               src={plus}
               onClick={() => {
-                navigate(URL.newObjet)
+                navigate(`${URL.lounge}/${loungeId}/objet/new`)
               }}
             />
           </IconContainer>

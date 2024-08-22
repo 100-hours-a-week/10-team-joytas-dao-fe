@@ -37,6 +37,8 @@ export default function NewLounge() {
   const models = [Model1, Model2, Model3]
   const navigate = useNavigate()
 
+  const nickname = localStorage.getItem('nickname') || '익명'
+
   const handleLeftClick = () => {
     setCurrentModelIndex((prevIndex) =>
       prevIndex === 0 ? models.length - 1 : prevIndex - 1
@@ -145,7 +147,7 @@ export default function NewLounge() {
           </InputContainer>
           <InputContainer>
             <InputTitle>라운지 관리자</InputTitle>
-            <Input readOnly value='홍은신이다' />
+            <Input readOnly value={nickname} />
           </InputContainer>
           <LoungeModel>
             <Canvas
