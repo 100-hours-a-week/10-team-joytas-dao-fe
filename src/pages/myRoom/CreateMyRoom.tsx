@@ -13,11 +13,13 @@ import { OrbitControls } from '@react-three/drei'
 import { useEffect, useState } from 'react'
 import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
 import { GlobalSubTitle, GlobalTitle } from '../../global/globalStyles.tsx'
-import { APIs } from '../../static.ts'
+import { APIs, URL } from '../../static.ts'
+import { useNavigate } from 'react-router-dom'
 
 export default function CreateMyRoom() {
   const [selectedModelType, setSelectedModelType] = useState('R0001')
   const [selectedModel, setSelectedModel] = useState<MyRoomModel>()
+  const navigate = useNavigate()
 
   useEffect(() => {
     setSelectedModel(
@@ -37,8 +39,12 @@ export default function CreateMyRoom() {
         body: JSON.stringify({ type: selectedModelType }),
       })
 
-      const responseData = await response.json()
-      console.log('마이룸 생성 응답: ', responseData)
+      if (response.status === 201) {
+        alert('마이룸이 생성되었습니다.')
+        navigate(URL.myRoom)
+      } else {
+        alert('마이룸 생성에 실패했습니다. 다시 시도해주세요.')
+      }
     } catch (error) {
       console.error('마이룸 생성 오류: ', error)
     }

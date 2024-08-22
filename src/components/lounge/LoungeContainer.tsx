@@ -98,7 +98,7 @@ export default function LoungeContainer() {
   return (
     // TODO: 라운지 모델 위치 조정 필요
     <Canvas
-      style={{ width: '324px', height: '600px' }}
+      style={{ width: '324px', height: '600px', cursor: 'pointer' }}
       camera={{ position: [0, 0, 8], fov: 50 }}
     >
       <ambientLight intensity={1} />
@@ -118,6 +118,7 @@ export default function LoungeContainer() {
             type={lounge.type}
             position={new Vector3(0, 0, 0)}
             label={lounge.name}
+            onClick={() => navigate(`${URL.lounge}/${lounge.lounge_id}`)}
           />
         ))}
       </group>
