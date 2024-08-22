@@ -1,28 +1,31 @@
+import { useState, useEffect, useRef } from 'react'
 import Layout from '../../components/Layout'
 import {
   TopContainer,
   IconContainer,
-  Icon,
   LoungeTitle,
   Objets,
+  Icon,
 } from './LoungeStyles'
 import { Skeleton } from 'antd'
-import invite from '../../assets/images/invite.png'
-import plus from '../../assets/images/plus.png'
+import menu from '../../assets/images/menu.png'
 import LoungeObjets from './LoungeObjets'
 import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
-import { useNavigate, useParams } from 'react-router-dom'
-import { APIs, URL } from '../../static'
-import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { APIs } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
+import LoungeDrop from '../../components/lounge/LoungeDrop'
 
 export default function Lounge() {
-  const loungeId = useParams().lid
-  const navigate = useNavigate()
+  const { lid: loungeId } = useParams<{ lid: string }>()
 
   const [loungeName, setLoungeName] = useState('')
-  const [objets, setObjets] = useState([])
+  const [objets, setObjets] = useState<any[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [isDrop, setIsDrop] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
+
+  const dropRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const fetchLounge = async () => {
@@ -40,6 +43,9 @@ export default function Lounge() {
           const responseData = await response.json()
           setLoungeName(responseData.data.name)
           setObjets(responseData.data.objets)
+          setIsOwner(
+            responseData.data.user_id === Number(localStorage.getItem('userId'))
+          )
         }
       } catch (error) {
         console.error('Failed to fetch lounge', error)
@@ -49,7 +55,25 @@ export default function Lounge() {
     }
 
     fetchLounge()
-  }, [])
+  }, [loungeId])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropRef.current && !dropRef.current.contains(event.target as Node)) {
+        setIsDrop(false)
+      }
+    }
+
+    if (isDrop) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDrop])
 
   return (
     <Layout>
@@ -70,19 +94,13 @@ export default function Lounge() {
               loungeName
             )}
           </LoungeTitle>
-          <IconContainer>
-            <Icon
-              src={invite}
-              onClick={() => {
-                navigate(URL.loungeInvite)
-              }}
-            />
-            <Icon
-              src={plus}
-              onClick={() => {
-                navigate(`${URL.lounge}/${loungeId}/objet/new`)
-              }}
-            />
+          <IconContainer onClick={() => setIsDrop(!isDrop)}>
+            <Icon src={menu} />
+            {isDrop && (
+              <div ref={dropRef} onClick={(e) => e.stopPropagation()}>
+                <LoungeDrop isOwner={isOwner} />
+              </div>
+            )}
           </IconContainer>
         </TopContainer>
         <GlobalSubTitle>
