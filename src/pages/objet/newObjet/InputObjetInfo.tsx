@@ -247,6 +247,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       />
       <InputItem
         label='오브제 이름'
+        className='name'
         input={
           <input
             type='text'
