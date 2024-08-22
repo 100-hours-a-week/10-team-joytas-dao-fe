@@ -124,7 +124,8 @@ const VideoContainer = () => {
   )
 
   const token = localStorage.getItem('access_token')
-  const nickname = useUserStore((state) => state.nickname)
+  const nickname = localStorage.getItem('nickname')
+  const profile_image = localStorage.getItem('profile_image')
 
   // TODO : url에서 추출
   const objet_id = 2
@@ -135,6 +136,7 @@ const VideoContainer = () => {
       query: {
         token,
         objet_id,
+        profile_image,
       },
     })
 
@@ -148,6 +150,7 @@ const VideoContainer = () => {
     socketRef.current.on(
       'all_users',
       (allUsers: Array<{ id: string; nickname: string }>) => {
+        console.log('All users:', allUsers)
         allUsers.forEach(async (user) => {
           if (!localStreamRef.current) return
           const pc = createPeerConnection(user.id, user.nickname)
