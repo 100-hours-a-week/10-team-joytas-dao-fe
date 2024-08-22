@@ -4,9 +4,23 @@ import Video from './Video'
 
 interface WebRTCUser {
   id: string
-  email: string
+  nickname: string
   stream: MediaStream
 }
+
+interface SocketError {
+  error: {
+    status: number
+    message: string
+  }
+}
+
+// 테스트 시그널링 서버
+const SOCKET_SERVER_URL =
+  'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
+
+/* 배포 시그널링 서버 */
+// const SOCKET_SERVER_URL = 'https://api.joytas.kro.kr/signaling'
 
 const pc_config = {
   iceServers: [
@@ -20,13 +34,6 @@ const pc_config = {
     },
   ],
 }
-
-// 로컬 환경 소켓 서버
-// const SOCKET_SERVER_URL = 'https://localhost:8083'
-
-// 배포 환경 소켓 서버
-const SOCKET_SERVER_URL =
-  'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
 
 const VideoContainer = () => {
   const socketRef = useRef<SocketIOClient.Socket>()
@@ -45,11 +52,19 @@ const VideoContainer = () => {
         },
       })
       localStreamRef.current = localStream
+
       if (localVideoRef.current) localVideoRef.current.srcObject = localStream
-      if (!socketRef.current) return
-      socketRef.current.emit('join_room', {
-        room: '1234',
-        email: 'jikky.kim',
+
+      if (!socketRef.current?.connected) {
+        console.log('signaling failed')
+        return
+      }
+
+      console.log('signaling succeeded')
+
+      socketRef.current.emit('join_objet', {
+        objet_id,
+        nickname,
       })
     } catch (e) {
       console.log(`getUserMedia error: ${e}`)
@@ -57,7 +72,7 @@ const VideoContainer = () => {
   }, [])
 
   const createPeerConnection = useCallback(
-    (socketID: string, email: string) => {
+    (socketID: string, nickname: string) => {
       try {
         const pc = new RTCPeerConnection(pc_config)
 
@@ -82,7 +97,7 @@ const VideoContainer = () => {
               .filter((user) => user.id !== socketID)
               .concat({
                 id: socketID,
-                email,
+                nickname,
                 stream: e.streams[0],
               })
           )
@@ -107,16 +122,34 @@ const VideoContainer = () => {
     []
   )
 
+  const token = localStorage.getItem('access_token')
+  const nickname = JSON.parse(localStorage.getItem('profile') || '{}').nickname
+
+  // TODO : url에서 추출
+  const objet_id = 2
+
   useEffect(() => {
-    socketRef.current = io.connect(SOCKET_SERVER_URL)
+    socketRef.current = io.connect(SOCKET_SERVER_URL, {
+      transports: ['websocket'],
+      query: {
+        token,
+        objet_id,
+      },
+    })
+
     getLocalStream()
+
+    socketRef.current.on('error_message', (data: SocketError) => {
+      console.error('Error:', data.error)
+      alert(`Error: ${data.error.message}`)
+    })
 
     socketRef.current.on(
       'all_users',
-      (allUsers: Array<{ id: string; email: string }>) => {
+      (allUsers: Array<{ id: string; nickname: string }>) => {
         allUsers.forEach(async (user) => {
           if (!localStreamRef.current) return
-          const pc = createPeerConnection(user.id, user.email)
+          const pc = createPeerConnection(user.id, user.nickname)
           if (!(pc && socketRef.current)) return
           pcsRef.current = { ...pcsRef.current, [user.id]: pc }
           try {
@@ -129,7 +162,7 @@ const VideoContainer = () => {
             socketRef.current.emit('offer', {
               sdp: localSdp,
               offerSendID: socketRef.current.id,
-              offerSendEmail: 'offerSend@sample.com',
+              offerSendNickname: nickname,
               offerReceiveID: user.id,
             })
           } catch (e) {
@@ -144,12 +177,12 @@ const VideoContainer = () => {
       async (data: {
         sdp: RTCSessionDescription
         offerSendID: string
-        offerSendEmail: string
+        offerSendNickname: string
       }) => {
-        const { sdp, offerSendID, offerSendEmail } = data
+        const { sdp, offerSendID, offerSendNickname } = data
         console.log('get offer')
         if (!localStreamRef.current) return
-        const pc = createPeerConnection(offerSendID, offerSendEmail)
+        const pc = createPeerConnection(offerSendID, offerSendNickname)
         if (!(pc && socketRef.current)) return
         pcsRef.current = { ...pcsRef.current, [offerSendID]: pc }
         try {
@@ -213,7 +246,6 @@ const VideoContainer = () => {
         delete pcsRef.current[user.id]
       })
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [createPeerConnection, getLocalStream])
 
   return (
@@ -235,7 +267,7 @@ const VideoContainer = () => {
         autoPlay
       />
       {users.map((user, index) => (
-        <Video key={index} email={user.email} stream={user.stream} />
+        <Video key={index} nickname={user.nickname} stream={user.stream} />
       ))}
     </>
   )

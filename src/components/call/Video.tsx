@@ -2,12 +2,12 @@ import { useEffect, useRef, useState } from 'react'
 import { Container, VideoContainer, UserLabel } from './VideoStyles'
 
 interface Props {
-  email: string
+  nickname: string
   stream: MediaStream
   muted?: boolean
 }
 
-const Video = ({ email, stream, muted }: Props) => {
+const Video = ({ nickname, stream, muted }: Props) => {
   const ref = useRef<HTMLVideoElement>(null)
   const [isMuted, setIsMuted] = useState<boolean>(false)
 
@@ -19,7 +19,7 @@ const Video = ({ email, stream, muted }: Props) => {
   return (
     <Container>
       <VideoContainer ref={ref} muted={isMuted} autoPlay controls />
-      <UserLabel>{email}</UserLabel>
+      <UserLabel>{nickname}</UserLabel>
     </Container>
   )
 }
