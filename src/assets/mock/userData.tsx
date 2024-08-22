@@ -6,101 +6,41 @@ export interface UserProps {
   kakao_id: string
   nickname: string
   profile_url: string | null
-  reason: string | null
-  reason_detail: string | null
   status: string
 }
 
 export const MOCK_USERS: UserProps[] = [
   {
     user_id: 1,
-    created_at: '2024-08-19 17:49:49.171721',
+    created_at: '2024-08-22 16:13:48.927009',
     deleted_at: null,
-    updated_at: '2024-08-21 14:21:20.306538',
-    kakao_id: '3665526301',
-    nickname: '아임소해피',
+    updated_at: '2024-08-22 16:33:11.179943',
+    kakao_id: '3670315073',
+    nickname: '홍은신이에요',
     profile_url:
-      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/99ab4720-b0b8-4afc-85dd-7725af09e77f',
-    reason: null,
-    reason_detail: null,
-    status: 'ACTIVE',
+      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/c33c2899-6d35-4d53-9f4d-fe16389e3898',
+    status: 'DELETED',
   },
   {
     user_id: 2,
-    created_at: '2024-08-19 17:49:57.518397',
+    created_at: '2024-08-22 16:13:48.926285',
     deleted_at: null,
-    updated_at: '2024-08-21 16:15:28.844561',
-    kakao_id: '3670315073',
+    updated_at: '2024-08-22 16:21:38.841360',
+    kakao_id: '3665526301',
     nickname: '홍은신이다',
     profile_url:
-      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/3d88b363-79f9-42d4-b4bb-ad1e974522f7',
-    reason: null,
-    reason_detail: null,
+      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/d21c9e65-20c6-47b3-9a65-473582de0d82',
     status: 'ACTIVE',
   },
   {
     user_id: 3,
-    created_at: '2024-08-19 17:54:50.572114',
+    created_at: '2024-08-22 16:15:50.909226',
     deleted_at: null,
-    updated_at: '2024-08-21 20:15:31.018675',
+    updated_at: '2024-08-22 16:16:25.541529',
     kakao_id: '3670669999',
-    nickname: '제이미',
+    nickname: '제이미짱',
     profile_url:
-      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/4cda765d-3859-414b-a578-006330eaca8d',
-    reason: null,
-    reason_detail: null,
+      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/16350f04-7e4c-4097-b515-59390745a5c3',
     status: 'ACTIVE',
-  },
-  {
-    user_id: 4,
-    created_at: '2024-08-19 19:29:59.639659',
-    deleted_at: null,
-    updated_at: '2024-08-19 19:29:59.639659',
-    kakao_id: '3670788937',
-    nickname: '지직지키',
-    profile_url:
-      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/4cda765d-3859-414b-a578-006330eaca8d',
-    reason: null,
-    reason_detail: null,
-    status: 'ACTIVE_FIRST_LOGIN',
-  },
-  {
-    user_id: 5,
-    created_at: '2024-08-19 20:30:40.420953',
-    deleted_at: null,
-    updated_at: '2024-08-19 20:30:40.420953',
-    kakao_id: '3670507341',
-    nickname: '준투는배고파',
-    profile_url:
-      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/4cda765d-3859-414b-a578-006330eaca8d',
-    reason: null,
-    reason_detail: null,
-    status: 'ACTIVE_FIRST_LOGIN',
-  },
-  {
-    user_id: 6,
-    created_at: '2024-08-20 20:07:59.224114',
-    deleted_at: null,
-    updated_at: '2024-08-20 20:07:59.224114',
-    kakao_id: '3665693002',
-    nickname: 'DAO-67053dcb',
-    profile_url:
-      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/3d88b363-79f9-42d4-b4bb-ad1e974522f7',
-    reason: null,
-    reason_detail: null,
-    status: 'ACTIVE_FIRST_LOGIN',
-  },
-  {
-    user_id: 7,
-    created_at: '2024-08-21 10:40:39.296805',
-    deleted_at: null,
-    updated_at: '2024-08-21 10:40:39.296805',
-    kakao_id: '3672900532',
-    nickname: '배고파요',
-    profile_url:
-      'https://dao-dev-s3.s3.ap-northeast-2.amazonaws.com/99ab4720-b0b8-4afc-85dd-7725af09e77f',
-    reason: null,
-    reason_detail: null,
-    status: 'ACTIVE_FIRST_LOGIN',
   },
 ]

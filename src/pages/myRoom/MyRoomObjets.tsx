@@ -26,7 +26,11 @@ export default function MyRoomObjet() {
   const [objets, setObjets] = useState([])
   const [lounges, setLounges] = useState<Lounge[]>([])
   const [isLoading, setIsLoading] = useState(true)
-  const [selectedLoungeId, setSelectedLoungeId] = useState(0)
+  const [selectedLounge, setSelectedLounge] = useState<Lounge>({
+    lounge_id: 0,
+    name: '전체',
+    type: '전체',
+  })
 
   useEffect(() => {
     fetchObjetsAll()
@@ -109,7 +113,12 @@ export default function MyRoomObjet() {
   const handleSelectLounge = (loungeId: number) => {
     setIsModalOpen(false)
     fetchObjetsByLounge(loungeId)
-    setSelectedLoungeId(loungeId)
+    const selectedLounge = lounges.find(
+      (lounge) => lounge.lounge_id === loungeId
+    )
+    if (selectedLounge) {
+      setSelectedLounge(selectedLounge)
+    }
   }
 
   if (isLoading) {
@@ -129,7 +138,7 @@ export default function MyRoomObjet() {
 
         <GloablContainer16>
           <TopContainer>
-            <LoungeTitle>전체</LoungeTitle>
+            <LoungeTitle>{selectedLounge.name}</LoungeTitle>
             <IconContainer>
               <Icon
                 src={MoreImg}
@@ -148,7 +157,7 @@ export default function MyRoomObjet() {
             <LoungeListModal
               onClose={() => setIsModalOpen(false)}
               handleSelectLounge={handleSelectLounge}
-              selectedLounge={selectedLoungeId}
+              selectedLounge={selectedLounge.lounge_id}
               lounges={lounges}
             />
           )}

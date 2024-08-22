@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   DeleteModalContainer,
   DeleteModalContents,
@@ -108,7 +108,7 @@ export function LoungeListModal({
     useState<number>(selectedLounge)
 
   const handleSelectItem = () => {
-    if (!selectedLoungeId) {
+    if (!selectedLoungeId && selectedLoungeId !== 0) {
       alert('라운지를 선택해주세요.')
     } else {
       handleSelectLounge(selectedLoungeId)
