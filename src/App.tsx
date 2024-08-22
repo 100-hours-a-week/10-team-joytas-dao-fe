@@ -36,7 +36,10 @@ function App() {
           <Route path={URL.terms} element={<Terms />}></Route>
           <Route path={URL.delete} element={<UserDelete />}></Route>
           <Route path={URL.privacy} element={<Privacy />}></Route>
-          <Route path={URL.newObjet} element={<NewObjet />}></Route>
+          <Route
+            path={`${URL.lounge}/:lid/objet/new`}
+            element={<NewObjet />}
+          ></Route>
           <Route path={`${URL.lounge}/:id`} element={<Lounge />}></Route>
           <Route path={URL.firstProfile} element={<FirstProfile />}></Route>
           <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
@@ -44,9 +47,12 @@ function App() {
           <Route path={URL.myRoom} element={<MyRoom />}></Route>
           <Route path={URL.loungeInvite} element={<UserList />}></Route>
           <Route path={URL.objetCall} element={<ObjetCall />}></Route>
-          <Route path={`${URL.objet}/:id`} element={<ObjetDetail />}></Route>
           <Route
-            path={`${URL.objet}/:id/update`}
+            path={`${URL.lounge}/:lid/objet/:oid`}
+            element={<ObjetDetail />}
+          ></Route>
+          <Route
+            path={`${URL.lounge}/:lid/objet/:id/update`}
             element={<UpdateObjet />}
           ></Route>
           <Route path={URL.myRoomObjet} element={<MyRoomObjet />}></Route>

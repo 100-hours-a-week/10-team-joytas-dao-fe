@@ -1,3 +1,5 @@
+import { useNavigate } from 'react-router-dom'
+import { APIs } from '../static'
 import {
   DeleteModalContainer,
   DeleteModalContents,
@@ -17,6 +19,7 @@ interface MenuProps {
 
 interface DeleteProps {
   onClose: () => void
+  handleDelete: () => void
 }
 
 interface LoungeListProps {
@@ -32,7 +35,7 @@ export function MenuModal({ onClickUpdate, onClickDelete }: MenuProps) {
   )
 }
 
-export function DeleteModal({ onClose }: DeleteProps) {
+export function DeleteModal({ onClose, handleDelete }: DeleteProps) {
   return (
     <DeleteModalContainer>
       <DeleteModalTitle>정말 삭제하시겠습니까?</DeleteModalTitle>
@@ -44,7 +47,7 @@ export function DeleteModal({ onClose }: DeleteProps) {
           <ModalButton className='cancel' onClick={onClose}>
             취소
           </ModalButton>
-          <ModalButton className='confirm' onClick={onClose}>
+          <ModalButton className='confirm' onClick={handleDelete}>
             확인
           </ModalButton>
         </ModalButtonContainer>

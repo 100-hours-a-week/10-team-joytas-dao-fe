@@ -13,34 +13,31 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 import type { MentionsProps } from 'antd'
 import { OptionProps } from 'antd/es/mentions'
 import { APIs } from '../../../static'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { MOCK_USERS } from '../../../assets/mock/userData'
 
 interface InputObjetInfoProps {
   selectedType: string
 }
 
-interface SharedMember {
-  id: number
+interface SharedMembersProps {
+  user_id: number
   nickname: string
 }
 
-const MOCK_USERS: SharedMember[] = [
-  { id: 1, nickname: 'jun' },
-  { id: 2, nickname: 'jamie' },
-  { id: 3, nickname: 'erica' },
-  { id: 4, nickname: 'hong' },
-  { id: 5, nickname: 'jikky' },
-]
-
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
-  const loungeId = 1
+  const loungeId = useLocation().pathname.split('/')[2]
   const navigate = useNavigate()
 
-  const [sharedMembers, setSharedMembers] = useState<SharedMember[]>([])
+  const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState('')
+
+  const [nameValid, setNameValid] = useState(false)
+  const [descriptionValid, setDescriptionValid] = useState(false)
+  const [imageValid, setImageValid] = useState(false)
 
   const [mentionValue, setMentionValue] = useState<string>('')
   const [memberErrorMessage, setMemberErrorMessage] = useState('')
@@ -65,7 +62,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const onMentionSelect = (option: OptionProps) => {
     setSharedMembers([
       ...sharedMembers,
-      { id: parseInt(option.key, 10), nickname: option.value as string },
+      { user_id: parseInt(option.key, 10), nickname: option.value as string },
     ])
     setMentionValue('')
   }
@@ -80,11 +77,11 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
     switch (field) {
       case 'objetName':
         setName(value)
-        validateName(value)
+        setNameValid(validateName(value))
         break
       case 'objetDescription':
         setDescription(value)
-        validateDescription(value)
+        setDescriptionValid(validateDescription(value))
         break
       default:
         break
@@ -97,6 +94,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       const url = URL.createObjectURL(file)
       setImageUrl(url)
       setImage(file)
+      setImageValid(true)
     }
   }
 
@@ -154,6 +152,15 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       setImageErrorMessage('오브제 이미지를 첨부해주세요.')
     }
 
+    if (
+      sharedMembers.length === 0 ||
+      !nameValid ||
+      !descriptionValid ||
+      !imageValid
+    ) {
+      return
+    }
+
     const formData = new FormData()
     if (image) {
       formData.append('lounge_id', loungeId.toString())
@@ -163,7 +170,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       formData.append('objet_image', image)
       formData.append(
         'sharers',
-        JSON.stringify(sharedMembers.map((member) => member.id))
+        JSON.stringify(sharedMembers.map((member) => member.user_id))
       )
     }
 
@@ -207,7 +214,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
                 (user) => !sharedMembers.includes(user)
               ).map((user) => ({
                 value: user.nickname,
-                key: user.id.toString(),
+                key: user.user_id.toString(),
                 label: user.nickname,
               }))}
             />
