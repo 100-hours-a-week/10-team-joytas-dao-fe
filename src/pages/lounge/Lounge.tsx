@@ -89,11 +89,7 @@ export default function Lounge() {
           친구를 초대하고 오브제로 추억을 공유해보세요!
         </GlobalSubTitle>
         <Objets>
-          {isLoading ? (
-            <LoadingLottie />
-          ) : (
-            <LoungeObjets type='lounge' objets={objets} />
-          )}
+          {isLoading ? <LoadingLottie /> : <LoungeObjets objets={objets} />}
         </Objets>
       </GloablContainer16>
     </Layout>

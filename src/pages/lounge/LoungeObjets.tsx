@@ -16,14 +16,15 @@ interface RandomModelsProps {
 }
 
 interface ObjetsProps {
-  type: string
   objets?: Objet[]
 }
 
 interface Objet {
   objet_id: number
-  type: string
+  objet_type: string
   name: string
+  description: string
+  objet_image: File
 }
 
 function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
@@ -49,7 +50,7 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
           Math.random() * 2 * Math.PI
         )
 
-        switch (objet.type) {
+        switch (objet.objet_type) {
           case 'O0001':
             mesh.scale.set(19.2, 19.2, 19.2)
             break
@@ -148,7 +149,7 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
   )
 }
 
-export default function LoungeObjets({ type, objets }: ObjetsProps) {
+export default function LoungeObjets({ objets }: ObjetsProps) {
   const navigate = useNavigate()
 
   const loungeId = useParams().lid
@@ -172,10 +173,8 @@ export default function LoungeObjets({ type, objets }: ObjetsProps) {
   }
 
   return (
-    type === 'lounge' && (
-      <Canvas>
-        <LoungeCanvas objets={objets} />
-      </Canvas>
-    )
+    <Canvas>
+      <LoungeCanvas objets={objets} />
+    </Canvas>
   )
 }
