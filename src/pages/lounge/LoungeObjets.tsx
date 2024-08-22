@@ -7,7 +7,7 @@ import { ObjetModel3 } from '../../assets/models/ObjetModel3'
 import { useRef, useMemo, useEffect } from 'react'
 import NoDataLottie from '../../components/lotties/NoDataLottie'
 import { NoDataContainer, InnerText, GoObjetButton } from './LoungeStyles'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { URL } from '../../static'
 
 interface RandomModelsProps {
@@ -151,7 +151,7 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
 export default function LoungeObjets({ type, objets }: ObjetsProps) {
   const navigate = useNavigate()
 
-  const loungeId = useLocation().pathname.split('/')[2]
+  const loungeId = useParams().lid
 
   const handleClickGoObjet = () => {
     navigate(`${URL.lounge}/${loungeId}/objet/new`)
