@@ -15,16 +15,12 @@ interface SocketError {
   }
 }
 
-/* 로컬 시그널링 서버 */
-const SOCKET_SERVER_URL = 'https://localhost:8083'
-
-/* 테스트 시그널링 서버 */
-// const SOCKET_SERVER_URL =
-//   'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
+// 테스트 시그널링 서버
+const SOCKET_SERVER_URL =
+  'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
 
 /* 배포 시그널링 서버 */
-// const SOCKET_SERVER_URL =
-//   'https:api.joytas.kro.kr/signaling'
+// const SOCKET_SERVER_URL = 'https://api.joytas.kro.kr/signaling'
 
 const pc_config = {
   iceServers: [
@@ -126,19 +122,11 @@ const VideoContainer = () => {
     []
   )
 
-  /****** 테스트용 INVALID TOKEN ******/
-  // const token =
-  //   'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEasdasdasdImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
+  const token = localStorage.getItem('access_token')
+  const nickname = JSON.parse(localStorage.getItem('profile') || '{}').nickname
 
-  /****** 테스트용 VALID TOKEN ******/
-  const token =
-    'eyJhbGciOiJIUzI1NiJ9.eyJtZW1iZXJfaWQiOjEwMDYsInN1YiI6ImFjY2Vzc190b2tlbiIsImlhdCI6MTcyNDIwNzcwMCwiZXhwIjoxNzI1MTk1MzU1fQ.YT4RLKHP2QPQWi8DAwhnlK0WqB8H-FU3k5Tc5tYIj2I'
-
-  /****** 진짜 써야할 토큰 /******/
-  // const token = localStorage.getItem('access_token')
-
-  const objet_id = 1
-  const nickname = 'joytas'
+  // TODO : url에서 추출
+  const objet_id = 2
 
   useEffect(() => {
     socketRef.current = io.connect(SOCKET_SERVER_URL, {
