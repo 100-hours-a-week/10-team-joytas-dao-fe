@@ -351,7 +351,11 @@ export default function UpdateObjet() {
           />
 
           <ChooseContainer>
-            <GenerateButton onClick={() => navigate(URL.objet + '/' + objetId)}>
+            <GenerateButton
+              onClick={() =>
+                navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`)
+              }
+            >
               취소하기
             </GenerateButton>
             <GenerateButton onClick={handleUpdateObjet}>

@@ -12,7 +12,7 @@ import { Tag, Mentions } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import type { MentionsProps } from 'antd'
 import { OptionProps } from 'antd/es/mentions'
-import { APIs } from '../../../static'
+import { APIs, URL } from '../../../static'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { MOCK_USERS } from '../../../assets/mock/userData'
 
@@ -90,10 +90,18 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
+
     if (file && validateImage(file)) {
-      const url = URL.createObjectURL(file)
-      setImageUrl(url)
       setImage(file)
+
+      const reader = new FileReader()
+      reader.onload = (data) => {
+        if (data.target?.result) {
+          setImageUrl(data.target.result as string)
+        }
+      }
+      reader.readAsDataURL(file)
+
       setImageValid(true)
     }
   }
@@ -189,7 +197,9 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         const objetId = responseData.data.objet_id
 
         alert('오브제 생성 성공!')
-        navigate(`/objet/${objetId}`, { replace: true })
+        navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
+          replace: true,
+        })
       }
     } catch (error) {
       console.log('오브제 생성 실패: ', error)
