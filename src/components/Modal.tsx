@@ -1,5 +1,3 @@
-import { useNavigate } from 'react-router-dom'
-import { APIs } from '../static'
 import {
   DeleteModalContainer,
   DeleteModalContents,
@@ -20,6 +18,7 @@ interface MenuProps {
 interface DeleteProps {
   onClose: () => void
   handleDelete: () => void
+  isClick?: boolean
 }
 
 interface LoungeListProps {
@@ -48,6 +47,38 @@ export function DeleteModal({ onClose, handleDelete }: DeleteProps) {
             취소
           </ModalButton>
           <ModalButton className='confirm' onClick={handleDelete}>
+            확인
+          </ModalButton>
+        </ModalButtonContainer>
+      </DeleteModalContents>
+    </DeleteModalContainer>
+  )
+}
+
+export function DeleteUserModal({
+  isClick,
+  onClose,
+  handleDelete,
+}: DeleteProps) {
+  return (
+    <DeleteModalContainer>
+      <DeleteModalTitle>정말 탈퇴하시겠습니까?</DeleteModalTitle>
+      <DeleteModalContents>
+        <span style={{ fontSize: '10px', lineHeight: '1.2' }}>
+          *회원이 작성한 컨텐츠는 자동적으로 삭제되지 않으며, <br /> 만일 삭제를
+          원하시면 탈퇴 이전에 삭제가 필요합니다. <br /> 탈퇴 후 동일한 아이디로
+          재가입이 어렵습니다. <br />
+          회원탈퇴를 하시면 위 내용에 동의하는 것으로 간주됩니다.
+        </span>
+        <ModalButtonContainer>
+          <ModalButton className='cancel' onClick={onClose}>
+            취소
+          </ModalButton>
+          <ModalButton
+            disabled={isClick}
+            className='confirm'
+            onClick={handleDelete}
+          >
             확인
           </ModalButton>
         </ModalButtonContainer>

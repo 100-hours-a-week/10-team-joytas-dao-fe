@@ -53,7 +53,7 @@ export default function ModifyProfile() {
   }
 
   const handleClickDelete = () => {
-    navigate(URL.delete) // 회원탈퇴 페이지로 이동
+    navigate(URL.withdraw)
   }
 
   // 닉네임 유효성 검사 함수

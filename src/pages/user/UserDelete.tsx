@@ -9,97 +9,174 @@ import {
   TextArea,
   DetailReason,
   Button,
+  Deem,
 } from './UserDeleteStyles'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { RedTextLong } from '../lounge/LoungeStyles'
+import { RedText } from '../objet/ObjetStyles'
+import { APIs, URL } from '../../static'
+import { DeleteUserModal } from '../../components/Modal'
 
 export default function UserDelete() {
+  const navigate = useNavigate()
+  const [isReasonNull, setIsReasonNull] = useState(false)
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isClick, setIsClick] = useState(false)
   const [reasons, setReasons] = useState({
-    noInterest: false,
-    lowUsage: false,
-    inconvenience: false,
-    noSpecificReason: false,
-    other: false,
+    W0001: false,
+    W0002: false,
+    W0003: false,
+    W0004: false,
+    W0005: false,
   })
+  const [detail, setDetail] = useState('')
 
-  const [detailedReason, setDetailedReason] = useState('')
+  useEffect(() => {
+    setIsReasonNull(
+      Object.values(reasons).filter((checked) => checked).length === 0
+    )
+  }, [reasons])
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, checked } = event.target
+    const { value, checked } = event.target
     setReasons((prevReasons) => ({
       ...prevReasons,
-      [name]: checked,
+      [value]: checked,
     }))
   }
 
   const handleTextAreaChange = (
     event: React.ChangeEvent<HTMLTextAreaElement>
   ) => {
-    setDetailedReason(event.target.value)
+    setDetail(event.target.value)
   }
 
-  const handleSubmit = () => {
-    // 제출 로직 추가
-    console.log('탈퇴 이유:', reasons)
-    console.log('상세 이유:', detailedReason)
+  const handleClickDeleteButton = () => {
+    console.log('isReasonNull? : ' + isReasonNull)
+    if (!isReasonNull) {
+      setIsDeleteModalVisible(true)
+    }
+  }
+
+  const handleSubmit = async () => {
+    setIsClick(true)
+    try {
+      const trueReasons = (
+        Object.keys(reasons) as Array<keyof typeof reasons>
+      ).filter((key) => reasons[key])
+
+      const response = await fetch(APIs.withdraw, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({
+          detail,
+          reason: trueReasons,
+        }),
+      })
+
+      if (response.status === 200) {
+        alert('회원탈퇴 성공')
+        localStorage.removeItem('access_token')
+        localStorage.removeItem('profileImage')
+        localStorage.removeItem('nickname')
+        localStorage.removeItem('userId')
+        navigate(URL.home)
+      }
+    } catch (error) {
+      console.error('Failed to withdraw user', error)
+      alert('회원탈퇴 실패')
+    } finally {
+      setIsClick(false)
+    }
   }
 
   return (
     <Layout>
-      <GloablContainer32>
-        <Title>회원탈퇴</Title>
-        <SubTitle>탈퇴 이유</SubTitle>
-        <CheckboxGroup>
-          <CheckboxLabel>
-            <CheckboxInput
-              name='noInterest'
-              checked={reasons.noInterest}
-              onChange={(event) => handleCheckboxChange(event)}
+      <>
+        <GloablContainer32>
+          <Title>회원탈퇴</Title>
+          <SubTitle style={{ display: 'flex', alignItems: 'flex-start' }}>
+            탈퇴 이유<RedText>*</RedText>
+          </SubTitle>
+          <CheckboxGroup>
+            <CheckboxLabel>
+              <CheckboxInput
+                name='noInterest'
+                value={'W0001'}
+                checked={reasons.W0001}
+                onChange={(event) => handleCheckboxChange(event)}
+              />
+              서비스에 대한 흥미를 잃었어요
+            </CheckboxLabel>
+            <CheckboxLabel>
+              <CheckboxInput
+                name='lowUsage'
+                checked={reasons.W0002}
+                value={'W0002'}
+                onChange={(event) => handleCheckboxChange(event)}
+              />
+              사용 빈도가 낮아요
+            </CheckboxLabel>
+            <CheckboxLabel>
+              <CheckboxInput
+                name='inconvenience'
+                checked={reasons.W0003}
+                value={'W0003'}
+                onChange={(event) => handleCheckboxChange(event)}
+              />
+              이용이 불편하고 장애가 많아요
+            </CheckboxLabel>
+            <CheckboxLabel>
+              <CheckboxInput
+                name='noSpecificReason'
+                checked={reasons.W0004}
+                value={'W0004'}
+                onChange={(event) => handleCheckboxChange(event)}
+              />
+              특별한 이유가 없어요
+            </CheckboxLabel>
+            <CheckboxLabel>
+              <CheckboxInput
+                name='other'
+                checked={reasons.W0005}
+                value={'W0004'}
+                onChange={(event) => handleCheckboxChange(event)}
+              />
+              기타
+            </CheckboxLabel>
+          </CheckboxGroup>
+          <RedTextLong style={{ marginTop: '15px' }}>
+            {isReasonNull ? '탈퇴 이유를 1개 이상 체크해주세요.' : null}
+          </RedTextLong>
+          <DetailReason>
+            <SubTitle style={{ marginTop: '0px' }}>
+              탈퇴 상세 이유 (선택)
+            </SubTitle>
+            <TextArea
+              maxLength={200}
+              placeholder='상세 이유를 입력해주세요'
+              value={detail}
+              onChange={(event) => handleTextAreaChange(event)}
             />
-            서비스에 대한 흥미를 잃었어요
-          </CheckboxLabel>
-          <CheckboxLabel>
-            <CheckboxInput
-              name='lowUsage'
-              checked={reasons.lowUsage}
-              onChange={(event) => handleCheckboxChange(event)}
+            <Button onClick={handleClickDeleteButton}>탈퇴하기</Button>
+          </DetailReason>
+        </GloablContainer32>
+        {isDeleteModalVisible && !isReasonNull && (
+          <>
+            <Deem />
+            <DeleteUserModal
+              onClose={() => setIsDeleteModalVisible(false)}
+              handleDelete={handleSubmit}
+              isClick={isClick}
             />
-            사용 빈도가 낮아요
-          </CheckboxLabel>
-          <CheckboxLabel>
-            <CheckboxInput
-              name='inconvenience'
-              checked={reasons.inconvenience}
-              onChange={(event) => handleCheckboxChange(event)}
-            />
-            이용이 불편하고 장애가 많아요
-          </CheckboxLabel>
-          <CheckboxLabel>
-            <CheckboxInput
-              name='noSpecificReason'
-              checked={reasons.noSpecificReason}
-              onChange={(event) => handleCheckboxChange(event)}
-            />
-            특별한 이유가 없어요
-          </CheckboxLabel>
-          <CheckboxLabel>
-            <CheckboxInput
-              name='other'
-              checked={reasons.other}
-              onChange={(event) => handleCheckboxChange(event)}
-            />
-            기타
-          </CheckboxLabel>
-        </CheckboxGroup>
-        <DetailReason>
-          <SubTitle>탈퇴 상세 이유 (선택)</SubTitle>
-          <TextArea
-            placeholder='상세 이유를 입력해주세요'
-            value={detailedReason}
-            onChange={(event) => handleTextAreaChange(event)}
-          />
-          <Button onClick={handleSubmit}>제출</Button>
-        </DetailReason>
-      </GloablContainer32>
+          </>
+        )}
+      </>
     </Layout>
   )
 }
