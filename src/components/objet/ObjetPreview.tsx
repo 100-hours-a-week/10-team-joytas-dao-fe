@@ -22,7 +22,7 @@ export default function ObjetPreview({
   objets,
 }: ObjetPreviewProps): JSX.Element | null {
   if (!objets || objets.length === 0) {
-    return null // or any other fallback UI you want
+    return null
   }
 
   return (
