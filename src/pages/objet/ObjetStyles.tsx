@@ -154,7 +154,6 @@ export const ObjetImgPreview = styled.img`
 `
 
 export const RedText = styled.div`
-  height: 23px;
   font-size: 10px;
   color: #d41313;
   text-align: start;
@@ -239,7 +238,9 @@ export const ChooseContainer = styled.div`
   flex-direction: row;
   gap: 20px;
   height: 40px;
-  margin: 30px auto;
+  margin: 10px auto;
+  position: absolute;
+  bottom: 4%;
   width: 100%;
 `
 
