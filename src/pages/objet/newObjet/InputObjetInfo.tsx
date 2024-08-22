@@ -13,7 +13,7 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 import type { MentionsProps } from 'antd'
 import { OptionProps } from 'antd/es/mentions'
 import { APIs, URL } from '../../../static'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { MOCK_USERS } from '../../../assets/mock/userData'
 
 interface InputObjetInfoProps {
@@ -26,7 +26,7 @@ interface SharedMembersProps {
 }
 
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
-  const loungeId = useLocation().pathname.split('/')[2]
+  const loungeId = useParams().lid || 0
   const navigate = useNavigate()
 
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])

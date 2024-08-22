@@ -40,7 +40,7 @@ function App() {
             path={`${URL.lounge}/:lid/objet/new`}
             element={<NewObjet />}
           ></Route>
-          <Route path={`${URL.lounge}/:id`} element={<Lounge />}></Route>
+          <Route path={`${URL.lounge}/:lid`} element={<Lounge />}></Route>
           <Route path={URL.firstProfile} element={<FirstProfile />}></Route>
           <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
           <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
@@ -52,7 +52,7 @@ function App() {
             element={<ObjetDetail />}
           ></Route>
           <Route
-            path={`${URL.lounge}/:lid/objet/:id/update`}
+            path={`${URL.lounge}/:lid/objet/:oid/update`}
             element={<UpdateObjet />}
           ></Route>
           <Route path={URL.myRoomObjet} element={<MyRoomObjet />}></Route>

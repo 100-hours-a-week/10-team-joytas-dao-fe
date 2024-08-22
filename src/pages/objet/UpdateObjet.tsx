@@ -25,7 +25,7 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 import { OptionProps } from 'antd/es/mentions/index'
 import { objetList } from '../../global/objetModels.tsx'
 import { APIs, URL } from '../../static.ts'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { MOCK_USERS } from '../../assets/mock/userData.tsx'
 
 interface ObjetProps {
@@ -38,8 +38,8 @@ interface SharedMembersProps {
 }
 
 export default function UpdateObjet() {
-  const loungeId = useLocation().pathname.split('/')[2]
-  const objetId = useLocation().pathname.split('/')[4]
+  const loungeId = useParams().lid
+  const objetId = useParams().oid
   const navigate = useNavigate()
 
   const [type, setType] = useState('')

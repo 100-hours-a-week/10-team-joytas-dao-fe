@@ -11,13 +11,13 @@ import invite from '../../assets/images/invite.png'
 import plus from '../../assets/images/plus.png'
 import LoungeObjets from './LoungeObjets'
 import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { APIs, URL } from '../../static'
 import { useState, useEffect } from 'react'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 
 export default function Lounge() {
-  const loungeId = useLocation().pathname.split('/')[2]
+  const loungeId = useParams().lid
   const navigate = useNavigate()
 
   const [loungeName, setLoungeName] = useState('')
