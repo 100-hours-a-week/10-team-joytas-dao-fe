@@ -52,7 +52,7 @@ export default function MyRoom() {
       const responseData = await response.json()
       console.log('마이룸 정보 조회 응답: ', responseData)
 
-      if (!responseData.data.type) {
+      if (!responseData.data) {
         alert('마이룸이 없습니다. 마이룸을 생성해주세요!')
         navigate(URL.createMyRoom)
       }
