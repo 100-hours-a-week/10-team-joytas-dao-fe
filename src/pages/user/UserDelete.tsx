@@ -66,8 +66,6 @@ export default function UserDelete() {
         Object.keys(reasons) as Array<keyof typeof reasons>
       ).filter((key) => reasons[key])
 
-      console.log(trueReasons)
-
       const response = await fetch(APIs.withdraw, {
         method: 'POST',
         credentials: 'include',
