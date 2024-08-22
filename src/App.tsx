@@ -34,7 +34,7 @@ function App() {
           <Route path={URL.lounge} element={<LoungeListPage />}></Route>
           <Route path={URL.newLounge} element={<NewLounge />}></Route>
           <Route path={URL.terms} element={<Terms />}></Route>
-          <Route path={URL.delete} element={<UserDelete />}></Route>
+          <Route path={URL.withdraw} element={<UserDelete />}></Route>
           <Route path={URL.privacy} element={<Privacy />}></Route>
           <Route
             path={`${URL.lounge}/:lid/objet/new`}
