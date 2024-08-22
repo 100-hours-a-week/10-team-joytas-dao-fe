@@ -38,10 +38,10 @@ export const IconWithBorder = styled(Icon)`
   border-radius: 50%;
 `
 
-export const StyledGloablContainer32 = styled.div`
+export const StyledGloablContainer16 = styled.div`
   width: 100%;
   height: 490px;
-  padding: 0 32px;
+  padding: 0 16px;
   box-sizing: border-box;
   color: white;
 `

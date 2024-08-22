@@ -6,7 +6,7 @@ import {
   MyRoomName,
   MyRoomPreviewWrapper,
   MyRoomThumbnail,
-  StyledGloablContainer32,
+  StyledGloablContainer16,
 } from './MyRoomStyles.tsx'
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
@@ -47,7 +47,7 @@ export default function CreateMyRoom() {
   return (
     <Layout>
       <>
-        <StyledGloablContainer32>
+        <StyledGloablContainer16>
           <GlobalTitle>마이룸 디자인을 선택해주세요!</GlobalTitle>
           <GlobalSubTitle>
             마이룸 별명은 생성 이후 수정할 수 있습니다.
@@ -63,7 +63,7 @@ export default function CreateMyRoom() {
             </Canvas>
             <MyRoomName>{selectedModel?.name}</MyRoomName>
           </MyRoomPreviewWrapper>
-        </StyledGloablContainer32>
+        </StyledGloablContainer16>
         <MyRoomList>
           {modelList.map((model) => (
             <MyRoomThumbnail
