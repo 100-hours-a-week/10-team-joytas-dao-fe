@@ -57,6 +57,8 @@ export const IconDiv = styled.div`
 
 export const IconImg = styled.img`
   width: 24px;
+  border-radius: 50%;
+  object-fit: cover;
 `
 
 export const IconText = styled.div`
