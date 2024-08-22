@@ -42,6 +42,8 @@ const VideoContainer = () => {
   const localStreamRef = useRef<MediaStream>()
   const [users, setUsers] = useState<WebRTCUser[]>([])
 
+  if (localVideoRef.current) localVideoRef.current.volume = 0
+
   const getLocalStream = useCallback(async () => {
     try {
       const localStream = await navigator.mediaDevices.getUserMedia({
