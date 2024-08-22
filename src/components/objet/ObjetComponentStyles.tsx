@@ -17,6 +17,7 @@ export const ObjetContainer = styled.div`
 export const ObjetImage = styled.img`
   width: 80px;
   height: 80px;
+  object-fit: cover;
   border-radius: 10px;
   background-color: grey;
 `
