@@ -23,7 +23,7 @@ import {
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import MenuImg from '../../assets/images/menu.png'
 import GoCommunityBtn from '../../components/objet/GoCommunityBtn'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
 import { useEffect, useState } from 'react'
 import { ChatMessage } from '../../components/objet/Chat'
@@ -32,8 +32,8 @@ import { ModalBackdrop } from '../../components/ModalStyles'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 
 export default function ObjetDetail() {
-  const loungeId = useLocation().pathname.split('/')[2]
-  const objetId = useLocation().pathname.split('/')[4]
+  const loungeId = useParams().lid
+  const objetId = useParams().oid
   const loggedInUserId = Number(localStorage.getItem('userId')) || 0
   const [isLoading, setIsLoading] = useState(true)
 
