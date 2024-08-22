@@ -82,7 +82,7 @@ export default function Home() {
 
         if (response.status === 200) {
           const responseData = await response.json()
-          setObjets(responseData.data?.objets)
+          setObjets(responseData.data)
         }
       } catch (error) {
         console.error('Failed to fetch objet preview', error)
