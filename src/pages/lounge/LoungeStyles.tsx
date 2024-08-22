@@ -100,6 +100,7 @@ export const ModelIndexText = styled.div`
 export const TopContainer = styled.div`
   padding-top: 70px;
   display: flex;
+  align-items: center;
   justify-content: space-between;
   width: 100%;
 `
@@ -107,6 +108,10 @@ export const TopContainer = styled.div`
 export const IconContainer = styled.div`
   display: flex;
   gap: 15px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
 `
 
 export const InviteIcon = styled.img`
@@ -116,9 +121,14 @@ export const InviteIcon = styled.img`
 `
 
 export const Icon = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 5px;
+  height: 20px;
+  opacity: 70%;
   cursor: pointer;
+
+  &:hover {
+    opacity: 100%;
+  }
 `
 
 export const LoungeTitle = styled.div`
