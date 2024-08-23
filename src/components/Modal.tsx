@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import {
   DeleteModalContainer,
   DeleteModalContents,
@@ -58,6 +58,34 @@ export function DeleteModal({ onClose, handleDelete }: DeleteProps) {
             취소
           </ModalButton>
           <ModalButton className='confirm' onClick={handleDelete}>
+            확인
+          </ModalButton>
+        </ModalButtonContainer>
+      </DeleteModalContents>
+    </DeleteModalContainer>
+  )
+}
+export function DeleteLoungeModal({
+  isClick,
+  onClose,
+  handleDelete,
+}: DeleteProps) {
+  return (
+    <DeleteModalContainer>
+      <DeleteModalTitle>정말 삭제하시겠습니까?</DeleteModalTitle>
+      <DeleteModalContents>
+        <span>
+          한 번 삭제한 라운지는 <br /> 복구할 수 없습니다.
+        </span>
+        <ModalButtonContainer>
+          <ModalButton className='cancel' onClick={onClose}>
+            취소
+          </ModalButton>
+          <ModalButton
+            disabled={isClick}
+            className='confirm'
+            onClick={handleDelete}
+          >
             확인
           </ModalButton>
         </ModalButtonContainer>
