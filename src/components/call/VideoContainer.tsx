@@ -4,7 +4,7 @@ import Video from './Video'
 import useUserStore from '../../store/userStore'
 
 interface WebRTCUser {
-  id: string
+  socket_id: string
   nickname: string
   stream: MediaStream
 }
@@ -19,6 +19,8 @@ interface SocketError {
 // 테스트 시그널링 서버
 const SOCKET_SERVER_URL =
   'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
+
+// const SOCKET_SERVER_URL = 'https://localhost:8083'
 
 /* 배포 시그널링 서버 */
 // const SOCKET_SERVER_URL = 'https://api.joytas.kro.kr/signaling'
@@ -45,6 +47,14 @@ const VideoContainer = () => {
 
   if (localVideoRef.current) localVideoRef.current.volume = 0
 
+  const token = localStorage.getItem('access_token')
+  const nickname = useUserStore((state) => state.nickname)
+  const profile_image = useUserStore((state) => state.profileImage)
+  const user_id = useUserStore((state) => state.userId)
+
+  // TODO : url에서 추출
+  const objet_id = 2
+
   const getLocalStream = useCallback(async () => {
     try {
       const localStream = await navigator.mediaDevices.getUserMedia({
@@ -68,6 +78,8 @@ const VideoContainer = () => {
       socketRef.current.emit('join_objet', {
         objet_id,
         nickname,
+        profile_image,
+        user_id,
       })
     } catch (e) {
       console.log(`getUserMedia error: ${e}`)
@@ -97,9 +109,9 @@ const VideoContainer = () => {
           console.log('ontrack success')
           setUsers((oldUsers) =>
             oldUsers
-              .filter((user) => user.id !== socketID)
+              .filter((user) => user.socket_id !== socketID)
               .concat({
-                id: socketID,
+                socket_id: socketID,
                 nickname,
                 stream: e.streams[0],
               })
@@ -124,21 +136,12 @@ const VideoContainer = () => {
     },
     []
   )
-
-  const token = localStorage.getItem('access_token')
-  const nickname = localStorage.getItem('nickname')
-  const profile_image = localStorage.getItem('profile_image')
-
-  // TODO : url에서 추출
-  const objet_id = 2
-
   useEffect(() => {
     socketRef.current = io.connect(SOCKET_SERVER_URL, {
       transports: ['websocket'],
       query: {
         token,
         objet_id,
-        profile_image,
       },
     })
 
@@ -151,13 +154,13 @@ const VideoContainer = () => {
 
     socketRef.current.on(
       'all_users',
-      (allUsers: Array<{ id: string; nickname: string }>) => {
+      (allUsers: Array<{ socket_id: string; nickname: string }>) => {
         console.log('All users:', allUsers)
         allUsers.forEach(async (user) => {
           if (!localStreamRef.current) return
-          const pc = createPeerConnection(user.id, user.nickname)
+          const pc = createPeerConnection(user.socket_id, user.nickname)
           if (!(pc && socketRef.current)) return
-          pcsRef.current = { ...pcsRef.current, [user.id]: pc }
+          pcsRef.current = { ...pcsRef.current, [user.socket_id]: pc }
           try {
             const localSdp = await pc.createOffer({
               offerToReceiveAudio: true,
@@ -169,7 +172,7 @@ const VideoContainer = () => {
               sdp: localSdp,
               offerSendID: socketRef.current.id,
               offerSendNickname: nickname,
-              offerReceiveID: user.id,
+              offerReceiveID: user.socket_id,
             })
           } catch (e) {
             console.error(e)
@@ -235,11 +238,13 @@ const VideoContainer = () => {
       }
     )
 
-    socketRef.current.on('user_exit', (data: { id: string }) => {
-      if (!pcsRef.current[data.id]) return
-      pcsRef.current[data.id].close()
-      delete pcsRef.current[data.id]
-      setUsers((oldUsers) => oldUsers.filter((user) => user.id !== data.id))
+    socketRef.current.on('user_exit', (data: { socket_id: string }) => {
+      if (!pcsRef.current[data.socket_id]) return
+      pcsRef.current[data.socket_id].close()
+      delete pcsRef.current[data.socket_id]
+      setUsers((oldUsers) =>
+        oldUsers.filter((user) => user.socket_id !== data.socket_id)
+      )
     })
 
     return () => {
@@ -247,9 +252,9 @@ const VideoContainer = () => {
         socketRef.current.disconnect()
       }
       users.forEach((user) => {
-        if (!pcsRef.current[user.id]) return
-        pcsRef.current[user.id].close()
-        delete pcsRef.current[user.id]
+        if (!pcsRef.current[user.socket_id]) return
+        pcsRef.current[user.socket_id].close()
+        delete pcsRef.current[user.socket_id]
       })
     }
   }, [createPeerConnection, getLocalStream])
