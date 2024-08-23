@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import io from 'socket.io-client'
 import Video from './Video'
+import useUserStore from '../../store/userStore'
 
 interface WebRTCUser {
   id: string
@@ -123,7 +124,7 @@ const VideoContainer = () => {
   )
 
   const token = localStorage.getItem('access_token')
-  const nickname = JSON.parse(localStorage.getItem('profile') || '{}').nickname
+  const nickname = useUserStore((state) => state.nickname)
 
   // TODO : url에서 추출
   const objet_id = 2

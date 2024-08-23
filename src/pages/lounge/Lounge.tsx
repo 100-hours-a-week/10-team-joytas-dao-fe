@@ -15,9 +15,11 @@ import { useParams } from 'react-router-dom'
 import { APIs } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import LoungeDrop from '../../components/lounge/LoungeDrop'
+import useUserStore from '../../store/userStore'
 
 export default function Lounge() {
   const { lid: loungeId } = useParams<{ lid: string }>()
+  const userId = useUserStore((state) => state.userId)
 
   const [loungeName, setLoungeName] = useState('')
   const [objets, setObjets] = useState<any[]>([])
@@ -43,9 +45,7 @@ export default function Lounge() {
           const responseData = await response.json()
           setLoungeName(responseData.data.name)
           setObjets(responseData.data.objets)
-          setIsOwner(
-            responseData.data.user_id === Number(localStorage.getItem('userId'))
-          )
+          setIsOwner(responseData.data.user_id === userId)
         }
       } catch (error) {
         console.error('Failed to fetch lounge', error)
