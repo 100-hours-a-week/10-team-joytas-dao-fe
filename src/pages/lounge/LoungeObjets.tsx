@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import { ObjetModel1 } from '../../assets/models/ObjetModel1'
 import { ObjetModel2 } from '../../assets/models/ObjetModel2'
 import { ObjetModel3 } from '../../assets/models/ObjetModel3'
-import { useRef, useMemo, useEffect } from 'react'
+import { useRef, useMemo, useEffect, useCallback } from 'react'
 import NoDataLottie from '../../components/lotties/NoDataLottie'
 import { NoDataContainer, InnerText, GoObjetButton } from './LoungeStyles'
 import { useNavigate, useParams } from 'react-router-dom'
@@ -20,8 +20,8 @@ interface ObjetsProps {
 }
 
 interface Objet {
-  objet_id: number
-  objet_type: string
+  object_id: number
+  type: string
   name: string
   description: string
   objet_image: File
@@ -31,50 +31,58 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
   const groupRef = useRef<THREE.Group>(null)
 
   const models = useMemo(() => {
+    if (!objets || objets.length === 0) return []
+
     const availableModels = [ObjetModel1, ObjetModel2, ObjetModel3]
-    const generatedModels: any[] = []
-
-    if (objets && objets.length > 0) {
-      objets.forEach((objet) => {
-        const num = Math.floor(Math.random() * availableModels.length)
-        const ModelComponent = availableModels[num]
-        const mesh = new THREE.Group()
-        mesh.position.set(
-          Math.random() * 600 - 300,
-          Math.random() * 600 - 300,
-          Math.random() * 600 - 300
-        )
-        mesh.rotation.set(
-          Math.random() * 2 * Math.PI,
-          Math.random() * 2 * Math.PI,
-          Math.random() * 2 * Math.PI
-        )
-
-        switch (objet.objet_type) {
-          case 'O0001':
-            mesh.scale.set(19.2, 19.2, 19.2)
-            break
-          case 'O0002':
-            mesh.scale.set(3, 3, 3)
-            break
-          case 'O0003':
-            mesh.scale.set(0.258, 0.258, 0.258)
-            break
-        }
-        mesh.userData = { onClick: () => onModelClick(mesh) }
-        generatedModels.push({ ModelComponent, mesh })
-      })
+    const getRandomPosition = (length: number): [number, number, number] => {
+      const ranges = [
+        { range: 15, offset: -1 },
+        { range: 100, offset: -50 },
+        { range: 200, offset: -100 },
+        { range: 400, offset: -200 },
+        { range: 600, offset: -300 },
+      ]
+      const { range, offset } =
+        ranges[Math.min(Math.floor(length / 5), ranges.length - 1)]
+      return [
+        Math.random() * range + offset,
+        Math.random() * range + offset,
+        Math.random() * range + offset,
+      ]
     }
 
-    return generatedModels
+    return objets.map((objet) => {
+      const mesh = new THREE.Group()
+
+      const scaleMap: { [key: string]: number } = {
+        O0001: 2,
+        O0002: 0.5,
+        O0003: 0.258,
+      }
+
+      mesh.scale.setScalar(scaleMap[objet.type] || 1)
+
+      mesh.position.set(...getRandomPosition(objets.length))
+      const ModelComponent =
+        availableModels[
+          objet.type === 'O0001' ? 0 : objet.type === 'O0002' ? 1 : 2
+        ]
+
+      mesh.position.set(...getRandomPosition(objets.length))
+      mesh.rotation.set(
+        Math.random() * 2 * Math.PI,
+        Math.random() * 2 * Math.PI,
+        Math.random() * 2 * Math.PI
+      )
+      mesh.userData = { id: objet.object_id, onClick: () => onModelClick(mesh) }
+      return { ModelComponent, mesh }
+    })
   }, [objets, onModelClick])
 
   useEffect(() => {
     const group = groupRef.current
     if (group) {
-      models.forEach(({ mesh }) => {
-        group.add(mesh)
-      })
+      models.forEach(({ mesh }) => group.add(mesh))
     }
   }, [models])
 
@@ -86,6 +94,7 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
           position={mesh.position}
           rotation={mesh.rotation}
           scale={mesh.scale}
+          onClick={mesh.userData.onClick}
         >
           <ModelComponent />
         </mesh>
@@ -95,28 +104,36 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
 }
 
 function LoungeCanvas({ objets }: { objets?: Objet[] }) {
+  const navigate = useNavigate()
+  const { lid } = useParams<{ lid: string }>()
   const { camera, gl, scene } = useThree()
   const controlsRef = useRef<any>(null)
-  const refGroup = useRef<THREE.Group>(null)
   const targetPositionRef = useRef(new THREE.Vector3())
+  const initialCameraSet = useRef(false)
 
-  const handleModelClick = (model: THREE.Group) => {
-    const offset = 1 // Distance from the object
-    model.getWorldPosition(targetPositionRef.current)
-    camera.position.set(
-      targetPositionRef.current.x + offset,
-      targetPositionRef.current.y + offset,
-      targetPositionRef.current.z + offset
-    )
-  }
+  const handleModelClick = useCallback(
+    (model: THREE.Group) => {
+      const offset = 1
+      model.getWorldPosition(targetPositionRef.current)
+      camera.position.set(
+        targetPositionRef.current.x + offset,
+        targetPositionRef.current.y + offset,
+        targetPositionRef.current.z + offset
+      )
+      camera.lookAt(targetPositionRef.current)
+
+      navigate(`${URL.lounge}/${lid}/objet/${model.userData.id}`)
+      console.log(`Clicked model ID: ${model.userData.id as number}`)
+    },
+    [camera]
+  )
 
   useEffect(() => {
-    gl.domElement.style.cursor = 'pointer'
-
     const handleClick = (event: MouseEvent) => {
-      const mouse = new THREE.Vector2()
-      mouse.x = (event.clientX / window.innerWidth) * 2 - 1
-      mouse.y = -(event.clientY / window.innerHeight) * 2 + 1
+      const mouse = new THREE.Vector2(
+        (event.clientX / window.innerWidth) * 2 - 1,
+        -(event.clientY / window.innerHeight) * 2 + 1
+      )
 
       const raycaster = new THREE.Raycaster()
       raycaster.setFromCamera(mouse, camera)
@@ -124,12 +141,11 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
       const intersects = raycaster.intersectObjects(scene.children, true)
       if (intersects.length > 0) {
         const firstIntersected = intersects[0].object
-        if (firstIntersected.userData.onClick) {
-          firstIntersected.userData.onClick()
-        }
+        firstIntersected.userData.onClick?.()
       }
     }
 
+    gl.domElement.style.cursor = 'pointer'
     gl.domElement.addEventListener('click', handleClick)
 
     return () => {
@@ -137,28 +153,44 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
     }
   }, [gl.domElement, camera, scene])
 
+  useEffect(() => {
+    if (scene.children.length > 0 && !initialCameraSet.current) {
+      const firstModel = scene.children.find(
+        (child) => child instanceof THREE.Group
+      ) as THREE.Group | undefined
+
+      if (firstModel) {
+        firstModel.getWorldPosition(targetPositionRef.current)
+        camera.position.set(
+          targetPositionRef.current.x + 10,
+          targetPositionRef.current.y + 10,
+          targetPositionRef.current.z + 10
+        )
+        camera.lookAt(targetPositionRef.current)
+        initialCameraSet.current = true
+      }
+    }
+  }, [scene.children, camera])
+
   return (
     <>
-      <FlyControls ref={controlsRef} movementSpeed={30} rollSpeed={0.2} />
-      <ambientLight intensity={3} />
+      <FlyControls ref={controlsRef} movementSpeed={20} rollSpeed={0.2} />
+      <ambientLight intensity={4} />
       <directionalLight position={[2, 1, 3]} intensity={1} />
-      <group ref={refGroup}>
-        <ObjetModels objets={objets} onModelClick={handleModelClick} />
-      </group>
+      <ObjetModels objets={objets} onModelClick={handleModelClick} />
     </>
   )
 }
 
 export default function LoungeObjets({ objets }: ObjetsProps) {
   const navigate = useNavigate()
-
-  const loungeId = useParams().lid
+  const { lid: loungeId } = useParams()
 
   const handleClickGoObjet = () => {
     navigate(`${URL.lounge}/${loungeId}/objet/new`)
   }
 
-  if (objets?.length === 0) {
+  if (!objets || objets.length === 0) {
     return (
       <NoDataContainer>
         <NoDataLottie />
