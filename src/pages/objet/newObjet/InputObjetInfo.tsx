@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { InputItem } from '../../../components/objet/InputItem'
 import {
   ChooseContainer,
@@ -28,6 +28,7 @@ interface SharedMembersProps {
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const loungeId = useParams().lid || 0
   const navigate = useNavigate()
+  const loggedInUserId = parseInt(localStorage.getItem('userId') || '0', 10)
 
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
   const [name, setName] = useState('')
@@ -214,7 +215,6 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         input={
           <>
             <Mentions
-              variant='borderless'
               placeholder='@을 입력해주세요.'
               onSearch={onMentionSearch}
               onSelect={(option) => onMentionSelect(option as OptionProps)}
@@ -222,11 +222,13 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
               value={mentionValue || undefined}
               options={MOCK_USERS.filter(
                 (user) => !sharedMembers.includes(user)
-              ).map((user) => ({
-                value: user.nickname,
-                key: user.user_id.toString(),
-                label: user.nickname,
-              }))}
+              )
+                .filter((user) => user.user_id !== loggedInUserId)
+                .map((user) => ({
+                  value: user.nickname,
+                  key: user.user_id.toString(),
+                  label: user.nickname,
+                }))}
             />
             <TagWrapper>
               {sharedMembers.map((member, index) => (
@@ -295,7 +297,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
             </label>
             <input
               type='file'
-              accept='.jpeg, .jpg, .png, .gif, .webp'
+              accept='.jpeg, .jpg, .png, .webp'
               id='objetImage'
               onChange={handleImageChange}
             />

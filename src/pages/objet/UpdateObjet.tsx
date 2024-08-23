@@ -41,6 +41,7 @@ export default function UpdateObjet() {
   const loungeId = useParams().lid
   const objetId = useParams().oid
   const navigate = useNavigate()
+  const loggedInUserId = parseInt(localStorage.getItem('userId') || '0', 10)
 
   const [type, setType] = useState('')
   const [name, setName] = useState('')
@@ -274,11 +275,13 @@ export default function UpdateObjet() {
                   value={mentionValue || undefined}
                   options={MOCK_USERS.filter(
                     (user) => !sharedMembers.includes(user)
-                  ).map((user) => ({
-                    value: user.nickname,
-                    key: user.user_id.toString(),
-                    label: user.nickname,
-                  }))}
+                  )
+                    .filter((user) => user.user_id !== loggedInUserId)
+                    .map((user) => ({
+                      value: user.nickname,
+                      key: user.user_id.toString(),
+                      label: user.nickname,
+                    }))}
                 />
                 <TagWrapper>
                   {sharedMembers.map(({ nickname, user_id }) => {
@@ -341,7 +344,7 @@ export default function UpdateObjet() {
                 </label>
                 <input
                   type='file'
-                  accept='.jpeg, .jpg, .png, .gif, .webp'
+                  accept='.jpeg, .jpg, .png, .webp'
                   id='objetImage'
                   onChange={handleImageChange}
                 />
