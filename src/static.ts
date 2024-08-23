@@ -36,4 +36,5 @@ export const APIs = {
   modifyProfile: `${BACK_HOST}/api/v1/users/profile`,
   objet: `${BACK_HOST}/api/v1/objets`,
   withdraw: `${BACK_HOST}/api/v1/auth/withdraw`,
+  poke: `${BACK_HOST}/api/v1/lounges/invite`,
 }
