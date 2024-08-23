@@ -26,7 +26,8 @@
     "socket.io-client": "2.3.0",
     "styled-components": "^6.1.12",
     "three": "^0.167.1",
-    "three-stdlib": "^2.32.2"
+    "three-stdlib": "^2.32.2",
+    "zustand": "^4.5.5"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.7",
