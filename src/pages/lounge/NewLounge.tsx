@@ -3,6 +3,7 @@ import { Vector3, Group, Box3 } from 'three'
 import { LoungeModel1 } from '../../assets/models/LoungeModel1'
 import { LoungeModel2 } from '../../assets/models/LoungeModel2'
 import { LoungeModel3 } from '../../assets/models/LoungeModel3'
+import useUserStore from '../../store/userStore'
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
@@ -64,7 +65,7 @@ export default function NewLounge() {
     fetchData()
   }, [])
 
-  const nickname = localStorage.getItem('nickname') || '익명'
+  const nickname = useUserStore((state) => state.nickname)
 
   const handleLeftClick = () => {
     setCurrentModelIndex((prevIndex) =>

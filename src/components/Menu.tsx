@@ -13,6 +13,7 @@ import close from '../assets/images/close.png'
 import { URL, APIs } from '../static'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
+import useUserStore from '../store/userStore'
 
 interface MenuProps {
   setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
@@ -20,8 +21,9 @@ interface MenuProps {
 
 export default function Menu({ setMenuOpen }: MenuProps) {
   const navigate = useNavigate()
-  const name = localStorage.getItem('nickname') || '익명'
-  const profileImage = localStorage.getItem('profileImage') || ''
+  const name = useUserStore((state) => state.nickname)
+  const profileImage = useUserStore((state) => state.profileImage)
+  const logout = useUserStore((state) => state.logout)
 
   const [isClick, setIsClick] = useState(false)
 
@@ -39,7 +41,7 @@ export default function Menu({ setMenuOpen }: MenuProps) {
 
       if (response.status === 200) {
         localStorage.removeItem('access_token')
-        localStorage.removeItem('profile')
+        logout()
         alert('로그아웃 성공!')
         navigate(URL.home)
       } else {

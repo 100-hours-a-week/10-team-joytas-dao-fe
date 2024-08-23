@@ -30,11 +30,12 @@ import { ChatMessage } from '../../components/objet/Chat'
 import { DeleteModal, MenuModal } from '../../components/Modal'
 import { ModalBackdrop } from '../../components/ModalStyles'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
+import useUserStore from '../../store/userStore'
 
 export default function ObjetDetail() {
   const loungeId = useParams().lid
   const objetId = useParams().oid
-  const loggedInUserId = Number(localStorage.getItem('userId')) || 0
+  const loggedInUserId = useUserStore((state) => state.userId)
   const [isLoading, setIsLoading] = useState(true)
 
   const [creator, setCreator] = useState('')

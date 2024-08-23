@@ -27,13 +27,13 @@ export default function ObjetPreview({
 
   return (
     <ObjetList>
-      {objets.map((objet) => {
+      {objets.map((objet, index) => {
         return (
           <Objet
             image={objet.objet_image}
             title={objet.name}
             description={objet.description}
-            key={objet.objet_id}
+            key={index}
           />
         )
       })}

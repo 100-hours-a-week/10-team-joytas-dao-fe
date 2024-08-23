@@ -17,6 +17,7 @@ import { RedTextLong } from '../lounge/LoungeStyles'
 import { RedText } from '../objet/ObjetStyles'
 import { APIs, URL } from '../../static'
 import { DeleteUserModal } from '../../components/Modal'
+import useUserStore from '../../store/userStore'
 
 export default function UserDelete() {
   const navigate = useNavigate()
@@ -31,6 +32,7 @@ export default function UserDelete() {
     W0005: false,
   })
   const [detail, setDetail] = useState('')
+  const logout = useUserStore((state) => state.logout)
 
   useEffect(() => {
     setIsReasonNull(
@@ -82,9 +84,7 @@ export default function UserDelete() {
       if (response.status === 200) {
         alert('회원탈퇴 성공')
         localStorage.removeItem('access_token')
-        localStorage.removeItem('profileImage')
-        localStorage.removeItem('nickname')
-        localStorage.removeItem('userId')
+        logout()
         navigate(URL.home)
       }
     } catch (error) {
