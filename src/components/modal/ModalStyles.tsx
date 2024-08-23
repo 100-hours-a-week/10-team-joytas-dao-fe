@@ -68,29 +68,6 @@ export const ModalButton = styled.button`
   }
 `
 
-export const MenuModalContainer = styled.div`
-  position: absolute;
-  top: 85px;
-  right: 0;
-  width: 100px;
-  background-color: #d9d9d9;
-  z-index: 1000;
-
-  div {
-    padding: 10px;
-    font-size: 12px;
-    font-weight: 300;
-    text-align: center;
-    color: black;
-
-    &:hover {
-      background-color: #242424;
-      color: white;
-      cursor: pointer;
-    }
-  }
-`
-
 export const LoungeListModalContainer = styled.div`
   ${positionCenter}
   display: flex;

@@ -16,8 +16,8 @@ import { useNavigate } from 'react-router-dom'
 import { RedTextLong } from '../lounge/LoungeStyles'
 import { RedText } from '../objet/ObjetStyles'
 import { APIs, URL } from '../../static'
-import { DeleteUserModal } from '../../components/Modal'
 import useUserStore from '../../store/userStore'
+import { DeleteUserModal } from '../../components/modal/Modal'
 
 export default function UserDelete() {
   const navigate = useNavigate()

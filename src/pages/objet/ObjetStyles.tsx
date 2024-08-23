@@ -293,6 +293,14 @@ export const RightContainer = styled.div`
   gap: 10px;
 `
 
+export const IconContainer = styled.div`
+  display: flex;
+  width: 10px;
+  height: 20px;
+  cursor: pointer;
+  position: relative;
+`
+
 export const CallTitle = styled.div`
   font-size: 20px;
   font-weight: bold;
