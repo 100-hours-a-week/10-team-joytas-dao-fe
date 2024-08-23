@@ -27,6 +27,7 @@ import { objetList } from '../../global/objetModels.tsx'
 import { APIs, URL } from '../../static.ts'
 import { useNavigate, useParams } from 'react-router-dom'
 import { MOCK_USERS } from '../../assets/mock/userData.tsx'
+import useUserStore from '../../store/userStore.ts'
 
 interface ObjetProps {
   type: string
@@ -41,7 +42,8 @@ export default function UpdateObjet() {
   const loungeId = useParams().lid
   const objetId = useParams().oid
   const navigate = useNavigate()
-  const loggedInUserId = parseInt(localStorage.getItem('userId') || '0', 10)
+  const userId = useUserStore((state) => state.userId)
+  const [isClick, setIsClick] = useState(false)
 
   const [type, setType] = useState('')
   const [name, setName] = useState('')
@@ -79,7 +81,6 @@ export default function UpdateObjet() {
 
       if (response.status === 200) {
         const data = await response.json()
-        console.log('오브제 정보: ', data)
 
         setName(data.data.name)
         setDescription(data.data.description)
@@ -207,6 +208,8 @@ export default function UpdateObjet() {
       return
     }
 
+    setIsClick(true)
+
     const formData = new FormData()
     formData.append(
       'sharers',
@@ -276,7 +279,7 @@ export default function UpdateObjet() {
                   options={MOCK_USERS.filter(
                     (user) => !sharedMembers.includes(user)
                   )
-                    .filter((user) => user.user_id !== loggedInUserId)
+                    .filter((user) => user.user_id !== userId)
                     .map((user) => ({
                       value: user.nickname,
                       key: user.user_id.toString(),
@@ -361,7 +364,7 @@ export default function UpdateObjet() {
             >
               취소하기
             </GenerateButton>
-            <GenerateButton onClick={handleUpdateObjet}>
+            <GenerateButton disabled={isClick} onClick={handleUpdateObjet}>
               수정하기
             </GenerateButton>
           </ChooseContainer>

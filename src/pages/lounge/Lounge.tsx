@@ -14,7 +14,7 @@ import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
 import { useParams } from 'react-router-dom'
 import { APIs } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
-import LoungeDrop from '../../components/lounge/LoungeDrop'
+import { LoungeDrop } from '../../components/dropdown/Dropdown'
 import useUserStore from '../../store/userStore'
 
 export default function Lounge() {

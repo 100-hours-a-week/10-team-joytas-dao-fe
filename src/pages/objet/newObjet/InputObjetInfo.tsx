@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { InputItem } from '../../../components/objet/InputItem'
 import {
   ChooseContainer,
@@ -16,6 +16,7 @@ import { APIs, URL } from '../../../static'
 import { useParams, useNavigate } from 'react-router-dom'
 import { MOCK_USERS } from '../../../assets/mock/userData'
 import LoadingLottie from '../../../components/lotties/LoadingLottie'
+import useUserStore from '../../../store/userStore'
 
 interface InputObjetInfoProps {
   selectedType: string
@@ -29,8 +30,10 @@ interface SharedMembersProps {
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const loungeId = useParams().lid || 0
   const navigate = useNavigate()
-  const loggedInUserId = parseInt(localStorage.getItem('userId') || '0', 10)
+  const userId = useUserStore((state) => state.userId)
+
   const [isLoading, setIsLoading] = useState(false)
+  const [isClick, setIsClick] = useState(false)
 
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
   const [name, setName] = useState('')
@@ -172,6 +175,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       return
     }
 
+    setIsClick(true)
+
     const formData = new FormData()
     if (image) {
       formData.append('lounge_id', loungeId.toString())
@@ -233,7 +238,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
               options={MOCK_USERS.filter(
                 (user) => !sharedMembers.includes(user)
               )
-                .filter((user) => user.user_id !== loggedInUserId)
+                .filter((user) => user.user_id !== userId)
                 .map((user) => ({
                   value: user.nickname,
                   key: user.user_id.toString(),
@@ -317,7 +322,9 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       />
 
       <ChooseContainer>
-        <GenerateButton onClick={handleGenerateClick}>생성하기</GenerateButton>
+        <GenerateButton disabled={isClick} onClick={handleGenerateClick}>
+          생성하기
+        </GenerateButton>
       </ChooseContainer>
     </>
   )

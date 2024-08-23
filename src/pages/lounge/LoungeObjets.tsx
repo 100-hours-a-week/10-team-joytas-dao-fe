@@ -123,7 +123,6 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
       camera.lookAt(targetPositionRef.current)
 
       navigate(`${URL.lounge}/${lid}/objet/${model.userData.id}`)
-      console.log(`Clicked model ID: ${model.userData.id as number}`)
     },
     [camera]
   )
