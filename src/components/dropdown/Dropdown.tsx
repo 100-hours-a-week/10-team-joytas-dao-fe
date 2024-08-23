@@ -1,10 +1,15 @@
-import { Container, Tab, Deem } from './LoungeDropStyle'
+import { Container, Deem, Tab } from './DropdownStyles'
 import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
 import { useState } from 'react'
-import { DeleteLoungeModal } from '../Modal'
+import { DeleteLoungeModal } from '../modal/Modal'
 
-export default function LoungeDrop({ isOwner }: { isOwner: boolean }) {
+interface MenuProps {
+  onClickUpdate: () => void
+  onClickDelete: () => void
+}
+
+export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
   const loungeId = useParams().lid
   const navigate = useNavigate()
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -54,6 +59,15 @@ export default function LoungeDrop({ isOwner }: { isOwner: boolean }) {
           />
         </>
       )}
+    </Container>
+  )
+}
+
+export function ObjetDrop({ onClickUpdate, onClickDelete }: MenuProps) {
+  return (
+    <Container style={{ marginTop: '10px' }}>
+      <Tab onClick={onClickUpdate}>수정하기</Tab>
+      <Tab onClick={onClickDelete}>삭제하기</Tab>
     </Container>
   )
 }

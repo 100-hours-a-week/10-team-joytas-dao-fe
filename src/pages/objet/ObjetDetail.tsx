@@ -19,24 +19,28 @@ import {
   ChattingsWrapper,
   Icon,
   CallToast,
+  IconContainer,
 } from './ObjetStyles'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import MenuImg from '../../assets/images/menu.png'
 import GoCommunityBtn from '../../components/objet/GoCommunityBtn'
 import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { ChatMessage } from '../../components/objet/Chat'
-import { DeleteModal, MenuModal } from '../../components/Modal'
-import { ModalBackdrop } from '../../components/ModalStyles'
+import { DeleteModal } from '../../components/modal/Modal'
+import { ModalBackdrop } from '../../components/modal/ModalStyles'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
+import { ObjetDrop } from '../../components/dropdown/Dropdown'
 import useUserStore from '../../store/userStore'
 
 export default function ObjetDetail() {
   const loungeId = useParams().lid
   const objetId = useParams().oid
   const loggedInUserId = useUserStore((state) => state.userId)
+
   const [isLoading, setIsLoading] = useState(true)
+  const dropRef = useRef<HTMLDivElement>(null)
 
   const [creator, setCreator] = useState('')
   const [name, setName] = useState('')
@@ -47,7 +51,7 @@ export default function ObjetDetail() {
   const [isActive, setIsActive] = useState(false)
   const [creatorId, setCreatorId] = useState(0)
 
-  const [isMenuModalVisible, setIsMenuModalVisible] = useState(false)
+  const [isDropVisible, setIsDropVisible] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
   const [isToastVisible, setIsToastVisible] = useState(true)
 
@@ -59,6 +63,24 @@ export default function ObjetDetail() {
       setIsLoading(false)
     }, 1000)
   }, [])
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (dropRef.current && !dropRef.current.contains(event.target as Node)) {
+        setIsDropVisible(false)
+      }
+    }
+
+    if (isDropVisible) {
+      document.addEventListener('mousedown', handleClickOutside)
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [isDropVisible])
 
   const fetchData = async () => {
     try {
@@ -72,7 +94,6 @@ export default function ObjetDetail() {
 
       if (response.status === 200) {
         const data = await response.json()
-        console.log('오브제 정보: ', data)
 
         setCreator(data.data.nickname)
         setName(data.data.name)
@@ -106,8 +127,7 @@ export default function ObjetDetail() {
         console.log('오브제 삭제 정보: ', data)
 
         alert('오브제 삭제 성공!')
-        // TODO: 라운지 아이디 가져와서 이동하기
-        navigate(URL.lounge + '/1')
+        navigate(`${URL.lounge}/${loungeId}`)
       }
     } catch (error) {
       console.log('오브제 삭제 실패: ', error)
@@ -173,24 +193,32 @@ export default function ObjetDetail() {
               </Avatar.Group>
 
               {loggedInUserId === creatorId && (
-                <Icon
-                  className='menu'
-                  src={MenuImg}
-                  onClick={() => setIsMenuModalVisible(!isMenuModalVisible)}
-                />
+                <>
+                  <IconContainer>
+                    <Icon
+                      className='menu'
+                      src={MenuImg}
+                      onClick={() => setIsDropVisible(!isDropVisible)}
+                    />
+                    {isDropVisible && (
+                      <div ref={dropRef} onClick={(e) => e.stopPropagation()}>
+                        <ObjetDrop
+                          onClickUpdate={() =>
+                            navigate(
+                              `${URL.lounge}/${loungeId}/objet/${objetId}/update`
+                            )
+                          }
+                          onClickDelete={() => {
+                            setIsDeleteModalVisible(true)
+                            setIsDropVisible(false)
+                          }}
+                        />
+                      </div>
+                    )}
+                  </IconContainer>
+                </>
               )}
             </RightContainer>
-            {isMenuModalVisible && (
-              <MenuModal
-                onClickUpdate={() =>
-                  navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/update`)
-                }
-                onClickDelete={() => {
-                  setIsDeleteModalVisible(true)
-                  setIsMenuModalVisible(false)
-                }}
-              />
-            )}
           </TopContainer>
 
           <ObjetDetailContainer>
@@ -203,19 +231,19 @@ export default function ObjetDetail() {
                 userName='jamie'
                 userId={3}
                 profileImg='../../assets/images/sampleObjet.png'
-                content='안녕 제이미'
+                content='채팅 미리보기 준비중 ~~'
               />
               <ChatMessage
                 userName='jamie'
                 userId={3}
                 profileImg='../../assets/images/sampleObjet.png'
-                content='안녕 제이미'
+                content='채팅 미리보기 준비중 ~~'
               />
               <ChatMessage
                 userName='jamie'
                 userId={3}
                 profileImg='../../assets/images/sampleObjet.png'
-                content='안녕 제이미'
+                content='채팅 미리보기 준비중 ~~'
               />
             </ChattingsWrapper>
             <GoToBtnWrapper>

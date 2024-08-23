@@ -7,15 +7,9 @@ import {
   LoungeListModalContents,
   LoungeListModalItem,
   LoungeListModalTitle,
-  MenuModalContainer,
   ModalButton,
   ModalButtonContainer,
 } from './ModalStyles'
-
-interface MenuProps {
-  onClickUpdate: () => void
-  onClickDelete: () => void
-}
 
 interface DeleteProps {
   onClose: () => void
@@ -36,16 +30,9 @@ interface LoungeListProps {
   lounges: Lounge[]
 }
 
-export function MenuModal({ onClickUpdate, onClickDelete }: MenuProps) {
-  return (
-    <MenuModalContainer>
-      <div onClick={onClickUpdate}>수정하기</div>
-      <div onClick={onClickDelete}>삭제하기</div>
-    </MenuModalContainer>
-  )
-}
-
 export function DeleteModal({ onClose, handleDelete }: DeleteProps) {
+  const [isClick, setIsClick] = useState(false)
+
   return (
     <DeleteModalContainer>
       <DeleteModalTitle>정말 삭제하시겠습니까?</DeleteModalTitle>
@@ -57,7 +44,14 @@ export function DeleteModal({ onClose, handleDelete }: DeleteProps) {
           <ModalButton className='cancel' onClick={onClose}>
             취소
           </ModalButton>
-          <ModalButton className='confirm' onClick={handleDelete}>
+          <ModalButton
+            disabled={isClick}
+            className='confirm'
+            onClick={() => {
+              handleDelete
+              setIsClick(true)
+            }}
+          >
             확인
           </ModalButton>
         </ModalButtonContainer>

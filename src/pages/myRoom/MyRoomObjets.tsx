@@ -10,8 +10,8 @@ import {
 import { Icon } from './MyRoomStyles'
 import { useEffect, useState } from 'react'
 import MoreImg from '../../assets/images/more.png'
-import { ModalBackdrop } from '../../components/ModalStyles'
-import { LoungeListModal } from '../../components/Modal'
+import { ModalBackdrop } from '../../components/modal/ModalStyles'
+import { LoungeListModal } from '../../components/modal/Modal'
 import { APIs } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 
