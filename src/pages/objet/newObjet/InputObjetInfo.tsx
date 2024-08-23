@@ -15,6 +15,7 @@ import { OptionProps } from 'antd/es/mentions'
 import { APIs, URL } from '../../../static'
 import { useParams, useNavigate } from 'react-router-dom'
 import { MOCK_USERS } from '../../../assets/mock/userData'
+import LoadingLottie from '../../../components/lotties/LoadingLottie'
 
 interface InputObjetInfoProps {
   selectedType: string
@@ -29,6 +30,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const loungeId = useParams().lid || 0
   const navigate = useNavigate()
   const loggedInUserId = parseInt(localStorage.getItem('userId') || '0', 10)
+  const [isLoading, setIsLoading] = useState(false)
 
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
   const [name, setName] = useState('')
@@ -183,6 +185,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       )
     }
 
+    setIsLoading(true)
+
     try {
       const response = await fetch(APIs.objet, {
         method: 'POST',
@@ -197,6 +201,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         const responseData = await response.json()
         const objetId = responseData.data.objet_id
 
+        setIsLoading(false)
+
         alert('오브제 생성 성공!')
         navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
           replace: true,
@@ -205,6 +211,10 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
     } catch (error) {
       console.log('오브제 생성 실패: ', error)
     }
+  }
+
+  if (isLoading) {
+    return <LoadingLottie />
   }
 
   return (
