@@ -10,14 +10,15 @@ import { useEffect, useState } from 'react'
 import { APIs } from '../../static'
 import { useParams } from 'react-router-dom'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
+import useUserStore from '../../store/userStore'
 
 export default function UserDetail() {
   const { id } = useParams<{ id: string }>()
 
   const profile = {
-    userId: Number(localStorage.getItem('userId')),
-    nickname: localStorage.getItem('nickname') || '익명',
-    profileImage: localStorage.getItem('profileImage') || '',
+    userId: useUserStore((state) => state.userId),
+    nickname: useUserStore((state) => state.nickname),
+    profileImage: useUserStore((state) => state.profileImage),
   }
 
   const [myRoomName, setMyRoomName] = useState('')

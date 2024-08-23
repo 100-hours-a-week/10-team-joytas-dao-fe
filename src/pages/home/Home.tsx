@@ -9,6 +9,7 @@ import {
   MyObjetTitle,
   LottieContainer,
 } from './HomeStyles'
+import useUserStore from '../../store/userStore'
 import ObjetPreview from '../../components/objet/ObjetPreview'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
@@ -22,6 +23,10 @@ export default function Home() {
   const navigate = useNavigate()
   const [objets, setObjets] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+
+  const updateId = useUserStore((state) => state.updateId)
+  const updateProfileImage = useUserStore((state) => state.updateProfileImage)
+  const updateNickname = useUserStore((state) => state.updateNickname)
 
   const fetchProfile = async (): Promise<Profile | undefined> => {
     try {
@@ -104,12 +109,9 @@ export default function Home() {
 
       if (profile) {
         setName(profile.nickname)
-
-        /* TODO: delete below code
-         * 상태관리 라이브러리로 변경 예정 */
-        localStorage.setItem('nickname', profile.nickname)
-        localStorage.setItem('profileImage', profile.profile_url)
-        localStorage.setItem('userId', `${profile.user_id}`)
+        updateNickname(profile.nickname)
+        updateProfileImage(profile.profile_url)
+        updateId(profile.user_id)
       } else {
         navigate(URL.home)
       }

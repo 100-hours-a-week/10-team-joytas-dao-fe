@@ -24,6 +24,7 @@ import { Group } from 'three'
 import { useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static.ts'
 import LoadingLottie from '../../components/lotties/LoadingLottie.tsx'
+import useUserStore from '../../store/userStore.ts'
 
 export default function MyRoom() {
   const [myRoomId, setMyRoomId] = useState()
@@ -34,8 +35,8 @@ export default function MyRoom() {
   const [isEditing, setIsEditing] = useState(false)
   const navigate = useNavigate()
 
-  const userNickname = localStorage.getItem('nickname') || '익명'
-  const userId = localStorage.getItem('userId') || '0'
+  const userNickname = useUserStore((state) => state.nickname)
+  const userId = useUserStore((state) => state.userId)
 
   useEffect(() => {
     fetchMyRoomInfo()

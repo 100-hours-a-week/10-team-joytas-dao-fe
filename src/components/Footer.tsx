@@ -7,11 +7,12 @@ import rocketPurple from '../assets/images/footer/rocketPurple.png'
 import usersPurple from '../assets/images/footer/usersPurple.png'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { URL } from '../static'
+import useUserStore from '../store/userStore'
 
 export default function Footer() {
   const navigate = useNavigate()
   const pathname = useLocation().pathname
-  const profileImage = localStorage.getItem('profileImage') || ''
+  const profileImage = useUserStore((state) => state.profileImage)
 
   return (
     <FooterDiv>

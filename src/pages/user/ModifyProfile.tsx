@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
 import { useState, useEffect } from 'react'
 import { checkNicknameDuplicate } from '../../utils/validation'
+import useUserStore from '../../store/userStore'
 
 export default function ModifyProfile() {
   const [profile, setProfile] = useState<File | null>(null)
@@ -14,8 +15,10 @@ export default function ModifyProfile() {
   const [nickname, setNickname] = useState('')
   const [nicknameError, setNicknameError] = useState('')
 
-  const userNickname = localStorage.getItem('nickname') || '익명'
-  const userProfileImage = localStorage.getItem('profileImage') || ''
+  const userNickname = useUserStore((state) => state.nickname)
+  const userProfileImage = useUserStore((state) => state.profileImage)
+  const updateProfileImage = useUserStore((state) => state.updateProfileImage)
+  const updateNickname = useUserStore((state) => state.updateNickname)
 
   const navigate = useNavigate()
 
@@ -42,8 +45,8 @@ export default function ModifyProfile() {
           if (!response.ok) {
             throw new Error('프로필 변경 실패')
           }
-          localStorage.setItem('profileImage', profileUrl)
-          localStorage.setItem('nickname', nickname)
+          updateProfileImage(profileUrl)
+          updateNickname(nickname)
           navigate(URL.main)
         } catch (error) {
           console.error('Error:', error)
