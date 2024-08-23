@@ -15,6 +15,8 @@ import { OptionProps } from 'antd/es/mentions'
 import { APIs, URL } from '../../../static'
 import { useParams, useNavigate } from 'react-router-dom'
 import { MOCK_USERS } from '../../../assets/mock/userData'
+import LoadingLottie from '../../../components/lotties/LoadingLottie'
+import useUserStore from '../../../store/userStore'
 
 interface InputObjetInfoProps {
   selectedType: string
@@ -28,6 +30,10 @@ interface SharedMembersProps {
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const loungeId = useParams().lid || 0
   const navigate = useNavigate()
+  const userId = useUserStore((state) => state.userId)
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [isClick, setIsClick] = useState(false)
 
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
   const [name, setName] = useState('')
@@ -169,6 +175,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       return
     }
 
+    setIsClick(true)
+
     const formData = new FormData()
     if (image) {
       formData.append('lounge_id', loungeId.toString())
@@ -181,6 +189,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         JSON.stringify(sharedMembers.map((member) => member.user_id))
       )
     }
+
+    setIsLoading(true)
 
     try {
       const response = await fetch(APIs.objet, {
@@ -196,6 +206,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         const responseData = await response.json()
         const objetId = responseData.data.objet_id
 
+        setIsLoading(false)
+
         alert('오브제 생성 성공!')
         navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
           replace: true,
@@ -206,6 +218,10 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
     }
   }
 
+  if (isLoading) {
+    return <LoadingLottie />
+  }
+
   return (
     <>
       <InputItem
@@ -214,7 +230,6 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         input={
           <>
             <Mentions
-              variant='borderless'
               placeholder='@을 입력해주세요.'
               onSearch={onMentionSearch}
               onSelect={(option) => onMentionSelect(option as OptionProps)}
@@ -222,11 +237,13 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
               value={mentionValue || undefined}
               options={MOCK_USERS.filter(
                 (user) => !sharedMembers.includes(user)
-              ).map((user) => ({
-                value: user.nickname,
-                key: user.user_id.toString(),
-                label: user.nickname,
-              }))}
+              )
+                .filter((user) => user.user_id !== userId)
+                .map((user) => ({
+                  value: user.nickname,
+                  key: user.user_id.toString(),
+                  label: user.nickname,
+                }))}
             />
             <TagWrapper>
               {sharedMembers.map((member, index) => (
@@ -295,7 +312,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
             </label>
             <input
               type='file'
-              accept='.jpeg, .jpg, .png, .gif, .webp'
+              accept='.jpeg, .jpg, .png, .webp'
               id='objetImage'
               onChange={handleImageChange}
             />
@@ -305,7 +322,9 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       />
 
       <ChooseContainer>
-        <GenerateButton onClick={handleGenerateClick}>생성하기</GenerateButton>
+        <GenerateButton disabled={isClick} onClick={handleGenerateClick}>
+          생성하기
+        </GenerateButton>
       </ChooseContainer>
     </>
   )

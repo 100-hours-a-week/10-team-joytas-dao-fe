@@ -13,6 +13,7 @@ import ProfileImageUploader from '../../components/user/ProfileImageUploader'
 import { checkNicknameDuplicate } from '../../utils/validation'
 import NicknameInputField from '../../components/user/NicknameInputField'
 import { useEffect } from 'react'
+import useUserStore from '../../store/userStore'
 
 export default function FirstProfile() {
   const [profile, setProfile] = useState<File | null>(null)
@@ -20,6 +21,9 @@ export default function FirstProfile() {
   const [nickname, setNickname] = useState('')
   const [imageError, setImageError] = useState('')
   const [nicknameError, setNicknameError] = useState('')
+
+  const updateProfileImage = useUserStore((state) => state.updateProfileImage)
+  const updateNickname = useUserStore((state) => state.updateNickname)
 
   const navigate = useNavigate()
 
@@ -89,8 +93,9 @@ export default function FirstProfile() {
           if (!response.ok) {
             throw new Error('프로필 변경 실패')
           }
-          localStorage.setItem('profileImage', profileUrl)
-          localStorage.setItem('nickname', nickname)
+
+          updateProfileImage(profileUrl)
+          updateNickname(nickname)
           navigate(URL.main)
         } catch (error) {
           console.error('Error:', error)
