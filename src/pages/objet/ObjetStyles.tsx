@@ -143,13 +143,37 @@ export const InputBox = styled.div<{
     white-space: pre-wrap;
     vertical-align: top;
   }
+
+  label {
+    display: flex;
+    height: fit-content;
+  }
+
+  .ant-mentions {
+    border: none;
+    border-radius: 12px;
+    background-color: transparent;
+
+    textarea {
+      height: 38px;
+      overflow: hidden;
+    }
+
+    ::placeholder {
+      color: #a9a9a9;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      opacity: 0.7;
+    }
+  }
 `
 
 export const ObjetImgPreview = styled.img`
   width: 120px;
   height: 120px;
   object-fit: cover;
-  margin-bottom: 10px;
+  border-radius: 10px;
   position: relative;
 `
 
