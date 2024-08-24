@@ -16,14 +16,7 @@ interface SocketError {
   }
 }
 
-// 테스트 시그널링 서버
-const SOCKET_SERVER_URL =
-  'https://ec2-13-125-226-136.ap-northeast-2.compute.amazonaws.com:8083'
-
-// const SOCKET_SERVER_URL = 'https://localhost:8083'
-
-/* 배포 시그널링 서버 */
-// const SOCKET_SERVER_URL = 'https://api.joytas.kro.kr/signaling'
+const SOCKET_SERVER_URL = 'https://api.joytas.kro.kr'
 
 const pc_config = {
   iceServers: [
@@ -67,7 +60,6 @@ const VideoContainer = () => {
       localStreamRef.current = localStream
 
       if (localVideoRef.current) localVideoRef.current.srcObject = localStream
-
       if (!socketRef.current?.connected) {
         console.log('signaling failed')
         return
