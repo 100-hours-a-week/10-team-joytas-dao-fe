@@ -131,6 +131,7 @@ const VideoContainer = () => {
   useEffect(() => {
     socketRef.current = io.connect(SOCKET_SERVER_URL, {
       transports: ['websocket'],
+      path: '/signaling/',
       query: {
         token,
         objet_id,
