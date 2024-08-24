@@ -1,3 +1,4 @@
+import { URL } from '../../static'
 import {
   ObjetContainer,
   ObjetDescription,
@@ -6,10 +7,12 @@ import {
   ObjetContent,
   ObjetList,
 } from './ObjetComponentStyles'
+import { useNavigate } from 'react-router-dom'
 
 interface ObjetProps {
   objet_id: number
   name: string
+  lounge_id: number
   objet_image: string
   description: string
 }
@@ -34,6 +37,8 @@ export default function ObjetPreview({
             title={objet.name}
             description={objet.description}
             key={index}
+            loungeId={objet.lounge_id}
+            objetId={objet.objet_id}
           />
         )
       })}
@@ -45,13 +50,21 @@ function Objet({
   image,
   title,
   description,
+  loungeId,
+  objetId,
 }: {
   image: string
   title: string
   description: string
+  loungeId: number
+  objetId: number
 }) {
+  const navigate = useNavigate()
+
   return (
-    <ObjetContainer>
+    <ObjetContainer
+      onClick={() => navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`)}
+    >
       <ObjetImage src={image} alt={title} />
       <ObjetContent>
         <ObjetTitle>{title}</ObjetTitle>
