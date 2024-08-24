@@ -44,7 +44,9 @@ export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
   }
   return (
     <Container>
-      <Tab>유저 초대</Tab>
+      <Tab onClick={() => navigate(`${URL.lounge}/${loungeId}/invite`)}>
+        유저 초대
+      </Tab>
       <Tab onClick={() => navigate(`${URL.lounge}/${loungeId}/objet/new`)}>
         오브제 생성
       </Tab>

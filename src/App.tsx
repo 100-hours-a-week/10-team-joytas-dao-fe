@@ -45,7 +45,6 @@ function App() {
           <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
           <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
           <Route path={URL.myRoom} element={<MyRoom />}></Route>
-          <Route path={URL.loungeInvite} element={<UserList />}></Route>
           <Route path={URL.objetCall} element={<ObjetCall />}></Route>
           <Route
             path={`${URL.lounge}/:lid/objet/:oid`}
@@ -63,6 +62,7 @@ function App() {
             element={<UserDetail />}
           ></Route>
           <Route path={URL.notification} element={<Notification />}></Route>
+          <Route path={`${URL.lounge}/:lid/invite`} element={<UserList />} />
         </Routes>
       </Main>
     </BrowserRouter>
