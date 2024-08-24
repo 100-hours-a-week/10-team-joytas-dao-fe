@@ -2,17 +2,22 @@ import styled from 'styled-components'
 
 export const ObjetList = styled.div`
   width: 100%;
-  margin-top: 20px;
+  padding: 0 32px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 20px;
 `
 
 export const ObjetContainer = styled.div`
+  cursor: pointer;
   width: 100%;
   display: flex;
   align-items: flex-start;
   gap: 10px;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 `
 export const ObjetImage = styled.img`
   width: 80px;
@@ -25,6 +30,7 @@ export const ObjetImage = styled.img`
 export const ObjetContent = styled.div`
   display: flex;
   flex: 1;
+  font-size: 13px;
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
@@ -32,7 +38,7 @@ export const ObjetContent = styled.div`
 
 export const ObjetTitle = styled.div`
   margin-top: 8px;
-  font-size: 12px;
+  font-size: 15px;
   font-weight: bold;
 `
 
