@@ -20,7 +20,7 @@ interface ObjetsProps {
 }
 
 interface Objet {
-  object_id: number
+  objet_id: number
   type: string
   name: string
   description: string
@@ -74,7 +74,7 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
         Math.random() * 2 * Math.PI,
         Math.random() * 2 * Math.PI
       )
-      mesh.userData = { id: objet.object_id, onClick: () => onModelClick(mesh) }
+      mesh.userData = { id: objet.objet_id, onClick: () => onModelClick(mesh) }
       return { ModelComponent, mesh }
     })
   }, [objets, onModelClick])
