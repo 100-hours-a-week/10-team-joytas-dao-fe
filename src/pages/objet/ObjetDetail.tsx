@@ -141,7 +141,7 @@ export default function ObjetDetail() {
       }, 2000)
       setIsToastVisible(false)
     } else {
-      navigate(URL.objetCall)
+      navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/call`)
     }
   }
 
