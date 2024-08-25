@@ -1,6 +1,6 @@
 import './App.css'
 import styled from 'styled-components'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { URL } from './static'
 import Login from './pages/login/Login'
 import LoungeListPage from './pages/lounge/LoungeList'
@@ -29,39 +29,38 @@ function App() {
     <BrowserRouter>
       <Main>
         <Routes>
-          <Route path={URL.main} element={<Home />}></Route>
-          <Route path={URL.home} element={<Login />}></Route>
-          <Route path={URL.lounge} element={<LoungeListPage />}></Route>
-          <Route path={URL.newLounge} element={<NewLounge />}></Route>
-          <Route path={URL.terms} element={<Terms />}></Route>
-          <Route path={URL.withdraw} element={<UserDelete />}></Route>
-          <Route path={URL.privacy} element={<Privacy />}></Route>
-          <Route
-            path={`${URL.lounge}/:lid/objet/new`}
-            element={<NewObjet />}
-          ></Route>
-          <Route path={`${URL.lounge}/:lid`} element={<Lounge />}></Route>
-          <Route path={URL.firstProfile} element={<FirstProfile />}></Route>
-          <Route path={URL.modifyProfile} element={<ModifyProfile />}></Route>
-          <Route path={URL.createMyRoom} element={<CreateMyRoom />}></Route>
-          <Route path={URL.myRoom} element={<MyRoom />}></Route>
-          <Route path={URL.objetCall} element={<ObjetCall />}></Route>
+          <Route path='/' element={<Navigate to={URL.main} />} />
+
+          <Route path={URL.main} element={<Home />} />
+          <Route path={URL.home} element={<Login />} />
+          <Route path={URL.lounge} element={<LoungeListPage />} />
+          <Route path={URL.newLounge} element={<NewLounge />} />
+          <Route path={URL.terms} element={<Terms />} />
+          <Route path={URL.withdraw} element={<UserDelete />} />
+          <Route path={URL.privacy} element={<Privacy />} />
+          <Route path={`${URL.lounge}/:lid/objet/new`} element={<NewObjet />} />
+          <Route path={`${URL.lounge}/:lid`} element={<Lounge />} />
+          <Route path={URL.firstProfile} element={<FirstProfile />} />
+          <Route path={URL.modifyProfile} element={<ModifyProfile />} />
+          <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
+          <Route path={URL.myRoom} element={<MyRoom />} />
+          <Route path={URL.objetCall} element={<ObjetCall />} />
           <Route
             path={`${URL.lounge}/:lid/objet/:oid`}
             element={<ObjetDetail />}
-          ></Route>
+          />
           <Route
             path={`${URL.lounge}/:lid/objet/:oid/update`}
             element={<UpdateObjet />}
-          ></Route>
-          <Route path={URL.myRoomObjet} element={<MyRoomObjet />}></Route>
-          <Route path={URL.objetChatting} element={<ObjetChatting />}></Route>
-          <Route path={URL.users} element={<UserList />}></Route>
+          />
+          <Route path={URL.myRoomObjet} element={<MyRoomObjet />} />
           <Route
-            path={`${URL.userDetail}/:id`}
-            element={<UserDetail />}
-          ></Route>
-          <Route path={URL.notification} element={<Notification />}></Route>
+            path={`${URL.lounge}/:lid/objet/:oid/chatting`}
+            element={<ObjetChatting />}
+          />
+          <Route path={URL.users} element={<UserList />} />
+          <Route path={`${URL.userDetail}/:id`} element={<UserDetail />} />
+          <Route path={URL.notification} element={<Notification />} />
           <Route path={`${URL.lounge}/:lid/invite`} element={<UserList />} />
         </Routes>
       </Main>
