@@ -12,6 +12,8 @@
   "dependencies": {
     "@react-three/drei": "^9.109.5",
     "@react-three/fiber": "^8.17.5",
+    "@sentry/react": "^8.26.0",
+    "@sentry/vite-plugin": "^2.22.2",
     "@types/react-lottie": "^1.2.10",
     "@types/socket.io-client": "1.4.34",
     "@types/three": "^0.167.1",
