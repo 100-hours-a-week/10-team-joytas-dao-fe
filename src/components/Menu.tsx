@@ -43,7 +43,7 @@ export default function Menu({ setMenuOpen }: MenuProps) {
         localStorage.removeItem('access_token')
         logout()
         alert('로그아웃 성공!')
-        navigate(URL.home)
+        navigate(URL.login)
       } else {
         alert('로그아웃 실패')
       }

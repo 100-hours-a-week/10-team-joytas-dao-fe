@@ -1,5 +1,5 @@
 export const URL = {
-  home: '/',
+  login: '/login',
   lounge: '/lounge',
   terms: '/terms',
   privacy: '/privacy',
