@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hotjar/browser": "^1.0.9",
     "@react-three/drei": "^9.109.5",
     "@react-three/fiber": "^8.17.5",
     "@sentry/react": "^8.26.0",
