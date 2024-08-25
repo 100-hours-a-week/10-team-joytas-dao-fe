@@ -2,40 +2,44 @@ import styled from 'styled-components'
 
 export const Greetings = styled.div`
   color: white;
-  padding-top: 40px;
+  padding: 20px 32px;
 `
 
 export const WelcomeMessage = styled.div`
-  font-size: 20px;
+  font-size: 18px;
   font-weight: bold;
 `
 
 export const Nickname = styled.div`
-  font-size: 30px;
+  font-size: 23px;
+  padding: 5px 10px;
+  width: fit-content;
+  border-radius: 10px;
+  background-color: rgba(117, 117, 117, 0.5);
   margin-top: 5px;
   font-weight: bold;
+  color: rgba(255, 204, 0);
 `
 
-export const Banner = styled.div`
+export const Banner = styled.video`
   background-color: grey;
-  margin-top: 20px;
   width: 100%;
   display: flex;
-  margin-top: 20px;
+  object-fit: cover;
   align-items: center;
   justify-content: center;
-  height: 165px;
+  height: 200px;
 `
 
 export const MyObjetContainer = styled.div`
-  margin-top: 20px;
   width: 100%;
   display: flex;
   flex-direction: column;
 `
 
 export const MyObjetTitle = styled.div`
-  font-size: 14px;
+  padding: 32px 32px 16px;
+  font-size: 17px;
   font-weight: bold;
 `
 
