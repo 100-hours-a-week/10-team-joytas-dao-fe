@@ -26,12 +26,27 @@ export const MyChat = styled.div`
   }
 `
 
+export const EnterAlert = styled.div`
+  display: flex;
+  justify-content: center;
+  margin: 8px 0;
+
+  font-size: 12px;
+  color: #b3b3b3;
+`
+
 export const ChatContents = styled.div`
   display: flex;
   flex-direction: column;
+  width: 90%;
   padding: 6px;
-  flex-grow: 1;
   gap: 5px;
+
+  .preview {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 `
 
 export const UserName = styled.span`
@@ -51,11 +66,14 @@ export const ContentsAndDatetime = styled.div`
     border: 0.3px solid #d9d9d9;
     border-radius: 10px;
     padding: 7px;
+
+    word-break: break-word;
+    white-space: pre-wrap;
   }
 
   .datetime {
     color: #b3b3b3;
-    width: 48px;
+    width: 55px;
     font-size: 7px;
     bottom: 0;
     white-space: pre-wrap;

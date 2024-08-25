@@ -16,7 +16,7 @@ export default function GoCommunityBtn({
   return (
     <CommunityBtn className={className} onClick={onClick}>
       {text}
-      <span> ( {people || 0} / 9 )</span>
+      {typeof people === 'number' && <span> ( {people} / 9 )</span>}
     </CommunityBtn>
   )
 }

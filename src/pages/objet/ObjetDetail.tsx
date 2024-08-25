@@ -33,6 +33,17 @@ import { ModalBackdrop } from '../../components/modal/ModalStyles'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { ObjetDrop } from '../../components/dropdown/Dropdown'
 import useUserStore from '../../store/userStore'
+import useObjetStore from '../../store/objetStore'
+
+interface Message {
+  id: string
+  type: string
+  sender_name: string
+  sender_id: number
+  sender_profile_url: string
+  message: string
+  created_at: string
+}
 
 export default function ObjetDetail() {
   const loungeId = useParams().lid
@@ -47,9 +58,17 @@ export default function ObjetDetail() {
   const [description, setDescription] = useState('')
   const [imageUrl, setImageUrl] = useState('')
 
+  const [messagePreviews, setMessagePreviews] = useState<Message[]>([])
   const [callingPeople, setCallingPeople] = useState(0)
   const [isActive, setIsActive] = useState(false)
   const [creatorId, setCreatorId] = useState(0)
+
+  const setChatToken = useObjetStore((state) => state.setChatToken)
+  const setObjetName = useObjetStore((state) => state.setObjetName)
+  const setObjetCreatorNickname = useObjetStore(
+    (state) => state.setObjetCreatorNickname
+  )
+  const setObjetCreatorId = useObjetStore((state) => state.setObjetCreatorId)
 
   const [isDropVisible, setIsDropVisible] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
@@ -58,10 +77,7 @@ export default function ObjetDetail() {
   const navigate = useNavigate()
 
   useEffect(() => {
-    setTimeout(() => {
-      fetchData()
-      setIsLoading(false)
-    }, 1000)
+    fetchData()
   }, [])
 
   useEffect(() => {
@@ -84,7 +100,8 @@ export default function ObjetDetail() {
 
   const fetchData = async () => {
     try {
-      const response = await fetch(`${APIs.objet}/${objetId}`, {
+      // 오브제 정보 가져오기
+      const objRes = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -93,8 +110,8 @@ export default function ObjetDetail() {
         },
       })
 
-      if (response.ok) {
-        const data = await response.json()
+      if (objRes.ok) {
+        const data = await objRes.json()
 
         setCreator(data.data.nickname)
         setName(data.data.name)
@@ -104,11 +121,51 @@ export default function ObjetDetail() {
         setIsActive(data.data.is_active)
         setCreatorId(data.data.user_id)
 
-        // TODO: 오브제 viewers 정보 가져오기
-        // TODO: 오브제 채팅 정보 가져오기
+        setObjetName(data.data.name)
+        setObjetCreatorNickname(data.data.nickname)
+        setObjetCreatorId(data.data.user_id)
       }
+
+      // 채팅 미리보기
+      // - 채팅방 토큰 가져오기
+      const chatRes = await fetch(`${APIs.chat}/${objetId}/room-token`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (chatRes.ok) {
+        const data = await chatRes.json()
+
+        setChatToken(data.data.room_token)
+
+        // - 채팅방 미리보기 가져오기
+        const chatPreviewRes = await fetch(
+          `${APIs.chat}/${data.data.room_token}/messages?all=false`,
+          {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          }
+        )
+
+        if (chatPreviewRes.ok) {
+          const chatPreviewData = await chatPreviewRes.json()
+          setMessagePreviews(chatPreviewData.data)
+        }
+      }
+
+      // TODO: 오브제 viewers 정보 가져오기
     } catch (error) {
       console.log('오브제 정보 가져오기 실패: ', error)
+    } finally {
+      setIsLoading(false)
     }
   }
 
@@ -133,6 +190,11 @@ export default function ObjetDetail() {
     } catch (error) {
       console.log('오브제 삭제 실패: ', error)
     }
+  }
+
+  const handleClickChat = async () => {
+    setChatToken(useObjetStore.getState().chatToken)
+    navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/chatting`)
   }
 
   const handleClickCall = () => {
@@ -170,7 +232,7 @@ export default function ObjetDetail() {
                   만든이 <Name>{creator}</Name>
                 </ObjetMaker>
                 <ObjetActive>
-                  실시간 <Active isActive={isActive} />
+                  실시간 <Active $isActive={isActive} />
                 </ObjetActive>
               </CallSubTitle>
             </LeftContainer>
@@ -226,34 +288,24 @@ export default function ObjetDetail() {
             <ObjetImg src={imageUrl} />
             <ObjetDescription>{description}</ObjetDescription>
           </ObjetDetailContainer>
+
           <CommunityContainer>
             <ChattingsWrapper>
-              <ChatMessage
-                userName='jamie'
-                userId={3}
-                profileImg='../../assets/images/sampleObjet.png'
-                content='채팅 미리보기 준비중 ~~'
-              />
-              <ChatMessage
-                userName='jamie'
-                userId={3}
-                profileImg='../../assets/images/sampleObjet.png'
-                content='채팅 미리보기 준비중 ~~'
-              />
-              <ChatMessage
-                userName='jamie'
-                userId={3}
-                profileImg='../../assets/images/sampleObjet.png'
-                content='채팅 미리보기 준비중 ~~'
-              />
+              {messagePreviews.map((message, index) => (
+                <ChatMessage
+                  userName={message.sender_name}
+                  userId={message.sender_id}
+                  profileImg={message.sender_profile_url}
+                  content={message.message}
+                  key={index}
+                />
+              ))}
             </ChattingsWrapper>
             <GoToBtnWrapper>
               <GoCommunityBtn
                 text='채팅 입장'
                 className='chattings'
-                onClick={() => {
-                  navigate(URL.objetChatting)
-                }}
+                onClick={handleClickChat}
               />
               <GoCommunityBtn
                 text='음성통화'

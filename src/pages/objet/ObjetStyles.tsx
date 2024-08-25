@@ -330,8 +330,8 @@ export const ObjetActive = styled.div`
   gap: 10px;
 `
 
-export const Active = styled.div<{ isActive: boolean }>`
-  background-color: ${(props) => (props.isActive ? '#00ff0a' : '#d9d9d9')};
+export const Active = styled.div<{ $isActive: boolean }>`
+  background-color: ${(props) => (props.$isActive ? '#00ff0a' : '#d9d9d9')};
   width: 6px;
   height: 6px;
   border-radius: 50%;
@@ -354,7 +354,7 @@ export const ObjetImg = styled.img`
 
 export const ObjetDescription = styled.div`
   margin: 20px 0;
-  height: 120px;
+  height: 130px;
   width: 100%;
   overflow-y: scroll;
   color: white;
@@ -364,8 +364,8 @@ export const ObjetDescription = styled.div`
 export const CommunityContainer = styled.div`
   ${flexColumn}
   width: 100%;
-  height: 250px;
-  justify-content: center;
+  height: 277px;
+  justify-content: space-around;
   background-color: #383838;
   gap: 20px;
   border-radius: 10px 10px 0 0;
@@ -441,6 +441,7 @@ export const ChatSendButton = styled.img`
   position: absolute;
   right: 20px;
   top: 50%;
+  opacity: 0.5;
 
   width: 16px;
   height: 16px;
@@ -449,6 +450,6 @@ export const ChatSendButton = styled.img`
   cursor: pointer;
 
   &:hover {
-    opacity: 0.7;
+    opacity: 1;
   }
 `
