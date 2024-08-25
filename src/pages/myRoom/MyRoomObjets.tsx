@@ -47,7 +47,7 @@ export default function MyRoomObjet() {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
       })
-      if (response.status === 200) {
+      if (response.ok) {
         const responseData = await response.json()
         setObjets(responseData.data)
       }
@@ -75,7 +75,7 @@ export default function MyRoomObjet() {
           },
         }
       )
-      if (response.status === 200) {
+      if (response.ok) {
         const responseData = await response.json()
         setObjets(responseData.data.objets)
       }
@@ -95,7 +95,7 @@ export default function MyRoomObjet() {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         const responseData = await response.json()
 
         setLounges([

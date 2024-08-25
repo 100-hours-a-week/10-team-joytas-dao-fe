@@ -48,7 +48,7 @@ export default function NewLounge() {
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
           },
         })
-        if (response.status === 200) {
+        if (response.ok) {
           const responseData = await response.json()
           if (responseData.data.length >= 4) {
             alert('4개 이상의 라운지를 만들 수 없습니다.')

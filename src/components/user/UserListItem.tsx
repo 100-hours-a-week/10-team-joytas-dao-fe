@@ -41,7 +41,7 @@ export default function UserListItem({ type, user }: UserListProps) {
         body: JSON.stringify({ user_id: user.userId, lounge_id: loungeId }),
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         alert('유저 초대 성공')
       } else if (response.status === 400) {
         alert('이미 라운지에 존재하는 유저입니다.')

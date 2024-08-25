@@ -81,7 +81,7 @@ export default function UserDelete() {
         }),
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         alert('회원탈퇴 성공')
         localStorage.removeItem('access_token')
         logout()

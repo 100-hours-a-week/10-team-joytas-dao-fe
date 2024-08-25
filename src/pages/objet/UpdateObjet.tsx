@@ -79,7 +79,7 @@ export default function UpdateObjet() {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         const data = await response.json()
 
         setName(data.data.name)

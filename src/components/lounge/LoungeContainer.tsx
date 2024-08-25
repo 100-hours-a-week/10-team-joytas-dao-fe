@@ -41,7 +41,7 @@ export default function LoungeContainer() {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
       })
-      if (response.status === 200) {
+      if (response.ok) {
         const responseData = await response.json()
         return responseData.data
       } else {
