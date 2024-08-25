@@ -32,7 +32,7 @@ function App() {
           <Route path='/' element={<Navigate to={URL.main} />} />
 
           <Route path={URL.main} element={<Home />} />
-          <Route path={URL.home} element={<Login />} />
+          <Route path={URL.login} element={<Login />} />
           <Route path={URL.lounge} element={<LoungeListPage />} />
           <Route path={URL.newLounge} element={<NewLounge />} />
           <Route path={URL.terms} element={<Terms />} />

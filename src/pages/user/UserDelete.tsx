@@ -85,7 +85,7 @@ export default function UserDelete() {
         alert('회원탈퇴 성공')
         localStorage.removeItem('access_token')
         logout()
-        navigate(URL.home)
+        navigate(URL.login)
       }
     } catch (error) {
       console.error('Failed to withdraw user', error)

@@ -49,7 +49,7 @@ export const useUserInfo = () => {
       return responseData.data
     } catch (error) {
       console.error('Failed to fetch profile', error)
-      navigate(URL.home)
+      navigate(URL.login)
     }
   }
 
@@ -65,7 +65,7 @@ export const useUserInfo = () => {
       updateProfileImage(profile.profile_url)
       updateId(profile.user_id)
     } else {
-      navigate(URL.home)
+      navigate(URL.login)
     }
   }
 
