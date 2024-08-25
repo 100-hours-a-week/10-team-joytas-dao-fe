@@ -23,14 +23,14 @@ export default function Login() {
   return (
     <Main>
       <LoginImagDiv>
-        <LoginImage1 src={login1} />
+        <LoginImage1 loading='lazy' src={login1} />
       </LoginImagDiv>
       <Logo>DAO</Logo>
       <LoginImagDiv2>
-        <LoginImage1 src={login2} />
+        <LoginImage1 loading='lazy' src={login2} />
       </LoginImagDiv2>
       <LoginButton onClick={handleClickLogIn}>
-        <img src={login} />
+        <img loading='lazy' src={login} />
       </LoginButton>
       <Bottom>
         <Link to={URL.terms}>
