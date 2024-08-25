@@ -1,77 +1,20 @@
 import Layout from '../../components/Layout'
 import { GloablContainer16 } from '../../global/globalStyles'
 import {
-  Greetings,
-  WelcomeMessage,
-  Nickname,
   Banner,
   MyObjetContainer,
   MyObjetTitle,
   LottieContainer,
 } from './HomeStyles'
-import useUserStore from '../../store/userStore'
 import ObjetPreview from '../../components/objet/ObjetPreview'
-import { useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import type { Profile } from '../../types/ProfileType'
-import { APIs, URL } from '../../static'
+import { APIs } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import NoPrevObjet from '../../components/objet/NoPrevObjet'
 
 export default function Home() {
-  const [name, setName] = useState('')
-  const navigate = useNavigate()
   const [objets, setObjets] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-
-  const updateId = useUserStore((state) => state.updateId)
-  const updateProfileImage = useUserStore((state) => state.updateProfileImage)
-  const updateNickname = useUserStore((state) => state.updateNickname)
-
-  const fetchProfile = async (): Promise<Profile | undefined> => {
-    try {
-      let response = await fetch(APIs.profile, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (response.status === 401) {
-        const reissueResponse = await fetch(APIs.reissueToken, {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
-
-        if (reissueResponse.ok) {
-          const reissueData = await reissueResponse.json()
-          localStorage.setItem('access_token', reissueData.data.access_token)
-
-          // 새로운 토큰으로 프로필 재요청
-          response = await fetch(APIs.profile, {
-            credentials: 'include',
-            headers: {
-              Authorization: `Bearer ${reissueData.data.access_token}`,
-            },
-          })
-        } else {
-          throw new Error('Failed to reissue token')
-        }
-      }
-
-      if (!response.ok) {
-        throw new Error('Failed to fetch profile')
-      }
-
-      const responseData = await response.json()
-      return responseData.data
-    } catch (error) {
-      console.error('Failed to fetch profile', error)
-      navigate(URL.home)
-    }
-  }
 
   useEffect(() => {
     const fetchData = async () => {
@@ -99,35 +42,17 @@ export default function Home() {
     fetchData()
   }, [])
 
-  useEffect(() => {
-    const getProfile = async () => {
-      const profile = await fetchProfile()
-
-      if (profile?.user_status === 'ACTIVE_FIRST_LOGIN') {
-        navigate(URL.firstProfile)
-      }
-
-      if (profile) {
-        setName(profile.nickname)
-        updateNickname(profile.nickname)
-        updateProfileImage(profile.profile_url)
-        updateId(profile.user_id)
-      } else {
-        navigate(URL.home)
-      }
-    }
-
-    getProfile()
-  }, [])
-
   return (
-    <Layout>
-      <GloablContainer16>
-        <Greetings>
-          <WelcomeMessage>안녕하세요 👋</WelcomeMessage>
-          <Nickname>"{name}"님,</Nickname>
-        </Greetings>
-        <Banner>광고</Banner>
+    <Layout style={{ padding: '0px' }}>
+      <GloablContainer16 style={{ padding: '0px' }}>
+        <Banner
+          autoPlay
+          muted
+          loop
+          playsInline
+          src='https://oopy.lazyrockets.com/api/v2/notion/fileUrl?src=https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F38552da6-340d-42c1-a9a1-b181ff331f03%2F64583d5a-5694-4c0e-9180-31e58fdd001a%2F%25E1%2584%258C%25E1%2585%25A6%25E1%2584%258C%25E1%2585%25AE_(PC).mp4&blockId=8e6adf11-495d-4115-ba04-12f87e247b9f#t=0.0001'
+        ></Banner>
+
         <MyObjetContainer>
           <MyObjetTitle>👀 최근 오브제를 확인해보세요!</MyObjetTitle>
           {isLoading ? (
