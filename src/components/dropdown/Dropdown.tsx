@@ -30,7 +30,7 @@ export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         alert('라운지가 삭제됐습니다!')
         navigate(URL.lounge)
       } else if (response.status == 400) {

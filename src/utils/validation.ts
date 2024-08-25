@@ -11,7 +11,7 @@ export const checkNicknameDuplicate = async (
         Authorization: `Bearer ${localStorage.getItem('access_token')}`,
       },
     })
-    if (response.status === 200) return false
+    if (response.ok) return false
     else return true
   } catch (error) {
     console.error('Error: ', error)

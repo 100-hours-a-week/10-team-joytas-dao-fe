@@ -41,7 +41,7 @@ export default function Lounge() {
           },
         })
 
-        if (response.status === 200) {
+        if (response.ok) {
           const responseData = await response.json()
           setLoungeName(responseData.data.name)
           setObjets(responseData.data.objets)

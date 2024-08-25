@@ -35,7 +35,7 @@ export default function FirstProfile() {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         const responseData = await response.json()
         if (responseData.data.user_status !== 'ACTIVE_FIRST_LOGIN') navigate(-1)
       }

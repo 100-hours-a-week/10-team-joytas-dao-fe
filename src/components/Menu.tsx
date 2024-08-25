@@ -39,7 +39,7 @@ export default function Menu({ setMenuOpen }: MenuProps) {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         localStorage.removeItem('access_token')
         logout()
         alert('로그아웃 성공!')
