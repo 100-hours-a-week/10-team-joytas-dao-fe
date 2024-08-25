@@ -44,7 +44,10 @@ function App() {
           <Route path={URL.modifyProfile} element={<ModifyProfile />} />
           <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
           <Route path={URL.myRoom} element={<MyRoom />} />
-          <Route path={URL.objetCall} element={<ObjetCall />} />
+          <Route
+            path={`${URL.lounge}/:lid/objet/:oid/call`}
+            element={<ObjetCall />}
+          />
           <Route
             path={`${URL.lounge}/:lid/objet/:oid`}
             element={<ObjetDetail />}

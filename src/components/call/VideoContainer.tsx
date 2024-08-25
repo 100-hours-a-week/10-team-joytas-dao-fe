@@ -31,7 +31,7 @@ const pc_config = {
   ],
 }
 
-const VideoContainer = () => {
+const VideoContainer = ({ objetId }: { objetId: number }) => {
   const socketRef = useRef<SocketIOClient.Socket>()
   const pcsRef = useRef<{ [socketId: string]: RTCPeerConnection }>({})
   const localVideoRef = useRef<HTMLVideoElement>(null)
@@ -44,9 +44,6 @@ const VideoContainer = () => {
   const nickname = useUserStore((state) => state.nickname)
   const profile_image = useUserStore((state) => state.profileImage)
   const user_id = useUserStore((state) => state.userId)
-
-  // TODO : url에서 추출
-  const objet_id = 2
 
   const getLocalStream = useCallback(async () => {
     try {
@@ -68,7 +65,7 @@ const VideoContainer = () => {
       console.log('signaling succeeded')
 
       socketRef.current.emit('join_objet', {
-        objet_id,
+        objet_id: objetId,
         nickname,
         profile_image,
         user_id,
@@ -134,7 +131,7 @@ const VideoContainer = () => {
       path: '/signaling/',
       query: {
         token,
-        objet_id,
+        objet_id: objetId,
       },
     })
 
@@ -245,10 +242,16 @@ const VideoContainer = () => {
         socketRef.current.disconnect()
       }
       users.forEach((user) => {
-        if (!pcsRef.current[user.socket_id]) return
-        pcsRef.current[user.socket_id].close()
-        delete pcsRef.current[user.socket_id]
+        if (pcsRef.current[user.socket_id]) {
+          pcsRef.current[user.socket_id].close()
+          delete pcsRef.current[user.socket_id]
+        }
       })
+
+      if (localStreamRef.current) {
+        localStreamRef.current.getTracks().forEach((track) => track.stop())
+        localStreamRef.current = undefined
+      }
     }
   }, [createPeerConnection, getLocalStream])
 
@@ -256,7 +259,6 @@ const VideoContainer = () => {
     <>
       <video
         style={{
-          // NOTE: 크기조정
           width: 80,
           height: 80,
           marginTop: 10,
