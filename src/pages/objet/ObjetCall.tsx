@@ -1,6 +1,6 @@
 import Layout from '../../components/Layout'
 import {
-  MicButton,
+  // MicButton,
   CallButton,
   Icon,
   MiddleContainer,
@@ -8,8 +8,8 @@ import {
 } from './ObjetCallStyles'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
-import mute from '../../assets/images/mute.png'
-import unmute from '../../assets/images/unmute.png'
+// import mute from '../../assets/images/mute.png'
+// import unmute from '../../assets/images/unmute.png'
 import quitCall from '../../assets/images/quitCall.png'
 import { useEffect, useState } from 'react'
 import {
@@ -30,7 +30,7 @@ import { APIs } from '../../static'
 
 export default function ObjetCall() {
   const navigate = useNavigate()
-  const [muted, setMuted] = useState(false)
+  // const [muted, setMuted] = useState(false)
   const [isActive, setIsActive] = useState(false)
   const { oid: objetId } = useParams()
   const [creator, setCreator] = useState('')
@@ -46,7 +46,7 @@ export default function ObjetCall() {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         const data = await response.json()
         setCreator(data.data.nickname)
         setName(data.data.name)
@@ -104,12 +104,12 @@ export default function ObjetCall() {
           <VideoContainer objetId={Number(objetId)} />
         </MiddleContainer>
         <BottomContainer>
-          <MicButton>
+          {/* <MicButton>
             <Icon
               src={muted ? unmute : mute}
               onClick={() => setMuted(!muted)}
             />
-          </MicButton>
+          </MicButton> */}
           <CallButton onClick={() => navigate(-1)}>
             <Icon src={quitCall} />
           </CallButton>
