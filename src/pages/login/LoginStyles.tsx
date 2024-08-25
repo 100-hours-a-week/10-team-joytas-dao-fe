@@ -3,6 +3,7 @@ import styled from 'styled-components'
 export const Main = styled.div`
   width: 100%;
   height: 100%;
+  position: relative;
 `
 
 export const LoginImage1 = styled.img`
@@ -13,20 +14,23 @@ export const LoginImagDiv2 = styled.div`
   width: 100%;
   height: fit-content;
   display: flex;
-  margin-top: -20px;
+  position: absolute;
+  bottom: 20px;
   justify-content: flex-end;
 `
 
 export const LoginImagDiv = styled.div`
   width: 100%;
+  position: absolute;
   height: fit-content;
 `
 
 export const Logo = styled.h2`
   font-size: 60px;
   display: flex;
+  position: absolute;
+  top: 370px;
   justify-content: center;
-  margin-top: 40px;
   width: 100%;
   color: white;
   font-weight: 800;
@@ -36,8 +40,8 @@ export const LoginButton = styled.button`
   background-color: #fee500;
   border-radius: 5px;
   font-weight: 600;
-  position: relative;
-  top: -120px;
+  position: absolute;
+  bottom: 130px;
   border: 0px;
   left: 45px;
   z-index: 10;
@@ -57,10 +61,10 @@ export const LoginButton = styled.button`
 `
 
 export const Bottom = styled.div`
-  width: 100%;
-  height: 100%;
   padding: 16px;
   display: flex;
+  position: absolute;
+  bottom: 10px;
   justify-content: flex-start;
   text-decoration: none;
   gap: 6px;
@@ -70,7 +74,6 @@ export const Text = styled.div`
   text-decoration: underline lightgray;
   position: relative;
   cursor: pointer;
-  top: -60px;
   font-size: 10px;
   width: fit-content;
   color: lightgray;
