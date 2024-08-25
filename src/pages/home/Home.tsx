@@ -28,7 +28,7 @@ export default function Home() {
           },
         })
 
-        if (response.status === 200) {
+        if (response.ok) {
           const responseData = await response.json()
           setObjets(responseData.data)
         }

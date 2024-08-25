@@ -92,7 +92,7 @@ export default function ObjetDetail() {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         const data = await response.json()
 
         setCreator(data.data.nickname)
@@ -122,7 +122,7 @@ export default function ObjetDetail() {
         },
       })
 
-      if (response.status === 200) {
+      if (response.ok) {
         const data = await response.json()
         console.log('오브제 삭제 정보: ', data)
 
@@ -248,7 +248,7 @@ export default function ObjetDetail() {
             </ChattingsWrapper>
             <GoToBtnWrapper>
               <GoCommunityBtn
-                text='채팅 입장하기'
+                text='채팅 입장'
                 className='chattings'
                 onClick={() => {
                   navigate(URL.objetChatting)
