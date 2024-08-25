@@ -77,7 +77,7 @@ export default function ObjetCall() {
                 만든이 <Name>{creator}</Name>
               </ObjetMaker>
               <ObjetActive>
-                실시간 <Active isActive={isActive} />
+                실시간 <Active $isActive={isActive} />
               </ObjetActive>
             </CallSubTitle>
           </LeftContainer>

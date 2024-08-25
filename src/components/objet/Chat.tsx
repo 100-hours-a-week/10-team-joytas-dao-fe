@@ -2,11 +2,12 @@ import {
   Chat,
   ChatContents,
   ContentsAndDatetime,
+  EnterAlert,
   MyChat,
   UserName,
 } from './ChatStyles'
-import sampleImg from '../../assets/images/sampleObjet.png'
 import { formatDatetime } from '../../utils/formatDatetime'
+import useUserStore from '../../store/userStore'
 
 interface ChattingProps {
   userName: string
@@ -16,6 +17,10 @@ interface ChattingProps {
   datetime?: string
 }
 
+interface EnterAlertProps {
+  message: string
+}
+
 export function ChatMessage({
   userName,
   userId,
@@ -23,8 +28,8 @@ export function ChatMessage({
   content,
   datetime,
 }: ChattingProps) {
-  const currentUserId = 2
-  const isMyChat = userId === currentUserId
+  const myUserId = useUserStore((state) => state.userId)
+  const isMyChat = userId === myUserId
 
   return datetime ? (
     isMyChat ? (
@@ -36,7 +41,7 @@ export function ChatMessage({
       </MyChat>
     ) : (
       <Chat>
-        <img src={sampleImg || profileImg} alt='profile' />
+        <img src={profileImg} alt='profile' />
         <ChatContents>
           <UserName>{userName}</UserName>
           <ContentsAndDatetime>
@@ -47,9 +52,20 @@ export function ChatMessage({
       </Chat>
     )
   ) : (
-    <Chat>
-      <img src={sampleImg} alt='profile' />
-      <span>{content}</span>
+    <Chat style={{ gap: 0 }}>
+      <img src={profileImg} alt='profile' />
+      <ChatContents>
+        <UserName>{userName}</UserName>
+        <div className='preview'>{content}</div>
+      </ChatContents>
     </Chat>
+  )
+}
+
+export function AlertUserEnter({ message }: EnterAlertProps) {
+  return (
+    <EnterAlert>
+      <span>{message}</span>
+    </EnterAlert>
   )
 }

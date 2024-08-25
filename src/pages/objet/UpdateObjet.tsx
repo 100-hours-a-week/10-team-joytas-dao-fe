@@ -51,9 +51,9 @@ export default function UpdateObjet() {
   const [image, setImage] = useState<File | null>(null)
   const [imageUrl, setImageUrl] = useState('')
 
-  const [nameValid, setNameValid] = useState(false)
-  const [descriptionValid, setDescriptionValid] = useState(false)
-  const [imageValid, setImageValid] = useState(false)
+  const [nameValid, setNameValid] = useState(true)
+  const [descriptionValid, setDescriptionValid] = useState(true)
+  const [imageValid, setImageValid] = useState(true)
 
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
 
