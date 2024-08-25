@@ -25,12 +25,40 @@ import {
   Name,
 } from './ObjetStyles'
 import VideoContainer from '../../components/call/VideoContainer'
+import { useParams, useNavigate } from 'react-router-dom'
+import { APIs } from '../../static'
 
 export default function ObjetCall() {
+  const navigate = useNavigate()
   const [muted, setMuted] = useState(false)
   const [isActive, setIsActive] = useState(false)
+  const { oid: objetId } = useParams()
+  const [creator, setCreator] = useState('')
+  const [name, setName] = useState('')
 
-  const name = 'jamie'
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${APIs.objet}/${objetId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (response.status === 200) {
+        const data = await response.json()
+        setCreator(data.data.nickname)
+        setName(data.data.name)
+      }
+    } catch (error) {
+      console.log('오브제 정보 가져오기 실패: ', error)
+    }
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
 
   // TODO: delete me
   useEffect(() => {
@@ -42,10 +70,10 @@ export default function ObjetCall() {
       <ObjetCallContainer>
         <TopContainer>
           <LeftContainer>
-            <CallTitle>굳나잇 지키 오브제</CallTitle>
+            <CallTitle>{name}</CallTitle>
             <CallSubTitle>
               <ObjetMaker>
-                만든이 <Name>{name}</Name>
+                만든이 <Name>{creator}</Name>
               </ObjetMaker>
               <ObjetActive>
                 실시간 <Active isActive={isActive} />
@@ -73,7 +101,7 @@ export default function ObjetCall() {
           </RightContainer>
         </TopContainer>
         <MiddleContainer>
-          <VideoContainer />
+          <VideoContainer objetId={Number(objetId)} />
         </MiddleContainer>
         <BottomContainer>
           <MicButton>
@@ -82,7 +110,7 @@ export default function ObjetCall() {
               onClick={() => setMuted(!muted)}
             />
           </MicButton>
-          <CallButton>
+          <CallButton onClick={() => navigate(-1)}>
             <Icon src={quitCall} />
           </CallButton>
         </BottomContainer>

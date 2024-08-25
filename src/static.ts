@@ -13,7 +13,6 @@ export const URL = {
   createMyRoom: '/myRoom/generate',
   myLounge: '/lounge/my',
   loungeInvite: '/lounge/invite',
-  objetCall: '/objet/call',
   objet: '/objet',
   objetChatting: '/objet/chatting',
   myRoomObjet: '/myRoom/objet',
