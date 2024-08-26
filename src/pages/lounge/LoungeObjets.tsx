@@ -1,5 +1,5 @@
 import { Canvas, useThree } from '@react-three/fiber'
-import { FlyControls } from '@react-three/drei'
+import { FlyControls, Text } from '@react-three/drei'
 import * as THREE from 'three'
 import { ObjetModel1 } from '../../assets/models/ObjetModel1'
 import { ObjetModel2 } from '../../assets/models/ObjetModel2'
@@ -69,13 +69,20 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
         ]
 
       mesh.position.set(...getRandomPosition(objets.length))
-      mesh.rotation.set(
-        Math.random() * 2 * Math.PI,
-        Math.random() * 2 * Math.PI,
-        Math.random() * 2 * Math.PI
-      )
       mesh.userData = { id: objet.objet_id, onClick: () => onModelClick(mesh) }
-      return { ModelComponent, mesh }
+
+      const nameText = (
+        <Text
+          position={[0, -1, 0]} // 바운딩 박스를 기준으로 텍스트 위치 조정
+          fontSize={0.5}
+          fontWeight={600}
+          color='#FFFFFF'
+        >
+          {objet.name}
+        </Text>
+      )
+
+      return { ModelComponent, mesh, nameText }
     })
   }, [objets, onModelClick])
 
@@ -88,7 +95,7 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
 
   return (
     <group ref={groupRef}>
-      {models.map(({ ModelComponent, mesh }, index) => (
+      {models.map(({ ModelComponent, mesh, nameText }, index) => (
         <mesh
           key={index}
           position={mesh.position}
@@ -97,6 +104,7 @@ function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
           onClick={mesh.userData.onClick}
         >
           <ModelComponent />
+          {nameText}
         </mesh>
       ))}
     </group>
