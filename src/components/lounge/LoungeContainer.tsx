@@ -36,6 +36,7 @@ export default function LoungeContainer() {
       setIsLoading(true)
       const response = await fetch(APIs.loungeList, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,

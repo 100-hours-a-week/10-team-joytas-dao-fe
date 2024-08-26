@@ -73,6 +73,7 @@ export default function UpdateObjet() {
     try {
       const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -225,6 +226,7 @@ export default function UpdateObjet() {
     try {
       const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'PATCH',
+        credentials: 'include',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },

@@ -24,6 +24,7 @@ export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
     try {
       const response = await fetch(`${APIs.loungeList}/${loungeId}`, {
         method: 'DELETE',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
