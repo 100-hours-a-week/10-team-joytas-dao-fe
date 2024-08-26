@@ -11,6 +11,7 @@ export const useUserInfo = () => {
   const fetchProfile = async (): Promise<Profile | undefined> => {
     try {
       let response = await fetch(APIs.profile, {
+        credentials: 'include',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },

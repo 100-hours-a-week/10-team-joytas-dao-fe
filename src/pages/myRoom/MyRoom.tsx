@@ -45,6 +45,7 @@ export default function MyRoom() {
   const fetchMyRoomInfo = async () => {
     try {
       const response = await fetch(`${APIs.myRoom}?user_id=${userId}`, {
+        credentials: 'include',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
