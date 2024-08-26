@@ -21,12 +21,12 @@ const SOCKET_SERVER_URL = import.meta.env.VITE_BACKHOST
 const pc_config = {
   iceServers: [
     {
-      urls: import.meta.env.VICE_ICE_URL,
-      credential: import.meta.env.VITE_ICE_CREDENTAIL,
-      username: import.meta.env.VITE_ICE_USERNAME,
+      urls: 'turn:192.158.29.39:3478?transport=udp',
+      credential: 'JZEOEt2V3Qb0y27GRntt2u2PAYA=',
+      username: '28224511:1379330808',
     },
     {
-      urls: import.meta.env.VITE_ICE_STUN,
+      urls: 'stun:stun.l.google.com:19302',
     },
   ],
 }
