@@ -14,7 +14,6 @@ export const URL = {
   myLounge: '/lounge/my',
   loungeInvite: '/lounge/invite',
   objet: '/objet',
-  objetChatting: '/objet/chatting',
   myRoomObjet: '/myRoom/objet',
   userDetail: '/users/user',
   notification: '/notification',
@@ -36,4 +35,6 @@ export const APIs = {
   objet: `${BACK_HOST}/api/v1/objets`,
   withdraw: `${BACK_HOST}/api/v1/auth/withdraw`,
   poke: `${BACK_HOST}/api/v1/lounges/invite`,
+  chat: `${BACK_HOST}/api/v1/chat-rooms`,
+  stomp: 'wss://api.joytas.kro.kr',
 }
