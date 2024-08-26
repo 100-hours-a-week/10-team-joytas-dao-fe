@@ -1,15 +1,6 @@
-import Lottie from 'react-lottie'
+import Lottie from 'lottie-react'
 import styled from 'styled-components'
 import loading from '../../assets/lotties/loading.json'
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: loading, // loading.json에서 가져온 데이터
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice',
-  },
-}
 
 export const LottieContainer = styled.div`
   width: 200px;
@@ -20,7 +11,12 @@ export const LottieContainer = styled.div`
 export default function LoadingLottie() {
   return (
     <LottieContainer>
-      <Lottie options={defaultOptions} height={200} width={200} />
+      <Lottie
+        animationData={loading}
+        loop={true}
+        autoplay={true}
+        style={{ width: 200, height: 200 }}
+      />
     </LottieContainer>
   )
 }
