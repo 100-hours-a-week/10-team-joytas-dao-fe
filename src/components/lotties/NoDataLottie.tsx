@@ -1,15 +1,6 @@
-import Lottie from 'react-lottie'
+import Lottie from 'lottie-react'
 import styled from 'styled-components'
 import noData from '../../assets/lotties/noData.json'
-
-const defaultOptions = {
-  loop: true,
-  autoplay: true,
-  animationData: noData,
-  rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice',
-  },
-}
 
 export const LottieContainer = styled.div`
   margin: 0 auto;
@@ -19,7 +10,12 @@ export const LottieContainer = styled.div`
 export default function NoDataLottie() {
   return (
     <LottieContainer>
-      <Lottie options={defaultOptions} />
+      <Lottie
+        animationData={noData}
+        loop={true}
+        autoplay={true}
+        style={{ width: '100%', height: '100%' }}
+      />
     </LottieContainer>
   )
 }
