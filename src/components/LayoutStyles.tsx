@@ -7,6 +7,7 @@ export const Main = styled.div`
 
 export const HeaderContainer = styled.div`
   display: flex;
+  position: relative;
   align-items: center;
   justify-content: space-between;
   width: 100%;
@@ -24,15 +25,23 @@ export const LogoImage = styled.img`
 `
 
 export const HeaderLeft = styled.div`
+  position: absolute;
+  width: 100%;
+  padding-right: 20px;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 15px;
+  justify-content: flex-end;
+  gap: 5px;
 `
 
 export const Icon = styled.img`
   cursor: pointer;
   width: 20px;
+`
+
+export const HamburgerIcon = styled.div`
+  z-index: 1001;
 `
 
 export const FooterDiv = styled.div`

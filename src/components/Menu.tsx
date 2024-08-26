@@ -3,23 +3,16 @@ import {
   Profile,
   Nickname,
   TopContainer,
-  CloseButton,
-  ButtonContainer,
   ProfileContainer,
   CategoryList,
   Category,
 } from './MenuStyles'
-import close from '../assets/images/close.png'
 import { URL, APIs } from '../static'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import useUserStore from '../store/userStore'
 
-interface MenuProps {
-  setMenuOpen: React.Dispatch<React.SetStateAction<boolean>>
-}
-
-export default function Menu({ setMenuOpen }: MenuProps) {
+export default function Menu() {
   const navigate = useNavigate()
   const name = useUserStore((state) => state.nickname)
   const profileImage = useUserStore((state) => state.profileImage)
@@ -57,9 +50,6 @@ export default function Menu({ setMenuOpen }: MenuProps) {
   return (
     <>
       <MenuContainer>
-        <ButtonContainer>
-          <CloseButton src={close} onClick={() => setMenuOpen(false)} />
-        </ButtonContainer>
         <TopContainer>
           <ProfileContainer>
             <Profile src={profileImage} />

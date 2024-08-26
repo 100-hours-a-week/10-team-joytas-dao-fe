@@ -14,7 +14,7 @@ export const MenuContainer = styled.div`
 export const TopContainer = styled.div`
   display: flex;
   box-sizing: border-box;
-  padding: 10px 32px 0;
+  padding: 30px 32px 0;
   align-items: center;
   justify-content: space-between;
 `

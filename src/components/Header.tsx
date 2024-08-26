@@ -1,11 +1,17 @@
-import { Icon, HeaderContainer, LogoImage, HeaderLeft } from './LayoutStyles'
+import {
+  Icon,
+  HeaderContainer,
+  LogoImage,
+  HeaderLeft,
+  HamburgerIcon,
+} from './LayoutStyles'
 import logo from '../assets/images/logo.png'
 import bell from '../assets/images/bell.png'
-import burger from '../assets/images/burger.png'
 import { useNavigate } from 'react-router-dom'
 import { URL } from '../static'
 import { useState } from 'react'
 import Menu from './Menu'
+import { Squash as Hamburger } from 'hamburger-react'
 
 export default function Header() {
   const navigate = useNavigate()
@@ -22,10 +28,17 @@ export default function Header() {
         />
         <HeaderLeft>
           <Icon src={bell} onClick={() => navigate(URL.notification)} />
-          <Icon onClick={() => setMenuOpen(!menuOpen)} src={burger} />
+          <HamburgerIcon>
+            <Hamburger
+              toggled={menuOpen}
+              toggle={setMenuOpen}
+              color='white'
+              size={20}
+            />
+          </HamburgerIcon>
         </HeaderLeft>
       </HeaderContainer>
-      {menuOpen ? <Menu setMenuOpen={setMenuOpen} /> : null}
+      {menuOpen ? <Menu /> : null}
     </>
   )
 }
