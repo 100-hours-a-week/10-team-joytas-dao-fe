@@ -1,19 +1,8 @@
-import {
-  Main,
-  LoginImage1,
-  LoginImagDiv,
-  LoginImagDiv2,
-  Logo,
-  LoginButton,
-  Text,
-  Bottom,
-} from './LoginStyles'
+import { Main, Logo, LoginButton, Text, Bottom, Mini } from './LoginStyles'
 import { Link } from 'react-router-dom'
-import login1 from '../../assets/images/login1.png'
-import login2 from '../../assets/images/login2.png'
-import login from '../../assets/images/login.png'
 import { URL } from '../../static'
 import { KAKAO_AUTH } from '../../static'
+import universe from '../../assets/images/DAO.mp4'
 
 export default function Login() {
   const handleClickLogIn = () => {
@@ -22,16 +11,19 @@ export default function Login() {
 
   return (
     <Main>
-      <LoginImagDiv>
-        <LoginImage1 loading='lazy' src={login1} />
-      </LoginImagDiv>
-      <Logo>DAO</Logo>
-      <LoginImagDiv2>
-        <LoginImage1 loading='lazy' src={login2} />
-      </LoginImagDiv2>
-      <LoginButton onClick={handleClickLogIn}>
-        <img loading='lazy' src={login} />
-      </LoginButton>
+      <video
+        style={{ objectFit: 'cover', width: '380px', height: '844px' }}
+        autoPlay
+        muted
+        loop
+        playsInline
+        src={universe}
+      />
+      <Logo>
+        DAO <br />
+        <Mini>"Digital Archive of Our Memories"</Mini>
+      </Logo>
+      <LoginButton onClick={handleClickLogIn}>카카오 로그인</LoginButton>
       <Bottom>
         <Link to={URL.terms}>
           <Text>이용약관</Text>
