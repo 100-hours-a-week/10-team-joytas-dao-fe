@@ -36,6 +36,7 @@ export default function ModifyProfile() {
 
           const response = await fetch(APIs.modifyProfile, {
             method: 'PATCH',
+            credentials: 'include',
             headers: {
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },

@@ -40,6 +40,7 @@ export default function ObjetCall() {
     try {
       const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'GET',
+        credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,

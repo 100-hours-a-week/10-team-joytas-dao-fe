@@ -30,6 +30,7 @@ export default function FirstProfile() {
   useEffect(() => {
     const fetchUserInfo = async () => {
       const response = await fetch(APIs.profile, {
+        credentials: 'include',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
@@ -84,6 +85,7 @@ export default function FirstProfile() {
 
           const response = await fetch(APIs.modifyProfile, {
             method: 'PATCH',
+            credentials: 'include',
             headers: {
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
