@@ -6,38 +6,29 @@ export const Main = styled.div`
   position: relative;
 `
 
-export const LoginImage1 = styled.img`
-  width: 230px;
-`
-
-export const LoginImagDiv2 = styled.div`
-  width: 100%;
-  height: fit-content;
-  display: flex;
-  position: absolute;
-  bottom: 20px;
-  justify-content: flex-end;
-`
-
-export const LoginImagDiv = styled.div`
-  width: 100%;
-  position: absolute;
-  height: fit-content;
-`
-
 export const Logo = styled.h2`
-  font-size: 60px;
-  display: flex;
+  font-size: 80px;
   position: absolute;
-  top: 370px;
+  top: 350px;
+  text-shadow: 0px 4px 10px #707070;
   justify-content: center;
-  width: 100%;
+  width: fit-content;
+  font-family: 'Shrikhand', serif;
+  left: 28%;
   color: white;
-  font-weight: 800;
+  font-weight: 900;
+`
+
+export const Mini = styled.div`
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 400;
 `
 
 export const LoginButton = styled.button`
   background-color: #fee500;
+  width: 300px;
+  height: 50px;
   border-radius: 5px;
   font-weight: 600;
   position: absolute;
