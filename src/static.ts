@@ -20,9 +20,9 @@ export const URL = {
   notification: '/notification',
 }
 
-export const KAKAO_AUTH = 'https://api.joytas.kro.kr/oauth2/authorization/kakao'
+export const KAKAO_AUTH = import.meta.env.VITE_KAKAO_AUTH
 
-export const BACK_HOST = 'https://api.joytas.kro.kr'
+export const BACK_HOST = import.meta.env.VITE_BACKHOST
 
 export const APIs = {
   profile: `${BACK_HOST}/api/v1/users/me`,
