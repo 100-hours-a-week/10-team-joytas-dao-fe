@@ -157,3 +157,96 @@ export const DeleteButton = styled.div`
 export const ImageInput = styled.input`
   display: none;
 `
+
+export const ButtonContainer = styled.div`
+  display: flex;
+  margin: 40px auto 0;
+  background-color: black;
+  width: 100%;
+  height: 100px;
+  position: relative;
+
+  overflow: hidden;
+  top: 0%;
+  left: 0%;
+
+  span {
+    position: relative;
+    z-index: 6;
+    font-family: 'Bagel Fat One', sans-serif;
+    text-decoration: none;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1);
+    font-size: 20px;
+    color: #fff;
+    pointer-events: none;
+  }
+`
+
+export const Button = styled.button`
+  font-family: 'Bagel Fat One', sans-serif;
+  text-decoration: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1);
+  font-size: 20px;
+  background-color: transparent;
+  border: 0.4px solid #fff;
+  border-radius: 20px;
+  padding: 10px 20px;
+  transform-style: preserve-3d;
+  transition: all 0.6s ease;
+
+  span {
+    position: relative;
+    opacity: 0;
+  }
+
+  &:after {
+    content: '';
+    background: linear-gradient(56deg, #61dafb 0%, #d6cbf6 46%, #f2056f 100%);
+    width: 80%;
+    height: 20%;
+    position: absolute;
+    bottom: -4px;
+    left: 10%;
+    opacity: 0;
+    filter: blur(15px);
+    border-radius: 20px;
+    transform: translateZ(-1px);
+    transition: opacity 0.6s ease;
+  }
+
+  &:before {
+    content: '';
+    background: linear-gradient(56deg, #61dafb 0%, #d6cbf6 46%, #f2056f 100%);
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    border-radius: 20px;
+    transition: opacity 0.4s ease;
+  }
+
+  &:hover {
+    transition: all 0.6s ease;
+    transform: translate(-50%, -50%) scale(1.35);
+    transform-origin: center;
+    border: none;
+
+    &:after {
+      opacity: 1;
+      transition: opacity 0.6s ease;
+    }
+
+    &:before {
+      opacity: 1;
+      transition: opacity 0.6s linear;
+    }
+  }
+`
