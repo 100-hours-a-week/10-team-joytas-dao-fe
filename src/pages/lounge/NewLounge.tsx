@@ -37,6 +37,13 @@ export default function NewLounge() {
   const [isClick, setIsClick] = useState(false)
   const models = [Model1, Model2, Model3]
   const navigate = useNavigate()
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus()
+    }
+  }, [])
 
   useEffect(() => {
     const fetchData = async () => {
@@ -165,6 +172,7 @@ export default function NewLounge() {
             </InputTitle>
             <InputInnerContainer>
               <Input
+                ref={inputRef}
                 minLength={2}
                 maxLength={10}
                 placeholder='라운지 이름을 입력하세요.'
@@ -181,7 +189,7 @@ export default function NewLounge() {
           <LoungeModel>
             <Canvas
               style={{ width: '100%', height: '100%' }}
-              camera={{ position: [0, 0, 4], fov: 50 }} // 카메라 위치와 시야각(fov) 설정
+              camera={{ position: [0, 0, 4], fov: 50 }}
             >
               <ambientLight intensity={1} />
               <CurrentModel position={new Vector3(0, 0, 0)} />
@@ -218,7 +226,7 @@ function CenterModel({ children }: { children: React.ReactNode }) {
     if (ref.current) {
       const box = new Box3().setFromObject(ref.current)
       const center = box.getCenter(new Vector3())
-      ref.current.position.sub(center) // 모델을 중심으로 이동
+      ref.current.position.sub(center)
     }
   }, [scene])
 
@@ -230,7 +238,7 @@ function Model1({ position }: ModelProps) {
 
   useFrame(() => {
     if (ref.current) {
-      ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
+      ref.current.rotation.y += 0.01
     }
   })
 
