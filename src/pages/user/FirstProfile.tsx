@@ -1,10 +1,4 @@
-import {
-  Title,
-  SubTitle,
-  StartButtonContainer,
-  RocketImage,
-} from './ProfileStyles'
-import rocket from '../../assets/images/footer/rocket.png'
+import { Title, SubTitle, Button, ButtonContainer } from './ProfileStyles'
 import { GloablContainer32 } from '../../global/globalStyles'
 import { useState } from 'react'
 import { APIs, URL } from '../../static'
@@ -129,17 +123,13 @@ export default function FirstProfile() {
         setNickname={setNickname}
         validateNickname={validateNickname}
       />
-      <StartButtonContainer
-        onClick={handleClickStart}
-        disabled={isStartButtonDisabled}
-        style={{
-          opacity: isStartButtonDisabled ? 0.5 : 1,
-          pointerEvents: isStartButtonDisabled ? 'none' : 'auto',
-        }}
-      >
-        <RocketImage src={rocket} />
-        START
-      </StartButtonContainer>
+
+      <ButtonContainer className='home' onClick={handleClickStart}>
+        <Button disabled={isStartButtonDisabled}>
+          <span className='ok'>START</span>
+        </Button>
+        <span className='ok'>START</span>
+      </ButtonContainer>
     </GloablContainer32>
   )
 }
