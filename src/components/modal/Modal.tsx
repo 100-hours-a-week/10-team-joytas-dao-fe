@@ -48,7 +48,7 @@ export function DeleteModal({ onClose, handleDelete }: DeleteProps) {
             disabled={isClick}
             className='confirm'
             onClick={() => {
-              handleDelete
+              handleDelete()
               setIsClick(true)
             }}
           >
