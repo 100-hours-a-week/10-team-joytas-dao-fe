@@ -49,6 +49,10 @@ export const Input = styled.input`
     font-size: 10px;
     color: gray;
   }
+
+  &:read-only:focus {
+    outline: none;
+  }
 `
 
 export const InputInnerContainer = styled.div`
@@ -200,3 +204,5 @@ export const GoObjetButton = styled.button`
     background-color: rgba(255, 255, 255, 0.2);
   }
 `
+
+export const InputDeem = styled.div``
