@@ -39,7 +39,7 @@ export default function CreateMyRoom() {
         body: JSON.stringify({ type: selectedModelType }),
       })
 
-      if (response.status === 201) {
+      if (response.ok) {
         alert('마이룸이 생성되었습니다.')
         navigate(URL.myRoom)
       } else {

@@ -115,7 +115,7 @@ export default function NewLounge() {
         }),
       })
 
-      if (response.status === 201) {
+      if (response.ok) {
         alert('라운지 생성 성공!')
         const responseData = await response.json()
         const loungeId = responseData.data.lounge_id
