@@ -202,11 +202,13 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         body: formData,
       })
 
+      if (response.status !== 201) {
+        alert('오브제 생성 실패')
+      }
+
       if (response.status === 201) {
         const responseData = await response.json()
         const objetId = responseData.data.objet_id
-
-        setIsLoading(false)
 
         alert('오브제 생성 성공!')
         navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
@@ -215,6 +217,9 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       }
     } catch (error) {
       console.log('오브제 생성 실패: ', error)
+    } finally {
+      setIsLoading(false)
+      setIsClick(false)
     }
   }
 
