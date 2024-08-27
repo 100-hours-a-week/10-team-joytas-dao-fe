@@ -72,7 +72,7 @@ export default function ObjetDetail() {
 
   const [isDropVisible, setIsDropVisible] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [isToastVisible, setIsToastVisible] = useState(true)
+  const [isToastVisible, setIsToastVisible] = useState(false)
 
   const navigate = useNavigate()
 
@@ -203,10 +203,10 @@ export default function ObjetDetail() {
 
   const handleClickCall = () => {
     if (callingPeople === 9) {
+      setIsToastVisible(true)
       setTimeout(() => {
-        setIsToastVisible(true)
+        setIsToastVisible(false)
       }, 2000)
-      setIsToastVisible(false)
     } else {
       navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/call`)
     }
