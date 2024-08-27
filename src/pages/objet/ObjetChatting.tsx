@@ -52,7 +52,6 @@ export default function ObjetChatting() {
   const objetName = useObjetStore((state) => state.objetName)
   const chatToken = useObjetStore((state) => state.chatToken)
   const creatorNickname = useObjetStore((state) => state.objetCreatorNickname)
-  const creatorId = useObjetStore((state) => state.objetCreatorId)
 
   const messagesEndRef = useRef<HTMLDivElement | null>(null)
 
@@ -61,7 +60,7 @@ export default function ObjetChatting() {
       await getMessages()
 
       if (chatToken) {
-        connectToRoom(creatorId, userNickname, chatToken, handleIncomingMessage)
+        connectToRoom(userId, userNickname, chatToken, handleIncomingMessage)
         setIsActive(true)
       }
     }
