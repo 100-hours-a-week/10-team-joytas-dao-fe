@@ -126,6 +126,10 @@ export default function ObjetDetail() {
         setObjetCreatorId(data.data.user_id)
       }
 
+      if (objRes.status === 404) {
+        alert('해당 오브제를 찾을 수 없습니다.')
+        navigate(`${URL.lounge}/${loungeId}`)
+      }
       // 채팅 미리보기
       // - 채팅방 토큰 가져오기
       const chatRes = await fetch(`${APIs.chat}/${objetId}/room-token`, {
