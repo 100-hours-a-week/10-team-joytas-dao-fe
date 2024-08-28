@@ -51,7 +51,11 @@ export default function ObjetModels({
         ]
 
       mesh.position.set(...getRandomPosition(objets.length))
-      mesh.userData = { id: objet.objet_id, onClick: () => onModelClick(mesh) }
+      mesh.userData = {
+        id: objet.objet_id,
+        lid: objet.lounge_id,
+        onClick: () => onModelClick(mesh),
+      }
 
       const nameText = (
         <Text

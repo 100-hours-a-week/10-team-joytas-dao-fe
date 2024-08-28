@@ -11,6 +11,7 @@ export interface ObjetsProps {
 
 export interface Objet {
   objet_id: number
+  lounge_id?: number
   type: string
   name: string
   description: string
