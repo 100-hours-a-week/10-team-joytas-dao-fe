@@ -78,7 +78,7 @@ export default function ObjetDetail() {
 
   useEffect(() => {
     fetchData()
-  }, [])
+  }, [loungeId, objetId])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
