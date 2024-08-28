@@ -28,6 +28,7 @@ export const APIs = {
   reissueToken: `${BACK_HOST}/api/v1/auth/reissue`,
   loungeList: `${BACK_HOST}/api/v1/lounges`,
   myRoom: `${BACK_HOST}/api/v1/rooms`,
+  userInfo: `${BACK_HOST}/api/v1/users`,
   objetPreview: `${BACK_HOST}/api/v1/objets/me`,
   logout: `${BACK_HOST}/api/v1/auth/logout`,
   nickname: `${BACK_HOST}/api/v1/users/validate?nickname`,
