@@ -1,115 +1,13 @@
 import { Canvas, useThree } from '@react-three/fiber'
-import { FlyControls, Text } from '@react-three/drei'
+import { FlyControls } from '@react-three/drei'
 import * as THREE from 'three'
-import { ObjetModel1 } from '../../assets/models/ObjetModel1'
-import { ObjetModel2 } from '../../assets/models/ObjetModel2'
-import { ObjetModel3 } from '../../assets/models/ObjetModel3'
-import { useRef, useMemo, useEffect, useCallback } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import NoDataLottie from '../../components/lotties/NoDataLottie'
 import { NoDataContainer, InnerText, GoObjetButton } from './LoungeStyles'
 import { useNavigate, useParams } from 'react-router-dom'
 import { URL } from '../../static'
-
-interface RandomModelsProps {
-  onModelClick: (model: THREE.Group) => void
-  objets?: Objet[]
-}
-
-interface ObjetsProps {
-  objets?: Objet[]
-}
-
-interface Objet {
-  objet_id: number
-  type: string
-  name: string
-  description: string
-  objet_image: File
-}
-
-function ObjetModels({ objets, onModelClick }: RandomModelsProps) {
-  const groupRef = useRef<THREE.Group>(null)
-
-  const models = useMemo(() => {
-    if (!objets || objets.length === 0) return []
-
-    const availableModels = [ObjetModel1, ObjetModel2, ObjetModel3]
-    const getRandomPosition = (length: number): [number, number, number] => {
-      const ranges = [
-        { range: 15, offset: -1 },
-        { range: 100, offset: -50 },
-        { range: 200, offset: -100 },
-        { range: 400, offset: -200 },
-        { range: 600, offset: -300 },
-      ]
-      const { range, offset } =
-        ranges[Math.min(Math.floor(length / 5), ranges.length - 1)]
-      return [
-        Math.random() * range + offset,
-        Math.random() * range + offset,
-        Math.random() * range + offset,
-      ]
-    }
-
-    return objets.map((objet) => {
-      const mesh = new THREE.Group()
-
-      const scaleMap: { [key: string]: number } = {
-        O0001: 2,
-        O0002: 0.5,
-        O0003: 0.258,
-      }
-
-      mesh.scale.setScalar(scaleMap[objet.type] || 1)
-
-      mesh.position.set(...getRandomPosition(objets.length))
-      const ModelComponent =
-        availableModels[
-          objet.type === 'O0001' ? 0 : objet.type === 'O0002' ? 1 : 2
-        ]
-
-      mesh.position.set(...getRandomPosition(objets.length))
-      mesh.userData = { id: objet.objet_id, onClick: () => onModelClick(mesh) }
-
-      const nameText = (
-        <Text
-          position={[0, -1, 0]} // 바운딩 박스를 기준으로 텍스트 위치 조정
-          fontSize={0.5}
-          fontWeight={600}
-          color='#FFFFFF'
-        >
-          {objet.name}
-        </Text>
-      )
-
-      return { ModelComponent, mesh, nameText }
-    })
-  }, [objets, onModelClick])
-
-  useEffect(() => {
-    const group = groupRef.current
-    if (group) {
-      models.forEach(({ mesh }) => group.add(mesh))
-    }
-  }, [models])
-
-  return (
-    <group ref={groupRef}>
-      {models.map(({ ModelComponent, mesh, nameText }, index) => (
-        <mesh
-          key={index}
-          position={mesh.position}
-          rotation={mesh.rotation}
-          scale={mesh.scale}
-          onClick={mesh.userData.onClick}
-        >
-          <ModelComponent />
-          {nameText}
-        </mesh>
-      ))}
-    </group>
-  )
-}
+import type { ObjetsProps, Objet } from '../../types/ModelType'
+import ObjetModels from './ObjetModels'
 
 function LoungeCanvas({ objets }: { objets?: Objet[] }) {
   const navigate = useNavigate()
