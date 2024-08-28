@@ -10,6 +10,7 @@ import {
   ModalButton,
   ModalButtonContainer,
 } from './ModalStyles'
+import { toast } from 'react-toastify'
 
 interface DeleteProps {
   onClose: () => void
@@ -131,7 +132,7 @@ export function LoungeListModal({
 
   const handleSelectItem = () => {
     if (!selectedLoungeId && selectedLoungeId !== 0) {
-      alert('라운지를 선택해주세요.')
+      toast.warning('라운지를 선택해주세요.')
     } else {
       handleSelectLounge(selectedLoungeId)
     }

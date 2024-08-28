@@ -12,6 +12,7 @@ import PickImg from '../../assets/images/pick.png'
 import { useNavigate, useParams } from 'react-router-dom'
 import { URL, APIs } from '../../static'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 
 interface UserListProps {
   type: string
@@ -47,11 +48,11 @@ export default function UserListItem({ type, user }: UserListProps) {
       })
 
       if (response.ok) {
-        alert('유저 초대 성공')
+        toast.success('유저 초대 성공')
       } else if (response.status === 400) {
-        alert('이미 라운지에 존재하는 유저입니다.')
+        toast.info('이미 라운지에 존재하는 유저입니다.')
       } else {
-        alert('유저 초대 실패')
+        toast.error('유저 초대 실패')
       }
     } catch (error) {
       console.error(error)

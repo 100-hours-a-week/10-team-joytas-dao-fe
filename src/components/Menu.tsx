@@ -11,6 +11,7 @@ import { URL, APIs } from '../static'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
 import useUserStore from '../store/userStore'
+import { toast } from 'react-toastify'
 
 export default function Menu() {
   const navigate = useNavigate()
@@ -35,10 +36,10 @@ export default function Menu() {
       if (response.ok) {
         localStorage.removeItem('access_token')
         logout()
-        alert('로그아웃 성공!')
+        toast.success('로그아웃 성공 😀')
         navigate(URL.login)
       } else {
-        alert('로그아웃 실패')
+        toast.error('로그아웃 실패 😭')
       }
     } catch (error) {
       console.error('Failed to logout', error)

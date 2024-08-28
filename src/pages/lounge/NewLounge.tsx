@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import left from '../../assets/images/left.png'
 import right from '../../assets/images/right.png'
+import { toast } from 'react-toastify'
 import {
   Input,
   Container,
@@ -59,7 +60,7 @@ export default function NewLounge() {
         if (response.ok) {
           const responseData = await response.json()
           if (responseData.data.length >= 4) {
-            alert('4개 이상의 라운지를 만들 수 없습니다.')
+            toast.error('라운지 갯수 제한(최대 4개) 🥹')
             navigate(URL.lounge)
           }
         } else {
@@ -123,10 +124,12 @@ export default function NewLounge() {
       })
 
       if (response.ok) {
-        alert('라운지 생성 성공!')
+        toast.success('라운지 생성 성공 🪐')
         const responseData = await response.json()
         const loungeId = responseData.data.lounge_id
         navigate(`${URL.lounge}/${loungeId}`, { replace: true })
+      } else {
+        toast.error('라운지 생성 실패 😭')
       }
     } catch (error) {
       console.log('Error: ', error)

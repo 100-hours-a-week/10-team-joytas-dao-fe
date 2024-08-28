@@ -34,6 +34,7 @@ import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { ObjetDrop } from '../../components/dropdown/Dropdown'
 import useUserStore from '../../store/userStore'
 import useObjetStore from '../../store/objetStore'
+import { toast } from 'react-toastify'
 
 interface Message {
   id: string
@@ -127,7 +128,7 @@ export default function ObjetDetail() {
       }
 
       if (objRes.status === 404) {
-        alert('해당 오브제를 찾을 수 없습니다.')
+        toast.warning('해당 오브제를 찾을 수 없습니다.')
         navigate(`${URL.lounge}/${loungeId}`)
       }
       // 채팅 미리보기
@@ -184,13 +185,11 @@ export default function ObjetDetail() {
         },
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        console.log('오브제 삭제 정보: ', data)
-
-        alert('오브제 삭제 성공!')
-        navigate(`${URL.lounge}/${loungeId}`)
+      if (!response.ok) {
+        toast.error('오브제 삭제 실패 😭')
       }
+      toast.success('오브제 삭제 성공 🪐')
+      navigate(`${URL.lounge}/${loungeId}`)
     } catch (error) {
       console.log('오브제 삭제 실패: ', error)
     }
