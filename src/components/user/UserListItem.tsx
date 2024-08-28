@@ -15,7 +15,12 @@ import { useState } from 'react'
 
 interface UserListProps {
   type: string
-  user: { userId: number; nickname: string; profileImage: string }
+  user: {
+    user_id: number
+    nickname: string
+    profile_url: string
+    user_status: string
+  }
 }
 
 export default function UserListItem({ type, user }: UserListProps) {
@@ -25,7 +30,7 @@ export default function UserListItem({ type, user }: UserListProps) {
   const [isClick, setIsClick] = useState(false)
 
   const handleUserClick = () => {
-    navigate(`${URL.userDetail}/${user.userId}`)
+    navigate(`${URL.userDetail}/${user.user_id}`)
   }
 
   const handleClickInvite = async () => {
@@ -38,7 +43,7 @@ export default function UserListItem({ type, user }: UserListProps) {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
-        body: JSON.stringify({ user_id: user.userId, lounge_id: loungeId }),
+        body: JSON.stringify({ user_id: user.user_id, lounge_id: loungeId }),
       })
 
       if (response.ok) {
@@ -56,10 +61,10 @@ export default function UserListItem({ type, user }: UserListProps) {
   }
 
   return (
-    <UserListItemContainer key={user.userId}>
+    <UserListItemContainer key={user.user_id}>
       <ProfileContainer onClick={handleUserClick}>
         <ProfileImageContainer>
-          <ProfileImage src={user.profileImage} />
+          <ProfileImage src={user.profile_url} />
           <ProfileActive />
         </ProfileImageContainer>
         <ProfileNickname>{user.nickname}</ProfileNickname>

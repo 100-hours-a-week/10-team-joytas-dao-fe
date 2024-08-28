@@ -37,4 +37,5 @@ export const APIs = {
   poke: `${BACK_HOST}/api/v1/lounges/invite`,
   chat: `${BACK_HOST}/api/v1/chat-rooms`,
   stomp: 'wss://api.joytas.kro.kr',
+  searchUser: `${BACK_HOST}/api/v1/users/search`,
 }
