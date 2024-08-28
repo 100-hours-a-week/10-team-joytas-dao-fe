@@ -64,7 +64,7 @@ export default function MyRoom() {
           ? responseData.data.my_room_name
           : userNickname + '의 마이룸'
       )
-      setMyRoomModel(modelList[responseData.data.type.split('R000')[1]])
+      setMyRoomModel(modelList[responseData.data.type.split('R000')[1] - 1])
     } catch (error) {
       console.error('마이룸 정보 조회 오류: ', error)
     } finally {

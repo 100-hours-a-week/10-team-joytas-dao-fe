@@ -386,13 +386,14 @@ export const GoToBtnWrapper = styled.div`
 `
 
 export const CallToast = styled.div`
-  background-color: #d9d9d9;
-  width: 130px;
+  ${flexCenter}
+  background-color: #fff;
+  box-shadow: #d9d9d9 0px 0px 10px;
+  width: 150px;
   height: 30px;
   border-radius: 20px;
   color: black;
   font-size: 14px;
-  display: none;
   text-align: center;
   position: absolute;
   top: 50%;
