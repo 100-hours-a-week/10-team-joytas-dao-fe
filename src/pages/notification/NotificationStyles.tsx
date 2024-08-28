@@ -14,7 +14,6 @@ export const NotificationContainer = styled.div`
 export const NotificationGroup = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 18px;
 `
 
 export const NotificationDate = styled.div`
@@ -34,11 +33,20 @@ export const NotificationDate = styled.div`
   margin: 10px 0;
 `
 
-export const NotificationItemContainer = styled.div`
+export const NotificationItemContainer = styled.div<{ $isRead: boolean }>`
   display: flex;
   gap: 10px;
   align-items: center;
   width: 100%;
+  padding: 15px 0;
+
+  ${(props) => (props.$isRead ? 'opacity: 0.7;' : '')}
+
+  cursor: pointer;
+  &:hover {
+    background-color: #2d2d2d;
+    border-radius: 15px;
+  }
 `
 
 export const StyledHr = styled.hr`
@@ -46,10 +54,9 @@ export const StyledHr = styled.hr`
   width: 315px;
 `
 
-export const ProfileImg = styled.span`
-  width: 32px;
-  height: 32px;
-  font-size: 25px;
+export const TypeImg = styled.img`
+  width: 25px;
+  height: 25px;
 `
 
 export const NotiContents = styled.span`
