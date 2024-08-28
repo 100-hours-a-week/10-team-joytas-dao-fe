@@ -28,6 +28,7 @@ import { APIs, URL } from '../../static.ts'
 import { useNavigate, useParams } from 'react-router-dom'
 import { MOCK_USERS } from '../../assets/mock/userData.tsx'
 import useUserStore from '../../store/userStore.ts'
+import { toast } from 'react-toastify'
 
 interface ObjetProps {
   type: string
@@ -236,10 +237,10 @@ export default function UpdateObjet() {
       if (response.ok) {
         const data = await response.json()
 
-        alert('오브제가 수정되었습니다.')
+        toast.success('오브제 수정 완료 🪐')
         navigate(`${URL.lounge}/${loungeId}/objet/${data.data.objet_id}`)
       } else {
-        alert('오브제 수정에 실패했습니다. 다시 시도해주세요.')
+        toast.error('오브제 수정 실패 😭')
       }
     } catch (error) {
       console.error('오브제 수정 중 에러 발생: ', error)

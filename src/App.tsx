@@ -23,6 +23,8 @@ import MyRoomObjet from './pages/myRoom/MyRoomObjets'
 import ObjetChatting from './pages/objet/ObjetChatting'
 import UserDetail from './pages/user/UserDetail'
 import Notification from './pages/notification/Notification'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 function App() {
   return (
@@ -66,6 +68,21 @@ function App() {
           <Route path={URL.notification} element={<Notification />} />
           <Route path={`${URL.lounge}/:lid/invite`} element={<UserList />} />
         </Routes>
+        <ToastContainer
+          position='top-right'
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+          theme='dark'
+          limit={5}
+          closeOnClick
+          toastStyle={{
+            fontSize: '13px',
+          }}
+        />
       </Main>
     </BrowserRouter>
   )
