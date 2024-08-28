@@ -15,6 +15,7 @@ import NoPrevObjet from '../../components/objet/NoPrevObjet'
 import { Carousel } from 'antd'
 import banner1 from '../../assets/images/banner1.png'
 import banner2 from '../../assets/images/banner2.png'
+import recentObjetsIcon from '../../assets/images/recentObjets.png'
 
 export default function Home() {
   const [objets, setObjets] = useState([])
@@ -62,7 +63,10 @@ export default function Home() {
         </Carousel>
 
         <MyObjetContainer>
-          <MyObjetTitle>👀 최근 오브제를 확인해보세요!</MyObjetTitle>
+          <MyObjetTitle>
+            <img src={recentObjetsIcon} alt='recentObjetsIcon' />
+            최근 오브제를 확인해보세요!
+          </MyObjetTitle>
           {isLoading ? (
             <LottieContainer>
               <LoadingLottie />
