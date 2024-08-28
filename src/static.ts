@@ -39,4 +39,5 @@ export const APIs = {
   chat: `${BACK_HOST}/api/v1/chat-rooms`,
   stomp: 'wss://api.joytas.kro.kr',
   searchUser: `${BACK_HOST}/api/v1/users/search`,
+  notification: `${BACK_HOST}/api/v1/notification`,
 }

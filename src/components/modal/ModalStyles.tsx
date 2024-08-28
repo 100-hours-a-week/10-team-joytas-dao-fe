@@ -44,6 +44,10 @@ export const ModalButtonContainer = styled.div`
   justify-content: center;
   gap: 20px;
   margin-top: 25px;
+
+  &.refuse {
+    margin-top: 0;
+  }
 `
 
 export const ModalButton = styled.button`
