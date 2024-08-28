@@ -9,6 +9,7 @@ import {
   Title,
   TitleWrapper,
 } from './MyRoomStyles.tsx'
+import { toast } from 'react-toastify'
 import { Skeleton } from 'antd'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
@@ -54,7 +55,7 @@ export default function MyRoom() {
       const responseData = await response.json()
 
       if (!responseData.data) {
-        alert('마이룸이 없습니다. 마이룸을 생성해주세요!')
+        toast.info('마이룸이 없습니다. 마이룸을 생성해주세요! 🪐')
         navigate(URL.createMyRoom)
       }
 
@@ -88,8 +89,10 @@ export default function MyRoom() {
         body: JSON.stringify({ room_name: myRoomName }),
       })
 
-      const responseData = await response.json()
-      console.log('마이룸 이름 수정 응답: ', responseData)
+      if (!response.ok) {
+        toast.error('마이룸 수정 실패 😭')
+      }
+      toast.success('마이룸 수정 성공 🪐')
     } catch (error) {
       console.error('마이룸 이름 수정 오류: ', error)
     } finally {

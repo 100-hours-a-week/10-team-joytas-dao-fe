@@ -17,6 +17,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { MOCK_USERS } from '../../../assets/mock/userData'
 import LoadingLottie from '../../../components/lotties/LoadingLottie'
 import useUserStore from '../../../store/userStore'
+import { toast } from 'react-toastify'
 
 interface InputObjetInfoProps {
   selectedType: string
@@ -203,13 +204,13 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       })
 
       if (!response.ok) {
-        alert('오브제 생성 실패')
+        toast.error('오브제 생성 실패 😭')
       }
 
       const responseData = await response.json()
       const objetId = responseData.data.objet_id
 
-      alert('오브제 생성 성공!')
+      toast.success('오브제 생성 성공 🪐')
       navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
         replace: true,
       })

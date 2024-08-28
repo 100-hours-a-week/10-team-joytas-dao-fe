@@ -28,6 +28,7 @@
     "react-lottie": "^1.2.4",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.26.0",
+    "react-toastify": "^10.0.5",
     "socket.io-client": "2.3.0",
     "styled-components": "^6.1.12",
     "three": "^0.167.1",

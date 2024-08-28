@@ -7,6 +7,7 @@ import { APIs, URL } from '../../static'
 import { useState, useEffect } from 'react'
 import { checkNicknameDuplicate } from '../../utils/validation'
 import useUserStore from '../../store/userStore'
+import { toast } from 'react-toastify'
 
 export default function ModifyProfile() {
   const [profile, setProfile] = useState<File | null>(null)
@@ -44,16 +45,17 @@ export default function ModifyProfile() {
           })
 
           if (!response.ok) {
-            throw new Error('프로필 변경 실패')
+            toast.error('프로필 변경 실패 😭')
           }
           updateProfileImage(profileUrl)
           updateNickname(nickname)
+          toast.success('프로필 변경 성공 🪐')
           navigate(URL.main)
         } catch (error) {
           console.error('Error:', error)
         }
       }
-    } else alert('프로필 변경 실패')
+    } else toast.error('프로필 변경 실패 😭')
   }
 
   const handleClickDelete = () => {

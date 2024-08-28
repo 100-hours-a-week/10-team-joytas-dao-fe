@@ -2,6 +2,7 @@ import { Container, Deem, Tab } from './DropdownStyles'
 import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
 import { useState } from 'react'
+import { toast } from 'react-toastify'
 import { DeleteLoungeModal } from '../modal/Modal'
 
 interface MenuProps {
@@ -32,10 +33,10 @@ export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
       })
 
       if (response.ok) {
-        alert('라운지가 삭제됐습니다!')
+        toast.success('라운지 삭제 성공 😀')
         navigate(URL.lounge)
       } else if (response.status == 400) {
-        alert('라운지를 삭제하는데 실패했습니다.')
+        toast.error('라운지 삭제 실패 😭')
       }
     } catch (error) {
       console.error('Failed to delete lounge', error)

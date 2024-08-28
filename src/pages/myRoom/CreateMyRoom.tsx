@@ -15,6 +15,7 @@ import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
 import { GlobalSubTitle, GlobalTitle } from '../../global/globalStyles.tsx'
 import { APIs, URL } from '../../static.ts'
 import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
 export default function CreateMyRoom() {
   const [selectedModelType, setSelectedModelType] = useState('R0001')
@@ -40,10 +41,10 @@ export default function CreateMyRoom() {
       })
 
       if (response.ok) {
-        alert('마이룸이 생성되었습니다.')
+        toast.success('마이룸 생성 성공 🪐')
         navigate(URL.myRoom)
       } else {
-        alert('마이룸 생성에 실패했습니다. 다시 시도해주세요.')
+        toast.error('마이룸 생성 생성 실패 😭')
       }
     } catch (error) {
       console.error('마이룸 생성 오류: ', error)

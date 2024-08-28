@@ -18,6 +18,7 @@ import { RedText } from '../objet/ObjetStyles'
 import { APIs, URL } from '../../static'
 import useUserStore from '../../store/userStore'
 import { DeleteUserModal } from '../../components/modal/Modal'
+import { toast } from 'react-toastify'
 
 export default function UserDelete() {
   const navigate = useNavigate()
@@ -82,14 +83,14 @@ export default function UserDelete() {
       })
 
       if (response.ok) {
-        alert('회원탈퇴 성공')
+        toast.success('회원탈퇴 성공 🥺')
         localStorage.removeItem('access_token')
         logout()
         navigate(URL.login)
       }
     } catch (error) {
       console.error('Failed to withdraw user', error)
-      alert('회원탈퇴 실패')
+      toast.error('회원탈퇴 실패 😭')
     } finally {
       setIsClick(false)
     }
