@@ -11,11 +11,11 @@ import ObjetModels from './ObjetModels'
 
 function LoungeCanvas({ objets }: { objets?: Objet[] }) {
   const navigate = useNavigate()
-  const { lid } = useParams<{ lid: string }>()
   const { camera, gl, scene } = useThree()
   const controlsRef = useRef<any>(null)
   const targetPositionRef = useRef(new THREE.Vector3())
   const initialCameraSet = useRef(false)
+  const lid = useParams().lid
 
   const handleModelClick = useCallback(
     (model: THREE.Group) => {
@@ -28,7 +28,9 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
       )
       camera.lookAt(targetPositionRef.current)
 
-      navigate(`${URL.lounge}/${lid}/objet/${model.userData.id}`)
+      navigate(
+        `${URL.lounge}/${model.userData.lid || lid}/objet/${model.userData.id}`
+      )
     },
     [camera]
   )
