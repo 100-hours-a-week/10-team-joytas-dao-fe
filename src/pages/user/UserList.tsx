@@ -13,7 +13,7 @@ import {
 } from './UserListStyles'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { APIs } from '../../static'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom'
 
 interface SearhUser {
@@ -29,6 +29,14 @@ export default function UserList() {
   const [isLoading, setIsLoading] = useState(false)
   const [userList, setUserList] = useState<SearhUser[]>([])
   const [searchUser, setSearchUser] = useState('')
+
+  const searchInputRef = useRef<HTMLInputElement | null>(null)
+
+  useEffect(() => {
+    if (searchInputRef.current) {
+      searchInputRef.current.focus()
+    }
+  }, [])
 
   const handleChangeUser = async (input: string) => {
     setIsLoading(true)
@@ -74,6 +82,7 @@ export default function UserList() {
               : '콕 찌르기는 3시간에 1번만 가능합니다 😎'}
           </SearchTitle>
           <SearchUserInput
+            ref={searchInputRef}
             value={searchUser}
             placeholder='검색할 유저 닉네임을 입력해주세요!'
             maxLength={10}
@@ -83,27 +92,16 @@ export default function UserList() {
             <LoadingLottie />
           ) : (
             <UserListContainer>
-              {type === 'lounge' &&
-                (userList.length === 0 || searchUser === '' ? (
-                  <GlobalBlankContainerText>
-                    검색 결과가 <br />
-                    없습니다.
-                  </GlobalBlankContainerText>
-                ) : (
-                  userList.map((user) => (
-                    <UserListItem key={user.user_id} type={type} user={user} />
-                  ))
-                ))}
-              {type === 'users' &&
-                (userList?.length === 0 || searchUser === '' ? (
-                  <GlobalBlankContainerText>
-                    추억을 공유할 <br /> 유저를 찾아보세요!
-                  </GlobalBlankContainerText>
-                ) : (
-                  userList.map((user) => (
-                    <UserListItem key={user.user_id} type={type} user={user} />
-                  ))
-                ))}
+              {userList.length === 0 || searchUser === '' ? (
+                <GlobalBlankContainerText>
+                  추억을 공유할 <br />
+                  유저를 찾아보세요!
+                </GlobalBlankContainerText>
+              ) : (
+                userList.map((user) => (
+                  <UserListItem key={user.user_id} type={type} user={user} />
+                ))
+              )}
             </UserListContainer>
           )}
         </GloablContainer16>
