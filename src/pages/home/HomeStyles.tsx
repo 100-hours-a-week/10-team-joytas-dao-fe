@@ -58,9 +58,18 @@ export const MyObjetContainer = styled.div`
 `
 
 export const MyObjetTitle = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
   padding: 32px 32px 16px;
   font-size: 17px;
   font-weight: bold;
+
+  img {
+    width: 22px;
+    height: 22px;
+    margin-right: 10px;
+  }
 `
 
 export const LottieContainer = styled.div`
