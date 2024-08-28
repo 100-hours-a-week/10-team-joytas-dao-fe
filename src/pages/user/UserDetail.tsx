@@ -10,43 +10,64 @@ import { useEffect, useState } from 'react'
 import { APIs } from '../../static'
 import { useParams } from 'react-router-dom'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
-import useUserStore from '../../store/userStore'
 
 export default function UserDetail() {
-  const { id } = useParams<{ id: string }>()
+  const userId = Number(useParams().id)
 
-  const profile = {
-    user_id: useUserStore((state) => state.userId),
-    nickname: useUserStore((state) => state.nickname),
-    profile_url: useUserStore((state) => state.profileImage),
-  }
+  const [userNickname, setUserNickname] = useState('')
+  const [userProfileUrl, setUserProfileUrl] = useState('')
+  const [userStatus, setUserStatus] = useState('')
 
   const [myRoomName, setMyRoomName] = useState('')
   const [myRoomModel, setMyRoomModel] = useState<MyRoomModel>(modelList[0])
   const [isLoading, setIsLoading] = useState(true)
 
+  const profile = {
+    user_id: userId,
+    nickname: userNickname,
+    profile_url: userProfileUrl,
+    user_status: userStatus,
+  }
+
   useEffect(() => {
     fetchMyRoomInfo()
-  }, [])
+  }, [userId])
 
   const fetchMyRoomInfo = async () => {
     try {
-      const response = await fetch(`${APIs.myRoom}?user_id=${Number(id)}`, {
+      const userRes = await fetch(`${APIs.userInfo}/${userId}`, {
+        method: 'GET',
         credentials: 'include',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
       })
 
-      const responseData = await response.json()
-      console.log('마이룸 정보 조회 응답: ', responseData)
+      if (userRes.ok) {
+        const userResData = await userRes.json()
 
-      setMyRoomName(
-        responseData.data.my_room_name
-          ? responseData.data.my_room_name
-          : profile.nickname + '의 마이룸'
-      )
-      setMyRoomModel(modelList[responseData.data.type.split('R000')[1]])
+        setUserNickname(userResData.data.nickname)
+        setUserProfileUrl(userResData.data.profile_url)
+        setUserStatus(userResData.data.user_status)
+
+        const response = await fetch(`${APIs.myRoom}?user_id=${userId}`, {
+          credentials: 'include',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+        })
+
+        const responseData = await response.json()
+
+        setMyRoomName(
+          responseData.data.my_room_name
+            ? responseData.data.my_room_name
+            : profile.nickname + '의 마이룸'
+        )
+        setMyRoomModel(modelList[responseData.data.type.split('R000')[1]])
+      } else {
+        console.error('유저 정보 조회 오류: ', userRes)
+      }
     } catch (error) {
       console.error('마이룸 정보 조회 오류: ', error)
     } finally {
