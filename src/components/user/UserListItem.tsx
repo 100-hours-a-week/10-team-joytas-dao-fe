@@ -19,7 +19,7 @@ interface UserListProps {
     user_id: number
     nickname: string
     profile_url: string
-    user_status: string
+    user_status?: string
   }
 }
 

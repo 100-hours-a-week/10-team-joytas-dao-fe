@@ -16,9 +16,9 @@ export default function UserDetail() {
   const { id } = useParams<{ id: string }>()
 
   const profile = {
-    userId: useUserStore((state) => state.userId),
+    user_id: useUserStore((state) => state.userId),
     nickname: useUserStore((state) => state.nickname),
-    profileImage: useUserStore((state) => state.profileImage),
+    profile_url: useUserStore((state) => state.profileImage),
   }
 
   const [myRoomName, setMyRoomName] = useState('')
