@@ -132,7 +132,7 @@ export default function NewLounge() {
         toast.error('라운지 생성 실패 😭')
       }
     } catch (error) {
-      console.log('Error: ', error)
+      console.error('Error: ', error)
     } finally {
       setIsClick(false)
     }

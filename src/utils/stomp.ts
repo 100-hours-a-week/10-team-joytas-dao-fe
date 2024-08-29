@@ -19,10 +19,7 @@ export function connectToRoom(
   roomToken: string,
   onMessageReceived: (message: string) => void
 ) {
-  console.log('START CONNECTION')
-
   if (isConnected) {
-    console.log('ALREADY CONNECTED, RETURNING')
     return
   }
 
@@ -30,12 +27,9 @@ export function connectToRoom(
     isConnected = true
 
     const subscribeToRoom = () => {
-      console.log('SUBSCRIBING TO ROOM')
-
       subscription = stompClient.subscribe(
         `/sub/chat-rooms/${roomToken}/messages`,
         (message) => {
-          console.log('MESSAGE RECEIVED: ', message.body)
           onMessageReceived(message.body)
         }
       )
@@ -44,7 +38,6 @@ export function connectToRoom(
     // 채팅방 구독
     if (subscription) {
       // 이미 구독 중이라면 해제 후 다시 구독
-      console.log('UNSUBSCRIBING TO ROOM BEFORE SUBSCRIBING')
       subscription.unsubscribe()
 
       subscribeToRoom()
@@ -88,8 +81,6 @@ export function sendMessage(id: number, roomToken: string, message: string) {
 }
 
 export function disconnectFromRoom(roomToken: string) {
-  console.log('DISCONNECTING FROM ROOM')
-
   if (subscription) {
     subscription.unsubscribe()
     subscription = null
