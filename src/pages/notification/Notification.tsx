@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import NotificationItem from '../../components/notification/NotificationItem'
 import {
@@ -12,86 +11,11 @@ import {
   NotificationGroup,
   StyledHr,
 } from './NotificationStyles'
-import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill'
-import { APIs } from '../../static'
-
-export interface NotificationProps {
-  notification_id: number
-  type: string
-  is_read: boolean
-  sender: {
-    user_id: number
-    nickname: string
-  }
-  detail: {
-    domain_id: number
-    name: string
-  }
-  datetime: string
-}
+import useNotifications from '../../hooks/useNotification'
+import { NotificationProps } from '../../hooks/useNotification'
 
 export default function Notification() {
-  const [notificationList, setNotificationList] = useState<NotificationProps[]>(
-    []
-  )
-
-  const eventSource = EventSourcePolyfill || NativeEventSource
-
-  useEffect(() => {
-    const eventSourceInstance = new eventSource(
-      `${APIs.notification}/subscribe`,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      }
-    )
-
-    eventSourceInstance.onmessage = (event) => {
-      const noti = JSON.parse(event.data)
-      setNotificationList((prev) => [noti, ...prev])
-      console.log('New notification on message:', noti)
-    }
-
-    eventSourceInstance.addEventListener('NOTIFICATION_EVENT', (event: any) => {
-      console.log('New notification:', event)
-
-      const data: NotificationProps = JSON.parse(event.data)
-
-      if (data) {
-        setNotificationList((prev) => [...prev, data])
-      }
-    })
-
-    fetchData()
-  }, [])
-
-  useEffect(() => {
-    // notification list 새로고침
-  }, [notificationList])
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${APIs.notification}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (response.ok) {
-        const responseData = await response.json()
-        console.log(responseData)
-
-        setNotificationList(responseData.data)
-      }
-    } catch (error) {
-      console.error('알림 불러오기 실패', error)
-    }
-  }
+  const { notificationList } = useNotifications()
 
   return (
     <Layout>
@@ -149,7 +73,7 @@ function groupByDate(
       })
 
       if (!acc[date]) {
-        acc[date] = [] // 초기화
+        acc[date] = []
       }
 
       acc[date].push(noti)
