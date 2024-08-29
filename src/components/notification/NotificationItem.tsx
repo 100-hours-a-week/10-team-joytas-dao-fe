@@ -1,4 +1,4 @@
-import { NotificationProps } from '../../pages/notification/Notification'
+import { NotificationProps } from '../../hooks/useNotification'
 import {
   NotiDatetime,
   NotificationItemContainer,
