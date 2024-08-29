@@ -56,7 +56,6 @@ export default function UserDelete() {
   }
 
   const handleClickDeleteButton = () => {
-    console.log('isReasonNull? : ' + isReasonNull)
     if (!isReasonNull) {
       setIsDeleteModalVisible(true)
     }

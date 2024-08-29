@@ -215,7 +215,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         replace: true,
       })
     } catch (error) {
-      console.log('오브제 생성 실패: ', error)
+      console.error('오브제 생성 실패: ', error)
     } finally {
       setIsLoading(false)
       setIsClick(false)

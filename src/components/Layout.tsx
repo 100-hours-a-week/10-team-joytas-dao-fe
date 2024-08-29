@@ -37,14 +37,7 @@ export default function Layout({
       }
     )
 
-    eventSourceInstance.onmessage = (event) => {
-      const noti = JSON.parse(event.data)
-      console.log('New notification on message:', noti)
-    }
-
     eventSourceInstance.addEventListener('NOTIFICATION_EVENT', (event: any) => {
-      console.log('New notification:', event)
-
       const data: NotificationProps | ConnectNotificationProps = JSON.parse(
         event.data
       )
