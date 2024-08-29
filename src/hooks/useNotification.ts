@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill'
 import { APIs } from '../static'
 
 export interface NotificationProps {
@@ -26,44 +25,8 @@ const useNotifications = () => {
     []
   )
 
-  const eventSource = EventSourcePolyfill || NativeEventSource
-
   useEffect(() => {
-    const eventSourceInstance = new eventSource(
-      `${APIs.notification}/subscribe`,
-      {
-        withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      }
-    )
-
-    eventSourceInstance.onmessage = (event) => {
-      const noti = JSON.parse(event.data)
-      setNotificationList((prev) => [noti, ...prev])
-      console.log('New notification on message:', noti)
-    }
-
-    eventSourceInstance.addEventListener('NOTIFICATION_EVENT', (event: any) => {
-      console.log('New notification:', event)
-
-      const data: NotificationProps | ConnectNotificationProps = JSON.parse(
-        event.data
-      )
-
-      if ('message' in data) {
-        return
-      } else if ('notification_id' in data) {
-        setNotificationList((prev) => [...prev, data])
-      }
-    })
-
     fetchData()
-
-    return () => {
-      eventSourceInstance.close()
-    }
   }, [])
 
   const fetchData = async () => {
