@@ -10,6 +10,7 @@ import {
   ModalButton,
   ModalButtonContainer,
 } from './ModalStyles'
+import LoadingLottie from '../lotties/LoadingLottie'
 import { toast } from 'react-toastify'
 
 interface DeleteProps {
@@ -29,6 +30,12 @@ interface LoungeListProps {
   handleSelectLounge: (loungeId: number) => void
   selectedLounge: number
   lounges: Lounge[]
+}
+
+interface NotiProps {
+  onClose: () => void
+  isLoading: boolean
+  handleConfirm: () => void
 }
 
 export function DeleteModal({ onClose, handleDelete }: DeleteProps) {
@@ -161,5 +168,26 @@ export function LoungeListModal({
         </ModalButton>
       </ModalButtonContainer>
     </LoungeListModalContainer>
+  )
+}
+
+export function ConfirmNotificationModal({
+  onClose,
+  isLoading,
+  handleConfirm,
+}: NotiProps) {
+  return (
+    <DeleteModalContainer>
+      <DeleteModalContents>
+        <span>라운지 초대에 수락하셨습니다.</span>
+        <span>3초 후 라운지로 이동합니다.</span>
+        {isLoading && <LoadingLottie />}
+        <ModalButtonContainer className='refuse'>
+          <ModalButton className='cancel' onClick={onClose}>
+            취소
+          </ModalButton>
+        </ModalButtonContainer>
+      </DeleteModalContents>
+    </DeleteModalContainer>
   )
 }

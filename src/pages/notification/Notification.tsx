@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import Layout from '../../components/Layout'
 import NotificationItem from '../../components/notification/NotificationItem'
 import {
@@ -11,89 +12,86 @@ import {
   NotificationGroup,
   StyledHr,
 } from './NotificationStyles'
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill'
+import { APIs } from '../../static'
 
-interface NotificationProps {
-  notiId: number
+export interface NotificationProps {
+  notification_id: number
   type: string
-  text: string
+  is_read: boolean
+  sender: {
+    user_id: number
+    nickname: string
+  }
+  detail: {
+    domain_id: number
+    name: string
+  }
   datetime: string
 }
 
 export default function Notification() {
-  const notificationList = [
-    {
-      notiId: 1,
-      type: 'poke',
-      text: '[콕 찌르기] 홍프님이 콕 찔렀습니다.',
-      datetime: '2024-08-20 12:00:00',
-    },
-    {
-      notiId: 2,
-      type: 'lounge',
-      text: '[라운지 초대장] 이프님이 홍은 신이에요 라운지 초대장을 보냈습니다.',
-      datetime: '2024-08-20 12:12:00',
-    },
-    {
-      notiId: 3,
-      type: 'voice',
-      text: '[음성 채팅 초대] 준투님이 우동은 최고야 오브제 음성 채팅 초대장을 보냈습니다.',
-      datetime: '2024-08-20 15:13:00',
-    },
-    {
-      notiId: 4,
-      type: 'objet',
-      text: '[오브제 남김] 지직지키님이 마이룸에 오브제를 남겼습니다.',
-      datetime: '2024-08-20 16:14:00',
-    },
-    {
-      notiId: 5,
-      type: 'poke',
-      text: '[콕 찌르기] 홍프님이 콕 찔렀습니다.',
-      datetime: '2024-08-21 12:00:00',
-    },
-    {
-      notiId: 6,
-      type: 'lounge',
-      text: '[라운지 초대장] 이프님이 홍은 신이에요 라운지 초대장을 보냈습니다.',
-      datetime: '2024-08-21 12:12:00',
-    },
-    {
-      notiId: 7,
-      type: 'voice',
-      text: '[음성 채팅 초대] 준투님이 우동은 최고야 오브제 음성 채팅 초대장을 보냈습니다.',
-      datetime: '2024-08-21 12:13:00',
-    },
-    {
-      notiId: 8,
-      type: 'objet',
-      text: '[오브제 남김] 지직지키님이 마이룸에 오브제를 남겼습니다.',
-      datetime: '2024-08-21 12:14:00',
-    },
-    {
-      notiId: 9,
-      type: 'poke',
-      text: '[콕 찌르기] 홍프님이 콕 찔렀습니다.',
-      datetime: '2024-08-22 12:00:00',
-    },
-    {
-      notiId: 10,
-      type: 'lounge',
-      text: '[라운지 초대장] 이프님이 홍은 신이에요 라운지 초대장을 보냈습니다.',
-      datetime: '2024-08-23 12:12:00',
-    },
-    {
-      notiId: 11,
-      type: 'voice',
-      text: '[음성 채팅 초대] 준투님이 우동은 최고야 오브제 음성 채팅 초대장을 보냈습니다.',
-      datetime: '2024-08-23 12:13:00',
-    },
-    {
-      notiId: 12,
-      type: 'objet',
-      text: '[오브제 남김] 지직지키님이 마이룸에 오브제를 남겼습니다.',
-      datetime: '2024-08-24 16:14:00',
-    },
-  ]
+  const [notificationList, setNotificationList] = useState<NotificationProps[]>(
+    []
+  )
+
+  const eventSource = EventSourcePolyfill || NativeEventSource
+
+  useEffect(() => {
+    const eventSourceInstance = new eventSource(
+      `${APIs.notification}/subscribe`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      }
+    )
+
+    eventSourceInstance.onmessage = (event) => {
+      const noti = JSON.parse(event.data)
+      setNotificationList((prev) => [noti, ...prev])
+      console.log('New notification on message:', noti)
+    }
+
+    eventSourceInstance.addEventListener('NOTIFICATION_EVENT', (event: any) => {
+      console.log('New notification:', event)
+
+      const data: NotificationProps = JSON.parse(event.data)
+
+      if (data) {
+        setNotificationList((prev) => [...prev, data])
+      }
+    })
+
+    fetchData()
+  }, [])
+
+  useEffect(() => {
+    // notification list 새로고침
+  }, [notificationList])
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(`${APIs.notification}`, {
+        method: 'GET',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (response.ok) {
+        const responseData = await response.json()
+        console.log(responseData)
+
+        setNotificationList(responseData.data)
+      }
+    } catch (error) {
+      console.error('알림 불러오기 실패', error)
+    }
+  }
 
   return (
     <Layout>
@@ -118,16 +116,22 @@ function renderNotificationList(notificationList: NotificationProps[]) {
   const dates = Object.keys(groupedNotifications)
 
   return dates.map((date, index) => (
-    <NotificationGroup key={date}>
+    <NotificationGroup key={`${date}_${index}`}>
       <NotificationDate>{date}</NotificationDate>
-      {groupedNotifications[date].map((noti: NotificationProps) => (
-        <NotificationItem
-          key={noti.notiId}
-          type={noti.type}
-          text={noti.text}
-          datetime={noti.datetime}
-        />
-      ))}
+      {groupedNotifications[date]
+        .slice()
+        .reverse()
+        .map((noti: NotificationProps) => (
+          <NotificationItem
+            key={noti.notification_id}
+            notification_id={noti.notification_id}
+            type={noti.type}
+            sender={noti.sender}
+            detail={noti.detail}
+            is_read={noti.is_read}
+            datetime={noti.datetime}
+          />
+        ))}
       {index !== dates.length - 1 && <StyledHr />}
     </NotificationGroup>
   ))
