@@ -174,7 +174,7 @@ export function LoungeListModal({
 export function ConfirmNotificationModal({
   onClose,
   isLoading,
-  handleConfirm,
+  // handleConfirm,
 }: NotiProps) {
   return (
     <DeleteModalContainer>
