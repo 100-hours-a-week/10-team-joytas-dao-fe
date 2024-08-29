@@ -91,7 +91,7 @@ export default function UpdateObjet() {
         setType(data.data.type)
       }
     } catch (error) {
-      console.log('오브제 정보 가져오기 실패: ', error)
+      console.error('오브제 정보 가져오기 실패: ', error)
     }
   }
 

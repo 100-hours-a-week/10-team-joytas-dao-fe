@@ -168,7 +168,7 @@ export default function ObjetDetail() {
 
       // TODO: 오브제 viewers 정보 가져오기
     } catch (error) {
-      console.log('오브제 정보 가져오기 실패: ', error)
+      console.error('오브제 정보 가져오기 실패: ', error)
     } finally {
       setIsLoading(false)
     }
@@ -191,7 +191,7 @@ export default function ObjetDetail() {
       toast.success('오브제 삭제 성공 🪐')
       navigate(`${URL.lounge}/${loungeId}`)
     } catch (error) {
-      console.log('오브제 삭제 실패: ', error)
+      console.error('오브제 삭제 실패: ', error)
     }
   }
 

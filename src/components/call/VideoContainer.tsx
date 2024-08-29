@@ -58,11 +58,8 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
 
       if (localVideoRef.current) localVideoRef.current.srcObject = localStream
       if (!socketRef.current?.connected) {
-        console.log('signaling failed')
         return
       }
-
-      console.log('signaling succeeded')
 
       socketRef.current.emit('join_objet', {
         objet_id: objetId,
@@ -71,7 +68,7 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
         user_id,
       })
     } catch (e) {
-      console.log(`getUserMedia error: ${e}`)
+      console.error(`getUserMedia error: ${e}`)
     }
   }, [])
 
@@ -82,7 +79,6 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
 
         pc.onicecandidate = (e) => {
           if (!(socketRef.current && e.candidate)) return
-          console.log('onicecandidate')
           socketRef.current.emit('candidate', {
             candidate: e.candidate,
             candidateSendID: socketRef.current.id,
@@ -95,7 +91,6 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
         }
 
         pc.ontrack = (e) => {
-          console.log('ontrack success')
           setUsers((oldUsers) =>
             oldUsers
               .filter((user) => user.socket_id !== socketID)
@@ -108,13 +103,12 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
         }
 
         if (localStreamRef.current) {
-          console.log('localstream add')
           localStreamRef.current.getTracks().forEach((track) => {
             if (!localStreamRef.current) return
             pc.addTrack(track, localStreamRef.current)
           })
         } else {
-          console.log('no local stream')
+          console.error('no local stream')
         }
 
         return pc
@@ -138,14 +132,12 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
     getLocalStream()
 
     socketRef.current.on('error_message', (data: SocketError) => {
-      console.error('Error:', data.error)
       alert(`Error: ${data.error.message}`)
     })
 
     socketRef.current.on(
       'all_users',
       (allUsers: Array<{ socket_id: string; nickname: string }>) => {
-        console.log('All users:', allUsers)
         allUsers.forEach(async (user) => {
           if (!localStreamRef.current) return
           const pc = createPeerConnection(user.socket_id, user.nickname)
@@ -156,7 +148,6 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
               offerToReceiveAudio: true,
               offerToReceiveVideo: true,
             })
-            console.log('create offer success')
             await pc.setLocalDescription(new RTCSessionDescription(localSdp))
             socketRef.current.emit('offer', {
               sdp: localSdp,
@@ -179,14 +170,12 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
         offerSendNickname: string
       }) => {
         const { sdp, offerSendID, offerSendNickname } = data
-        console.log('get offer')
         if (!localStreamRef.current) return
         const pc = createPeerConnection(offerSendID, offerSendNickname)
         if (!(pc && socketRef.current)) return
         pcsRef.current = { ...pcsRef.current, [offerSendID]: pc }
         try {
           await pc.setRemoteDescription(new RTCSessionDescription(sdp))
-          console.log('answer set remote description success')
           const localSdp = await pc.createAnswer({
             offerToReceiveVideo: true,
             offerToReceiveAudio: true,
@@ -207,7 +196,6 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
       'getAnswer',
       (data: { sdp: RTCSessionDescription; answerSendID: string }) => {
         const { sdp, answerSendID } = data
-        console.log('get answer')
         const pc: RTCPeerConnection = pcsRef.current[answerSendID]
         if (!pc) return
         pc.setRemoteDescription(new RTCSessionDescription(sdp))
@@ -220,11 +208,9 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
         candidate: RTCIceCandidateInit
         candidateSendID: string
       }) => {
-        console.log('get candidate')
         const pc: RTCPeerConnection = pcsRef.current[data.candidateSendID]
         if (!pc) return
         await pc.addIceCandidate(new RTCIceCandidate(data.candidate))
-        console.log('candidate add success')
       }
     )
 

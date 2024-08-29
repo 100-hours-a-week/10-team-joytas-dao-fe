@@ -24,7 +24,6 @@ export default function ModifyProfile() {
   const navigate = useNavigate()
 
   const handleClickConfirm = async () => {
-    console.log(profile, profileUrl, nickname)
     if ((profile || profileUrl) && nickname) {
       const isValidate = await validateNickname(nickname)
       if (isValidate) {

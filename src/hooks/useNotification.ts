@@ -42,8 +42,6 @@ const useNotifications = () => {
 
       if (response.ok) {
         const responseData = await response.json()
-        console.log(responseData)
-
         setNotificationList(responseData.data)
       }
     } catch (error) {
