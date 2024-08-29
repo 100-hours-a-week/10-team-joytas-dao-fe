@@ -21,7 +21,27 @@ export const Nickname = styled.div`
   color: rgba(255, 204, 0);
 `
 
-export const Banner = styled.video`
+export const Banner = styled.div`
+  background-color: grey;
+  width: 100%;
+  display: flex;
+  object-fit: cover;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+`
+
+export const BannerImage = styled.img`
+  background-color: grey;
+  width: 100%;
+  display: flex;
+  object-fit: cover;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+`
+
+export const BannerVideo = styled.video`
   background-color: grey;
   width: 100%;
   display: flex;
