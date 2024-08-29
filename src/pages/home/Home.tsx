@@ -49,7 +49,7 @@ export default function Home() {
   return (
     <Layout style={{ padding: '0px' }}>
       <GloablContainer16 style={{ padding: '0px' }}>
-        <Carousel autoplay autoplaySpeed={2500}>
+        <Carousel arrows autoplay autoplaySpeed={2500}>
           <BannerImage src={banner2} />
           <BannerImage src={banner1} />
           <BannerVideo
