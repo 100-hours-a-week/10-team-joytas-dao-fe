@@ -11,14 +11,7 @@ export default function Login() {
 
   return (
     <Main>
-      <video
-        style={{ objectFit: 'cover', width: '380px', height: '844px' }}
-        autoPlay
-        muted
-        loop
-        playsInline
-        src={universe}
-      />
+      <video autoPlay muted loop playsInline src={universe} />
       <Logo>
         DAO <br />
         <Mini>"Digital Archive of Our Memories"</Mini>

@@ -4,6 +4,15 @@ export const Main = styled.div`
   width: 100%;
   height: 100%;
   position: relative;
+
+  video {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+  }
+
+  -webkit-animation: text-focus-in 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
+  animation: text-focus-in 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 `
 
 export const Logo = styled.h2`
