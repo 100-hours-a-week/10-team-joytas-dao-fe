@@ -31,7 +31,13 @@ const pc_config = {
   ],
 }
 
-const VideoContainer = ({ objetId }: { objetId: number }) => {
+const VideoContainer = ({
+  objetId,
+  loungeId,
+}: {
+  objetId: number
+  loungeId: number
+}) => {
   const socketRef = useRef<SocketIOClient.Socket>()
   const pcsRef = useRef<{ [socketId: string]: RTCPeerConnection }>({})
   const localVideoRef = useRef<HTMLVideoElement>(null)
@@ -125,7 +131,7 @@ const VideoContainer = ({ objetId }: { objetId: number }) => {
       path: '/signaling/',
       query: {
         token,
-        objet_id: objetId,
+        lounge_id: loungeId,
       },
     })
 

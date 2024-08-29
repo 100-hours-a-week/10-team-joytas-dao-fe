@@ -32,7 +32,7 @@ export default function ObjetCall() {
   const navigate = useNavigate()
   // const [muted, setMuted] = useState(false)
   const [isActive, setIsActive] = useState(false)
-  const { oid: objetId } = useParams()
+  const { oid: objetId, lid: loungeId } = useParams()
   const [creator, setCreator] = useState('')
   const [name, setName] = useState('')
 
@@ -102,7 +102,10 @@ export default function ObjetCall() {
           </RightContainer>
         </TopContainer>
         <MiddleContainer>
-          <VideoContainer objetId={Number(objetId)} />
+          <VideoContainer
+            objetId={Number(objetId)}
+            loungeId={Number(loungeId)}
+          />
         </MiddleContainer>
         <BottomContainer>
           {/* <MicButton>
