@@ -3,6 +3,13 @@ import Footer from './Footer'
 import { Main, ChildrenDiv } from './LayoutStyles'
 import { useEffect } from 'react'
 import { useUserInfo } from '../hooks/useInfo'
+import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill'
+import { APIs } from '../static'
+import {
+  NotificationProps,
+  ConnectNotificationProps,
+} from '../hooks/useNotification'
+import { toast } from 'react-toastify'
 
 interface LayoutStyles {
   padding: string
@@ -16,6 +23,49 @@ export default function Layout({
   children: JSX.Element
 }) {
   const { getProfile } = useUserInfo()
+
+  const eventSource = EventSourcePolyfill || NativeEventSource
+
+  useEffect(() => {
+    const eventSourceInstance = new eventSource(
+      `${APIs.notification}/subscribe`,
+      {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      }
+    )
+
+    eventSourceInstance.onmessage = (event) => {
+      const noti = JSON.parse(event.data)
+      console.log('New notification on message:', noti)
+    }
+
+    eventSourceInstance.addEventListener('NOTIFICATION_EVENT', (event: any) => {
+      console.log('New notification:', event)
+
+      const data: NotificationProps | ConnectNotificationProps = JSON.parse(
+        event.data
+      )
+
+      if ('message' in data) {
+        return
+      } else if ('notification_id' in data) {
+        let message = ''
+        if (data.type === 'N0001') {
+          message = `${data.sender.nickname}님이 "${data.detail.name}" 오브제에 태그하셨습니다 💫`
+        } else if (data.type === 'N0002') {
+          message = `${data.sender.nickname}님이 "${data.detail.name}" 라운지에 초대하셨습니다 💫`
+        }
+        toast(message)
+      }
+    })
+
+    return () => {
+      eventSourceInstance.close()
+    }
+  }, [])
 
   useEffect(() => {
     getProfile()
