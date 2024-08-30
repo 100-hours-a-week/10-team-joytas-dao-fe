@@ -77,7 +77,7 @@ function App() {
           draggable
           pauseOnHover
           theme='dark'
-          limit={5}
+          limit={2}
           closeOnClick
           toastStyle={{
             fontSize: '13px',
