@@ -20,6 +20,8 @@ import {
   Icon,
   CallToast,
   IconContainer,
+  ChattingText,
+  Divider,
 } from './ObjetStyles'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import MenuImg from '../../assets/images/menu.png'
@@ -286,39 +288,42 @@ export default function ObjetDetail() {
               )}
             </RightContainer>
           </TopContainer>
-
           <ObjetDetailContainer>
             <ObjetImg src={imageUrl} />
             <ObjetDescription>{description}</ObjetDescription>
           </ObjetDetailContainer>
-
-          <CommunityContainer>
-            <ChattingsWrapper>
-              {messagePreviews.map((message, index) => (
-                <ChatMessage
-                  userName={message.sender_name}
-                  userId={message.sender_id}
-                  profileImg={message.sender_profile_url}
-                  content={message.message}
-                  key={index}
+          <Divider />
+          <ChattingText>| &nbsp; 채팅 미리보기</ChattingText>
+          {messagePreviews.length < 1 ? (
+            '채팅 내역이 없습니다.'
+          ) : (
+            <CommunityContainer>
+              <ChattingsWrapper>
+                {messagePreviews.map((message, index) => (
+                  <ChatMessage
+                    userName={message.sender_name}
+                    userId={message.sender_id}
+                    profileImg={message.sender_profile_url}
+                    content={message.message}
+                    key={index}
+                  />
+                ))}
+              </ChattingsWrapper>
+              <GoToBtnWrapper>
+                <GoCommunityBtn
+                  text='채팅 입장'
+                  className='chattings'
+                  onClick={handleClickChat}
                 />
-              ))}
-            </ChattingsWrapper>
-            <GoToBtnWrapper>
-              <GoCommunityBtn
-                text='채팅 입장'
-                className='chattings'
-                onClick={handleClickChat}
-              />
-              <GoCommunityBtn
-                text='음성통화'
-                className='call'
-                people={callingPeople}
-                onClick={handleClickCall}
-              />
-            </GoToBtnWrapper>
-          </CommunityContainer>
-
+                <GoCommunityBtn
+                  text='음성통화'
+                  className='call'
+                  people={callingPeople}
+                  onClick={handleClickCall}
+                />
+              </GoToBtnWrapper>
+            </CommunityContainer>
+          )}
           {isDeleteModalVisible && (
             <DeleteModal
               onClose={() => setIsDeleteModalVisible(false)}
