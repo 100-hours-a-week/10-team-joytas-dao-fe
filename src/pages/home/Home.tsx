@@ -16,6 +16,7 @@ import { Carousel } from 'antd'
 import banner1 from '../../assets/images/banner1.png'
 import banner2 from '../../assets/images/banner2.png'
 import recentObjetsIcon from '../../assets/images/recentObjets.png'
+import tripday from '../../assets/images/tripday.mp4'
 
 export default function Home() {
   const [objets, setObjets] = useState([])
@@ -52,6 +53,13 @@ export default function Home() {
       <GloablContainer16 style={{ padding: '0px' }}>
         <Carousel arrows autoplay autoplaySpeed={2500}>
           <BannerImage src={banner2} />
+          <BannerVideo
+            autoPlay
+            muted
+            loop
+            playsInline
+            src={tripday}
+          ></BannerVideo>
           <BannerImage src={banner1} />
           <BannerVideo
             autoPlay

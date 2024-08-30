@@ -45,6 +45,7 @@ export const HamburgerIcon = styled.div`
 `
 
 export const FooterDiv = styled.div`
+  background-color: black;
   position: relative;
   width: 100%;
   box-sizing: border-box;
