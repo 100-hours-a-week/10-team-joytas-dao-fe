@@ -22,6 +22,7 @@ import {
   IconContainer,
   ChattingText,
   Divider,
+  NoChatting,
 } from './ObjetStyles'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import MenuImg from '../../assets/images/menu.png'
@@ -295,7 +296,22 @@ export default function ObjetDetail() {
           <Divider />
           <ChattingText>| &nbsp; 채팅 미리보기</ChattingText>
           {messagePreviews.length < 1 ? (
-            '채팅 내역이 없습니다.'
+            <>
+              <NoChatting>채팅 내역이 없습니다.</NoChatting>
+              <GoToBtnWrapper style={{ marginTop: '30px' }}>
+                <GoCommunityBtn
+                  text='채팅 입장'
+                  className='chattings'
+                  onClick={handleClickChat}
+                />
+                <GoCommunityBtn
+                  text='음성통화'
+                  className='call'
+                  people={callingPeople}
+                  onClick={handleClickCall}
+                />
+              </GoToBtnWrapper>
+            </>
           ) : (
             <CommunityContainer>
               <ChattingsWrapper>
