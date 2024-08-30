@@ -61,7 +61,7 @@ export const MyObjetTitle = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  padding: 32px 32px 16px;
+  padding: 20px 32px;
   font-size: 17px;
   font-weight: bold;
 
