@@ -474,3 +474,9 @@ export const Divider = styled.div`
   height: 1px;
   border: 0.5px dotted #434242;
 `
+
+export const NoChatting = styled.div`
+  font-size: 12px;
+  padding-left: 25px;
+  color: rgba(255, 255, 255, 0.4);
+`
