@@ -131,7 +131,7 @@ export const MainTitle = styled.div`
   padding-top: 100px;
 `
 
-export const ModifyConfirmButton = styled.div`
+export const ModifyConfirmButton = styled.button`
   cursor: pointer;
   width: 150px;
   height: 30px;

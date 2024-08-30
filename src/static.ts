@@ -32,6 +32,7 @@ export const APIs = {
   objetPreview: `${BACK_HOST}/api/v1/objets/me`,
   logout: `${BACK_HOST}/api/v1/auth/logout`,
   nickname: `${BACK_HOST}/api/v1/users/validate?nickname`,
+  modifyProfileImage: `${BACK_HOST}/api/v1/uploads/images`,
   modifyProfile: `${BACK_HOST}/api/v1/users/profile`,
   objet: `${BACK_HOST}/api/v1/objets`,
   withdraw: `${BACK_HOST}/api/v1/auth/withdraw`,
