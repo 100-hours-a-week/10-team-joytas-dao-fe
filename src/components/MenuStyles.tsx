@@ -14,7 +14,7 @@ export const MenuContainer = styled.div`
 export const TopContainer = styled.div`
   display: flex;
   box-sizing: border-box;
-  padding: 30px 32px 0;
+  padding: 50px 32px 0;
   align-items: center;
   justify-content: space-between;
 `
@@ -34,6 +34,7 @@ export const ProfileContainer = styled.div`
 
 export const Profile = styled.img`
   width: 44px;
+  object-fit: cover;
   height: 44px;
   border-radius: 50%;
 `
