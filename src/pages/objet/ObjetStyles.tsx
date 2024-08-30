@@ -79,7 +79,7 @@ export const ModelIndexText = styled.div`
 export const Container = styled.div`
   ${flexColumn}
   width: 100%;
-  height: 540px;
+  height: fit-content;
   margin-top: 90px;
   box-sizing: border-box;
   gap: 2px;
@@ -262,9 +262,7 @@ export const ChooseContainer = styled.div`
   flex-direction: row;
   gap: 20px;
   height: 40px;
-  margin: 10px auto;
-  position: absolute;
-  bottom: 4%;
+  margin: 50px auto;
   width: 100%;
 `
 

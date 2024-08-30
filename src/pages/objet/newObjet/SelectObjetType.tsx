@@ -55,7 +55,7 @@ export default function SelectObjetType({ setSelectedType }: ObjetProps) {
       <ModelIndexText>
         {currentModelIndex + 1} / {models.length}
       </ModelIndexText>
-      <ChooseContainer style={{ bottom: '20%' }}>
+      <ChooseContainer>
         <MoveIcon src={left} onClick={handleLeftClick} />
         <ChooseButton onClick={handleSelectClick}>선택</ChooseButton>
         <MoveIcon src={right} onClick={handleRightClick} />
