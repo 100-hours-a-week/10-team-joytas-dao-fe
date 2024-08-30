@@ -15,6 +15,7 @@ export default function ModifyProfile() {
   const [imageError, setImageError] = useState('')
   const [nickname, setNickname] = useState('')
   const [nicknameError, setNicknameError] = useState('')
+  const [isClickUpdate, setIsClickUpdate] = useState(false)
 
   const userNickname = useUserStore((state) => state.nickname)
   const userProfileImage = useUserStore((state) => state.profileImage)
@@ -24,26 +25,46 @@ export default function ModifyProfile() {
   const navigate = useNavigate()
 
   const handleClickConfirm = async () => {
-    if ((profile || profileUrl) && nickname) {
+    let imageUrl = profileUrl
+    setIsClickUpdate(true)
+    if (profile) {
+      const formData = new FormData()
+      formData.append('file', profile)
+
+      const imageResponse = await fetch(APIs.modifyProfileImage, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: formData,
+      })
+
+      if (!imageResponse.ok) {
+        toast.error('프로필 이미지 변경 실패 😭')
+        return
+      }
+
+      const imageResponseData = await imageResponse.json()
+      imageUrl = imageResponseData.data.image_url
+      setProfileUrl(imageResponseData?.data?.image_url)
+    }
+
+    if (imageUrl && nickname) {
       const isValidate = await validateNickname(nickname)
       if (isValidate) {
         try {
-          const formData = new FormData()
-          if (profile) {
-            formData.append('profile_image', profile)
-          }
-          formData.append('nickname', nickname)
-
-          const response = await fetch(APIs.modifyProfile, {
+          const updateResponse = await fetch(APIs.modifyProfile, {
             method: 'PATCH',
             credentials: 'include',
             headers: {
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+              'Content-Type': 'application/json',
             },
-            body: formData,
+            body: JSON.stringify({ nickname, profile_url: imageUrl }),
           })
 
-          if (!response.ok) {
+          if (!updateResponse.ok) {
             toast.error('프로필 변경 실패 😭')
           }
           updateProfileImage(profileUrl)
@@ -54,7 +75,8 @@ export default function ModifyProfile() {
           console.error('Error:', error)
         }
       }
-    } else toast.error('프로필 변경 실패 😭')
+    }
+    setIsClickUpdate(false)
   }
 
   const handleClickDelete = () => {
@@ -79,10 +101,12 @@ export default function ModifyProfile() {
       return false
     }
 
-    const isNicknameDuplicate = await checkNicknameDuplicate(nickname)
-    if (isNicknameDuplicate) {
-      setNicknameError('중복된 닉네임입니다.')
-      return false
+    if (nickname !== userNickname) {
+      const isNicknameDuplicate = await checkNicknameDuplicate(nickname)
+      if (isNicknameDuplicate) {
+        setNicknameError('중복된 닉네임입니다.')
+        return false
+      }
     }
 
     return true
@@ -112,7 +136,10 @@ export default function ModifyProfile() {
           setNickname={setNickname}
           validateNickname={validateNickname}
         />
-        <ModifyConfirmButton onClick={handleClickConfirm}>
+        <ModifyConfirmButton
+          disabled={isClickUpdate}
+          onClick={handleClickConfirm}
+        >
           수정하기
         </ModifyConfirmButton>
         <DeleteButton onClick={handleClickDelete}>회원탈퇴</DeleteButton>
