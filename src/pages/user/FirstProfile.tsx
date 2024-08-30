@@ -8,6 +8,7 @@ import { checkNicknameDuplicate } from '../../utils/validation'
 import NicknameInputField from '../../components/user/NicknameInputField'
 import { useEffect } from 'react'
 import useUserStore from '../../store/userStore'
+import { toast } from 'react-toastify'
 
 export default function FirstProfile() {
   const [profile, setProfile] = useState<File | null>(null)
@@ -15,6 +16,7 @@ export default function FirstProfile() {
   const [nickname, setNickname] = useState('')
   const [imageError, setImageError] = useState('')
   const [nicknameError, setNicknameError] = useState('')
+  const [isClick, setIsClick] = useState(false)
 
   const updateProfileImage = useUserStore((state) => state.updateProfileImage)
   const updateNickname = useUserStore((state) => state.updateNickname)
@@ -32,12 +34,15 @@ export default function FirstProfile() {
 
       if (response.ok) {
         const responseData = await response.json()
-        if (responseData.data.user_status !== 'ACTIVE_FIRST_LOGIN') navigate(-1)
+        if (responseData.data.user_status !== 'ACTIVE_FIRST_LOGIN') {
+          toast.info('이미 프로필을 설정했습니다 😊')
+          navigate(-1)
+        }
       }
     }
 
     fetchUserInfo()
-  })
+  }, [])
 
   // 닉네임 유효성 검사 함수
   const validateNickname = async (nickname: string): Promise<boolean> => {
@@ -66,19 +71,17 @@ export default function FirstProfile() {
     return true
   }
 
-  // START 버튼 클릭 핸들러
-  //TODO: 이후에는 이미지는 multipart, 닉네임은 application/json으로 전송할 예정
   const handleClickStart = async () => {
     if (profile && nickname) {
+      setIsClick(true)
       const isValidate = await validateNickname(nickname)
       if (isValidate) {
         try {
           const formData = new FormData()
-          formData.append('profile_image', profile)
-          formData.append('nickname', nickname)
+          formData.append('file', profile)
 
-          const response = await fetch(APIs.modifyProfile, {
-            method: 'PATCH',
+          const imageResponse = await fetch(APIs.modifyProfileImage, {
+            method: 'POST',
             credentials: 'include',
             headers: {
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -86,21 +89,49 @@ export default function FirstProfile() {
             body: formData,
           })
 
-          if (!response.ok) {
-            throw new Error('프로필 변경 실패')
+          if (!imageResponse.ok) {
+            toast.error('프로필 이미지 변경 실패 😭')
+            return
           }
 
+          const imageResponseData = await imageResponse.json()
+          const profileUrl = imageResponseData?.data?.image_url
+
           updateProfileImage(profileUrl)
-          updateNickname(nickname)
-          navigate(URL.main)
+
+          try {
+            const updateResponse = await fetch(APIs.modifyProfile, {
+              method: 'PATCH',
+              credentials: 'include',
+              headers: {
+                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ nickname, profile_url: profileUrl }),
+            })
+
+            if (!updateResponse.ok) {
+              toast.error('프로필 변경 실패 😭')
+              return
+            }
+
+            updateNickname(nickname)
+            toast.success('프로필 변경 성공 🪐')
+            navigate(URL.main)
+          } catch (error) {
+            console.error('Error:', error)
+          }
         } catch (error) {
           console.error('Error:', error)
+        } finally {
+          setIsClick(false)
         }
       }
     }
   }
 
-  const isStartButtonDisabled = !profile || !nickname || !!nicknameError
+  const isStartButtonDisabled =
+    !profile || !nickname || !!nicknameError || isClick
 
   return (
     <GloablContainer32>
