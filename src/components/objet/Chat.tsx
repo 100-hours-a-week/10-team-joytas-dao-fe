@@ -54,9 +54,11 @@ export function ChatMessage({
   ) : (
     <Chat style={{ gap: 0 }}>
       <img src={profileImg} alt='profile' />
-      <ChatContents>
-        <UserName>{userName}</UserName>
-        <div className='preview'>{content}</div>
+      <ChatContents style={{ marginLeft: '5px' }}>
+        <UserName style={{ fontSize: '13px' }}>{userName}</UserName>
+        <div style={{ fontSize: '12px' }} className='preview'>
+          {content}
+        </div>
       </ChatContents>
     </Chat>
   )

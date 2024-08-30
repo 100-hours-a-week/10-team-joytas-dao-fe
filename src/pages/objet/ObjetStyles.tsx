@@ -340,21 +340,23 @@ export const Active = styled.div<{ $isActive: boolean }>`
 export const ObjetDetailContainer = styled.div`
   ${flexColumn}
   width: 100%;
-  height: 370px;
+  height: fit-content;
   align-items: center;
   padding-top: 20px;
 `
 
 export const ObjetImg = styled.img`
-  width: 200px;
-  height: 200px;
-  object-fit: cover;
-  margin: 10px 0;
+  width: 100%;
 `
 
 export const ObjetDescription = styled.div`
+  padding: 15px;
+  border: 0.1px solid gray;
+  border-radius: 10px;
   margin: 20px 0;
-  height: 130px;
+  height: fit-content;
+  min-height: 80px;
+  max-height: 170px;
   width: 100%;
   overflow-y: scroll;
   color: white;
@@ -364,9 +366,8 @@ export const ObjetDescription = styled.div`
 export const CommunityContainer = styled.div`
   ${flexColumn}
   width: 100%;
-  height: 277px;
+  height: fit-content;
   justify-content: space-around;
-  background-color: #383838;
   gap: 20px;
   border-radius: 10px 10px 0 0;
 `
@@ -374,15 +375,20 @@ export const CommunityContainer = styled.div`
 export const ChattingsWrapper = styled.div`
   ${flexColumn}
   width: 100%;
-  height: 130px;
+  height: fit-content;
   gap: 13px;
-  padding: 0 20px;
+  border-radius: 10px;
+  border: 0.1px solid gray;
+  padding: 15px;
+  overflow-y: scroll;
+  box-sizing: border-box;
 `
 
 export const GoToBtnWrapper = styled.div`
   ${flexRow}
   justify-content: center;
   gap: 20px;
+  margin-bottom: 20px;
 `
 
 export const CallToast = styled.div`
@@ -406,7 +412,7 @@ export const CallToast = styled.div`
 export const ChatContainer = styled.div`
   ${flexColumn}
   width: 100%;
-  height: 100%;
+  height: 615px;
 
   margin-top: 30px;
 `
@@ -453,4 +459,18 @@ export const ChatSendButton = styled.img`
   &:hover {
     opacity: 1;
   }
+`
+
+export const ChattingText = styled.div`
+  width: fit-content;
+  margin: 15px 0 5px;
+  padding: 10px 10px;
+  font-size: 14px;
+  border-radius: 20px;
+  font-weight: 600;
+`
+
+export const Divider = styled.div`
+  height: 1px;
+  border: 0.5px dotted #434242;
 `
