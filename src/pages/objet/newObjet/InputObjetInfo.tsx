@@ -14,7 +14,6 @@ import type { MentionsProps } from 'antd'
 import { OptionProps } from 'antd/es/mentions'
 import { APIs, URL } from '../../../static'
 import { useParams, useNavigate } from 'react-router-dom'
-import { MOCK_USERS } from '../../../assets/mock/userData'
 import LoadingLottie from '../../../components/lotties/LoadingLottie'
 import useUserStore from '../../../store/userStore'
 import { toast } from 'react-toastify'
@@ -26,6 +25,7 @@ interface InputObjetInfoProps {
 interface SharedMembersProps {
   user_id: number
   nickname: string
+  profile_url?: string
 }
 
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
@@ -52,31 +52,52 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const [descriptionErrorMessage, setDescriptionErrorMessage] = useState('')
   const [imageErrorMessage, setImageErrorMessage] = useState('')
 
-  // TODO: useReducer로 리팩토링
+  const [userList, setUserList] = useState<SharedMembersProps[]>([])
 
   const onMentionSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
     if (newPrefix) {
-      return MOCK_USERS.filter((user) =>
-        user.nickname.includes(newPrefix)
-      ).filter((user) => !sharedMembers.includes(user))
+      return userList
+        .filter((user) => user.nickname.includes(newPrefix))
+        .filter(
+          (user) =>
+            user.user_id !== userId &&
+            !sharedMembers.some((member) => member.user_id === user.user_id)
+        )
     }
   }
 
-  const onMentionChange = (value: string) => {
-    setMentionValue(value)
+  const onMentionChange = async (value: string) => {
+    setMentionValue(value || '@')
+    const searchValue = value.slice(1)
+    const response = await fetch(
+      `${APIs.loungeList}/${loungeId}/search?nickname=${searchValue}`,
+      {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      }
+    )
+    if (response.ok) {
+      const responseData = await response.json()
+      setUserList(responseData.data)
+    } else {
+      setUserList([])
+    }
   }
 
   const onMentionSelect = (option: OptionProps) => {
-    setSharedMembers([
-      ...sharedMembers,
+    setSharedMembers((prevMembers) => [
+      ...prevMembers,
       { user_id: parseInt(option.key, 10), nickname: option.value as string },
     ])
     setMentionValue('')
   }
 
   const handleTagClose = (removedTag: string) => {
-    setSharedMembers(
-      sharedMembers.filter((member) => member.nickname !== removedTag)
+    setSharedMembers((prevMembers) =>
+      prevMembers.filter((member) => member.nickname !== removedTag)
     )
   }
 
@@ -239,10 +260,14 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
               onSelect={(option) => onMentionSelect(option as OptionProps)}
               onChange={(value) => onMentionChange(value)}
               value={mentionValue || undefined}
-              options={MOCK_USERS.filter(
-                (user) => !sharedMembers.includes(user)
-              )
-                .filter((user) => user.user_id !== userId)
+              options={userList
+                .filter(
+                  (user) =>
+                    user.user_id !== userId &&
+                    !sharedMembers.some(
+                      (member) => member.user_id === user.user_id
+                    )
+                )
                 .map((user) => ({
                   value: user.nickname,
                   key: user.user_id.toString(),
@@ -250,9 +275,9 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
                 }))}
             />
             <TagWrapper>
-              {sharedMembers.map((member, index) => (
+              {sharedMembers.map((member) => (
                 <Tag
-                  key={index}
+                  key={member.user_id}
                   closeIcon={<CloseCircleOutlined />}
                   color='white'
                   style={{ color: 'black' }}
@@ -319,6 +344,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
               accept='.jpeg, .jpg, .png, .webp'
               id='objetImage'
               onChange={handleImageChange}
+              style={{ display: 'none' }}
             />
           </>
         }
