@@ -60,7 +60,10 @@ export default function CreateMyRoom() {
             마이룸 별명은 생성 이후 수정할 수 있습니다.
           </GlobalSubTitle>
           <MyRoomPreviewWrapper>
-            <Canvas camera={{ position: selectedModel?.camera }}>
+            <Canvas
+              frameloop='demand'
+              camera={{ position: selectedModel?.camera }}
+            >
               <OrbitControls
                 target={selectedModel?.targetOrbit}
                 enableZoom={false}
