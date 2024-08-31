@@ -6,7 +6,7 @@ export const MiddleContainer = styled.div`
   height: 475px;
   display: grid;
   grid-template-columns: repeat(3, 90px);
-  grid-template-rows: repeat(3, 90px);
+  grid-template-rows: repeat(3, 120px);
   grid-gap: 27px;
 `
 

@@ -3,22 +3,22 @@ import styled from 'styled-components'
 export const Container = styled.div`
   position: relative;
   display: inline-block;
-  width: 80px;
-  height: 100px;
-  margin: 10px;
+  width: 90px;
+  height: 110px;
 `
 
 export const VideoContainer = styled.video`
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   border-radius: 100%;
   background-color: black;
 `
 
 export const UserLabel = styled.p`
-  display: inline-block;
-  position: absolute;
-  top: 80px;
-  left: 0px;
-  font-size: 8px;
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
 `
