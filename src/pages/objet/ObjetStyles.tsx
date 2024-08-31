@@ -107,13 +107,13 @@ export const ItemInput = styled.div`
 
 export const InputBox = styled.div<{
   className?: string
-  longtext?: boolean
-  img?: boolean
+  longtext?: string
+  img?: string
 }>`
   ${() => commonBoxStyles}
-  width: ${(props) => (props.img ? '120px' : '220px')};
+  width: ${(props) => (props.img === 'true' ? '120px' : '220px')};
   height: ${(props) => {
-    if (props.longtext) return '90px'
+    if (props.longtext === 'true') return '90px'
     if (props.img && props.className === 'updateImg') return '120px'
     if (props.img && props.className !== 'updateImg') return 'auto'
     return '40px'

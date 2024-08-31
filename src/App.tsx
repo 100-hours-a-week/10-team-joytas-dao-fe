@@ -26,6 +26,16 @@ import Notification from './pages/notification/Notification'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
+const originalWarn = console.warn
+console.warn = (...args) => {
+  if (args[0].includes('<StyleSheetManager shouldForwardProp={...}>')) {
+    return
+  } else if (args[0].includes('MenuItem should not leave undefined `key`')) {
+    return
+  }
+  originalWarn(...args)
+}
+
 function App() {
   return (
     <BrowserRouter>

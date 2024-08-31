@@ -3,10 +3,8 @@ import { GroupProps } from '@react-three/fiber'
 import { Vector3, Euler } from 'three'
 import React, { useMemo } from 'react'
 
-// LoungeModel3의 props 타입 정의
 interface LoungeModel3Props extends GroupProps {}
 
-// 메모이제이션된 그룹 컴포넌트
 const MemoizedGroup = React.memo(
   ({ position, rotation, scale, meshes }: any) => (
     <group position={position} rotation={rotation} scale={scale}>
@@ -18,12 +16,10 @@ const MemoizedGroup = React.memo(
 )
 
 export function LoungeModel3(props: LoungeModel3Props) {
-  // GLTF 데이터를 로드하고 메모이제이션합니다.
   const { nodes, materials } = useGLTF(
     '/models/lounge_model3/scene.gltf'
   ) as any
 
-  // 그룹과 메쉬 데이터를 메모이제이션하여 코드 간결화 및 성능 최적화
   const groupData = useMemo(
     () => [
       {
@@ -191,7 +187,6 @@ export function LoungeModel3(props: LoungeModel3Props) {
     [nodes, materials]
   )
 
-  // 개별 메쉬 데이터를 관리
   const meshData = useMemo(
     () => [
       {

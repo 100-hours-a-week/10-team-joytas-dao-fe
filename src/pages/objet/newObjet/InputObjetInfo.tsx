@@ -306,7 +306,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       />
       <InputItem
         label='오브제 설명'
-        longtext={true}
+        longtext={'true'}
         input={
           <>
             <textarea
@@ -322,7 +322,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       />
       <InputItem
         label='오브제 이미지'
-        img={true}
+        img={'true'}
         input={
           <>
             <label htmlFor='objetImage'>
