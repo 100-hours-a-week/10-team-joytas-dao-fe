@@ -39,7 +39,7 @@ function renderNotificationList(notificationList: NotificationProps[]) {
   const groupedNotifications = groupByDate(notificationList)
   const dates = Object.keys(groupedNotifications)
 
-  return dates.map((date, index) => (
+  return dates.reverse().map((date, index) => (
     <NotificationGroup key={`${date}_${index}`}>
       <NotificationDate>{date}</NotificationDate>
       {groupedNotifications[date]
