@@ -154,7 +154,10 @@ export default function MyRoom() {
           {isLoading ? (
             <LoadingLottie />
           ) : (
-            <Canvas camera={{ position: myRoomModel.camera }}>
+            <Canvas
+              frameloop='demand'
+              camera={{ position: myRoomModel.camera }}
+            >
               <OrbitControls
                 target={myRoomModel.targetOrbit}
                 enableZoom={false}
@@ -169,7 +172,10 @@ export default function MyRoom() {
           {isLoading ? (
             <LoadingLottie />
           ) : (
-            <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
+            <Canvas
+              frameloop='demand'
+              camera={{ position: [0, 0, 4], fov: 50 }}
+            >
               <OrbitControls enableZoom={false} />
               <ambientLight intensity={1} />
               <RenderObjet />

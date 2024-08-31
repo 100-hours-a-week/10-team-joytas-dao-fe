@@ -86,7 +86,10 @@ export default function UserDetail() {
               <LoadingLottie />
             ) : (
               <>
-                <Canvas camera={{ position: myRoomModel.camera }}>
+                <Canvas
+                  frameloop='demand'
+                  camera={{ position: myRoomModel.camera }}
+                >
                   <OrbitControls
                     target={myRoomModel.targetOrbit}
                     enableZoom={false}
