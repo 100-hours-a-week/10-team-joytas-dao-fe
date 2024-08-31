@@ -80,7 +80,7 @@ export const Container = styled.div`
   ${flexColumn}
   width: 100%;
   height: fit-content;
-  margin-top: 90px;
+  margin-top: 50px;
   box-sizing: border-box;
   gap: 2px;
   position: relative;
@@ -262,7 +262,7 @@ export const ChooseContainer = styled.div`
   flex-direction: row;
   gap: 20px;
   height: 40px;
-  margin: 50px auto;
+  margin: 20px auto;
   width: 100%;
 `
 
