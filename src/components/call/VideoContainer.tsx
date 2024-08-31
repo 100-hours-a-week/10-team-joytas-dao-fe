@@ -2,6 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import io from 'socket.io-client'
 import Video from './Video'
 import useUserStore from '../../store/userStore'
+import { Container, UserLabel } from './VideoStyles'
 
 interface WebRTCUser {
   socket_id: string
@@ -125,6 +126,7 @@ const VideoContainer = ({
     },
     []
   )
+
   useEffect(() => {
     socketRef.current = io.connect(SOCKET_SERVER_URL, {
       transports: ['websocket'],
@@ -249,21 +251,23 @@ const VideoContainer = ({
 
   return (
     <>
-      <video
-        style={{
-          width: 80,
-          height: 80,
-          marginTop: 10,
-          marginBottom: 10,
-          marginLeft: 10,
-          marginRight: 10,
-          backgroundColor: 'black',
-          borderRadius: 100,
-        }}
-        muted
-        ref={localVideoRef}
-        autoPlay
-      />
+      {/*본인*/}
+      <Container>
+        <video
+          style={{
+            width: 90,
+            height: 90,
+            backgroundColor: 'black',
+            borderRadius: 100,
+          }}
+          muted
+          ref={localVideoRef}
+          autoPlay
+        />
+        <UserLabel>{nickname}</UserLabel>
+      </Container>
+
+      {/*다른 사용자*/}
       {users.map((user, index) => (
         <Video key={index} nickname={user.nickname} stream={user.stream} />
       ))}
