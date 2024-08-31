@@ -351,7 +351,7 @@ export default function UpdateObjet() {
           />
           <InputItem
             label='오브제 설명'
-            longtext={true}
+            longtext={'true'}
             input={
               <>
                 <textarea
@@ -368,7 +368,7 @@ export default function UpdateObjet() {
           <InputItem
             label='오브제 이미지'
             className='updateImg'
-            img={true}
+            img={'true'}
             input={
               <>
                 <label htmlFor='objetImage'>

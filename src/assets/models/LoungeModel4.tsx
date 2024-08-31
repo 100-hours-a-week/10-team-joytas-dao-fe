@@ -47,5 +47,4 @@ export function LoungeModel4(props: LoungeModel4Props) {
   )
 }
 
-// GLTF 파일을 사전에 로드
 useGLTF.preload('/models/lounge_model4/scene.gltf')

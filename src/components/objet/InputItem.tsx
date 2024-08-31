@@ -9,8 +9,8 @@ import {
 interface ItemProps {
   label: string
   className?: string
-  longtext?: boolean
-  img?: boolean
+  longtext?: string
+  img?: string
   input: JSX.Element
   helperText?: string
 }
