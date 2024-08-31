@@ -44,7 +44,6 @@ const VideoContainer = ({
   const localVideoRef = useRef<HTMLVideoElement>(null)
   const localStreamRef = useRef<MediaStream>()
   const [users, setUsers] = useState<WebRTCUser[]>([])
-  console.log(users)
 
   if (localVideoRef.current) localVideoRef.current.volume = 0
 
