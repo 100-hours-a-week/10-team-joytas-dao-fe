@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { ConfirmNotificationModal } from '../modal/Modal'
 import { useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
+import { toast } from 'react-toastify'
 
 export default function NotificationItem({
   notification_id,
@@ -60,8 +61,8 @@ export default function NotificationItem({
         }
       )
 
-      if (readRes.ok) {
-        console.log('알림 클릭 성공')
+      if (!readRes.ok) {
+        toast.error('알림을 읽지 못했어요 🥹 이따가 다시 시도해주세요!')
       }
     } catch (error) {
       console.error('알림 클릭 실패', error)
