@@ -26,7 +26,7 @@ import {
 } from './ObjetStyles'
 import VideoContainer from '../../components/call/VideoContainer'
 import { useParams, useNavigate } from 'react-router-dom'
-import { APIs } from '../../static'
+import { APIs, URL } from '../../static'
 
 export default function ObjetCall() {
   const navigate = useNavigate()
@@ -114,7 +114,11 @@ export default function ObjetCall() {
               onClick={() => setMuted(!muted)}
             />
           </MicButton> */}
-          <CallButton onClick={() => navigate(-1)}>
+          <CallButton
+            onClick={() =>
+              navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`)
+            }
+          >
             <Icon src={quitCall} />
           </CallButton>
         </BottomContainer>
