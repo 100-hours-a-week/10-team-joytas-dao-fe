@@ -27,17 +27,43 @@ interface UserListProps {
 export default function UserListItem({ type, user }: UserListProps) {
   const loungeId = useParams().lid
   const navigate = useNavigate()
-  const PickUser = () => {}
   const [isClick, setIsClick] = useState(false)
 
   const handleUserClick = () => {
     navigate(`${URL.userDetail}/${user.user_id}`)
   }
 
-  const handleClickInvite = async () => {
+  const handleClickPoke = async () => {
     setIsClick(true)
     try {
       const response = await fetch(APIs.poke, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        body: JSON.stringify({ user_id: user.user_id }),
+      })
+
+      if (response.ok) {
+        toast.success(`${user.nickname} 콕 찌르기 성공 😊`)
+      } else if (response.status === 400) {
+        toast.info(`이미 찌른 유저입니다 🙂`)
+      } else {
+        toast.error('콕 찌르기 실패 🥲')
+      }
+    } catch (error) {
+      console.error(error)
+    } finally {
+      setIsClick(false)
+    }
+  }
+
+  const handleClickInvite = async () => {
+    setIsClick(true)
+    try {
+      const response = await fetch(APIs.invite, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -48,11 +74,11 @@ export default function UserListItem({ type, user }: UserListProps) {
       })
 
       if (response.ok) {
-        toast.success('유저 초대 성공')
-      } else if (response.status === 400) {
+        toast.success('유저 초대 성공 😉')
+      } else if (response.status === 405) {
         toast.info('이미 라운지에 존재하는 유저입니다.')
       } else {
-        toast.error('유저 초대 실패')
+        toast.error('유저 초대 실패 🥲')
       }
     } catch (error) {
       console.error(error)
@@ -75,7 +101,7 @@ export default function UserListItem({ type, user }: UserListProps) {
           초대하기
         </InviteButton>
       ) : type === 'users' ? (
-        <Icon src={PickImg} onClick={PickUser} />
+        <Icon src={PickImg} onClick={handleClickPoke} />
       ) : null}
     </UserListItemContainer>
   )

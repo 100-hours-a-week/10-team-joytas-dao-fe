@@ -50,6 +50,8 @@ export default function Layout({
           message = `${data.sender.nickname}님이 "${data.detail.name}" 오브제에 태그하셨습니다 💫`
         } else if (data.type === 'N0002') {
           message = `${data.sender.nickname}님이 "${data.detail.name}" 라운지에 초대하셨습니다 💫`
+        } else if (data.type === 'N0003') {
+          message = `${data.sender.nickname}님이 콕 찌르셨습니다 💫`
         }
         toast(message)
       }

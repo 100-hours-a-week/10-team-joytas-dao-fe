@@ -5,10 +5,11 @@ export const NotificationContainer = styled.div`
   flex-direction: column;
 
   width: 100%;
-  height: calc(100% - 35px);
+  height: fit-content;
   overflow-y: auto;
   box-sizing: border-box;
   margin-top: 30px;
+  padding-bottom: 20px;
 `
 
 export const NotificationGroup = styled.div`
