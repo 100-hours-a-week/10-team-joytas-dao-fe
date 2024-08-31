@@ -14,7 +14,6 @@ import {
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { APIs } from '../../static'
 import { useEffect, useRef, useState } from 'react'
-import { useParams } from 'react-router-dom'
 
 interface SearhUser {
   user_id: number
@@ -25,7 +24,6 @@ interface SearhUser {
 
 export default function UserList() {
   const type = useLocation().pathname.split('/')[1] as 'lounge' | 'users'
-  const lid = useParams().lid || ''
   const [isLoading, setIsLoading] = useState(false)
   const [userList, setUserList] = useState<SearhUser[]>([])
   const [searchUser, setSearchUser] = useState('')
@@ -42,12 +40,7 @@ export default function UserList() {
     setIsLoading(true)
     setSearchUser(input)
     try {
-      const url =
-        type === 'lounge'
-          ? `${APIs.searchUser}?lounge_id=${lid}&nickname=${input}`
-          : `${APIs.searchUser}?nickname=${input}`
-
-      const response = await fetch(url, {
+      const response = await fetch(`${APIs.searchUser}?nickname=${input}`, {
         credentials: 'include',
         headers: {
           'Content-Type': 'application/json',
