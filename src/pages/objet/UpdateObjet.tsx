@@ -26,7 +26,6 @@ import { OptionProps } from 'antd/es/mentions/index'
 import { objetList } from '../../global/objetModels.tsx'
 import { APIs, URL } from '../../static.ts'
 import { useNavigate, useParams } from 'react-router-dom'
-import { MOCK_USERS } from '../../assets/mock/userData.tsx'
 import useUserStore from '../../store/userStore.ts'
 import { toast } from 'react-toastify'
 
@@ -65,6 +64,7 @@ export default function UpdateObjet() {
   const [imageErrorMessage, setImageErrorMessage] = useState('')
 
   const [isImageChanged, setIsImageChanged] = useState(false)
+  const [userList, setUserList] = useState<SharedMembersProps[]>([])
 
   useEffect(() => {
     fetchData()
@@ -87,7 +87,11 @@ export default function UpdateObjet() {
         setName(data.data.name)
         setDescription(data.data.description)
         setImageUrl(data.data.objet_image)
-        setSharedMembers(data.data.sharers)
+        setSharedMembers(
+          data.data.sharers.filter(
+            (user: SharedMembersProps) => user.user_id !== userId
+          )
+        )
         setType(data.data.type)
       }
     } catch (error) {
@@ -97,14 +101,35 @@ export default function UpdateObjet() {
 
   const onMentionSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
     if (newPrefix) {
-      return MOCK_USERS.filter((user) =>
-        user.nickname.includes(newPrefix)
-      ).filter((user) => !sharedMembers.includes(user))
+      return userList
+        .filter((user) => user.nickname.includes(newPrefix))
+        .filter(
+          (user) =>
+            user.user_id !== userId &&
+            !sharedMembers.some((member) => member.user_id === user.user_id)
+        )
     }
   }
 
-  const onMentionChange = (value: string) => {
-    setMentionValue(value)
+  const onMentionChange = async (value: string) => {
+    setMentionValue(value || '@')
+    const searchValue = value.slice(1)
+    const response = await fetch(
+      `${APIs.loungeList}/${loungeId}/search?nickname=${searchValue}`,
+      {
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      }
+    )
+    if (response.ok) {
+      const responseData = await response.json()
+      setUserList(responseData.data)
+    } else {
+      setUserList([])
+    }
   }
 
   const onMentionSelect = (option: OptionProps) => {
@@ -279,10 +304,14 @@ export default function UpdateObjet() {
                   onSelect={(option) => onMentionSelect(option as OptionProps)}
                   onChange={(value) => onMentionChange(value)}
                   value={mentionValue || undefined}
-                  options={MOCK_USERS.filter(
-                    (user) => !sharedMembers.includes(user)
-                  )
-                    .filter((user) => user.user_id !== userId)
+                  options={userList
+                    .filter(
+                      (user) =>
+                        user.user_id !== userId &&
+                        !sharedMembers.some(
+                          (member) => member.user_id === user.user_id
+                        )
+                    )
                     .map((user) => ({
                       value: user.nickname,
                       key: user.user_id.toString(),
