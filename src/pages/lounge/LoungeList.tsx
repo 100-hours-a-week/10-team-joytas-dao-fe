@@ -1,15 +1,18 @@
 import Layout from '../../components/Layout'
-import LoungeContainer from '../../components/lounge/LoungeContainer'
 import {
   GloablContainer16,
   GlobalSubTitle,
   GlobalTitle,
 } from '../../global/globalStyles'
 import { LoungeList } from './LoungeStyles'
+import React, { Suspense } from 'react'
+import LoadingLottie from '../../components/lotties/LoadingLottie'
+
+const LoungeContainer = React.lazy(
+  () => import('../../components/lounge/LoungeContainer')
+)
 
 export default function LoungeListPage() {
-  
-
   return (
     <Layout>
       <GloablContainer16>
@@ -18,7 +21,9 @@ export default function LoungeListPage() {
           라운지를 클릭해 입장하거나, 라운지를 생성해보세요!
         </GlobalSubTitle>
         <LoungeList>
-          <LoungeContainer />
+          <Suspense fallback={<LoadingLottie />}>
+            <LoungeContainer />
+          </Suspense>
         </LoungeList>
       </GloablContainer16>
     </Layout>
