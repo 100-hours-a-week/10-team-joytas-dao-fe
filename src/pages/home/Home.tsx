@@ -17,10 +17,12 @@ import banner1 from '../../assets/images/banner1.webp'
 import banner2 from '../../assets/images/banner2.webp'
 import recentObjetsIcon from '../../assets/images/recentObjets.webp'
 import tripday from '../../assets/images/tripday.mp4'
+import useUserStore from '../../store/userStore'
 
 export default function Home() {
   const [objets, setObjets] = useState([])
   const [isLoading, setIsLoading] = useState(false)
+  const userId = useUserStore((state) => state.userId)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -46,7 +48,7 @@ export default function Home() {
     }
 
     fetchData()
-  }, [])
+  }, [userId])
 
   return (
     <Layout style={{ padding: '0px' }}>
