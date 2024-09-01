@@ -67,9 +67,6 @@ export default function UserList() {
   return (
     <Layout>
       <FullContainerForToast>
-        {/* <Toast>지직지키님을 콕 찌르셨습니다 😆</Toast>
-        <Toast>이미 찌른 유저입니다 🥲</Toast> */}
-
         <GloablContainer16>
           <SearchTitle type={type}>
             {type === 'lounge'
