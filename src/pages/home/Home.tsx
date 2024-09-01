@@ -13,9 +13,9 @@ import { APIs } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import NoPrevObjet from '../../components/objet/NoPrevObjet'
 import { Carousel } from 'antd'
-import banner1 from '../../assets/images/banner1.png'
-import banner2 from '../../assets/images/banner2.png'
-import recentObjetsIcon from '../../assets/images/recentObjets.png'
+import banner1 from '../../assets/images/banner1.webp'
+import banner2 from '../../assets/images/banner2.webp'
+import recentObjetsIcon from '../../assets/images/recentObjets.webp'
 import tripday from '../../assets/images/tripday.mp4'
 
 export default function Home() {

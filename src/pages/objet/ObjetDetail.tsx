@@ -18,14 +18,13 @@ import {
   CommunityContainer,
   ChattingsWrapper,
   Icon,
-  CallToast,
   IconContainer,
   ChattingText,
   Divider,
   NoChatting,
 } from './ObjetStyles'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
-import MenuImg from '../../assets/images/menu.png'
+import MenuImg from '../../assets/images/menu.webp'
 import GoCommunityBtn from '../../components/objet/GoCommunityBtn'
 import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
@@ -76,7 +75,6 @@ export default function ObjetDetail() {
 
   const [isDropVisible, setIsDropVisible] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [isToastVisible, setIsToastVisible] = useState(false)
 
   const navigate = useNavigate()
 
@@ -204,11 +202,8 @@ export default function ObjetDetail() {
   }
 
   const handleClickCall = () => {
-    if (callingPeople === 9) {
-      setIsToastVisible(true)
-      setTimeout(() => {
-        setIsToastVisible(false)
-      }, 2000)
+    if (callingPeople >= 9) {
+      toast.error('방이 가득찼습니다! 🥲')
     } else {
       navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/call`)
     }
@@ -346,7 +341,6 @@ export default function ObjetDetail() {
               handleDelete={handleDeleteObjet}
             />
           )}
-          {isToastVisible && <CallToast>방이 가득찼습니다!</CallToast>}
         </GloablContainer16>
       </>
     </Layout>

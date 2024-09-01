@@ -8,7 +8,7 @@ import {
   Icon,
 } from './LoungeStyles'
 import { Skeleton } from 'antd'
-import menu from '../../assets/images/menu.png'
+import menu from '../../assets/images/menu.webp'
 import LoungeObjets from './LoungeObjets'
 import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
 import { useParams } from 'react-router-dom'

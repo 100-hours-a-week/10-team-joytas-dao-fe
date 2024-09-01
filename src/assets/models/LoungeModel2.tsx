@@ -1,23 +1,38 @@
 import { useGLTF } from '@react-three/drei'
 import { GroupProps } from '@react-three/fiber'
+import React, { useMemo } from 'react'
 
-// LoungeModel2의 props 타입 정의
 interface LoungeModel2Props extends GroupProps {}
 
+const MemoizedMesh = React.memo(
+  ({ geometry, material, position, rotation }: any) => (
+    <mesh
+      geometry={geometry}
+      material={material}
+      position={position}
+      rotation={rotation}
+    />
+  )
+)
+
 export function LoungeModel2(props: LoungeModel2Props) {
-  // useGLTF에서 반환된 데이터의 타입을 명시적으로 지정합니다.
   const { nodes, materials } = useGLTF(
     '/models/lounge_model2/scene.gltf'
   ) as any
 
+  const meshData = useMemo(
+    () => ({
+      geometry: nodes.Object_Planet_0.geometry,
+      material: materials.Planet,
+      position: [-0.045, 0.3, 0.066],
+      rotation: [Math.PI, 0, Math.PI],
+    }),
+    [nodes, materials]
+  )
+
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.Object_Planet_0.geometry}
-        material={materials.Planet}
-        position={[-0.045, 0.3, 0.066]}
-        rotation={[Math.PI, 0, Math.PI]}
-      />
+      <MemoizedMesh {...meshData} />
     </group>
   )
 }

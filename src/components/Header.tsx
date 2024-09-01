@@ -5,8 +5,8 @@ import {
   HeaderLeft,
   HamburgerIcon,
 } from './LayoutStyles'
-import logo from '../assets/images/logo.png'
-import bell from '../assets/images/bell.png'
+import logo from '../assets/images/logo.webp'
+import bell from '../assets/images/bell.webp'
 import { useNavigate } from 'react-router-dom'
 import { URL } from '../static'
 import { useState } from 'react'

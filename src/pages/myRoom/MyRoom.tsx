@@ -13,9 +13,9 @@ import { toast } from 'react-toastify'
 import { Skeleton } from 'antd'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
-import editIcon from '../../assets/images/edit.png'
-import closeIcon from '../../assets/images/close.png'
-import checkIcon from '../../assets/images/check.png'
+import editIcon from '../../assets/images/edit.webp'
+import closeIcon from '../../assets/images/close.webp'
+import checkIcon from '../../assets/images/check.webp'
 
 import { useEffect, useRef, useState } from 'react'
 import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
@@ -154,7 +154,10 @@ export default function MyRoom() {
           {isLoading ? (
             <LoadingLottie />
           ) : (
-            <Canvas camera={{ position: myRoomModel.camera }}>
+            <Canvas
+              frameloop='demand'
+              camera={{ position: myRoomModel.camera }}
+            >
               <OrbitControls
                 target={myRoomModel.targetOrbit}
                 enableZoom={false}
@@ -169,7 +172,10 @@ export default function MyRoom() {
           {isLoading ? (
             <LoadingLottie />
           ) : (
-            <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
+            <Canvas
+              frameloop='demand'
+              camera={{ position: [0, 0, 4], fov: 50 }}
+            >
               <OrbitControls enableZoom={false} />
               <ambientLight intensity={1} />
               <RenderObjet />

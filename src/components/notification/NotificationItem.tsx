@@ -6,9 +6,9 @@ import {
   TypeImg,
 } from '../../pages/notification/NotificationStyles'
 import { extractTime } from '../../utils/formatDatetime'
-import TagImg from '../../assets/images/tag.png'
-import PokeImg from '../../assets/images/poke.png'
-import InviteImg from '../../assets/images/loungeInvite.png'
+import TagImg from '../../assets/images/tag.webp'
+import PokeImg from '../../assets/images/poke.webp'
+import InviteImg from '../../assets/images/loungeInvite.webp'
 import { ModalBackdrop } from '../modal/ModalStyles'
 import { useState } from 'react'
 import { ConfirmNotificationModal } from '../modal/Modal'
