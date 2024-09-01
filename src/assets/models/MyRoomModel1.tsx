@@ -4,7 +4,7 @@ import { useGLTF } from '@react-three/drei'
 
 interface MyRoomModel1Props extends React.ComponentProps<'group'> {}
 
-export function MyRoomModel1(props: MyRoomModel1Props) {
+export default function MyRoomModel1(props: MyRoomModel1Props) {
   const { nodes, materials } = useGLTF(
     '/models/myRoom_model1/scene.gltf'
   ) as unknown as {
