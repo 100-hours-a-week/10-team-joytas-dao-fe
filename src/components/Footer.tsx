@@ -29,7 +29,7 @@ export default function Footer() {
         <IconText>유저</IconText>
       </IconDiv>
       <IconDiv onClick={() => navigate(URL.myRoom)}>
-        <IconImg src={profileImage} />
+        <IconImg loading='lazy' alt='마이룸' src={profileImage} />
         <IconText>마이룸</IconText>
       </IconDiv>
     </FooterDiv>
