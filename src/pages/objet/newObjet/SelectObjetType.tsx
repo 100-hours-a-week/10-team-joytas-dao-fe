@@ -7,12 +7,13 @@ import {
 } from '../ObjetStyles'
 import left from '../../../assets/images/left.webp'
 import right from '../../../assets/images/right.webp'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, lazy } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
-import { ObjetModel1 } from '../../../assets/models/ObjetModel1'
-import { ObjetModel2 } from '../../../assets/models/ObjetModel2'
-import { ObjetModel3 } from '../../../assets/models/ObjetModel3'
+
+const ObjetModel1 = lazy(() => import('../../../assets/models/ObjetModel1'))
+const ObjetModel2 = lazy(() => import('../../../assets/models/ObjetModel2'))
+const ObjetModel3 = lazy(() => import('../../../assets/models/ObjetModel3'))
 
 interface ObjetProps {
   setSelectedType: (type: string) => void

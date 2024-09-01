@@ -5,10 +5,10 @@ import {
   GlobalTitle,
 } from '../../global/globalStyles'
 import { LoungeList } from './LoungeStyles'
-import React, { Suspense } from 'react'
+import { Suspense, lazy } from 'react'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 
-const LoungeContainer = React.lazy(
+const LoungeContainer = lazy(
   () => import('../../components/lounge/LoungeContainer')
 )
 

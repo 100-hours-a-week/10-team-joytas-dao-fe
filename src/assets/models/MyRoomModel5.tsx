@@ -5,7 +5,7 @@ import { Vector3, Euler } from 'three'
 
 interface MyRoomModel5Props extends GroupProps {}
 
-export function MyRoomModel5(props: MyRoomModel5Props) {
+export default function MyRoomModel5(props: MyRoomModel5Props) {
   const { nodes, materials } = useGLTF(
     '/models/myRoom_model5/scene.gltf'
   ) as any

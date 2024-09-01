@@ -1,6 +1,8 @@
-import { ObjetModel1 } from '../assets/models/ObjetModel1'
-import { ObjetModel2 } from '../assets/models/ObjetModel2'
-import { ObjetModel3 } from '../assets/models/ObjetModel3'
+import { lazy } from 'react'
+
+const ObjetModel1 = lazy(() => import('../assets/models/ObjetModel1'))
+const ObjetModel2 = lazy(() => import('../assets/models/ObjetModel2'))
+const ObjetModel3 = lazy(() => import('../assets/models/ObjetModel3'))
 
 interface ObjetModel {
   type: 'O0001' | 'O0002' | 'O0003'
