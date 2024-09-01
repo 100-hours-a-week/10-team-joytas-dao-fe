@@ -1,10 +1,12 @@
 import { Text } from '@react-three/drei'
+import { lazy } from 'react'
 import * as THREE from 'three'
-import { ObjetModel1 } from '../../assets/models/ObjetModel1'
-import { ObjetModel2 } from '../../assets/models/ObjetModel2'
-import { ObjetModel3 } from '../../assets/models/ObjetModel3'
 import { useRef, useMemo, useEffect } from 'react'
 import type { RandomModelsProps } from '../../types/ModelType'
+
+const ObjetModel1 = lazy(() => import('../../assets/models/ObjetModel1'))
+const ObjetModel2 = lazy(() => import('../../assets/models/ObjetModel2'))
+const ObjetModel3 = lazy(() => import('../../assets/models/ObjetModel3'))
 
 export default function ObjetModels({
   objets,
