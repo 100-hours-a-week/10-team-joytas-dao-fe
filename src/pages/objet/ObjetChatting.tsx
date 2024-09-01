@@ -18,8 +18,8 @@ import {
   TopContainer,
 } from './ObjetStyles'
 import { AlertUserEnter, ChatMessage } from '../../components/objet/Chat'
-import SendImg from '../../assets/images/send.png'
-import LeaveImg from '../../assets/images/leave.png'
+import SendImg from '../../assets/images/send.webp'
+import LeaveImg from '../../assets/images/leave.webp'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import useObjetStore from '../../store/objetStore'

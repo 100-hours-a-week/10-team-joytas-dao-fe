@@ -9,7 +9,7 @@ import {
 } from '../lounge/LoungeStyles'
 import { Icon } from './MyRoomStyles'
 import { useEffect, useState } from 'react'
-import MoreImg from '../../assets/images/more.png'
+import MoreImg from '../../assets/images/more.webp'
 import { ModalBackdrop } from '../../components/modal/ModalStyles'
 import { LoungeListModal } from '../../components/modal/Modal'
 import { APIs } from '../../static'

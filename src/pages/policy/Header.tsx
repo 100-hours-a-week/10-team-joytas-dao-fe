@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom'
-import backImage from '../../assets/images/back.png'
+import backImage from '../../assets/images/back.webp'
 import { HeaderDiv, BackImg } from './PolicyStyles'
 
 export default function Header() {
