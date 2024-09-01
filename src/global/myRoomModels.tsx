@@ -4,11 +4,11 @@ import { MyRoomModel3 } from '../assets/models/MyRoomModel3.tsx'
 import { MyRoomModel4 } from '../assets/models/MyRoomModel4.tsx'
 import { MyRoomModel5 } from '../assets/models/MyRoomModel5.tsx'
 
-import myRoomThumbnail1 from '../assets/images/myRoom_thumnails/myRoomModel1.png'
-import myRoomThumbnail2 from '../assets/images/myRoom_thumnails/myRoomModel2.png'
-import myRoomThumbnail3 from '../assets/images/myRoom_thumnails/myRoomModel3.png'
-import myRoomThumbnail4 from '../assets/images/myRoom_thumnails/myRoomModel4.png'
-import myRoomThumbnail5 from '../assets/images/myRoom_thumnails/myRoomModel5.png'
+import myRoomThumbnail1 from '../assets/images/myRoom_thumnails/myRoomModel1.webp'
+import myRoomThumbnail2 from '../assets/images/myRoom_thumnails/myRoomModel2.webp'
+import myRoomThumbnail3 from '../assets/images/myRoom_thumnails/myRoomModel3.webp'
+import myRoomThumbnail4 from '../assets/images/myRoom_thumnails/myRoomModel4.webp'
+import myRoomThumbnail5 from '../assets/images/myRoom_thumnails/myRoomModel5.webp'
 
 export interface MyRoomModel {
   type: 'R0001' | 'R0002' | 'R0003' | 'R0004' | 'R0005'

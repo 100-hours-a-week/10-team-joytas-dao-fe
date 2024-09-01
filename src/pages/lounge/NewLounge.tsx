@@ -7,8 +7,8 @@ import useUserStore from '../../store/userStore'
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
-import left from '../../assets/images/left.png'
-import right from '../../assets/images/right.png'
+import left from '../../assets/images/left.webp'
+import right from '../../assets/images/right.webp'
 import { toast } from 'react-toastify'
 import {
   Input,

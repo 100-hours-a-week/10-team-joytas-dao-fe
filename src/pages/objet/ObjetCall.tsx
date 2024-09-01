@@ -8,9 +8,9 @@ import {
 } from './ObjetCallStyles'
 import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
-// import mute from '../../assets/images/mute.png'
-// import unmute from '../../assets/images/unmute.png'
-import quitCall from '../../assets/images/quitCall.png'
+// import mute from '../../assets/images/mute.webp'
+// import unmute from '../../assets/images/unmute.webp'
+import quitCall from '../../assets/images/quitCall.webp'
 import { useEffect, useState } from 'react'
 import {
   ObjetCallContainer,
