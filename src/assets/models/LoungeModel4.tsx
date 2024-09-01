@@ -4,7 +4,7 @@ import { useMemo } from 'react'
 
 interface LoungeModel4Props extends GroupProps {}
 
-export function LoungeModel4(props: LoungeModel4Props) {
+export default function LoungeModel4(props: LoungeModel4Props) {
   const { nodes, materials } = useGLTF(
     '/models/lounge_model4/scene.gltf'
   ) as any

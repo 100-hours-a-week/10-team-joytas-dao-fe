@@ -15,7 +15,7 @@ const MemoizedGroup = React.memo(
   )
 )
 
-export function LoungeModel3(props: LoungeModel3Props) {
+export default function LoungeModel3(props: LoungeModel3Props) {
   const { nodes, materials } = useGLTF(
     '/models/lounge_model3/scene.gltf'
   ) as any

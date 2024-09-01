@@ -1,16 +1,24 @@
+import React, { Suspense, useRef, useEffect, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import { Vector3, Group } from 'three'
-import { LoungeModel1 } from '../../assets/models/LoungeModel1'
-import { LoungeModel2 } from '../../assets/models/LoungeModel2'
-import { LoungeModel3 } from '../../assets/models/LoungeModel3'
-import { LoungeModel4 } from '../../assets/models/LoungeModel4'
-import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Deem } from '../../pages/lounge/LoungeStyles'
-import { useEffect, useState } from 'react'
 import { APIs, URL } from '../../static'
 import LoadingLottie from '../lotties/LoadingLottie'
+
+const LoungeModel1 = React.lazy(
+  () => import('../../assets/models/LoungeModel1')
+)
+const LoungeModel2 = React.lazy(
+  () => import('../../assets/models/LoungeModel2')
+)
+const LoungeModel3 = React.lazy(
+  () => import('../../assets/models/LoungeModel3')
+)
+const LoungeModel4 = React.lazy(
+  () => import('../../assets/models/LoungeModel4')
+)
 
 interface ModelProps {
   position: Vector3
@@ -80,13 +88,15 @@ export default function LoungeContainer() {
         >
           <ambientLight intensity={1} />
           <group position={[0, 0, 0]}>
-            <Model
-              type='L0004'
-              position={new Vector3(0, 0, 0)}
-              label='새 라운지 만들기'
-              scale={[2, 2, 2]}
-              onClick={() => navigate(URL.newLounge)}
-            />
+            <Suspense fallback={<LoadingLottie />}>
+              <Model
+                type='L0004'
+                position={new Vector3(0, 0, 0)}
+                label='새 라운지 만들기'
+                scale={[2, 2, 2]}
+                onClick={() => navigate(URL.newLounge)}
+              />
+            </Suspense>
           </group>
           <Text position={[0, -3, 0]} fontSize={0.7} color='#FFFFFF'>
             새 라운지 만들기
@@ -95,6 +105,7 @@ export default function LoungeContainer() {
       </Deem>
     )
   }
+
   const modelLocationWithNew = [
     new Vector3(0.9, 1.4, 0),
     new Vector3(-0.9, -1, 0),
@@ -109,36 +120,38 @@ export default function LoungeContainer() {
   ]
 
   return (
-    <Canvas
-      style={{ width: '324px', height: '600px', cursor: 'pointer' }}
-      camera={{ position: [0, 0, 8], fov: 50 }}
-    >
-      <ambientLight intensity={1} />
-      <group position={[0, 0, 0]}>
-        {loungeList.length >= 4 ? null : (
-          <Model
-            type='L0004'
-            position={new Vector3(-0.9, 1.4, 0)}
-            label='새 라운지 만들기'
-            scale={[0.6, 0.6, 0.6]}
-            onClick={() => navigate(URL.newLounge)}
-          />
-        )}
-        {loungeList.map((lounge, index) => (
-          <Model
-            key={lounge.lounge_id}
-            type={lounge.type}
-            position={
-              loungeList.length < 4
-                ? modelLocationWithNew[index]
-                : modelLocation[index]
-            }
-            label={lounge.name}
-            onClick={() => navigate(`${URL.lounge}/${lounge.lounge_id}`)}
-          />
-        ))}
-      </group>
-    </Canvas>
+    <Suspense fallback={<LoadingLottie />}>
+      <Canvas
+        style={{ width: '324px', height: '600px', cursor: 'pointer' }}
+        camera={{ position: [0, 0, 8], fov: 50 }}
+      >
+        <ambientLight intensity={1} />
+        <group position={[0, 0, 0]}>
+          {loungeList.length >= 4 ? null : (
+            <Model
+              type='L0004'
+              position={new Vector3(-0.9, 1.4, 0)}
+              label='새 라운지 만들기'
+              scale={[0.6, 0.6, 0.6]}
+              onClick={() => navigate(URL.newLounge)}
+            />
+          )}
+          {loungeList.map((lounge, index) => (
+            <Model
+              key={index}
+              type={lounge.type}
+              position={
+                loungeList.length < 4
+                  ? modelLocationWithNew[index]
+                  : modelLocation[index]
+              }
+              label={lounge.name}
+              onClick={() => navigate(`${URL.lounge}/${lounge.lounge_id}`)}
+            />
+          ))}
+        </group>
+      </Canvas>
+    </Suspense>
   )
 }
 
@@ -177,7 +190,9 @@ function Model({
   return (
     <group position={position} onClick={onClick}>
       <group ref={ref} scale={scale}>
-        <ModelComponent />
+        <Suspense fallback={null}>
+          <ModelComponent />
+        </Suspense>
       </group>
       <Text position={[0, -0.6, 0]} fontSize={0.15} color='#FFFFFF'>
         {label}

@@ -15,7 +15,7 @@ const MemoizedMesh = React.memo(
   )
 )
 
-export function LoungeModel2(props: LoungeModel2Props) {
+export default function LoungeModel2(props: LoungeModel2Props) {
   const { nodes, materials } = useGLTF(
     '/models/lounge_model2/scene.gltf'
   ) as any
