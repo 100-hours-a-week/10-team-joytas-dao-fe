@@ -1,8 +1,7 @@
-import React from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
 import useUserStore from '../../store/userStore'
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, lazy } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import left from '../../assets/images/left.webp'
@@ -29,15 +28,9 @@ import {
 import { RedText } from '../objet/ObjetStyles'
 import { APIs, URL } from '../../static'
 
-const LoungeModel1 = React.lazy(
-  () => import('../../assets/models/LoungeModel1')
-)
-const LoungeModel2 = React.lazy(
-  () => import('../../assets/models/LoungeModel2')
-)
-const LoungeModel3 = React.lazy(
-  () => import('../../assets/models/LoungeModel3')
-)
+const LoungeModel1 = lazy(() => import('../../assets/models/LoungeModel1'))
+const LoungeModel2 = lazy(() => import('../../assets/models/LoungeModel2'))
+const LoungeModel3 = lazy(() => import('../../assets/models/LoungeModel3'))
 
 export default function NewLounge() {
   const [loungeName, setLoungeName] = useState('')

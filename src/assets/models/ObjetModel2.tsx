@@ -11,7 +11,7 @@ interface GLTFResultExtended {
   }
 }
 
-export function ObjetModel2(props: GroupProps) {
+export default function ObjetModel2(props: GroupProps) {
   const { nodes, materials } = useGLTF(
     '/models/objet_model2/scene.gltf'
   ) as unknown as GLTFResultExtended

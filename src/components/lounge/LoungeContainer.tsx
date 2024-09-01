@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useEffect, useState } from 'react'
+import { Suspense, useRef, useEffect, useState, lazy } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import { Vector3, Group } from 'three'
@@ -7,18 +7,10 @@ import { Deem } from '../../pages/lounge/LoungeStyles'
 import { APIs, URL } from '../../static'
 import LoadingLottie from '../lotties/LoadingLottie'
 
-const LoungeModel1 = React.lazy(
-  () => import('../../assets/models/LoungeModel1')
-)
-const LoungeModel2 = React.lazy(
-  () => import('../../assets/models/LoungeModel2')
-)
-const LoungeModel3 = React.lazy(
-  () => import('../../assets/models/LoungeModel3')
-)
-const LoungeModel4 = React.lazy(
-  () => import('../../assets/models/LoungeModel4')
-)
+const LoungeModel1 = lazy(() => import('../../assets/models/LoungeModel1'))
+const LoungeModel2 = lazy(() => import('../../assets/models/LoungeModel2'))
+const LoungeModel3 = lazy(() => import('../../assets/models/LoungeModel3'))
+const LoungeModel4 = lazy(() => import('../../assets/models/LoungeModel4'))
 
 interface ModelProps {
   position: Vector3

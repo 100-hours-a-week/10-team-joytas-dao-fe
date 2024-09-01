@@ -12,7 +12,7 @@ interface GLTFResultExtended {
   }
 }
 
-export function ObjetModel3(props: GroupProps) {
+export default function ObjetModel3(props: GroupProps) {
   const { nodes, materials } = useGLTF(
     '/models/objet_model3/scene.gltf'
   ) as unknown as GLTFResultExtended

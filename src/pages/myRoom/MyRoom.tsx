@@ -1,3 +1,4 @@
+import { lazy } from 'react'
 import Layout from '../../components/Layout.js'
 import {
   Icon,
@@ -16,16 +17,16 @@ import { OrbitControls } from '@react-three/drei'
 import editIcon from '../../assets/images/edit.webp'
 import closeIcon from '../../assets/images/close.webp'
 import checkIcon from '../../assets/images/check.webp'
-
 import { useEffect, useRef, useState } from 'react'
 import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
 import { GloablContainer16 } from '../../global/globalStyles.tsx'
-import { ObjetModel1 } from '../../assets/models/ObjetModel1.tsx'
 import { Group } from 'three'
 import { useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static.ts'
 import LoadingLottie from '../../components/lotties/LoadingLottie.tsx'
 import useUserStore from '../../store/userStore.ts'
+
+const ObjetModel1 = lazy(() => import('../../assets/models/ObjetModel1.tsx'))
 
 export default function MyRoom() {
   const [myRoomId, setMyRoomId] = useState()
