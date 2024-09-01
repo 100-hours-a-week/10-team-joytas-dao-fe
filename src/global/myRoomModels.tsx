@@ -1,14 +1,16 @@
-import { MyRoomModel1 } from '../assets/models/MyRoomModel1.tsx'
-import { MyRoomModel2 } from '../assets/models/MyRoomModel2.tsx'
-import { MyRoomModel3 } from '../assets/models/MyRoomModel3.tsx'
-import { MyRoomModel4 } from '../assets/models/MyRoomModel4.tsx'
-import { MyRoomModel5 } from '../assets/models/MyRoomModel5.tsx'
+import { lazy } from 'react'
 
 import myRoomThumbnail1 from '../assets/images/myRoom_thumnails/myRoomModel1.webp'
 import myRoomThumbnail2 from '../assets/images/myRoom_thumnails/myRoomModel2.webp'
 import myRoomThumbnail3 from '../assets/images/myRoom_thumnails/myRoomModel3.webp'
 import myRoomThumbnail4 from '../assets/images/myRoom_thumnails/myRoomModel4.webp'
 import myRoomThumbnail5 from '../assets/images/myRoom_thumnails/myRoomModel5.webp'
+
+const MyRoomModel1 = lazy(() => import('../assets/models/MyRoomModel1'))
+const MyRoomModel2 = lazy(() => import('../assets/models/MyRoomModel2'))
+const MyRoomModel3 = lazy(() => import('../assets/models/MyRoomModel3'))
+const MyRoomModel4 = lazy(() => import('../assets/models/MyRoomModel4'))
+const MyRoomModel5 = lazy(() => import('../assets/models/MyRoomModel5'))
 
 export interface MyRoomModel {
   type: 'R0001' | 'R0002' | 'R0003' | 'R0004' | 'R0005'
