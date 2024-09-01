@@ -16,9 +16,12 @@ import { APIs } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { LoungeDrop } from '../../components/dropdown/Dropdown'
 import useUserStore from '../../store/userStore'
+import { toast } from 'react-toastify'
+import { useNavigate } from 'react-router-dom'
 
 export default function Lounge() {
   const { lid: loungeId } = useParams<{ lid: string }>()
+  const navigate = useNavigate()
   const userId = useUserStore((state) => state.userId)
 
   const [loungeName, setLoungeName] = useState('')
@@ -41,12 +44,14 @@ export default function Lounge() {
           },
         })
 
-        if (response.ok) {
-          const responseData = await response.json()
-          setLoungeName(responseData.data.name)
-          setObjets(responseData.data.objets)
-          setIsOwner(responseData.data.user_id === userId)
+        if (!response.ok) {
+          toast.error('해당 라운지를 찾을 수 없습니다 😅')
+          navigate(-1)
         }
+        const responseData = await response.json()
+        setLoungeName(responseData.data.name)
+        setObjets(responseData.data.objets)
+        setIsOwner(responseData.data.user_id === userId)
       } catch (error) {
         console.error('Failed to fetch lounge', error)
       } finally {

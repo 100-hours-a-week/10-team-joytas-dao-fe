@@ -112,26 +112,25 @@ export default function ObjetDetail() {
         },
       })
 
-      if (objRes.ok) {
-        const data = await objRes.json()
-
-        setCreator(data.data.nickname)
-        setName(data.data.name)
-        setDescription(data.data.description)
-        setImageUrl(data.data.objet_image)
-        setCallingPeople(data.data.calling_user_num)
-        setIsActive(data.data.is_active)
-        setCreatorId(data.data.user_id)
-
-        setObjetName(data.data.name)
-        setObjetCreatorNickname(data.data.nickname)
-        setObjetCreatorId(data.data.user_id)
-      }
-
-      if (objRes.status === 404) {
-        toast.warning('해당 오브제를 찾을 수 없습니다.')
+      if (!objRes.ok) {
+        toast.error('해당 오브제를 찾을수 없습니다 😅')
         navigate(`${URL.lounge}/${loungeId}`)
       }
+
+      const data = await objRes.json()
+
+      setCreator(data.data.nickname)
+      setName(data.data.name)
+      setDescription(data.data.description)
+      setImageUrl(data.data.objet_image)
+      setCallingPeople(data.data.calling_user_num)
+      setIsActive(data.data.is_active)
+      setCreatorId(data.data.user_id)
+
+      setObjetName(data.data.name)
+      setObjetCreatorNickname(data.data.nickname)
+      setObjetCreatorId(data.data.user_id)
+
       // 채팅 미리보기
       // - 채팅방 토큰 가져오기
       const chatRes = await fetch(`${APIs.chat}/${objetId}/room-token`, {
