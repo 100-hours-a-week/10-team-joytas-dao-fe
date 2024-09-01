@@ -139,6 +139,7 @@ section {
 }
 body {
   font-family: 'Nanum Gothic', sans-serif;
+  font-display: swap;
 }
 ol,
 ul {

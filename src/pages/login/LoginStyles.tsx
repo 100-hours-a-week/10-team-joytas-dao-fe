@@ -23,6 +23,7 @@ export const Logo = styled.h2`
   justify-content: center;
   width: fit-content;
   font-family: 'Shrikhand', serif;
+  font-display: swap;
   left: 28%;
   color: white;
   font-weight: 900;

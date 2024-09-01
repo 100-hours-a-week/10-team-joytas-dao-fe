@@ -174,6 +174,7 @@ export const ButtonContainer = styled.div`
     position: relative;
     z-index: 6;
     font-family: 'Bagel Fat One', sans-serif;
+    font-display: swap;
     text-decoration: none;
     position: absolute;
     top: 50%;
@@ -187,6 +188,7 @@ export const ButtonContainer = styled.div`
 
 export const Button = styled.button`
   font-family: 'Bagel Fat One', sans-serif;
+  font-display: swap;
   text-decoration: none;
   position: absolute;
   top: 50%;
