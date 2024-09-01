@@ -14,6 +14,7 @@ import {
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { APIs } from '../../static'
 import { useEffect, useRef, useState } from 'react'
+import useUserStore from '../../store/userStore'
 
 interface SearhUser {
   user_id: number
@@ -27,6 +28,7 @@ export default function UserList() {
   const [isLoading, setIsLoading] = useState(false)
   const [userList, setUserList] = useState<SearhUser[]>([])
   const [searchUser, setSearchUser] = useState('')
+  const userId = useUserStore((state) => state.userId)
 
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -91,9 +93,11 @@ export default function UserList() {
                   유저를 찾아보세요!
                 </GlobalBlankContainerText>
               ) : (
-                userList.map((user) => (
-                  <UserListItem key={user.user_id} type={type} user={user} />
-                ))
+                userList
+                  .filter((user) => user.user_id !== userId)
+                  .map((user) => (
+                    <UserListItem key={user.user_id} type={type} user={user} />
+                  ))
               )}
             </UserListContainer>
           )}
