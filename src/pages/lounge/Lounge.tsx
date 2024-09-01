@@ -12,7 +12,7 @@ import menu from '../../assets/images/menu.webp'
 import LoungeObjets from './LoungeObjets'
 import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
 import { useParams } from 'react-router-dom'
-import { APIs } from '../../static'
+import { APIs, URL } from '../../static'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { LoungeDrop } from '../../components/dropdown/Dropdown'
 import useUserStore from '../../store/userStore'
@@ -46,7 +46,7 @@ export default function Lounge() {
 
         if (!response.ok) {
           toast.error('해당 라운지를 찾을 수 없습니다 😅')
-          navigate(-1)
+          navigate(`${URL.lounge}`)
         }
         const responseData = await response.json()
         setLoungeName(responseData.data.name)
