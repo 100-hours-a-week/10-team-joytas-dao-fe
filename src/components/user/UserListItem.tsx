@@ -49,7 +49,7 @@ export default function UserListItem({ type, user }: UserListProps) {
       if (response.ok) {
         toast.success(`${user.nickname} 콕 찌르기 성공 😊`)
       } else if (response.status === 400) {
-        toast.info(`이미 찌른 유저입니다 🙂`)
+        toast.info(`3시간에 한번씩만 찌를 수 있어요 🙂`)
       } else {
         toast.error('콕 찌르기 실패 🥲')
       }
