@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { Deem } from '../../pages/lounge/LoungeStyles'
 import { APIs, URL } from '../../static'
 import LoadingLottie from '../lotties/LoadingLottie'
+import { logEvent } from 'firebase/analytics'
+import { analytics } from '../../firebase'
 
 const LoungeModel1 = lazy(() => import('../../assets/models/LoungeModel1'))
 const LoungeModel2 = lazy(() => import('../../assets/models/LoungeModel2'))
@@ -111,6 +113,21 @@ export default function LoungeContainer() {
     new Vector3(0.9, -1, 0),
   ]
 
+  const handleClickNewLounge = () => {
+    logEvent(analytics, 'click-new-lounge', {
+      content_type: 'new-lounge',
+    })
+    navigate(URL.newLounge)
+  }
+
+  const handleClickLounge = (lid: number) => {
+    logEvent(analytics, 'click-lounge', {
+      content_type: 'lounge',
+      lounge_id: lid,
+    })
+    navigate(`${URL.lounge}/${lid}`)
+  }
+
   return (
     <Suspense fallback={<LoadingLottie />}>
       <Canvas
@@ -129,7 +146,7 @@ export default function LoungeContainer() {
               position={new Vector3(-0.9, 1.4, 0)}
               label='새 라운지 만들기'
               scale={[0.6, 0.6, 0.6]}
-              onClick={() => navigate(URL.newLounge)}
+              onClick={handleClickNewLounge}
             />
           )}
           {loungeList.map((lounge, index) => (
@@ -142,7 +159,7 @@ export default function LoungeContainer() {
                   : modelLocation[index]
               }
               label={lounge.name}
-              onClick={() => navigate(`${URL.lounge}/${lounge.lounge_id}`)}
+              onClick={() => handleClickLounge(lounge.lounge_id)}
             />
           ))}
         </group>
