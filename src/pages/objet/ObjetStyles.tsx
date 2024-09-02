@@ -79,6 +79,7 @@ export const ModelIndexText = styled.div`
 export const Container = styled.div`
   ${flexColumn}
   width: 100%;
+  min-height: 540px;
   height: fit-content;
   margin-top: 50px;
   box-sizing: border-box;

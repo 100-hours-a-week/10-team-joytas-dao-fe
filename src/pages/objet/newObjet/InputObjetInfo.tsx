@@ -300,6 +300,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
             value={name}
             placeholder='오브제 이름을 입력해주세요.'
             onChange={(e) => handleInputChange('objetName', e.target.value)}
+            minLength={2}
+            maxLength={10}
           />
         }
         helperText={nameErrorMessage}
@@ -315,6 +317,8 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
               onChange={(e) =>
                 handleInputChange('objetDescription', e.target.value)
               }
+              minLength={2}
+              maxLength={200}
             />
           </>
         }
@@ -351,7 +355,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         helperText={imageErrorMessage}
       />
 
-      <ChooseContainer>
+      <ChooseContainer style={{ position: 'absolute', bottom: '4%' }}>
         <GenerateButton disabled={isClick} onClick={handleGenerateClick}>
           생성하기
         </GenerateButton>

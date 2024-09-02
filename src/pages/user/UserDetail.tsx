@@ -64,7 +64,7 @@ export default function UserDetail() {
             ? responseData.data.my_room_name
             : profile.nickname + '의 마이룸'
         )
-        setMyRoomModel(modelList[responseData.data.type.split('R000')[1]])
+        setMyRoomModel(modelList[responseData.data.type.split('R000')[1] - 1])
       } else {
         console.error('유저 정보 조회 오류: ', userRes)
       }
