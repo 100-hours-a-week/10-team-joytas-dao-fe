@@ -80,7 +80,7 @@ export default function FirstProfile() {
           const formData = new FormData()
           formData.append('file', profile)
 
-          const imageResponse = await fetch(APIs.modifyProfileImage, {
+          const imageResponse = await fetch(APIs.uploadImage, {
             method: 'POST',
             credentials: 'include',
             headers: {
