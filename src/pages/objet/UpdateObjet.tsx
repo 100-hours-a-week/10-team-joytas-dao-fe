@@ -63,6 +63,9 @@ export default function UpdateObjet() {
   const [descriptionErrorMessage, setDescriptionErrorMessage] = useState('')
   const [imageErrorMessage, setImageErrorMessage] = useState('')
 
+  const [isMentionChanged, setIsMentionChanged] = useState(false)
+  const [isNameChanged, setIsNameChanged] = useState(false)
+  const [isDescriptionChanged, setIsDescriptionChanged] = useState(false)
   const [isImageChanged, setIsImageChanged] = useState(false)
   const [userList, setUserList] = useState<SharedMembersProps[]>([])
 
@@ -113,6 +116,7 @@ export default function UpdateObjet() {
 
   const onMentionChange = async (value: string) => {
     setMentionValue(value || '@')
+    setIsMentionChanged(true)
     const searchValue = value.slice(1)
     const response = await fetch(
       `${APIs.loungeList}/${loungeId}/search?nickname=${searchValue}`,
@@ -151,10 +155,12 @@ export default function UpdateObjet() {
       case 'objetName':
         setName(value)
         setNameValid(validateName(value))
+        setIsNameChanged(true)
         break
       case 'objetDescription':
         setDescription(value)
         setDescriptionValid(validateDescription(value))
+        setIsDescriptionChanged(true)
         break
       default:
         break
@@ -226,6 +232,11 @@ export default function UpdateObjet() {
       setImageErrorMessage('오브제 이미지를 첨부해주세요.')
     }
 
+    if (!isMentionChanged && !isNameChanged && !isDescriptionChanged) {
+      toast.info('변경된 내용이 없습니다.')
+      return
+    }
+
     if (
       sharedMembers.length === 0 ||
       !nameValid ||
@@ -237,38 +248,58 @@ export default function UpdateObjet() {
 
     setIsClick(true)
 
-    const formData = new FormData()
-    formData.append(
-      'sharers',
-      JSON.stringify(sharedMembers.map((member) => member.user_id))
-    )
-    formData.append('name', name)
-    formData.append('description', description)
-
-    if (isImageChanged && image) {
-      formData.append('objet_image', image)
-    }
-
     try {
+      if (isImageChanged && image) {
+        const formData = new FormData()
+        formData.append('file', image)
+
+        const imageResponse = await fetch(APIs.uploadImage, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          body: formData,
+        })
+
+        if (!imageResponse.ok) {
+          toast.error('오브제 이미지 업로드 실패 😭')
+          return
+        }
+
+        const imageResponseData = await imageResponse.json()
+        const imageUrl = imageResponseData.data.image_url
+        setImageUrl(imageUrl)
+      }
+
       const response = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'PATCH',
         credentials: 'include',
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          'Content-Type': 'application/json',
         },
-        body: formData,
+        body: JSON.stringify({
+          name,
+          description,
+          objet_image: imageUrl,
+          sharers: sharedMembers.map((member) => member.user_id),
+        }),
       })
 
-      if (response.ok) {
-        const data = await response.json()
-
-        toast.success('오브제 수정 완료 🪐')
-        navigate(`${URL.lounge}/${loungeId}/objet/${data.data.objet_id}`)
-      } else {
+      if (!response.ok) {
         toast.error('오브제 수정 실패 😭')
+        return
       }
+
+      toast.success('오브제 수정 성공 🪐')
+      navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
+        replace: true,
+      })
     } catch (error) {
-      console.error('오브제 수정 중 에러 발생: ', error)
+      console.error('오브제 수정 실패: ', error)
+    } finally {
+      setIsClick(false)
     }
   }
 

@@ -199,47 +199,70 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
 
     setIsClick(true)
 
-    const formData = new FormData()
     if (image) {
-      formData.append('lounge_id', loungeId.toString())
-      formData.append('type', selectedType)
-      formData.append('name', name)
-      formData.append('description', description)
-      formData.append('objet_image', image)
-      formData.append(
-        'sharers',
-        JSON.stringify(sharedMembers.map((member) => member.user_id))
-      )
-    }
+      setIsLoading(true)
 
-    setIsLoading(true)
+      try {
+        const formData = new FormData()
+        formData.append('file', image)
 
-    try {
-      const response = await fetch(APIs.objet, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: formData,
-      })
+        const imageResponse = await fetch(APIs.uploadImage, {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          body: formData,
+        })
 
-      if (!response.ok) {
-        toast.error('오브제 생성 실패 😭')
+        if (!imageResponse.ok) {
+          toast.error('오브제 이미지 업로드 실패 😭')
+          return
+        }
+
+        const imageResponseData = await imageResponse.json()
+        const imageUrl = imageResponseData.data.image_url
+        setImageUrl(imageUrl)
+
+        try {
+          const response = await fetch(APIs.objet, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              lounge_id: Number(loungeId),
+              type: selectedType,
+              name,
+              description,
+              objet_image: imageUrl,
+              sharers: sharedMembers.map((member) => member.user_id),
+            }),
+          })
+
+          if (!response.ok) {
+            toast.error('오브제 생성 실패 😭')
+            return
+          }
+
+          const objetResponseData = await response.json()
+          const objetId = objetResponseData.data.objet_id
+
+          toast.success('오브제 생성 성공 🪐')
+          navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
+            replace: true,
+          })
+        } catch (error) {
+          console.error('오브제 생성 실패: ', error)
+        }
+      } catch (error) {
+        console.error('오브제 이미지 업로드 실패: ', error)
+      } finally {
+        setIsLoading(false)
+        setIsClick(false)
       }
-
-      const responseData = await response.json()
-      const objetId = responseData.data.objet_id
-
-      toast.success('오브제 생성 성공 🪐')
-      navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
-        replace: true,
-      })
-    } catch (error) {
-      console.error('오브제 생성 실패: ', error)
-    } finally {
-      setIsLoading(false)
-      setIsClick(false)
     }
   }
 
