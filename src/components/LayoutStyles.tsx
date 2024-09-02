@@ -65,11 +65,13 @@ export const IconDiv = styled.div`
   align-items: center;
 `
 
-export const IconImg = styled.img`
+export const IconImg = styled.img<{ $isMyRoom?: boolean }>`
   width: 24px;
   height: 24px;
   border-radius: 50%;
   object-fit: cover;
+
+  ${(props) => props.$isMyRoom && `border: 2px solid #575FFF;`}
 `
 
 export const IconText = styled.div`
