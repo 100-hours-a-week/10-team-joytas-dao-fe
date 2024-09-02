@@ -29,9 +29,10 @@ const commonBoxStyles = css`
 
 export const ObjetCallContainer = styled.div`
   width: 100%;
-  height: 724px;
+  height: 100%;
   padding: 0 16px;
   box-sizing: border-box;
+  overflow-y: auto;
   color: white;
 `
 
