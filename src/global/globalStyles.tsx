@@ -1,9 +1,9 @@
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 export const GloablContainer16 = styled.div`
   width: 100%;
   overflow-y: auto;
-  height: 724px;
+  height: 100%;
   padding: 0 16px;
   box-sizing: border-box;
   color: white;
@@ -17,9 +17,10 @@ export const GloablContainer32 = styled.div`
 `
 
 export const GlobalTitle = styled.div`
-  padding-top: 70px;
+  padding-top: 50px;
   font-size: 20px;
   font-weight: bold;
+  width: 100%;
 `
 
 export const GlobalSubTitle = styled.div`
@@ -39,4 +40,11 @@ export const GlobalBlankContainerText = styled.div`
   color: #6a6a6a;
   font-size: 18px;
   line-height: 30px;
+`
+
+export const GlobalWidth = css`
+  width: 100%;
+  @media (min-width: 600px) {
+    width: 600px;
+  }
 `

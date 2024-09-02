@@ -2,19 +2,23 @@ import styled from 'styled-components'
 
 export const TitleWrapper = styled.div`
   width: 100%;
+  height: 100px;
   display: flex;
-  flex-direction: row;
+  justify-content: space-between;
   align-items: center;
   padding-top: 70px;
 `
 
 export const Title = styled.span`
   color: white;
-  font-size: 20px;
+  font-size: 19px;
   font-weight: bold;
-  max-width: 220px;
+  max-width: 240px;
+  display: flex;
+  align-items: center;
+  padding-left: 10px;
   margin-right: 20px;
-  line-height: 1.2;
+  height: 32px;
 `
 
 export const Icon = styled.img`
@@ -48,14 +52,14 @@ export const StyledGloablContainer16 = styled.div`
 
 export const MyRoomTitleInput = styled.input`
   border: none;
-  width: 220px;
+  width: 100%;
   color: white;
-  background-color: transparent;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
   font-size: 20px;
   font-weight: bold;
   max-width: 230px;
-  outline: none;
-  line-height: 1.2;
 `
 
 export const MyRoomPreviewWrapper = styled.div`
@@ -118,4 +122,9 @@ export const ObjetWrapper = styled.div`
   color: white;
 
   cursor: pointer;
+`
+
+export const MyRoomIconContainer = styled.div`
+  display: flex;
+  align-items: center;
 `

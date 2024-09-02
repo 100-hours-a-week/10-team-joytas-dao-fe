@@ -79,7 +79,7 @@ export const ChooseContainer = styled.div`
   width: fit-content;
   gap: 20px;
   height: 40px;
-  margin: 10px auto;
+  margin: 30px auto;
 `
 
 export const MoveIcon = styled.img`
@@ -143,9 +143,8 @@ export const LoungeTitle = styled.div`
 export const Objets = styled.div`
   margin-top: 30px;
   width: 100%;
-  display: flex;
+  height: calc(100% - 150px);
   align-items: center;
-  height: 575px;
 `
 
 export const Deem = styled.div`

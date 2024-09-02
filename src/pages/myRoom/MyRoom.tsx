@@ -9,6 +9,7 @@ import {
   ObjetWrapper,
   Title,
   TitleWrapper,
+  MyRoomIconContainer,
 } from './MyRoomStyles.tsx'
 import { toast } from 'react-toastify'
 import { Skeleton } from 'antd'
@@ -130,16 +131,18 @@ export default function MyRoom() {
                 minLength={2}
                 maxLength={20}
               />
-              <IconWithBorder
-                src={checkIcon}
-                alt='check'
-                onClick={handleSubmit}
-              />
-              <IconWithBorder
-                src={closeIcon}
-                alt='close'
-                onClick={handleChangeIsEditing}
-              />
+              <MyRoomIconContainer>
+                <IconWithBorder
+                  src={checkIcon}
+                  alt='check'
+                  onClick={handleSubmit}
+                />
+                <IconWithBorder
+                  src={closeIcon}
+                  alt='close'
+                  onClick={handleChangeIsEditing}
+                />
+              </MyRoomIconContainer>
             </>
           ) : (
             <>
@@ -156,7 +159,7 @@ export default function MyRoom() {
               ) : (
                 <Title>
                   {myRoomName.length > 15
-                    ? `${myRoomName.substring(0, 15)}...`
+                    ? `${myRoomName.substring(0, 14)}..`
                     : myRoomName}
                 </Title>
               )}
