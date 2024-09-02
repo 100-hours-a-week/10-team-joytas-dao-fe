@@ -114,7 +114,11 @@ export default function LoungeContainer() {
   return (
     <Suspense fallback={<LoadingLottie />}>
       <Canvas
-        style={{ width: '324px', height: '600px', cursor: 'pointer' }}
+        style={{
+          width: '324px',
+          height: '100% ',
+          cursor: 'pointer',
+        }}
         camera={{ position: [0, 0, 8], fov: 50 }}
       >
         <ambientLight intensity={1} />
