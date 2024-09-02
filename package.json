@@ -21,6 +21,7 @@
     "@types/three": "^0.167.1",
     "antd": "^5.20.1",
     "event-source-polyfill": "^1.0.31",
+    "firebase": "^10.13.1",
     "gltfjsx": "^6.5.0",
     "hamburger-react": "^2.5.1",
     "lottie-react": "^2.4.0",
