@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, useCallback } from 'react'
 import io from 'socket.io-client'
 import Video from './Video'
 import useUserStore from '../../store/userStore'
-import { Container, UserLabel } from './VideoStyles'
+import { Container, UserLabel, MyVideo } from './VideoStyles'
 
 interface WebRTCUser {
   socket_id: string
@@ -91,10 +91,6 @@ const VideoContainer = ({
             candidateSendID: socketRef.current.id,
             candidateReceiveID: socketID,
           })
-        }
-
-        pc.oniceconnectionstatechange = (e) => {
-          console.log(e)
         }
 
         pc.ontrack = (e) => {
@@ -253,17 +249,7 @@ const VideoContainer = ({
     <>
       {/*본인*/}
       <Container>
-        <video
-          style={{
-            width: 90,
-            height: 90,
-            backgroundColor: 'black',
-            borderRadius: 100,
-          }}
-          muted
-          ref={localVideoRef}
-          autoPlay
-        />
+        <MyVideo muted ref={localVideoRef} autoPlay />
         <UserLabel>{nickname}</UserLabel>
       </Container>
 
