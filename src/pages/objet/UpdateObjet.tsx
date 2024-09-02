@@ -63,6 +63,9 @@ export default function UpdateObjet() {
   const [descriptionErrorMessage, setDescriptionErrorMessage] = useState('')
   const [imageErrorMessage, setImageErrorMessage] = useState('')
 
+  const [isMentionChanged, setIsMentionChanged] = useState(false)
+  const [isNameChanged, setIsNameChanged] = useState(false)
+  const [isDescriptionChanged, setIsDescriptionChanged] = useState(false)
   const [isImageChanged, setIsImageChanged] = useState(false)
   const [userList, setUserList] = useState<SharedMembersProps[]>([])
 
@@ -113,6 +116,7 @@ export default function UpdateObjet() {
 
   const onMentionChange = async (value: string) => {
     setMentionValue(value || '@')
+    setIsMentionChanged(true)
     const searchValue = value.slice(1)
     const response = await fetch(
       `${APIs.loungeList}/${loungeId}/search?nickname=${searchValue}`,
@@ -151,10 +155,12 @@ export default function UpdateObjet() {
       case 'objetName':
         setName(value)
         setNameValid(validateName(value))
+        setIsNameChanged(true)
         break
       case 'objetDescription':
         setDescription(value)
         setDescriptionValid(validateDescription(value))
+        setIsDescriptionChanged(true)
         break
       default:
         break
@@ -224,6 +230,11 @@ export default function UpdateObjet() {
     }
     if (!imageUrl) {
       setImageErrorMessage('오브제 이미지를 첨부해주세요.')
+    }
+
+    if (!isMentionChanged && !isNameChanged && !isDescriptionChanged) {
+      toast.info('변경된 내용이 없습니다.')
+      return
     }
 
     if (
