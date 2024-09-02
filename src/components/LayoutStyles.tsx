@@ -1,8 +1,8 @@
 import styled from 'styled-components'
-
 export const Main = styled.div`
   width: 100%;
   height: 100%;
+  border: 0.1px solid rgba(255, 255, 255, 0.8);
 `
 
 export const HeaderContainer = styled.div`
@@ -11,27 +11,33 @@ export const HeaderContainer = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
+  box-sizing: border-box;
   height: 50px;
   position: relative;
   top: 0px;
-  padding: 0 16px;
-  box-sizing: border-box;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  padding-left: 32px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  @media (min-width: 600px) {
+    height: 70px;
+  }
 `
 
 export const LogoImage = styled.img`
   width: 40px;
+  height: 18px;
   cursor: pointer;
+  @media (min-width: 600px) {
+    width: 50px;
+    height: 22px;
+  }
 `
 
-export const HeaderLeft = styled.div`
+export const HeaderRight = styled.div`
   position: absolute;
-  width: 100%;
-  padding-right: 20px;
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  right: 20px;
   gap: 5px;
 `
 
@@ -46,11 +52,9 @@ export const HamburgerIcon = styled.div`
 
 export const FooterDiv = styled.div`
   background-color: black;
-  position: relative;
-  width: 100%;
   box-sizing: border-box;
   height: 70px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   justify-content: space-between;
   bottom: 0;
@@ -82,7 +86,11 @@ export const IconText = styled.div`
 
 export const ChildrenDiv = styled.div`
   width: 100%;
-  height: 724px;
   padding: 0 16px;
   box-sizing: border-box;
+  height: calc(100% - 120px);
+
+  @media (min-width: 600px) {
+    height: calc(100% - 140px);
+  }
 `

@@ -4,7 +4,7 @@ import noData from '../../assets/lotties/noData.json'
 
 export const LottieContainer = styled.div`
   margin: 0 auto;
-  margin-left: 25px;
+  padding-right: 25px;
 `
 
 export default function NoDataLottie() {

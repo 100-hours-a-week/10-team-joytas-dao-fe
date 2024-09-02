@@ -25,6 +25,7 @@ import UserDetail from './pages/user/UserDetail'
 import Notification from './pages/notification/Notification'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { GlobalWidth } from './global/globalStyles'
 
 const originalWarn = console.warn
 console.warn = (...args) => {
@@ -99,12 +100,11 @@ function App() {
 }
 
 const Main = styled.div`
-  width: 390px;
-  height: 844px;
+  height: 100%;
   margin: auto;
-  border: 1px solid #404040;
   overflow: hidden;
   background-color: black;
+  ${GlobalWidth}
 `
 
 export default App

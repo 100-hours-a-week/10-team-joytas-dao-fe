@@ -23,8 +23,9 @@ export const Logo = styled.h2`
   justify-content: center;
   width: fit-content;
   font-family: 'Shrikhand', serif;
-  font-display: swap;
-  left: 28%;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: white;
   font-weight: 900;
 `
@@ -36,15 +37,16 @@ export const Mini = styled.div`
 `
 
 export const LoginButton = styled.button`
+  bottom: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   background-color: #fee500;
   width: 300px;
   height: 50px;
   border-radius: 5px;
   font-weight: 600;
   position: absolute;
-  bottom: 130px;
   border: 0px;
-  left: 45px;
   z-index: 10;
   box-shadow:
     0px 4px 10px rgba(0, 0, 0, 0.25),
@@ -54,7 +56,7 @@ export const LoginButton = styled.button`
     box-shadow 0.3s ease;
 
   &:hover {
-    transform: translateY(-5px);
+    transform: translate(-50%, -60%);
     box-shadow:
       0px 8px 15px rgba(0, 0, 0, 0.25),
       0px 4px 10px rgba(0, 0, 0, 0.15);

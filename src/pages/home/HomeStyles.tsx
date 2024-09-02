@@ -38,7 +38,7 @@ export const BannerImage = styled.img`
   object-fit: cover;
   align-items: center;
   justify-content: center;
-  height: 200px;
+  aspect-ratio: 1.9;
 `
 
 export const BannerVideo = styled.video`
@@ -48,7 +48,7 @@ export const BannerVideo = styled.video`
   object-fit: cover;
   align-items: center;
   justify-content: center;
-  height: 200px;
+  aspect-ratio: 1.9;
 `
 
 export const MyObjetContainer = styled.div`
@@ -69,6 +69,10 @@ export const MyObjetTitle = styled.div`
     width: 22px;
     height: 22px;
     margin-right: 10px;
+  }
+
+  @media (min-width: 600px) {
+    font-size: 23px;
   }
 `
 

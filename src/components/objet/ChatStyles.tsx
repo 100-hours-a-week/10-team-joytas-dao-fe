@@ -10,6 +10,7 @@ export const Chat = styled.div`
   img {
     width: 30px;
     height: 30px;
+    object-fit: cover;
     border-radius: 50%;
   }
 `

@@ -1,4 +1,10 @@
 #root {
-  width: 390px;
-  height: 844px;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-width: 600px) {
+  #root {
+    width: 600px;
+  }
 }

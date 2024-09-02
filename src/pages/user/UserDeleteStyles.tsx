@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { GlobalWidth } from '../../global/globalStyles'
 
 export const Title = styled.div`
   color: white;
@@ -87,8 +88,8 @@ export const Deem = styled.div`
   top: -675px;
   left: -16px;
   background-color: rgba(0, 0, 0, 0.7);
-  width: 390px;
-  height: 844px;
+  height: 100%;
   z-index: 998;
   position: relative;
+  ${GlobalWidth}
 `

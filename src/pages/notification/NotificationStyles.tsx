@@ -8,7 +8,7 @@ export const NotificationContainer = styled.div`
   height: fit-content;
   overflow-y: auto;
   box-sizing: border-box;
-  margin-top: 30px;
+  margin-top: 20px;
   padding-bottom: 20px;
 `
 
@@ -52,7 +52,7 @@ export const NotificationItemContainer = styled.div<{ $isRead: boolean }>`
 
 export const StyledHr = styled.hr`
   border: 0.1px solid #666666;
-  width: 315px;
+  width: 90%;
 `
 
 export const TypeImg = styled.img`
@@ -65,7 +65,7 @@ export const NotiContents = styled.span`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  width: 240px;
+  width: 85%;
   gap: 2px;
   font-size: 11px;
 
