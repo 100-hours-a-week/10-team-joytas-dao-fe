@@ -13,9 +13,11 @@ import {
 } from './NotificationStyles'
 import useNotifications from '../../hooks/useNotification'
 import { NotificationProps } from '../../hooks/useNotification'
+import useUserStore from '../../store/userStore'
 
 export default function Notification() {
   const { notificationList } = useNotifications()
+  const userId = useUserStore((state) => state.userId)
 
   return (
     <Layout>
@@ -27,7 +29,7 @@ export default function Notification() {
               알림이 없습니다.
             </GlobalBlankContainerText>
           ) : (
-            renderNotificationList(notificationList)
+            renderNotificationList(notificationList, userId)
           )}
         </NotificationContainer>
       </GloablContainer16>
@@ -35,30 +37,41 @@ export default function Notification() {
   )
 }
 
-function renderNotificationList(notificationList: NotificationProps[]) {
+function renderNotificationList(
+  notificationList: NotificationProps[],
+  userId: number
+) {
   const groupedNotifications = groupByDate(notificationList)
   const dates = Object.keys(groupedNotifications)
 
-  return dates.reverse().map((date, index) => (
-    <NotificationGroup key={`${date}_${index}`}>
-      <NotificationDate>{date}</NotificationDate>
-      {groupedNotifications[date]
-        .slice()
-        .reverse()
-        .map((noti: NotificationProps) => (
-          <NotificationItem
-            key={noti.notification_id}
-            notification_id={noti.notification_id}
-            type={noti.type}
-            sender={noti.sender}
-            detail={noti.detail}
-            is_read={noti.is_read}
-            datetime={noti.datetime}
-          />
-        ))}
-      {index !== dates.length - 1 && <StyledHr />}
-    </NotificationGroup>
-  ))
+  return dates.reverse().map((date, index) => {
+    const dateSort = groupedNotifications[date].filter(
+      (noti) => noti.sender.user_id !== userId
+    )
+
+    return (
+      dateSort.length > 0 && (
+        <NotificationGroup key={`${date}_${index}`}>
+          <NotificationDate>{date}</NotificationDate>
+          {dateSort
+            .slice()
+            .reverse()
+            .map((noti: NotificationProps) => (
+              <NotificationItem
+                key={noti.notification_id}
+                notification_id={noti.notification_id}
+                type={noti.type}
+                sender={noti.sender}
+                detail={noti.detail}
+                is_read={noti.is_read}
+                datetime={noti.datetime}
+              />
+            ))}
+          {index !== dates.length - 1 && <StyledHr />}
+        </NotificationGroup>
+      )
+    )
+  })
 }
 
 function groupByDate(
