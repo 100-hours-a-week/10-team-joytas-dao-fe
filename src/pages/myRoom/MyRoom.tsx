@@ -31,6 +31,7 @@ const ObjetModel1 = lazy(() => import('../../assets/models/ObjetModel1.tsx'))
 export default function MyRoom() {
   const [myRoomId, setMyRoomId] = useState()
   const [myRoomName, setMyRoomName] = useState('')
+  const [myRoomNameForChange, setMyRoomNameForChange] = useState('')
   const [myRoomModel, setMyRoomModel] = useState<MyRoomModel>(modelList[0])
 
   const [isLoading, setIsLoading] = useState(true)
@@ -42,7 +43,7 @@ export default function MyRoom() {
 
   useEffect(() => {
     fetchMyRoomInfo()
-  }, [])
+  }, [userId])
 
   const fetchMyRoomInfo = async () => {
     try {
@@ -66,6 +67,7 @@ export default function MyRoom() {
           ? responseData.data.my_room_name
           : userNickname + '의 마이룸'
       )
+      setMyRoomNameForChange(myRoomName)
       setMyRoomModel(modelList[responseData.data.type.split('R000')[1] - 1])
     } catch (error) {
       console.error('마이룸 정보 조회 오류: ', error)
@@ -76,9 +78,18 @@ export default function MyRoom() {
 
   const handleChangeIsEditing = () => {
     setIsEditing(!isEditing)
+    if (!isEditing) {
+      setMyRoomNameForChange(myRoomName)
+    }
   }
 
   const handleSubmit = async () => {
+    if (myRoomName === myRoomNameForChange) {
+      setIsEditing(false)
+      toast.info('변경된 사항이 없습니다. 🤔')
+      return
+    }
+
     try {
       const response = await fetch(`${APIs.myRoom}/${myRoomId}`, {
         method: 'PATCH',
@@ -87,13 +98,14 @@ export default function MyRoom() {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
-        body: JSON.stringify({ room_name: myRoomName }),
+        body: JSON.stringify({ room_name: myRoomNameForChange }),
       })
 
       if (!response.ok) {
         toast.error('마이룸 수정 실패 😭')
       }
       toast.success('마이룸 수정 성공 🪐')
+      setMyRoomName(myRoomNameForChange)
     } catch (error) {
       console.error('마이룸 이름 수정 오류: ', error)
     } finally {
@@ -112,9 +124,11 @@ export default function MyRoom() {
           {isEditing ? (
             <>
               <MyRoomTitleInput
-                value={myRoomName}
-                onChange={(e) => setMyRoomName(e.target.value)}
+                value={myRoomNameForChange}
+                onChange={(e) => setMyRoomNameForChange(e.target.value)}
                 placeholder='마이룸 이름을 입력해주세요'
+                minLength={2}
+                maxLength={20}
               />
               <IconWithBorder
                 src={checkIcon}
