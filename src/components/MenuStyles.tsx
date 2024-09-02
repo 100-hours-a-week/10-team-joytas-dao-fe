@@ -9,7 +9,11 @@ export const MenuContainer = styled.div`
   margin-top: -50px;
   z-index: 1000;
   background-color: black;
+  width: 100%;
   ${GlobalWidth}
+  @media (min-width: 600px) {
+    margin-top: -70px;
+  }
 `
 
 export const TopContainer = styled.div`
