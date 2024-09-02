@@ -16,17 +16,45 @@ import { GlobalSubTitle, GlobalTitle } from '../../global/globalStyles.tsx'
 import { APIs, URL } from '../../static.ts'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
+import useUserStore from '../../store/userStore.ts'
 
 export default function CreateMyRoom() {
   const [selectedModelType, setSelectedModelType] = useState('R0001')
   const [selectedModel, setSelectedModel] = useState<MyRoomModel>()
+  const userId = useUserStore((state) => state.userId)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    checkIfGenerated()
+  }, [])
 
   useEffect(() => {
     setSelectedModel(
       modelList.find((model) => model.type === selectedModelType)
     )
   }, [selectedModelType])
+
+  const checkIfGenerated = async () => {
+    try {
+      const response = await fetch(`${APIs.myRoom}?user_id=${userId}`, {
+        credentials: 'include',
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (response.ok) {
+        toast.info(
+          <>
+            이미 마이룸을 생성하셨습니다. <br /> 마이룸으로 이동합니다. 🪐
+          </>
+        )
+        navigate(URL.myRoom)
+      }
+    } catch (error) {
+      console.error('마이룸 정보 조회 오류: ', error)
+    }
+  }
 
   const handleCreate = async () => {
     try {

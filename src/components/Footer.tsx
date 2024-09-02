@@ -29,7 +29,12 @@ export default function Footer() {
         <IconText>유저</IconText>
       </IconDiv>
       <IconDiv onClick={() => navigate(URL.myRoom)}>
-        <IconImg loading='lazy' alt='마이룸' src={profileImage} />
+        <IconImg
+          loading='lazy'
+          alt='마이룸'
+          src={profileImage}
+          $isMyRoom={pathname.includes('myRoom') ? true : false}
+        />
         <IconText>마이룸</IconText>
       </IconDiv>
     </FooterDiv>
