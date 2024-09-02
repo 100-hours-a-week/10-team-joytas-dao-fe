@@ -20,7 +20,7 @@ export default function Notification() {
   return (
     <Layout>
       <GloablContainer16>
-        <GlobalTitle>누군가 찾는 것 같아요..!</GlobalTitle>
+        <GlobalTitle>알림</GlobalTitle>
         <NotificationContainer>
           {notificationList.length === 0 ? (
             <GlobalBlankContainerText>

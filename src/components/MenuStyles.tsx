@@ -1,14 +1,15 @@
 import styled from 'styled-components'
+import { GlobalWidth } from '../global/globalStyles'
 
 export const MenuContainer = styled.div`
-  width: 390px;
-  height: 844px;
+  height: 100%;
   box-sizing: border-box;
   position: absolute;
   color: #6d6d6d;
   margin-top: -50px;
   z-index: 1000;
   background-color: black;
+  ${GlobalWidth}
 `
 
 export const TopContainer = styled.div`

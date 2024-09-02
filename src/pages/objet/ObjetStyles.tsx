@@ -38,6 +38,7 @@ export const ObjetCallContainer = styled.div`
 export const UpperContainer = styled.div`
   ${flexRow}
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 20px;
 `
 
@@ -52,7 +53,7 @@ export const ObjetModel = styled.div`
 export const MiniObjetModel = styled.div`
   width: 40px;
   height: 40px;
-  margin: 70px 0 0 50px;
+  margin: 70px 0 0;
 `
 
 export const MoveIcon = styled.img`
@@ -92,6 +93,10 @@ export const ItemWrapper = styled.div`
   align-items: flex-start;
   margin-bottom: 8px;
   width: 100%;
+
+  @media (min-width: 600px) {
+    gap: 30px;
+  }
 `
 
 export const ItemLabel = styled.span`
@@ -112,7 +117,7 @@ export const InputBox = styled.div<{
   img?: string
 }>`
   ${() => commonBoxStyles}
-  width: ${(props) => (props.img === 'true' ? '120px' : '220px')};
+  width: ${(props) => (props.img === 'true' ? '120px' : '100%')};
   height: ${(props) => {
     if (props.longtext === 'true') return '90px'
     if (props.img && props.className === 'updateImg') return '120px'
@@ -411,7 +416,10 @@ export const CallToast = styled.div`
 export const ChatContainer = styled.div`
   ${flexColumn}
   width: 100%;
-  height: 615px;
+  height: calc(100% - 120px);
+  @media (min-width: 600px) {
+    height: calc(100% - 140px);
+  }
 
   margin-top: 30px;
 `

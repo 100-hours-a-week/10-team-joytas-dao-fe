@@ -2,7 +2,7 @@ import {
   Icon,
   HeaderContainer,
   LogoImage,
-  HeaderLeft,
+  HeaderRight,
   HamburgerIcon,
 } from './LayoutStyles'
 import logo from '../assets/images/logo.webp'
@@ -20,13 +20,8 @@ export default function Header() {
   return (
     <>
       <HeaderContainer>
-        <LogoImage
-          onClick={() => {
-            navigate(URL.main)
-          }}
-          src={logo}
-        />
-        <HeaderLeft>
+        <LogoImage onClick={() => navigate(URL.main)} src={logo} />
+        <HeaderRight>
           <Icon src={bell} onClick={() => navigate(URL.notification)} />
           <HamburgerIcon>
             <Hamburger
@@ -36,7 +31,7 @@ export default function Header() {
               size={20}
             />
           </HamburgerIcon>
-        </HeaderLeft>
+        </HeaderRight>
       </HeaderContainer>
       {menuOpen ? <Menu /> : null}
     </>

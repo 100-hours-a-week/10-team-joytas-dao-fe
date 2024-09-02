@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { GlobalWidth } from '../../global/globalStyles'
 
 export const Container = styled.div`
   position: absolute;
@@ -37,8 +38,8 @@ export const Tab = styled.button`
 `
 
 export const Deem = styled.div`
-  width: 390px;
-  height: 844px;
+  height: 100%;
   background-color: rgba(0, 0, 0, 0.7);
   position: absolute;
+  ${GlobalWidth}
 `

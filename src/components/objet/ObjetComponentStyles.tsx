@@ -25,6 +25,11 @@ export const ObjetImage = styled.img`
   object-fit: cover;
   border-radius: 10px;
   background-color: grey;
+
+  @media (min-width: 600px) {
+    width: 100px;
+    height: 100px;
+  }
 `
 
 export const ObjetContent = styled.div`
@@ -34,16 +39,28 @@ export const ObjetContent = styled.div`
   flex-direction: column;
   align-items: flex-start;
   gap: 5px;
+
+  @media (min-width: 600px) {
+    font-size: 15px;
+  }
 `
 
 export const ObjetTitle = styled.div`
   margin-top: 8px;
   font-size: 15px;
   font-weight: bold;
+
+  @media (min-width: 600px) {
+    font-size: 20px;
+  }
 `
 
 export const ObjetDescription = styled.div`
+  color: rgba(255, 255, 255, 0.7);
   font-size: 10px;
+  @media (min-width: 600px) {
+    font-size: 16px;
+  }
 `
 
 export const CommunityBtn = styled.button`
