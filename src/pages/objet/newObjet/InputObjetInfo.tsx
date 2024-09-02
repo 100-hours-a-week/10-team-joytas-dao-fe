@@ -355,7 +355,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
         helperText={imageErrorMessage}
       />
 
-      <ChooseContainer>
+      <ChooseContainer style={{ position: 'absolute', bottom: '4%' }}>
         <GenerateButton disabled={isClick} onClick={handleGenerateClick}>
           생성하기
         </GenerateButton>
