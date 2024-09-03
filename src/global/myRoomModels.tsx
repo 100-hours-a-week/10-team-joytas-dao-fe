@@ -22,7 +22,6 @@ export interface MyRoomModel {
 }
 
 export const modelList: MyRoomModel[] = [
-  // TODO: 카메라 각도 조정
   {
     type: 'R0001',
     thumbnail: myRoomThumbnail1,
@@ -49,16 +48,22 @@ export const modelList: MyRoomModel[] = [
   {
     type: 'R0004',
     thumbnail: myRoomThumbnail4,
-    camera: [-50, 30, 0],
+    camera: [-30, 30, 10],
     name: '홍의 방',
     targetOrbit: [0, 0, 0],
-    model: <MyRoomModel4 scale={[0.1, 0.1, 0.1]} />,
+    model: <MyRoomModel4 scale={[14, 14, 14]} position={[0, -10, 0]} />,
   },
   {
     type: 'R0005',
     thumbnail: myRoomThumbnail5,
-    camera: [-50, 20, 0],
+    camera: [-30, 20, 0],
     name: '지키의 방',
-    model: <MyRoomModel5 scale={[0.15, 0.15, 0.15]} />,
+    model: (
+      <MyRoomModel5
+        scale={[5, 5, 5]}
+        rotation={[-Math.PI / 2, 0, 0]}
+        position={[0, -10, 0]}
+      />
+    ),
   },
 ]
