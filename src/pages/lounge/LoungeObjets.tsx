@@ -29,7 +29,7 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
       camera.lookAt(targetPositionRef.current)
 
       navigate(
-        `${URL.lounge}/${model.userData.lid || lid}/objet/${model.userData.id}`
+        `${URL.lounge}/${model.userData.lid || lid}/objets/${model.userData.id}`
       )
     },
     [camera]
@@ -94,7 +94,7 @@ export default function LoungeObjets({ objets }: ObjetsProps) {
   const { lid: loungeId } = useParams()
 
   const handleClickGoObjet = () => {
-    navigate(`${URL.lounge}/${loungeId}/objet/new`)
+    navigate(`${URL.lounge}/${loungeId}/objets/new`)
   }
 
   if (!objets || objets.length === 0) {

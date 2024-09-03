@@ -197,14 +197,14 @@ export default function ObjetDetail() {
 
   const handleClickChat = async () => {
     setChatToken(useObjetStore.getState().chatToken)
-    navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/chatting`)
+    navigate(`${URL.lounge}/${loungeId}/objets/${objetId}/chatting`)
   }
 
   const handleClickCall = () => {
     if (callingPeople >= 9) {
       toast.error('방이 가득찼습니다! 🥲')
     } else {
-      navigate(`${URL.lounge}/${loungeId}/objet/${objetId}/call`)
+      navigate(`${URL.lounge}/${loungeId}/objets/${objetId}/call`)
     }
   }
 
@@ -268,7 +268,7 @@ export default function ObjetDetail() {
                         <ObjetDrop
                           onClickUpdate={() =>
                             navigate(
-                              `${URL.lounge}/${loungeId}/objet/${objetId}/update`
+                              `${URL.lounge}/${loungeId}/objets/${objetId}/update`
                             )
                           }
                           onClickDelete={() => {

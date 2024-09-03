@@ -63,7 +63,7 @@ function Objet({
 
   return (
     <ObjetContainer
-      onClick={() => navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`)}
+      onClick={() => navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`)}
     >
       <ObjetImage src={image} alt={title} />
       <ObjetContent>
