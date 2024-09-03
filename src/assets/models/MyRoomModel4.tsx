@@ -1,11 +1,11 @@
-import { useMemo } from 'react'
 import { useGLTF } from '@react-three/drei'
+import { useMemo } from 'react'
 import { GroupProps } from '@react-three/fiber'
 import { Vector3, Euler } from 'three'
 
 interface MyRoomModel4Props extends GroupProps {}
 
-export default function MyRoomModel4(props: MyRoomModel4Props) {
+export default function MyRoomModel5(props: MyRoomModel4Props) {
   const { nodes, materials } = useGLTF(
     '/models/myRoom_model4/scene.gltf'
   ) as any
@@ -13,284 +13,396 @@ export default function MyRoomModel4(props: MyRoomModel4Props) {
   const meshData = useMemo(
     () => [
       {
-        key: 'RoomGroup',
-        position: new Vector3(12.096, 11.584, -59.541),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(194.179, 194.179, 194.179),
-        meshes: [
-          { geometry: nodes.Room_Wall_0.geometry, material: materials.Wall },
-          { geometry: nodes.Room_Floor_0.geometry, material: materials.Floor },
-          {
-            geometry: nodes.Room_Windows_0.geometry,
-            material: materials.Windows,
-          },
-        ],
+        key: 'Chair001_0',
+        geometry: nodes.Chair001_0.geometry,
+        material: materials.Chair,
+        position: new Vector3(0.076, 2.629, 0),
+        rotation: undefined,
+        scale: new Vector3(0.6, 0.6, 0.6),
       },
       {
-        key: 'BedGroup',
-        position: new Vector3(-101.408, -101.92, -175.955),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(47.299, 47.299, 47.299),
-        meshes: [
-          { geometry: nodes.Cube_Bed_0.geometry, material: materials.material },
-          { geometry: nodes.Cube_Bed2_0.geometry, material: materials.Bed2 },
-        ],
+        key: 'Chair001_1',
+        geometry: nodes.Chair001_1.geometry,
+        material: materials.Chair_Red,
+        position: new Vector3(0.076, 2.629, 0),
+        rotation: undefined,
+        scale: new Vector3(0.6, 0.6, 0.6),
       },
       {
-        key: 'BookGroup1',
-        position: new Vector3(118.938, 77.76, -199.278),
-        rotation: new Euler(-Math.PI / 2, 0, Math.PI / 2),
-        scale: new Vector3(21.466, 21.466, 21.466),
-        meshes: [
-          { geometry: nodes.Book_BookA_0.geometry, material: materials.BookA },
-          { geometry: nodes.Book_Paper_0.geometry, material: materials.Paper },
-          {
-            geometry: nodes.Book_CoverA_0.geometry,
-            material: materials.CoverA,
-          },
-        ],
+        key: 'Chair_0',
+        geometry: nodes.Chair_0.geometry,
+        material: materials.Chair,
+        position: new Vector3(0, -0.3, 0),
+        rotation: undefined,
+        scale: new Vector3(0.6, 0.6, 0.6),
       },
       {
-        key: 'BookGroup2',
-        position: new Vector3(127.024, 73.743, -199.278),
-        rotation: new Euler(-Math.PI / 2, 0, Math.PI / 2),
-        scale: new Vector3(18.48, 18.48, 18.48),
-        meshes: [
-          {
-            geometry: nodes.Book001_BookB_0.geometry,
-            material: materials.BookB,
-          },
-          {
-            geometry: nodes.Book001_Paper_0.geometry,
-            material: materials.Paper,
-          },
-        ],
+        key: 'Chair_1',
+        geometry: nodes.Chair_1.geometry,
+        material: materials.Chair_Red,
+        position: new Vector3(0, -0.3, 0),
+        rotation: undefined,
+        scale: new Vector3(0.6, 0.6, 0.6),
       },
       {
-        key: 'ClothGroup',
-        position: new Vector3(5.323, -69.051, -52.437),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(162.888, 162.888, 162.888),
-        meshes: [
-          { geometry: nodes.Plane_Cloth_0.geometry, material: materials.Cloth },
-          {
-            geometry: nodes.Plane_ClothB_0.geometry,
-            material: materials.ClothB,
-          },
-        ],
+        key: 'Desk_0',
+        geometry: nodes.Desk_0.geometry,
+        material: materials.Desk_Top,
+        position: new Vector3(0, 1, 0),
+        rotation: undefined,
+        scale: undefined,
       },
       {
-        key: 'ComputerGroup',
-        position: new Vector3(136.249, -43.814, -191.086),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(31.477, 31.477, 31.477),
-        meshes: [
-          {
-            geometry: nodes.Cube004_Computer_0.geometry,
-            material: materials.Computer,
-          },
-          {
-            geometry: nodes.Cube004_Mac_0.geometry,
-            material: materials.material_17,
-          },
-          {
-            geometry: nodes.Cube004_Black_0.geometry,
-            material: materials.Black,
-          },
-          {
-            geometry: nodes.Cube004_Keyboard_0.geometry,
-            material: materials.Keyboard,
-          },
-          {
-            geometry: nodes.Cube004_Desktop_0.geometry,
-            material: materials.Desktop,
-          },
-        ],
+        key: 'Desk_1',
+        geometry: nodes.Desk_1.geometry,
+        material: materials.Desk_Structure,
+        position: new Vector3(0, 1, 0),
+        rotation: undefined,
+        scale: undefined,
       },
       {
-        key: 'WardrobeGroup',
-        position: new Vector3(-121.448, -117.042, 168.738),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(35.528, 35.528, 35.528),
-        meshes: [
-          {
-            geometry: nodes.Cube005_Wardrop_0.geometry,
-            material: materials.Wardrop,
-          },
-          {
-            geometry: nodes.Cube005_Table_0.geometry,
-            material: materials.Table,
-          },
-        ],
+        key: 'Icosphere025_0',
+        geometry: nodes.Icosphere025_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.476, -1.688, 3.783),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
       },
       {
-        key: 'VenetianBlindsGroup',
-        position: new Vector3(-153.456, 138.613, -31.457),
-        rotation: new Euler(-Math.PI / 2, 0, Math.PI / 2),
-        scale: new Vector3(291.269, 194.179, 93.206),
-        meshes: [
-          {
-            geometry: nodes.Venetian_slats_Plastic_venetian_material_0.geometry,
-            material: materials.Plastic_venetian_material,
-          },
-          {
-            geometry: nodes.StringL_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(0.352, 0, 0),
-          },
-          {
-            geometry: nodes.StringC_String_material_0.geometry,
-            material: materials.String_material,
-          },
-          {
-            geometry: nodes.StringR_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(-0.352, 0, 0),
-          },
-          {
-            geometry: nodes.StringfL_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(0.352, -0.021, 0),
-          },
-          {
-            geometry: nodes.StringfC_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(0, -0.021, 0),
-          },
-          {
-            geometry: nodes.StringfR_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(-0.352, -0.021, 0),
-          },
-          {
-            geometry: nodes.StringbL_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(0.352, 0.021, 0),
-          },
-          {
-            geometry: nodes.StringbC_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(0, 0.021, 0),
-          },
-          {
-            geometry: nodes.StringbR_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(-0.352, 0.021, 0),
-          },
-          {
-            geometry: nodes.Venetian_base_Plastic_venetian_material_0.geometry,
-            material: materials.Plastic_venetian_material,
-            position: new Vector3(0, 0, -1.59),
-          },
-          {
-            geometry: nodes.VenetianFrame_Plastic_venetian_material_0.geometry,
-            material: materials.Plastic_venetian_material,
-          },
-          {
-            geometry: nodes.Venetian_stick__0.geometry,
-            material: materials['Cube.002__0'],
-            position: new Vector3(-0.47, -0.023, -0.03),
-          },
-          {
-            geometry: nodes.Venetian_updown_String_material_0.geometry,
-            material: materials.String_material,
-            position: new Vector3(0.47, -0.023, -0.03),
-          },
-        ],
+        key: 'Icosphere024_0',
+        geometry: nodes.Icosphere024_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-3.114, -2.977, 4.722),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
       },
       {
-        key: 'LampGroup1',
-        position: new Vector3(-143.294, 64.03, -218.151),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(416.126, 416.126, 416.126),
-        meshes: [
-          {
-            geometry: nodes.Lampstrings_Lampstrings_material_0.geometry,
-            material: materials.Lampstrings_material,
-          },
-          {
-            geometry: nodes.Lamp_B1_Lampstrings_material_0.geometry,
-            material: materials.Lampstrings_material,
-            position: new Vector3(0.021, 0, 0.035),
-          },
-          {
-            geometry: nodes.Lamp_B2_Lampstrings_material_0.geometry,
-            material: materials.Lampstrings_material,
-            position: new Vector3(-0.021, 0, 0.035),
-          },
-          {
-            geometry: nodes.Lampholder_Lampholder_material_0.geometry,
-            material: materials.Lampholder_material,
-          },
-          {
-            geometry: nodes.Lamp_Bulb001_Lamp_Bulb_0.geometry,
-            material: materials.Lamp_Bulb,
-            position: new Vector3(0, 0, 0.091),
-          },
-        ],
+        key: 'Icosphere023_0',
+        geometry: nodes.Icosphere023_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-3.59, -2.151, 4.229),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
       },
       {
-        key: 'LampGroup2',
-        position: new Vector3(223.21, -55.841, -155.996),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(194.179, 194.179, 194.179),
-        meshes: [
-          {
-            geometry: nodes.Lampstrings001_Lampstrings001_material_0.geometry,
-            material: materials['Lampstrings.001_material'],
-          },
-          {
-            geometry: nodes.Lamp_B1001_Lampstrings001_material_0.geometry,
-            material: materials['Lampstrings.001_material'],
-            position: new Vector3(0.021, 0, 0.035),
-          },
-          {
-            geometry: nodes.Lamp_B2001_Lampstrings001_material_0.geometry,
-            material: materials['Lampstrings.001_material'],
-            position: new Vector3(-0.021, 0, 0.035),
-          },
-          {
-            geometry: nodes.Lampholder001_Lampholder001_material_0.geometry,
-            material: materials['Lampholder.001_material'],
-          },
-          {
-            geometry: nodes.Lamp_Bulb_Lamp_Bulb001_0.geometry,
-            material: materials['Lamp_Bulb.001'],
-            position: new Vector3(0, 0, 0.091),
-          },
-        ],
+        key: 'Icosphere022_0',
+        geometry: nodes.Icosphere022_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.571, -1.088, 5.932),
+        rotation: undefined,
+        scale: new Vector3(1.068, 1.068, 0.747),
       },
       {
-        key: 'Table',
-        geometry: nodes.Table_Table_0.geometry,
-        material: materials.Table,
-        position: new Vector3(169.704, -114.937, -229.054),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(8.501, 8.501, 8.501),
+        key: 'Icosphere021_0',
+        geometry: nodes.Icosphere021_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.777, -2.076, 5.6),
+        rotation: undefined,
+        scale: new Vector3(0.817, 0.817, 0.572),
       },
       {
-        key: 'CubeTable',
-        geometry: nodes.Cube001_Table_0.geometry,
-        material: materials.Table,
-        position: new Vector3(171.999, 46.083, -202.247),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(29.376, 29.376, 29.376),
+        key: 'Icosphere020_0',
+        geometry: nodes.Icosphere020_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.562, -0.681, 4.72),
+        rotation: undefined,
+        scale: new Vector3(0.936, 0.936, 0.655),
       },
       {
-        key: 'Cube',
-        geometry: nodes.Cube002__0.geometry,
-        material: materials['Cube.002__0'],
-        position: new Vector3(-118.973, -68.756, -188.596),
-        rotation: new Euler(-Math.PI / 2, 0, 0),
-        scale: new Vector3(23.36, 23.36, 23.36),
+        key: 'Icosphere019_0',
+        geometry: nodes.Icosphere019_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-0.357, -0.921, 5.648),
+        rotation: undefined,
+        scale: new Vector3(0.732, 0.732, 0.512),
       },
       {
-        key: 'Shelves',
-        geometry: nodes.Shelves1_Shelves_material_0.geometry,
-        material: materials.Shelves_material,
-        position: new Vector3(234.614, -101.704, 125.247),
-        rotation: new Euler(-Math.PI / 2, 0, Math.PI / 2),
-        scale: new Vector3(139.794, 139.794, 139.794),
+        key: 'Icosphere018_0',
+        geometry: nodes.Icosphere018_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.389, -1.511, 4.152),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Icosphere017_0',
+        geometry: nodes.Icosphere017_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.125, -1.452, 5.353),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Icosphere016_0',
+        geometry: nodes.Icosphere016_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-0.749, -1.2, 4.561),
+        rotation: undefined,
+        scale: new Vector3(0.766, 0.766, 0.536),
+      },
+      {
+        key: 'Icosphere015_0',
+        geometry: nodes.Icosphere015_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.914, -2.789, 4.402),
+        rotation: undefined,
+        scale: new Vector3(0.936, 0.936, 0.655),
+      },
+      {
+        key: 'Icosphere014_0',
+        geometry: nodes.Icosphere014_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-3.02, -1.375, 5.44),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Icosphere013_0',
+        geometry: nodes.Icosphere013_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.851, -1.974, 4.797),
+        rotation: undefined,
+        scale: new Vector3(0.873, 0.873, 0.611),
+      },
+      {
+        key: 'Icosphere012_0',
+        geometry: nodes.Icosphere012_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.85, -2.021, 3.927),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Icosphere011_0',
+        geometry: nodes.Icosphere011_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-3.194, -1.025, 4.065),
+        rotation: undefined,
+        scale: new Vector3(0.766, 0.766, 0.536),
+      },
+      {
+        key: 'Icosphere010_0',
+        geometry: nodes.Icosphere010_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.624, -3.097, 5.052),
+        rotation: undefined,
+        scale: new Vector3(0.287, 0.287, 0.201),
+      },
+      {
+        key: 'Icosphere009_0',
+        geometry: nodes.Icosphere009_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.681, 0.035, 4.653),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Icosphere008_0',
+        geometry: nodes.Icosphere008_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-0.391, -0.426, 4.392),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Icosphere007_0',
+        geometry: nodes.Icosphere007_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.165, -2.869, 4.892),
+        rotation: undefined,
+        scale: new Vector3(0.766, 0.766, 0.536),
+      },
+      {
+        key: 'Icosphere006_0',
+        geometry: nodes.Icosphere006_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-0.102, -2.278, 4.933),
+        rotation: undefined,
+        scale: new Vector3(0.766, 0.766, 0.536),
+      },
+      {
+        key: 'Icosphere005_0',
+        geometry: nodes.Icosphere005_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.477, -3.038, 5.636),
+        rotation: undefined,
+        scale: new Vector3(0.936, 0.936, 0.655),
+      },
+      {
+        key: 'Icosphere004_0',
+        geometry: nodes.Icosphere004_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.572, -2.143, 5.473),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Icosphere003_0',
+        geometry: nodes.Icosphere003_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-1.375, -0.591, 5.167),
+        rotation: undefined,
+        scale: new Vector3(0.766, 0.766, 0.536),
+      },
+      {
+        key: 'Icosphere002_0',
+        geometry: nodes.Icosphere002_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-3.126, -2.586, 5.09),
+        rotation: undefined,
+        scale: new Vector3(0.287, 0.287, 0.201),
+      },
+      {
+        key: 'Icosphere001_0',
+        geometry: nodes.Icosphere001_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-2.061, -1.077, 3.735),
+        rotation: undefined,
+        scale: new Vector3(0.561, 0.561, 0.392),
+      },
+      {
+        key: 'Icosphere_0',
+        geometry: nodes.Icosphere_0.geometry,
+        material: materials.Leaf,
+        position: new Vector3(-0.925, -1.856, 4.726),
+        rotation: undefined,
+        scale: new Vector3(0.5, 0.5, 0.35),
+      },
+      {
+        key: 'Trunk_0',
+        geometry: nodes.Trunk_0.geometry,
+        material: materials.Wood,
+        position: new Vector3(-2, -2, 0),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'WindowFrame_0',
+        geometry: nodes.WindowFrame_0.geometry,
+        material: materials.WindowBlack,
+        position: new Vector3(-3, -4.25, 1),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'WindowFrame_1',
+        geometry: nodes.WindowFrame_1.geometry,
+        material: materials.WindowWhite,
+        position: new Vector3(-3, -4.25, 1),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'GlassesTop_0',
+        geometry: nodes.GlassesTop_0.geometry,
+        material: materials.Glass,
+        position: new Vector3(0.812, -3.823, 4.694),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'GlassesBottom_0',
+        geometry: nodes.GlassesBottom_0.geometry,
+        material: materials.Glass,
+        position: new Vector3(0.812, -3.823, 1.494),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'Grass_0',
+        geometry: nodes.Grass_0.geometry,
+        material: materials.Grass,
+        position: new Vector3(3.361, -3.517, 0.172),
+        rotation: new Euler(0.244, -0.08, -1.655),
+        scale: new Vector3(0.175, 0.176, 0.242),
+      },
+      {
+        key: 'WallLeft_0',
+        geometry: nodes.WallLeft_0.geometry,
+        material: materials.WallWhite,
+        position: new Vector3(0, -4, 4),
+        rotation: new Euler(-Math.PI / 2, 0, -Math.PI),
+        scale: undefined,
+      },
+      {
+        key: 'WallLeft_1',
+        geometry: nodes.WallLeft_1.geometry,
+        material: materials.WallGray,
+        position: new Vector3(0, -4, 4),
+        rotation: new Euler(-Math.PI / 2, 0, -Math.PI),
+        scale: undefined,
+      },
+      {
+        key: 'WallRight_0',
+        geometry: nodes.WallRight_0.geometry,
+        material: materials.WallWhite,
+        position: new Vector3(-4, 0, 4),
+        rotation: new Euler(Math.PI / 2, Math.PI / 2, 0),
+        scale: undefined,
+      },
+      {
+        key: 'WallRight_1',
+        geometry: nodes.WallRight_1.geometry,
+        material: materials.WallGray,
+        position: new Vector3(-4, 0, 4),
+        rotation: new Euler(Math.PI / 2, Math.PI / 2, 0),
+        scale: undefined,
+      },
+      {
+        key: 'Pillar_Right_0',
+        geometry: nodes.Pillar_Right_0.geometry,
+        material: materials.WallWhite,
+        position: new Vector3(-3.5, 3.5, 1.5),
+        rotation: new Euler(0, 0, -Math.PI / 2),
+        scale: undefined,
+      },
+      {
+        key: 'Pillar_Middle_0',
+        geometry: nodes.Pillar_Middle_0.geometry,
+        material: materials.WallWhite,
+        position: new Vector3(-3.5, -3.5, 1.5),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'Pillar_Left_0',
+        geometry: nodes.Pillar_Left_0.geometry,
+        material: materials.WallWhite,
+        position: new Vector3(3.5, -3.5, 1.5),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'Low_0',
+        geometry: nodes.Low_0.geometry,
+        material: materials.WallGray,
+        position: new Vector3(-3.5, -3.5, 0.5),
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'Floor_0',
+        geometry: nodes.Floor_0.geometry,
+        material: materials.WallDarkGray,
+        position: undefined,
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'Floor_1',
+        geometry: nodes.Floor_1.geometry,
+        material: materials.Soil,
+        position: undefined,
+        rotation: undefined,
+        scale: undefined,
+      },
+      {
+        key: 'Floor_2',
+        geometry: nodes.Floor_2.geometry,
+        material: materials.WallGray,
+        position: undefined,
+        rotation: undefined,
+        scale: undefined,
       },
     ],
     [nodes, materials]
@@ -298,23 +410,21 @@ export default function MyRoomModel4(props: MyRoomModel4Props) {
 
   return (
     <group {...props} dispose={null}>
-      {meshData.map((group) => (
-        <group
-          key={group.key}
-          position={group.position}
-          rotation={group.rotation}
-          scale={group.scale}
-        >
-          {group?.meshes?.map((mesh, index) => (
-            <mesh
-              key={index}
-              geometry={mesh.geometry}
-              material={mesh.material}
-              position={mesh.position}
-            />
-          ))}
-        </group>
-      ))}
+      <group
+        rotation={new Euler(-Math.PI / 2, 0, 0)}
+        scale={new Vector3(0.378, 0.378, 0.378)}
+      >
+        {meshData.map((mesh) => (
+          <mesh
+            key={mesh.key}
+            geometry={mesh.geometry}
+            material={mesh.material}
+            position={mesh.position}
+            rotation={mesh.rotation}
+            scale={mesh.scale}
+          />
+        ))}
+      </group>
     </group>
   )
 }
