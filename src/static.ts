@@ -1,22 +1,30 @@
 export const URL = {
+  main: '/main',
+  notification: '/notification',
+
+  // auth
   login: '/login',
-  lounge: '/lounge',
   terms: '/terms',
   privacy: '/privacy',
-  firstProfile: '/user/first',
-  modifyProfile: '/user/profile',
-  withdraw: '/user/withdraw',
-  main: '/main',
+
+  // users
+  firstProfile: '/users/first',
+  modifyProfile: '/users/profile',
+  withdraw: '/users/withdraw',
   users: '/users',
-  myRoom: '/myRoom',
-  newLounge: '/lounge/new',
-  createMyRoom: '/myRoom/generate',
-  myLounge: '/lounge/my',
-  loungeInvite: '/lounge/invite',
-  objet: '/objet',
-  myRoomObjet: '/myRoom/objet',
   userDetail: '/users/user',
-  notification: '/notification',
+
+  // lounges
+  newLounge: '/lounges/new',
+  lounge: '/lounges',
+  myLounge: '/lounges/my',
+  loungeInvite: '/lounges/invite',
+  objet: '/objets',
+
+  // myRoom
+  createMyRoom: '/myRoom/generate',
+  myRoom: '/myRoom',
+  myRoomObjet: '/myRoom/objets',
 }
 
 export const KAKAO_AUTH = import.meta.env.VITE_KAKAO_AUTH
@@ -24,22 +32,32 @@ export const KAKAO_AUTH = import.meta.env.VITE_KAKAO_AUTH
 export const BACK_HOST = import.meta.env.VITE_BACKHOST
 
 export const APIs = {
+  uploadImage: `${BACK_HOST}/api/v1/uploads/images`,
+  notification: `${BACK_HOST}/api/v1/notification`,
+
+  // auth
   profile: `${BACK_HOST}/api/v1/users/me`,
   reissueToken: `${BACK_HOST}/api/v1/auth/reissue`,
-  loungeList: `${BACK_HOST}/api/v1/lounges`,
-  myRoom: `${BACK_HOST}/api/v1/rooms`,
-  userInfo: `${BACK_HOST}/api/v1/users`,
-  objetPreview: `${BACK_HOST}/api/v1/objets/me`,
-  logout: `${BACK_HOST}/api/v1/auth/logout`,
+
+  // users
   nickname: `${BACK_HOST}/api/v1/users/validate?nickname`,
-  uploadImage: `${BACK_HOST}/api/v1/uploads/images`,
-  modifyProfile: `${BACK_HOST}/api/v1/users/profile`,
-  objet: `${BACK_HOST}/api/v1/objets`,
+  logout: `${BACK_HOST}/api/v1/auth/logout`,
+  userInfo: `${BACK_HOST}/api/v1/users`,
   withdraw: `${BACK_HOST}/api/v1/auth/withdraw`,
+  modifyProfile: `${BACK_HOST}/api/v1/users/profile`,
+  searchUser: `${BACK_HOST}/api/v1/users/search`,
+
+  // lounges
+  loungeList: `${BACK_HOST}/api/v1/lounges`,
+  objet: `${BACK_HOST}/api/v1/objets`,
+  objetPreview: `${BACK_HOST}/api/v1/objets/me`,
   invite: `${BACK_HOST}/api/v1/lounges/invite`,
   poke: `${BACK_HOST}/api/v1/users/poke`,
-  chat: `${BACK_HOST}/api/v1/chat-rooms`,
+
+  // myRoom
+  myRoom: `${BACK_HOST}/api/v1/rooms`,
+
+  // stomp
   stomp: `${import.meta.env.VITE_STOMP_API}`,
-  searchUser: `${BACK_HOST}/api/v1/users/search`,
-  notification: `${BACK_HOST}/api/v1/notification`,
+  chat: `${BACK_HOST}/api/v1/chat-rooms`,
 }
