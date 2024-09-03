@@ -72,7 +72,7 @@ export default function CreateMyRoom() {
         toast.success('마이룸 생성 성공 🪐')
         navigate(URL.myRoom)
       } else {
-        toast.error('마이룸 생성 생성 실패 😭')
+        toast.error('마이룸 생성 실패 😭')
       }
     } catch (error) {
       console.error('마이룸 생성 오류: ', error)

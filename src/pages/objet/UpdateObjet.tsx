@@ -232,7 +232,12 @@ export default function UpdateObjet() {
       setImageErrorMessage('오브제 이미지를 첨부해주세요.')
     }
 
-    if (!isMentionChanged && !isNameChanged && !isDescriptionChanged) {
+    if (
+      !isMentionChanged &&
+      !isNameChanged &&
+      !isDescriptionChanged &&
+      !isImageChanged
+    ) {
       toast.info('변경된 내용이 없습니다.')
       return
     }
