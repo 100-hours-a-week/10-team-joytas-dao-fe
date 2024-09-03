@@ -39,7 +39,7 @@ export const APIs = {
   invite: `${BACK_HOST}/api/v1/lounges/invite`,
   poke: `${BACK_HOST}/api/v1/users/poke`,
   chat: `${BACK_HOST}/api/v1/chat-rooms`,
-  stomp: 'wss://api.joytas.kro.kr',
+  stomp: `${import.meta.env.VITE_STOMP_API}`,
   searchUser: `${BACK_HOST}/api/v1/users/search`,
   notification: `${BACK_HOST}/api/v1/notification`,
 }
