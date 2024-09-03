@@ -116,7 +116,7 @@ export default function ObjetCall() {
           </MicButton> */}
           <CallButton
             onClick={() =>
-              navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`)
+              navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`)
             }
           >
             <Icon src={quitCall} />

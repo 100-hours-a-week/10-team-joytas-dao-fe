@@ -251,7 +251,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
           const objetId = objetResponseData.data.objet_id
 
           toast.success('오브제 생성 성공 🪐')
-          navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
+          navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`, {
             replace: true,
           })
         } catch (error) {

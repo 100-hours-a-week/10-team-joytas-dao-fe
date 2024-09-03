@@ -293,7 +293,7 @@ export default function UpdateObjet() {
       }
 
       toast.success('오브제 수정 성공 🪐')
-      navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`, {
+      navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`, {
         replace: true,
       })
     } catch (error) {
@@ -422,7 +422,7 @@ export default function UpdateObjet() {
           <ChooseContainer>
             <GenerateButton
               onClick={() =>
-                navigate(`${URL.lounge}/${loungeId}/objet/${objetId}`)
+                navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`)
               }
             >
               취소하기

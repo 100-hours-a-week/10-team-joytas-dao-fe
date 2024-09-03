@@ -51,27 +51,30 @@ function App() {
           <Route path={URL.terms} element={<Terms />} />
           <Route path={URL.withdraw} element={<UserDelete />} />
           <Route path={URL.privacy} element={<Privacy />} />
-          <Route path={`${URL.lounge}/:lid/objet/new`} element={<NewObjet />} />
+          <Route
+            path={`${URL.lounge}/:lid/objets/new`}
+            element={<NewObjet />}
+          />
           <Route path={`${URL.lounge}/:lid`} element={<Lounge />} />
           <Route path={URL.firstProfile} element={<FirstProfile />} />
           <Route path={URL.modifyProfile} element={<ModifyProfile />} />
           <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
           <Route path={URL.myRoom} element={<MyRoom />} />
           <Route
-            path={`${URL.lounge}/:lid/objet/:oid/call`}
+            path={`${URL.lounge}/:lid/objets/:oid/call`}
             element={<ObjetCall />}
           />
           <Route
-            path={`${URL.lounge}/:lid/objet/:oid`}
+            path={`${URL.lounge}/:lid/objets/:oid`}
             element={<ObjetDetail />}
           />
           <Route
-            path={`${URL.lounge}/:lid/objet/:oid/update`}
+            path={`${URL.lounge}/:lid/objets/:oid/update`}
             element={<UpdateObjet />}
           />
           <Route path={URL.myRoomObjet} element={<MyRoomObjet />} />
           <Route
-            path={`${URL.lounge}/:lid/objet/:oid/chatting`}
+            path={`${URL.lounge}/:lid/objets/:oid/chatting`}
             element={<ObjetChatting />}
           />
           <Route path={URL.users} element={<UserList />} />
