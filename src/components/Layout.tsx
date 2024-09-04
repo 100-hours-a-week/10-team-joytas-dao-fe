@@ -5,6 +5,7 @@ import { useEffect } from 'react'
 import { useUserInfo } from '../hooks/useInfo'
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill'
 import { APIs } from '../static'
+import useUserStore from '../store/userStore'
 import {
   NotificationProps,
   ConnectNotificationProps,
@@ -24,6 +25,7 @@ export default function Layout({
 }) {
   const { getProfile } = useUserInfo()
 
+  const userId = useUserStore((state) => state.userId)
   const eventSource = EventSourcePolyfill || NativeEventSource
 
   useEffect(() => {
@@ -44,7 +46,7 @@ export default function Layout({
 
       if ('message' in data) {
         return
-      } else if ('notification_id' in data) {
+      } else if ('notification_id' in data && data.sender.user_id !== userId) {
         let message = ''
         if (data.type === 'N0001') {
           message = `${data.sender.nickname}님이 "${data.detail.name}" 오브제에 태그하셨습니다 💫`
