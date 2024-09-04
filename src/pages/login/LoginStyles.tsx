@@ -15,29 +15,48 @@ export const Main = styled.div`
   animation: text-focus-in 1s cubic-bezier(0.55, 0.085, 0.68, 0.53) both;
 `
 
-export const Logo = styled.h2`
-  font-size: 80px;
-  position: absolute;
-  top: 350px;
+export const Logo = styled.div`
   text-shadow: 0px 4px 10px #707070;
+
+  display: flex;
+  flex-direction: column;
   justify-content: center;
+  align-items: center;
   width: fit-content;
-  font-family: 'Shrikhand', serif;
+  gap: 20px;
+
+  position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
-  color: white;
-  font-weight: 900;
 `
 
 export const Mini = styled.div`
-  font-size: 10px;
+  width: 195px;
+  font-size: 14px;
   color: rgba(255, 255, 255, 0.5);
-  font-weight: 400;
+  font-weight: bold;
+  font-family: 'Cormorant', serif;
+  animation:
+    typing 3.5s steps(40, end),
+    blink-caret 0.75s step-end infinite;
+
+  overflow: hidden;
+  border-right: 0.15em solid #575fff;
+  white-space: nowrap;
+  margin: 0 auto;
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 195px;
+    }
+  }
 `
 
 export const LoginButton = styled.button`
-  bottom: 30%;
+  bottom: 20%;
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: #fee500;
