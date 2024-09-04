@@ -43,45 +43,43 @@ function App() {
       <Main>
         <Routes>
           <Route path='/' element={<Navigate to={URL.main} />} />
-
           <Route path={URL.main} element={<Home />} />
+          <Route path={URL.notification} element={<Notification />} />
+
+          {/* auth */}
           <Route path={URL.login} element={<Login />} />
-          <Route path={URL.lounge} element={<LoungeListPage />} />
-          <Route path={URL.newLounge} element={<NewLounge />} />
+          <Route path={URL.privacy} element={<Privacy />} />
           <Route path={URL.terms} element={<Terms />} />
           <Route path={URL.withdraw} element={<UserDelete />} />
-          <Route path={URL.privacy} element={<Privacy />} />
-          <Route
-            path={`${URL.lounge}/:lid/objets/new`}
-            element={<NewObjet />}
-          />
-          <Route path={`${URL.lounge}/:lid`} element={<Lounge />} />
+
+          {/* user */}
           <Route path={URL.firstProfile} element={<FirstProfile />} />
           <Route path={URL.modifyProfile} element={<ModifyProfile />} />
-          <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
-          <Route path={URL.myRoom} element={<MyRoom />} />
+          <Route path={`${URL.userDetail}/:id`} element={<UserDetail />} />
+          <Route path={`${URL.lounge}/:lid/invite`} element={<UserList />} />
+          <Route path={URL.users} element={<UserList />} />
+
+          {/* lounges */}
+          <Route path={URL.lounge} element={<LoungeListPage />} />
+          <Route path={`${URL.lounge}/:lid`} element={<Lounge />} />
+          <Route path={URL.newLounge} element={<NewLounge />} />
+
+          {/* objets */}
+          <Route path={URL.newObjet} element={<NewObjet />} />
+          <Route path={`${URL.objet}/:oid`} element={<ObjetDetail />} />
+          <Route path={`${URL.objet}/:oid/update`} element={<UpdateObjet />} />
           <Route
-            path={`${URL.lounge}/:lid/objets/:oid/call`}
-            element={<ObjetCall />}
-          />
-          <Route
-            path={`${URL.lounge}/:lid/objets/:oid`}
-            element={<ObjetDetail />}
-          />
-          <Route
-            path={`${URL.lounge}/:lid/objets/:oid/update`}
-            element={<UpdateObjet />}
-          />
-          <Route path={URL.myRoomObjet} element={<MyRoomObjet />} />
-          <Route
-            path={`${URL.lounge}/:lid/objets/:oid/chatting`}
+            path={`${URL.objet}/:oid/chatting`}
             element={<ObjetChatting />}
           />
-          <Route path={URL.users} element={<UserList />} />
-          <Route path={`${URL.userDetail}/:id`} element={<UserDetail />} />
-          <Route path={URL.notification} element={<Notification />} />
-          <Route path={`${URL.lounge}/:lid/invite`} element={<UserList />} />
+          <Route path={`${URL.objet}/:oid/call`} element={<ObjetCall />} />
+
+          {/* my room */}
+          <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
+          <Route path={URL.myRoom} element={<MyRoom />} />
+          <Route path={URL.myRoomObjet} element={<MyRoomObjet />} />
         </Routes>
+
         <ToastContainer
           position='top-right'
           autoClose={2000}

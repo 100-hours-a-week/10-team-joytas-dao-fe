@@ -13,7 +13,7 @@ import { CloseCircleOutlined } from '@ant-design/icons'
 import type { MentionsProps } from 'antd'
 import { OptionProps } from 'antd/es/mentions'
 import { APIs, URL } from '../../../static'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import LoadingLottie from '../../../components/lotties/LoadingLottie'
 import useUserStore from '../../../store/userStore'
 import { toast } from 'react-toastify'
@@ -29,7 +29,7 @@ interface SharedMembersProps {
 }
 
 export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
-  const loungeId = useParams().lid || 0
+  const loungeId = localStorage.getItem('loungeId') || 0
   const navigate = useNavigate()
   const userId = useUserStore((state) => state.userId)
 
@@ -251,7 +251,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
           const objetId = objetResponseData.data.objet_id
 
           toast.success('오브제 생성 성공 🪐')
-          navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`, {
+          navigate(`${URL.objet}/${objetId}`, {
             replace: true,
           })
         } catch (error) {
@@ -262,6 +262,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       } finally {
         setIsLoading(false)
         setIsClick(false)
+        localStorage.removeItem('loungeId')
       }
     }
   }
