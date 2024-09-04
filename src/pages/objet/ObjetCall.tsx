@@ -32,9 +32,11 @@ export default function ObjetCall() {
   const navigate = useNavigate()
   // const [muted, setMuted] = useState(false)
   // const [isActive, setIsActive] = useState(false)
-  const { oid: objetId, lid: loungeId } = useParams()
+  const { oid: objetId } = useParams()
+  const [loungeId, setLoungeId] = useState(0)
   const [creator, setCreator] = useState('')
   const [name, setName] = useState('')
+  const [loading, setLoading] = useState(true)
 
   const fetchData = async () => {
     try {
@@ -49,11 +51,15 @@ export default function ObjetCall() {
 
       if (response.ok) {
         const data = await response.json()
+
         setCreator(data.data.nickname)
         setName(data.data.name)
+        setLoungeId(data.data.lounge_id)
       }
     } catch (error) {
       console.error('오브제 정보 가져오기 실패: ', error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -101,12 +107,13 @@ export default function ObjetCall() {
             </Avatar.Group> */}
           </RightContainer>
         </TopContainer>
-        <MiddleContainer>
-          <VideoContainer
-            objetId={Number(objetId)}
-            loungeId={Number(loungeId)}
-          />
-        </MiddleContainer>
+
+        {!loading && loungeId !== 0 && (
+          <MiddleContainer>
+            <VideoContainer objetId={Number(objetId)} loungeId={loungeId} />
+          </MiddleContainer>
+        )}
+
         <BottomContainer>
           {/* <MicButton>
             <Icon
@@ -114,11 +121,7 @@ export default function ObjetCall() {
               onClick={() => setMuted(!muted)}
             />
           </MicButton> */}
-          <CallButton
-            onClick={() =>
-              navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`)
-            }
-          >
+          <CallButton onClick={() => navigate(`${URL.objet}/${objetId}`)}>
             <Icon src={quitCall} />
           </CallButton>
         </BottomContainer>

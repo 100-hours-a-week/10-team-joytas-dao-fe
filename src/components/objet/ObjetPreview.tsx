@@ -37,7 +37,6 @@ export default function ObjetPreview({
             title={objet.name}
             description={objet.description}
             key={index}
-            loungeId={objet.lounge_id}
             objetId={objet.objet_id}
           />
         )
@@ -50,21 +49,17 @@ function Objet({
   image,
   title,
   description,
-  loungeId,
   objetId,
 }: {
   image: string
   title: string
   description: string
-  loungeId: number
   objetId: number
 }) {
   const navigate = useNavigate()
 
   return (
-    <ObjetContainer
-      onClick={() => navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`)}
-    >
+    <ObjetContainer onClick={() => navigate(`${URL.objet}/${objetId}`)}>
       <ObjetImage src={image} alt={title} />
       <ObjetContent>
         <ObjetTitle>{title}</ObjetTitle>

@@ -19,7 +19,10 @@ export const URL = {
   lounge: '/lounges',
   myLounge: '/lounges/my',
   loungeInvite: '/lounges/invite',
+
+  // objets
   objet: '/objets',
+  newObjet: '/objets/new',
 
   // myRoom
   createMyRoom: '/myRoom/generate',

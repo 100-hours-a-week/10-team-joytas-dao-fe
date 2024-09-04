@@ -39,7 +39,7 @@ interface SharedMembersProps {
 }
 
 export default function UpdateObjet() {
-  const loungeId = useParams().lid
+  const [loungeId, setLoungeId] = useState(0)
   const objetId = useParams().oid
   const navigate = useNavigate()
   const userId = useUserStore((state) => state.userId)
@@ -86,6 +86,8 @@ export default function UpdateObjet() {
 
       if (response.ok) {
         const data = await response.json()
+
+        setLoungeId(data.data.lounge_id)
 
         setName(data.data.name)
         setDescription(data.data.description)
@@ -298,7 +300,7 @@ export default function UpdateObjet() {
       }
 
       toast.success('오브제 수정 성공 🪐')
-      navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`, {
+      navigate(`${URL.objet}/${objetId}`, {
         replace: true,
       })
     } catch (error) {
@@ -425,11 +427,7 @@ export default function UpdateObjet() {
           />
 
           <ChooseContainer>
-            <GenerateButton
-              onClick={() =>
-                navigate(`${URL.lounge}/${loungeId}/objets/${objetId}`)
-              }
-            >
+            <GenerateButton onClick={() => navigate(`${URL.objet}/${objetId}`)}>
               취소하기
             </GenerateButton>
             <GenerateButton disabled={isClick} onClick={handleUpdateObjet}>
