@@ -1,12 +1,13 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import io from 'socket.io-client'
-import Video from './Video'
 import useUserStore from '../../store/userStore'
-import { Container, UserLabel, MyVideo } from './VideoStyles'
+import { Container, UserLabel, MyAudio, ProfileImage } from './VideoStyles'
+import Video from './Video'
 
 interface WebRTCUser {
   socket_id: string
   nickname: string
+  profile_image: string
   stream: MediaStream
 }
 
@@ -41,11 +42,9 @@ const VideoContainer = ({
 }) => {
   const socketRef = useRef<SocketIOClient.Socket>()
   const pcsRef = useRef<{ [socketId: string]: RTCPeerConnection }>({})
-  const localVideoRef = useRef<HTMLVideoElement>(null)
+  const localAudioRef = useRef<HTMLAudioElement>(null)
   const localStreamRef = useRef<MediaStream>()
   const [users, setUsers] = useState<WebRTCUser[]>([])
-
-  if (localVideoRef.current) localVideoRef.current.volume = 0
 
   const token = localStorage.getItem('access_token')
   const nickname = useUserStore((state) => state.nickname)
@@ -56,14 +55,11 @@ const VideoContainer = ({
     try {
       const localStream = await navigator.mediaDevices.getUserMedia({
         audio: true,
-        video: {
-          width: 120,
-          height: 120,
-        },
+        video: false,
       })
       localStreamRef.current = localStream
 
-      if (localVideoRef.current) localVideoRef.current.srcObject = localStream
+      if (localAudioRef.current) localAudioRef.current.srcObject = localStream
       if (!socketRef.current?.connected) {
         return
       }
@@ -77,10 +73,10 @@ const VideoContainer = ({
     } catch (e) {
       console.error(`getUserMedia error: ${e}`)
     }
-  }, [])
+  }, [objetId, nickname, profile_image, user_id])
 
   const createPeerConnection = useCallback(
-    (socketID: string, nickname: string) => {
+    (socketID: string, nickname: string, profile_image: string) => {
       try {
         const pc = new RTCPeerConnection(pc_config)
 
@@ -100,6 +96,7 @@ const VideoContainer = ({
               .concat({
                 socket_id: socketID,
                 nickname,
+                profile_image,
                 stream: e.streams[0],
               })
           )
@@ -107,13 +104,13 @@ const VideoContainer = ({
 
         if (localStreamRef.current) {
           localStreamRef.current.getTracks().forEach((track) => {
-            if (!localStreamRef.current) return
-            pc.addTrack(track, localStreamRef.current)
+            if (localStreamRef.current) {
+              pc.addTrack(track, localStreamRef.current)
+            }
           })
         } else {
           console.error('no local stream')
         }
-
         return pc
       } catch (e) {
         console.error(e)
@@ -141,16 +138,26 @@ const VideoContainer = ({
 
     socketRef.current.on(
       'all_users',
-      (allUsers: Array<{ socket_id: string; nickname: string }>) => {
+      (
+        allUsers: Array<{
+          profile_image: string
+          socket_id: string
+          nickname: string
+        }>
+      ) => {
         allUsers.forEach(async (user) => {
           if (!localStreamRef.current) return
-          const pc = createPeerConnection(user.socket_id, user.nickname)
+          const pc = createPeerConnection(
+            user.socket_id,
+            user.nickname,
+            user.profile_image
+          )
           if (!(pc && socketRef.current)) return
           pcsRef.current = { ...pcsRef.current, [user.socket_id]: pc }
           try {
             const localSdp = await pc.createOffer({
               offerToReceiveAudio: true,
-              offerToReceiveVideo: true,
+              offerToReceiveVideo: false,
             })
             await pc.setLocalDescription(new RTCSessionDescription(localSdp))
             socketRef.current.emit('offer', {
@@ -175,13 +182,17 @@ const VideoContainer = ({
       }) => {
         const { sdp, offerSendID, offerSendNickname } = data
         if (!localStreamRef.current) return
-        const pc = createPeerConnection(offerSendID, offerSendNickname)
+        const pc = createPeerConnection(
+          offerSendID,
+          offerSendNickname,
+          profile_image
+        )
         if (!(pc && socketRef.current)) return
         pcsRef.current = { ...pcsRef.current, [offerSendID]: pc }
         try {
           await pc.setRemoteDescription(new RTCSessionDescription(sdp))
           const localSdp = await pc.createAnswer({
-            offerToReceiveVideo: true,
+            offerToReceiveVideo: false,
             offerToReceiveAudio: true,
           })
           await pc.setLocalDescription(new RTCSessionDescription(localSdp))
@@ -249,13 +260,21 @@ const VideoContainer = ({
     <>
       {/*본인*/}
       <Container>
-        <MyVideo muted ref={localVideoRef} autoPlay />
+        <ProfileImage src={profile_image} />
+        <MyAudio muted={false} ref={localAudioRef} autoPlay />
         <UserLabel>{nickname}</UserLabel>
       </Container>
 
       {/*다른 사용자*/}
       {users.map((user, index) => (
-        <Video key={index} nickname={user.nickname} stream={user.stream} />
+        <Container key={index}>
+          <Video
+            profileImage={user.profile_image}
+            nickname={user.nickname}
+            stream={user.stream}
+            muted={false}
+          />
+        </Container>
       ))}
     </>
   )

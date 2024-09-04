@@ -4,7 +4,7 @@ export const Container = styled.div`
   position: relative;
   display: inline-block;
   width: 90px;
-  height: 9px;
+  height: 90px;
 
   @media (min-width: 500px) {
     width: 120px;
@@ -12,11 +12,27 @@ export const Container = styled.div`
   }
 `
 
-export const VideoContainer = styled.video`
+export const ProfileImage = styled.img`
+  position: absolute;
   width: 90px;
   height: 90px;
+  margin: 0 auto;
   border-radius: 100%;
+  object-fit: cover;
+  z-index: 10;
+  background-color: white;
+  @media (min-width: 500px) {
+    width: 120px;
+    height: 120px;
+  }
+`
+
+export const AudioContainer = styled.audio`
+  width: 90px;
+  border-radius: 100%;
+  height: 90px;
   background-color: black;
+  position: absolute;
 
   @media (min-width: 500px) {
     width: 120px;
@@ -26,14 +42,18 @@ export const VideoContainer = styled.video`
 
 export const UserLabel = styled.p`
   width: 100%;
-  margin-top: 10px;
+  margin-top: 100px;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 12px;
+  @media (min-width: 500px) {
+    margin-top: 140px;
+    font-size: 14px;
+  }
 `
 
-export const MyVideo = styled.video`
+export const MyAudio = styled.audio`
   width: 90px;
   height: 90px;
   border-radius: 100%;
