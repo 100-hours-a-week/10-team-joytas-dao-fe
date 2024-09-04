@@ -82,15 +82,13 @@ export default function LoungeContainer() {
         >
           <ambientLight intensity={1} />
           <group position={[0, 0, 0]}>
-            <Suspense fallback={<LoadingLottie />}>
-              <Model
-                type='L0004'
-                position={new Vector3(0, 0, 0)}
-                label='새 라운지 만들기'
-                scale={[2, 2, 2]}
-                onClick={() => navigate(URL.newLounge)}
-              />
-            </Suspense>
+            <Model
+              type='L0004'
+              position={new Vector3(0, 0, 0)}
+              label='새 라운지 만들기'
+              scale={[2, 2, 2]}
+              onClick={() => navigate(URL.newLounge)}
+            />
           </group>
           <Text position={[0, -3, 0]} fontSize={0.7} color='#FFFFFF'>
             새 라운지 만들기

@@ -84,18 +84,15 @@ export default function ObjetModels({
   return (
     <group ref={groupRef}>
       {models.map(({ ModelComponent, mesh, nameText }, index) => (
-        <>
-          <mesh
-            key={index}
-            position={mesh.position}
-            rotation={mesh.rotation}
-            scale={mesh.scale}
-            onClick={mesh.userData.onClick}
-          >
-            <ModelComponent />
-            {nameText}
-          </mesh>
-        </>
+        <mesh
+          key={index}
+          position={mesh.position}
+          scale={mesh.scale}
+          onClick={mesh.userData.onClick}
+        >
+          <ModelComponent />
+          {nameText}
+        </mesh>
       ))}
     </group>
   )
