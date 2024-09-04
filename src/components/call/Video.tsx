@@ -1,13 +1,19 @@
 import { useEffect, useRef, useState } from 'react'
-import { Container, VideoContainer, UserLabel } from './VideoStyles'
+import {
+  Container,
+  AudioContainer,
+  UserLabel,
+  ProfileImage,
+} from './VideoStyles'
 
 interface Props {
   nickname: string
   stream: MediaStream
   muted?: boolean
+  profileImage: string
 }
 
-const Video = ({ nickname, stream, muted }: Props) => {
+const Video = ({ profileImage, nickname, stream, muted }: Props) => {
   const ref = useRef<HTMLVideoElement>(null)
   const [isMuted, setIsMuted] = useState<boolean>(false)
 
@@ -18,7 +24,8 @@ const Video = ({ nickname, stream, muted }: Props) => {
 
   return (
     <Container>
-      <VideoContainer ref={ref} muted={isMuted} autoPlay controls />
+      <ProfileImage src={profileImage} />
+      <AudioContainer ref={ref} muted={isMuted} autoPlay controls />
       <UserLabel>{nickname}</UserLabel>
     </Container>
   )
