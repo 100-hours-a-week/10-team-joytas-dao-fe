@@ -30,7 +30,13 @@ export default function Footer() {
         <IconText>홈</IconText>
       </IconDiv>
       <IconDiv onClick={() => handleClickFooter(URL.lounge)}>
-        <IconImg src={pathname.includes('lounge') ? rocketPurple : rocket} />
+        <IconImg
+          src={
+            pathname.includes('lounge') || pathname.includes('objets')
+              ? rocketPurple
+              : rocket
+          }
+        />
         <IconText>라운지</IconText>
       </IconDiv>
       <IconDiv onClick={() => handleClickFooter(URL.users)}>
