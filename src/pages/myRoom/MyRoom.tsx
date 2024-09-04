@@ -19,7 +19,11 @@ import editIcon from '../../assets/images/edit.webp'
 import closeIcon from '../../assets/images/close.webp'
 import checkIcon from '../../assets/images/check.webp'
 import { useEffect, useRef, useState } from 'react'
-import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
+import {
+  modelList,
+  MyRoomModel,
+  roomConfigs,
+} from '../../global/myRoomModels.js'
 import { GloablContainer16 } from '../../global/globalStyles.tsx'
 import { Group } from 'three'
 import { useNavigate } from 'react-router-dom'
@@ -103,9 +107,9 @@ export default function MyRoom() {
       })
 
       if (!response.ok) {
-        toast.error('마이룸 수정 실패 😭')
+        toast.error('마이룸 이름 수정 실패 😭')
       }
-      toast.success('마이룸 수정 성공 🪐')
+      toast.success('마이룸 이름 수정 성공 🪐')
       setMyRoomName(myRoomNameForChange)
     } catch (error) {
       console.error('마이룸 이름 수정 오류: ', error)
@@ -174,14 +178,22 @@ export default function MyRoom() {
           ) : (
             <Canvas
               frameloop='demand'
-              camera={{ position: myRoomModel.camera }}
+              camera={{
+                position: roomConfigs[myRoomModel.type].cameraPosition,
+              }}
             >
               <OrbitControls
                 target={myRoomModel.targetOrbit}
                 enableZoom={false}
               />
               <ambientLight intensity={1} />
-              <group rotation-y={-Math.PI / 2}>{myRoomModel.model}</group>
+              <group
+                rotation-y={roomConfigs[myRoomModel.type].rotationY}
+                position={roomConfigs[myRoomModel.type].position}
+                scale={roomConfigs[myRoomModel.type].scale}
+              >
+                {myRoomModel.model}
+              </group>
             </Canvas>
           )}
         </MyRoomPreviewWrapper>
@@ -190,10 +202,7 @@ export default function MyRoom() {
           {isLoading ? (
             <LoadingLottie />
           ) : (
-            <Canvas
-              frameloop='demand'
-              camera={{ position: [0, 0, 4], fov: 50 }}
-            >
+            <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
               <OrbitControls enableZoom={false} />
               <ambientLight intensity={1} />
               <RenderObjet />

@@ -17,7 +17,7 @@ export default function MyRoomModel5(props: MyRoomModel4Props) {
         geometry: nodes.Chair001_0.geometry,
         material: materials.Chair,
         position: new Vector3(0.076, 2.629, 0),
-        rotation: undefined,
+        rotation: new Euler(0, 0, -Math.PI / 2 + 100),
         scale: new Vector3(0.6, 0.6, 0.6),
       },
       {
@@ -25,7 +25,7 @@ export default function MyRoomModel5(props: MyRoomModel4Props) {
         geometry: nodes.Chair001_1.geometry,
         material: materials.Chair_Red,
         position: new Vector3(0.076, 2.629, 0),
-        rotation: undefined,
+        rotation: new Euler(0, 0, -Math.PI / 2 + 100),
         scale: new Vector3(0.6, 0.6, 0.6),
       },
       {

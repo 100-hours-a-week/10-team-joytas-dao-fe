@@ -5,6 +5,7 @@ import myRoomThumbnail2 from '../assets/images/myRoom_thumnails/myRoomModel2.web
 import myRoomThumbnail3 from '../assets/images/myRoom_thumnails/myRoomModel3.webp'
 import myRoomThumbnail4 from '../assets/images/myRoom_thumnails/myRoomModel4.webp'
 import myRoomThumbnail5 from '../assets/images/myRoom_thumnails/myRoomModel5.webp'
+import { Vector3 } from 'three'
 
 const MyRoomModel1 = lazy(() => import('../assets/models/MyRoomModel1'))
 const MyRoomModel2 = lazy(() => import('../assets/models/MyRoomModel2'))
@@ -67,3 +68,36 @@ export const modelList: MyRoomModel[] = [
     ),
   },
 ]
+
+export const roomConfigs = {
+  R0001: {
+    cameraPosition: new Vector3(40, 20, 50),
+    rotationY: -Math.PI / 2,
+    position: new Vector3(0, 0, 0),
+    scale: new Vector3(1, 1, 1),
+  },
+  R0002: {
+    cameraPosition: new Vector3(50, 20, 50),
+    rotationY: -Math.PI / 2,
+    position: new Vector3(0, 0, 0),
+    scale: new Vector3(1, 1, 1),
+  },
+  R0003: {
+    cameraPosition: new Vector3(-65, 30, 20),
+    rotationY: Math.PI + 100,
+    position: new Vector3(0, -10, 0),
+    scale: new Vector3(1.2, 1.2, 1.2),
+  },
+  R0004: {
+    cameraPosition: new Vector3(-45, 25, 10),
+    rotationY: -Math.PI + 100,
+    position: new Vector3(0, 0, 0),
+    scale: new Vector3(0.8, 0.8, 0.8),
+  },
+  R0005: {
+    cameraPosition: new Vector3(-60, 40, 20),
+    rotationY: -Math.PI + 100,
+    position: new Vector3(0, -15, 0),
+    scale: new Vector3(1.3, 1.3, 1.3),
+  },
+}
