@@ -8,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { URL } from '../../static'
 import type { ObjetsProps, Objet } from '../../types/ModelType'
 import ObjetModels from './ObjetModels'
+import { toast } from 'react-toastify'
 
 function LoungeCanvas({ objets }: { objets?: Objet[] }) {
   const navigate = useNavigate()
@@ -90,8 +91,13 @@ export default function LoungeObjets({ objets, loungeId }: ObjetsProps) {
   const navigate = useNavigate()
 
   const handleClickGoObjet = () => {
-    localStorage.setItem('loungeId', loungeId.toString())
-    navigate(URL.newObjet)
+    if (loungeId === 0) {
+      toast.info('라운지를 선택 후 오브제를 생성해주세요 🙂')
+      navigate(URL.lounge)
+    } else {
+      localStorage.setItem('loungeId', loungeId.toString())
+      navigate(URL.newObjet)
+    }
   }
 
   if (!objets || objets.length === 0) {

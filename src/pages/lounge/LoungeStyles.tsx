@@ -141,6 +141,7 @@ export const LoungeTitle = styled.div`
 `
 
 export const Objets = styled.div`
+  display: flex;
   margin-top: 30px;
   width: 100%;
   height: calc(100% - 150px);
