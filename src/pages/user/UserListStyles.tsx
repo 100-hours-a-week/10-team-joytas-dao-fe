@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 
-export const SearchTitle = styled.div<{ type: 'lounge' | 'users' }>`
+export const SearchTitle = styled.div<{ type: 'lounges' | 'users' }>`
   padding-top: 50px;
-  font-size: ${(props) => (props.type === 'lounge' ? '20px' : '12px')};
-  font-weight: ${(props) => (props.type === 'lounge' ? 'bold' : 'regular')};
+  font-size: ${(props) => (props.type === 'lounges' ? '18px' : '12px')};
+  font-weight: ${(props) => (props.type === 'lounges' ? 'bold' : 'regular')};
 `
 
 export const SearchUserInput = styled.input`
