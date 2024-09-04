@@ -19,14 +19,16 @@ export default function ObjetModel3(props: GroupProps) {
 
   return (
     <group {...props} dispose={null}>
-      <group rotation={[-2.384, 0.785, -0.702]}>
+      <group>
         <mesh
           geometry={nodes.Object_2.geometry}
           material={materials.material_0}
+          scale={0.02}
         />
         <mesh
           geometry={nodes.Object_3.geometry}
           material={materials.material_0}
+          scale={0.02}
         />
       </group>
     </group>

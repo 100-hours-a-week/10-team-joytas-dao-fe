@@ -18,12 +18,11 @@ export default function ObjetModel2(props: GroupProps) {
 
   return (
     <group {...props} dispose={null}>
-      <group scale={0.01}>
+      <group>
         <mesh
+          scale={0.3}
           geometry={nodes.Meteorite_Meteorite_Shader_Proxy_0.geometry}
           material={materials.Meteorite_Shader_Proxy}
-          rotation={[-Math.PI / 2, 0, 0]}
-          scale={100}
         />
       </group>
     </group>
