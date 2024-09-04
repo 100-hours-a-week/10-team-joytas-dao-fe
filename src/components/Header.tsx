@@ -4,14 +4,17 @@ import {
   LogoImage,
   HeaderRight,
   HamburgerIcon,
+  LogoWrapper,
 } from './LayoutStyles'
-import logo from '../assets/images/logo.webp'
+import rocket from '../assets/lotties/rocket.json'
+import logo from '../assets/images/DAO.webp'
 import bell from '../assets/images/bell.webp'
 import { useNavigate } from 'react-router-dom'
 import { URL } from '../static'
 import { useState } from 'react'
 import Menu from './Menu'
 import { Squash as Hamburger } from 'hamburger-react'
+import Lottie from 'lottie-react'
 
 export default function Header() {
   const navigate = useNavigate()
@@ -20,7 +23,15 @@ export default function Header() {
   return (
     <>
       <HeaderContainer>
-        <LogoImage onClick={() => navigate(URL.main)} src={logo} />
+        <LogoWrapper onClick={() => navigate(URL.main)}>
+          <Lottie
+            animationData={rocket}
+            loop={true}
+            autoplay={true}
+            style={{ width: 40, height: 40 }}
+          />
+          <LogoImage src={logo} />
+        </LogoWrapper>
         <HeaderRight>
           <Icon src={bell} onClick={() => navigate(URL.notification)} />
           <HamburgerIcon>
