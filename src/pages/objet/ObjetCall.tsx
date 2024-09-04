@@ -6,8 +6,8 @@ import {
   MiddleContainer,
   BottomContainer,
 } from './ObjetCallStyles'
-import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
-import { Avatar } from 'antd'
+// import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
+// import { Avatar } from 'antd'
 // import mute from '../../assets/images/mute.webp'
 // import unmute from '../../assets/images/unmute.webp'
 import quitCall from '../../assets/images/quitCall.webp'
@@ -20,8 +20,8 @@ import {
   CallTitle,
   CallSubTitle,
   ObjetMaker,
-  ObjetActive,
-  Active,
+  // ObjetActive,
+  // Active,
   Name,
 } from './ObjetStyles'
 import VideoContainer from '../../components/call/VideoContainer'
@@ -31,7 +31,7 @@ import { APIs, URL } from '../../static'
 export default function ObjetCall() {
   const navigate = useNavigate()
   // const [muted, setMuted] = useState(false)
-  const [isActive, setIsActive] = useState(false)
+  // const [isActive, setIsActive] = useState(false)
   const { oid: objetId, lid: loungeId } = useParams()
   const [creator, setCreator] = useState('')
   const [name, setName] = useState('')
@@ -62,9 +62,9 @@ export default function ObjetCall() {
   }, [])
 
   // TODO: delete me
-  useEffect(() => {
-    setIsActive(true)
-  }, [])
+  // useEffect(() => {
+  //   setIsActive(true)
+  // }, [])
 
   return (
     <Layout>
@@ -76,13 +76,13 @@ export default function ObjetCall() {
               <ObjetMaker>
                 만든이 <Name>{creator}</Name>
               </ObjetMaker>
-              <ObjetActive>
+              {/* <ObjetActive>
                 실시간 <Active $isActive={isActive} />
-              </ObjetActive>
+              </ObjetActive> */}
             </CallSubTitle>
           </LeftContainer>
           <RightContainer>
-            <Avatar.Group
+            {/* <Avatar.Group
               max={{
                 count: 3,
                 style: { color: '#f56a00', backgroundColor: '#fde3cf' },
@@ -98,7 +98,7 @@ export default function ObjetCall() {
                 style={{ backgroundColor: '#1677ff' }}
                 icon={<AntDesignOutlined />}
               />
-            </Avatar.Group>
+            </Avatar.Group> */}
           </RightContainer>
         </TopContainer>
         <MiddleContainer>

@@ -1,4 +1,4 @@
-import { Avatar } from 'antd'
+// import { Avatar } from 'antd'
 import Layout from '../../components/Layout'
 import { GloablContainer16 } from '../../global/globalStyles'
 import {
@@ -8,8 +8,8 @@ import {
   CallTitle,
   CallSubTitle,
   ObjetMaker,
-  ObjetActive,
-  Active,
+  // ObjetActive,
+  // Active,
   Name,
   ObjetDetailContainer,
   ObjetImg,
@@ -23,7 +23,7 @@ import {
   Divider,
   NoChatting,
 } from './ObjetStyles'
-import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
+// import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import MenuImg from '../../assets/images/menu.webp'
 import GoCommunityBtn from '../../components/objet/GoCommunityBtn'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -63,7 +63,7 @@ export default function ObjetDetail() {
 
   const [messagePreviews, setMessagePreviews] = useState<Message[]>([])
   const [callingPeople, setCallingPeople] = useState(0)
-  const [isActive, setIsActive] = useState(false)
+  // const [isActive, setIsActive] = useState(false)
   const [creatorId, setCreatorId] = useState(0)
 
   const setChatToken = useObjetStore((state) => state.setChatToken)
@@ -124,7 +124,7 @@ export default function ObjetDetail() {
       setDescription(data.data.description)
       setImageUrl(data.data.objet_image)
       setCallingPeople(data.data.calling_user_num)
-      setIsActive(data.data.is_active)
+      // setIsActive(data.data.is_active)
       setCreatorId(data.data.user_id)
 
       setObjetName(data.data.name)
@@ -231,13 +231,13 @@ export default function ObjetDetail() {
                 <ObjetMaker>
                   만든이 <Name>{creator}</Name>
                 </ObjetMaker>
-                <ObjetActive>
+                {/* <ObjetActive>
                   실시간 <Active $isActive={isActive} />
-                </ObjetActive>
+                </ObjetActive> */}
               </CallSubTitle>
             </LeftContainer>
             <RightContainer>
-              <Avatar.Group
+              {/* <Avatar.Group
                 max={{
                   count: 3,
                   style: { color: '#f56a00', backgroundColor: '#fde3cf' },
@@ -253,7 +253,7 @@ export default function ObjetDetail() {
                   style={{ backgroundColor: '#1677ff' }}
                   icon={<AntDesignOutlined />}
                 />
-              </Avatar.Group>
+              </Avatar.Group> */}
 
               {loggedInUserId === creatorId && (
                 <>
