@@ -18,11 +18,7 @@ export default function ObjetModel1(props: GroupProps) {
 
   return (
     <group {...props} dispose={null}>
-      <mesh
-        geometry={nodes.Object_2.geometry}
-        material={materials.mat0}
-        rotation={[-Math.PI / 2, 0, 0]}
-      />
+      <mesh geometry={nodes.Object_2.geometry} material={materials.mat0} />
     </group>
   )
 }
