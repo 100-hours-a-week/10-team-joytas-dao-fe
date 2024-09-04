@@ -14,21 +14,24 @@ export const HeaderContainer = styled.div`
   height: 50px;
   position: relative;
   top: 0px;
-  padding-left: 32px;
+  padding-left: 20px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   @media (min-width: 600px) {
     height: 70px;
   }
 `
 
+export const LogoWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  gap: 3px;
+`
+
 export const LogoImage = styled.img`
-  width: 40px;
-  height: 18px;
+  width: 60px;
+  height: 20px;
   cursor: pointer;
-  @media (min-width: 600px) {
-    width: 50px;
-    height: 22px;
-  }
 `
 
 export const HeaderRight = styled.div`
