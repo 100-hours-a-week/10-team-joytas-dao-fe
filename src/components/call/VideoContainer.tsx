@@ -90,8 +90,8 @@ const VideoContainer = ({
         }
 
         pc.ontrack = (e) => {
-          setUsers((oldUsers) =>
-            oldUsers
+          setUsers((oldUsers) => {
+            return oldUsers
               .filter((user) => user.socket_id !== socketID)
               .concat({
                 socket_id: socketID,
@@ -99,7 +99,7 @@ const VideoContainer = ({
                 profile_image,
                 stream: e.streams[0],
               })
-          )
+          })
         }
 
         if (localStreamRef.current) {
@@ -165,6 +165,7 @@ const VideoContainer = ({
               offerSendID: socketRef.current.id,
               offerSendNickname: nickname,
               offerReceiveID: user.socket_id,
+              offerSendProfileImage: user.profile_image,
             })
           } catch (e) {
             console.error(e)
@@ -179,13 +180,15 @@ const VideoContainer = ({
         sdp: RTCSessionDescription
         offerSendID: string
         offerSendNickname: string
+        offerSendProfileImage: string
       }) => {
-        const { sdp, offerSendID, offerSendNickname } = data
+        const { sdp, offerSendID, offerSendNickname, offerSendProfileImage } =
+          data
         if (!localStreamRef.current) return
         const pc = createPeerConnection(
           offerSendID,
           offerSendNickname,
-          profile_image
+          offerSendProfileImage
         )
         if (!(pc && socketRef.current)) return
         pcsRef.current = { ...pcsRef.current, [offerSendID]: pc }
