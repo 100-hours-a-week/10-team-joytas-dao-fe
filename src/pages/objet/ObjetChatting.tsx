@@ -1,7 +1,6 @@
 import Layout from '../../components/Layout'
 import { GloablContainer16 } from '../../global/globalStyles'
 import {
-  Active,
   CallSubTitle,
   CallTitle,
   ChatContainer,
@@ -12,7 +11,8 @@ import {
   Icon,
   LeftContainer,
   Name,
-  ObjetActive,
+  // Active,
+  // ObjetActive,
   ObjetMaker,
   RightContainer,
   TopContainer,
@@ -43,7 +43,7 @@ interface Message {
 
 export default function ObjetChatting() {
   const navigate = useNavigate()
-  const [isActive, setIsActive] = useState(false)
+  // const [isActive, setIsActive] = useState(false)
   const [messageInput, setMessageInput] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
 
@@ -61,7 +61,7 @@ export default function ObjetChatting() {
 
       if (chatToken) {
         connectToRoom(userId, userNickname, chatToken, handleIncomingMessage)
-        setIsActive(true)
+        // setIsActive(true)
       }
     }
 
@@ -132,9 +132,9 @@ export default function ObjetChatting() {
               <ObjetMaker>
                 만든이 <Name>{creatorNickname}</Name>
               </ObjetMaker>
-              <ObjetActive>
+              {/* <ObjetActive>
                 실시간 <Active $isActive={isActive} />
-              </ObjetActive>
+              </ObjetActive> */}
             </CallSubTitle>
           </LeftContainer>
           <RightContainer>
