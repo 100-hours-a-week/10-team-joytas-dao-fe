@@ -8,6 +8,7 @@ export const MiddleContainer = styled.div`
   grid-template-columns: repeat(3, 90px);
   grid-template-rows: repeat(3, 120px);
   justify-content: center;
+  align-items: center;
   grid-gap: 27px;
 
   @media (min-width: 500px) {
