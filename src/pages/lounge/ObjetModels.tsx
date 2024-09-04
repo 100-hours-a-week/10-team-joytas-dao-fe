@@ -40,8 +40,8 @@ export default function ObjetModels({
 
       const scaleMap: { [key: string]: number } = {
         O0001: 2,
-        O0002: 0.5,
-        O0003: 0.258,
+        O0002: 2,
+        O0003: 2,
       }
 
       mesh.scale.setScalar(scaleMap[objet.type] || 1)
@@ -61,7 +61,7 @@ export default function ObjetModels({
 
       const nameText = (
         <Text
-          position={[0, -1, 0]} // 바운딩 박스를 기준으로 텍스트 위치 조정
+          position={[0, -1, 0]}
           fontSize={0.5}
           fontWeight={600}
           color='#FFFFFF'
@@ -84,16 +84,18 @@ export default function ObjetModels({
   return (
     <group ref={groupRef}>
       {models.map(({ ModelComponent, mesh, nameText }, index) => (
-        <mesh
-          key={index}
-          position={mesh.position}
-          rotation={mesh.rotation}
-          scale={mesh.scale}
-          onClick={mesh.userData.onClick}
-        >
-          <ModelComponent />
-          {nameText}
-        </mesh>
+        <>
+          <mesh
+            key={index}
+            position={mesh.position}
+            rotation={mesh.rotation}
+            scale={mesh.scale}
+            onClick={mesh.userData.onClick}
+          >
+            <ModelComponent />
+            {nameText}
+          </mesh>
+        </>
       ))}
     </group>
   )

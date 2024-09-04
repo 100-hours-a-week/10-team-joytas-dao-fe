@@ -101,7 +101,7 @@ function Model2({ position }: ModelProps) {
     <group position={position}>
       <CenterModel>
         <RotatingModel>
-          <ObjetModel2 scale={[0.5, 0.5, 0.5]} />
+          <ObjetModel2 scale={[1.3, 1.3, 1.3]} />
         </RotatingModel>
       </CenterModel>
     </group>
@@ -113,7 +113,7 @@ function Model3({ position }: ModelProps) {
     <group position={position}>
       <CenterModel>
         <RotatingModel>
-          <ObjetModel3 scale={[0.043, 0.043, 0.043]} />
+          <ObjetModel3 scale={2} />
         </RotatingModel>
       </CenterModel>
     </group>
@@ -125,7 +125,7 @@ function RotatingModel({ children }: { children: React.ReactNode }) {
 
   useFrame(() => {
     if (ref.current) {
-      ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
+      ref.current.rotation.y += 0.01
     }
   })
 
