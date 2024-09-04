@@ -7,6 +7,7 @@ export interface RandomModelsProps {
 
 export interface ObjetsProps {
   objets?: Objet[]
+  loungeId: number
 }
 
 export interface Objet {

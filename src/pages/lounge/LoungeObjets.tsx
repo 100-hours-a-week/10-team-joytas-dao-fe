@@ -4,7 +4,7 @@ import * as THREE from 'three'
 import { useRef, useEffect, useCallback } from 'react'
 import NoDataLottie from '../../components/lotties/NoDataLottie'
 import { NoDataContainer, InnerText, GoObjetButton } from './LoungeStyles'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { URL } from '../../static'
 import type { ObjetsProps, Objet } from '../../types/ModelType'
 import ObjetModels from './ObjetModels'
@@ -15,7 +15,6 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
   const controlsRef = useRef<any>(null)
   const targetPositionRef = useRef(new THREE.Vector3())
   const initialCameraSet = useRef(false)
-  const lid = useParams().lid
 
   const handleModelClick = useCallback(
     (model: THREE.Group) => {
@@ -28,9 +27,7 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
       )
       camera.lookAt(targetPositionRef.current)
 
-      navigate(
-        `${URL.lounge}/${model.userData.lid || lid}/objets/${model.userData.id}`
-      )
+      navigate(`${URL.objet}/${model.userData.id}`)
     },
     [camera]
   )
@@ -89,12 +86,12 @@ function LoungeCanvas({ objets }: { objets?: Objet[] }) {
   )
 }
 
-export default function LoungeObjets({ objets }: ObjetsProps) {
+export default function LoungeObjets({ objets, loungeId }: ObjetsProps) {
   const navigate = useNavigate()
-  const { lid: loungeId } = useParams()
 
   const handleClickGoObjet = () => {
-    navigate(`${URL.lounge}/${loungeId}/objets/new`)
+    localStorage.setItem('loungeId', loungeId.toString())
+    navigate(URL.newObjet)
   }
 
   if (!objets || objets.length === 0) {

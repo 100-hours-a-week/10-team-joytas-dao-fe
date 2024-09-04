@@ -49,8 +49,8 @@ interface Message {
 }
 
 export default function ObjetDetail() {
-  const loungeId = useParams().lid
   const objetId = useParams().oid
+  const [loungeId, setLoungeId] = useState(0)
   const loggedInUserId = useUserStore((state) => state.userId)
 
   const [isLoading, setIsLoading] = useState(true)
@@ -80,7 +80,7 @@ export default function ObjetDetail() {
 
   useEffect(() => {
     fetchData()
-  }, [loungeId, objetId])
+  }, [objetId])
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -114,10 +114,12 @@ export default function ObjetDetail() {
 
       if (!objRes.ok) {
         toast.error('해당 오브제를 찾을수 없습니다 😅')
-        navigate(`${URL.lounge}/${loungeId}`)
+        navigate(`${URL.lounge}`)
       }
 
       const data = await objRes.json()
+
+      setLoungeId(data.data.lounge_id)
 
       setCreator(data.data.nickname)
       setName(data.data.name)
@@ -197,14 +199,14 @@ export default function ObjetDetail() {
 
   const handleClickChat = async () => {
     setChatToken(useObjetStore.getState().chatToken)
-    navigate(`${URL.lounge}/${loungeId}/objets/${objetId}/chatting`)
+    navigate(`${URL.objet}/${objetId}/chatting`)
   }
 
   const handleClickCall = () => {
     if (callingPeople >= 9) {
       toast.error('방이 가득찼습니다! 🥲')
     } else {
-      navigate(`${URL.lounge}/${loungeId}/objets/${objetId}/call`)
+      navigate(`${URL.objet}/${objetId}/call`)
     }
   }
 
@@ -267,9 +269,7 @@ export default function ObjetDetail() {
                       <div ref={dropRef} onClick={(e) => e.stopPropagation()}>
                         <ObjetDrop
                           onClickUpdate={() =>
-                            navigate(
-                              `${URL.lounge}/${loungeId}/objets/${objetId}/update`
-                            )
+                            navigate(`${URL.objet}/${objetId}/update`)
                           }
                           onClickDelete={() => {
                             setIsDeleteModalVisible(true)

@@ -25,7 +25,7 @@ interface UserListProps {
 }
 
 export default function UserListItem({ type, user }: UserListProps) {
-  const loungeId = useParams().lid
+  const loungeId = useParams().lid || 0
   const navigate = useNavigate()
   const [isClick, setIsClick] = useState(false)
 
