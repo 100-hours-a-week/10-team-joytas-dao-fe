@@ -17,9 +17,11 @@ export const GloablContainer32 = styled.div`
 `
 
 export const GlobalTitle = styled.div`
+  display: flex;
+  align-items: center;
   padding-top: 50px;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 600;
   width: 100%;
 `
 
