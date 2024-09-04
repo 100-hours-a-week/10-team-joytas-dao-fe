@@ -53,7 +53,7 @@ export default function Home() {
   return (
     <Layout style={{ padding: '0px' }}>
       <GloablContainer16 style={{ padding: '0px' }}>
-        <Carousel arrows autoplay autoplaySpeed={2500}>
+        <Carousel arrows autoplay autoplaySpeed={3500}>
           <BannerImage src={banner2} />
           <BannerVideo
             autoPlay

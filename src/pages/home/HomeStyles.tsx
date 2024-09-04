@@ -34,6 +34,7 @@ export const Banner = styled.div`
 export const BannerImage = styled.img`
   background-color: grey;
   width: 100%;
+  height: 250px;
   display: flex;
   object-fit: cover;
   align-items: center;
@@ -44,6 +45,8 @@ export const BannerImage = styled.img`
 export const BannerVideo = styled.video`
   background-color: grey;
   width: 100%;
+  height: 250px;
+
   display: flex;
   object-fit: cover;
   align-items: center;
@@ -73,7 +76,7 @@ export const MyObjetTitle = styled.div`
   }
 
   @media (min-width: 600px) {
-    font-size: 23px;
+    font-size: 20px;
   }
 `
 

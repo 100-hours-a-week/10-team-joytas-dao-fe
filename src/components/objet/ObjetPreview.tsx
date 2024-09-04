@@ -63,7 +63,11 @@ function Objet({
       <ObjetImage src={image} alt={title} />
       <ObjetContent>
         <ObjetTitle>{title}</ObjetTitle>
-        <ObjetDescription>{description}</ObjetDescription>
+        <ObjetDescription>
+          {description.length > 80
+            ? description.slice(0, 80) + '...'
+            : description}
+        </ObjetDescription>
       </ObjetContent>
     </ObjetContainer>
   )
