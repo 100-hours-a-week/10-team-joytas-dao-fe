@@ -96,7 +96,7 @@ export default function UserListItem({ type, user }: UserListProps) {
         </ProfileImageContainer>
         <ProfileNickname>{user.nickname}</ProfileNickname>
       </ProfileContainer>
-      {type === 'lounge' ? (
+      {type === 'lounges' ? (
         <InviteButton disabled={isClick} onClick={handleClickInvite}>
           초대하기
         </InviteButton>

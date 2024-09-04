@@ -24,7 +24,7 @@ interface SearhUser {
 }
 
 export default function UserList() {
-  const type = useLocation().pathname.split('/')[1] as 'lounge' | 'users'
+  const type = useLocation().pathname.split('/')[1] as 'lounges' | 'users'
   const [isLoading, setIsLoading] = useState(false)
   const [userList, setUserList] = useState<SearhUser[]>([])
   const [searchUser, setSearchUser] = useState('')
@@ -69,8 +69,8 @@ export default function UserList() {
       <FullContainerForToast>
         <GloablContainer16>
           <SearchTitle type={type}>
-            {type === 'lounge'
-              ? '라운지에 초대할 유저를 선택해주세요.'
+            {type === 'lounges'
+              ? '라운지에 초대할 유저를 선택해주세요! 🙌'
               : '콕 찌르기는 3시간에 1번만 가능합니다 😎'}
           </SearchTitle>
           <SearchUserInput
