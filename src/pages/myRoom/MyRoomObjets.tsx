@@ -26,11 +26,13 @@ export default function MyRoomObjet() {
   const [objets, setObjets] = useState([])
   const [lounges, setLounges] = useState<Lounge[]>([])
   const [isLoading, setIsLoading] = useState(true)
+  const [isObjetsLoading, setIsObjetsLoading] = useState(true)
   const [selectedLounge, setSelectedLounge] = useState<Lounge>({
     lounge_id: 0,
     name: '전체',
     type: '전체',
   })
+  const [loungeId, setLoungeId] = useState(0)
 
   useEffect(() => {
     fetchObjetsAll()
@@ -38,6 +40,8 @@ export default function MyRoomObjet() {
   }, [])
 
   const fetchObjetsAll = async () => {
+    setIsObjetsLoading(true)
+
     try {
       const response = await fetch(`${APIs.objet}/me`, {
         method: 'GET',
@@ -53,6 +57,8 @@ export default function MyRoomObjet() {
       }
     } catch (error) {
       console.error('마이룸 전체 오브제 조회 실패', error)
+    } finally {
+      setIsObjetsLoading(false)
     }
   }
 
@@ -62,6 +68,7 @@ export default function MyRoomObjet() {
       fetchObjetsAll()
       return
     }
+    setIsObjetsLoading(true)
 
     try {
       const response = await fetch(
@@ -77,10 +84,12 @@ export default function MyRoomObjet() {
       )
       if (response.ok) {
         const responseData = await response.json()
-        setObjets(responseData.data.objets)
+        setObjets(responseData.data)
       }
     } catch (error) {
       console.error('마이룸 라운지별 오브제 조회 실패', error)
+    } finally {
+      setIsObjetsLoading(false)
     }
   }
 
@@ -112,12 +121,13 @@ export default function MyRoomObjet() {
 
   const handleSelectLounge = (loungeId: number) => {
     setIsModalOpen(false)
-    fetchObjetsByLounge(loungeId)
     const selectedLounge = lounges.find(
       (lounge) => lounge.lounge_id === loungeId
     )
     if (selectedLounge) {
       setSelectedLounge(selectedLounge)
+      fetchObjetsByLounge(loungeId)
+      setLoungeId(loungeId)
     }
   }
 
@@ -149,9 +159,11 @@ export default function MyRoomObjet() {
             </IconContainer>
           </TopContainer>
           <GlobalSubTitle>나에게 전달된 오브제를 확인해보세요!</GlobalSubTitle>
-          <Objets>
-            <LoungeObjets objets={objets} />
-          </Objets>
+          {!isObjetsLoading && (
+            <Objets>
+              <LoungeObjets objets={objets} loungeId={loungeId} />
+            </Objets>
+          )}
 
           {isModalOpen && (
             <LoungeListModal
