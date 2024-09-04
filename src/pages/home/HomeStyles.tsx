@@ -62,8 +62,9 @@ export const MyObjetTitle = styled.div`
   flex-direction: row;
   align-items: center;
   padding: 20px 32px;
+  margin-top: 20px;
   font-size: 17px;
-  font-weight: bold;
+  font-weight: 500;
 
   img {
     width: 22px;

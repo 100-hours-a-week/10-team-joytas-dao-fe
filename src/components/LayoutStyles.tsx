@@ -45,7 +45,46 @@ export const HeaderRight = styled.div`
 
 export const Icon = styled.img`
   cursor: pointer;
-  width: 20px;
+  width: 50px;
+  padding: 14px;
+
+  &:hover {
+    transform-origin: 50% 0%;
+    animation-name: shake;
+    animation-duration: 2s;
+    animation-iteration-count: infinite;
+    animation-delay: 0.1s;
+  }
+
+  @keyframes shake {
+    0% {
+      transform: rotate(0deg);
+    }
+    10% {
+      transform: rotate(20deg);
+    }
+    20% {
+      transform: rotate(-20deg);
+    }
+    30% {
+      transform: rotate(15deg);
+    }
+    40% {
+      transform: rotate(-15deg);
+    }
+    50% {
+      transform: rotate(10deg);
+    }
+    60% {
+      transform: rotate(-10deg);
+    }
+    70% {
+      transform: rotate(0deg);
+    }
+    100% {
+      transform: rotate(0deg);
+    }
+  }
 `
 
 export const HamburgerIcon = styled.div`

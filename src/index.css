@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Bagel+Fat+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300..700;1,300..700&family=Lobster&display=swap');
 
 html {
   width: 100%;
@@ -138,7 +139,7 @@ section {
   display: block;
 }
 body {
-  font-family: 'Nanum Gothic', sans-serif;
+  font-family: 'Noto Sans', sans-serif;
   font-display: swap;
 }
 ol,

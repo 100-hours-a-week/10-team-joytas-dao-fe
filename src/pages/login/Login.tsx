@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { URL } from '../../static'
 import { KAKAO_AUTH } from '../../static'
 import universe from '../../assets/images/DAO.mp4'
+import logo from '../../assets/images/DAO.webp'
 
 export default function Login() {
   const handleClickLogIn = () => {
@@ -13,7 +14,7 @@ export default function Login() {
     <Main>
       <video autoPlay muted loop playsInline src={universe} />
       <Logo>
-        DAO <br />
+        <img src={logo} alt='logo' style={{ width: '300px' }} />
         <Mini>"Digital Archive of Our Memories"</Mini>
       </Logo>
       <LoginButton onClick={handleClickLogIn}>카카오 로그인</LoginButton>
