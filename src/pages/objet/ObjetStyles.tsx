@@ -366,6 +366,7 @@ export const ObjetDescription = styled.div`
   overflow-y: scroll;
   color: white;
   font-size: 14px;
+  word-break: break-word;
 `
 
 export const CommunityContainer = styled.div`
