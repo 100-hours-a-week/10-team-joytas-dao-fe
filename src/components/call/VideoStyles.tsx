@@ -1,5 +1,9 @@
 import styled from 'styled-components'
 
+interface ProfileImageProps {
+  $isSpeaking?: boolean
+}
+
 export const Container = styled.div`
   position: relative;
   display: inline-block;
@@ -12,7 +16,8 @@ export const Container = styled.div`
   }
 `
 
-export const ProfileImage = styled.img`
+export const ProfileImage = styled.img<ProfileImageProps>`
+  border: ${(props) => (props.$isSpeaking ? '3px solid green' : '')};
   position: absolute;
   width: 90px;
   height: 90px;
