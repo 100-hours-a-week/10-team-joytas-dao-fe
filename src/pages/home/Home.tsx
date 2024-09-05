@@ -27,6 +27,8 @@ export default function Home() {
   const [objets, setObjets] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const userId = useUserStore((state) => state.userId)
+  const commitMateUrl = 'https://commitmate.kro.kr/home'
+  const KtbUrl = 'https://ktb.goorm.io/'
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,8 +59,18 @@ export default function Home() {
   return (
     <Layout style={{ padding: '0px' }}>
       <GloablContainer16 style={{ padding: '0px' }}>
-        <Carousel arrows autoplay autoplaySpeed={3500}>
-          <BannerImage src={banner2} />
+        <Carousel
+          arrows
+          autoplay
+          autoplaySpeed={3500}
+          style={{ cursor: 'pointer' }}
+        >
+          <BannerImage
+            src={banner2}
+            onClick={() => {
+              window.location.href = commitMateUrl
+            }}
+          />
           <BannerVideo
             autoPlay
             muted
@@ -66,13 +78,21 @@ export default function Home() {
             playsInline
             src={tripday}
           ></BannerVideo>
-          <BannerImage src={banner1} />
+          <BannerImage
+            src={banner1}
+            onClick={() => {
+              window.location.href = KtbUrl
+            }}
+          />
           <BannerVideo
             autoPlay
             muted
             loop
             playsInline
             src='https://oopy.lazyrockets.com/api/v2/notion/fileUrl?src=https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F38552da6-340d-42c1-a9a1-b181ff331f03%2F64583d5a-5694-4c0e-9180-31e58fdd001a%2F%25E1%2584%258C%25E1%2585%25A6%25E1%2584%258C%25E1%2585%25AE_(PC).mp4&blockId=8e6adf11-495d-4115-ba04-12f87e247b9f#t=0.0001'
+            onClick={() => {
+              window.location.href = KtbUrl
+            }}
           ></BannerVideo>
         </Carousel>
         <MyObjetContainer>
