@@ -34,9 +34,11 @@ const pc_config = {
 }
 
 const VideoContainer = ({
+  muted,
   objetId,
   loungeId,
 }: {
+  muted: boolean
   objetId: number
   loungeId: number
 }) => {
@@ -119,6 +121,26 @@ const VideoContainer = ({
     },
     []
   )
+
+  const muteMyAudio = useCallback(() => {
+    if (localStreamRef.current) {
+      localStreamRef.current.getAudioTracks().forEach((track) => {
+        track.enabled = false
+      })
+    }
+  }, [])
+
+  const unmuteMyAudio = useCallback(() => {
+    if (localStreamRef.current) {
+      localStreamRef.current.getAudioTracks().forEach((track) => {
+        track.enabled = true
+      })
+    }
+  }, [])
+
+  useEffect(() => {
+    muted ? muteMyAudio() : unmuteMyAudio()
+  }, [muted])
 
   useEffect(() => {
     socketRef.current = io.connect(SOCKET_SERVER_URL, {
@@ -264,7 +286,7 @@ const VideoContainer = ({
       {/*본인*/}
       <Container>
         <ProfileImage src={profile_image} />
-        <MyAudio muted={false} ref={localAudioRef} autoPlay />
+        <MyAudio muted={true} ref={localAudioRef} autoPlay />
         <UserLabel>{nickname}</UserLabel>
       </Container>
 

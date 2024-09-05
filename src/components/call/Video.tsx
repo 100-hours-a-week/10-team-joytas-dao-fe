@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useCallback } from 'react'
 import {
   Container,
   AudioContainer,
@@ -16,15 +16,52 @@ interface Props {
 const Video = ({ profileImage, nickname, stream, muted }: Props) => {
   const ref = useRef<HTMLVideoElement>(null)
   const [isMuted, setIsMuted] = useState<boolean>(false)
+  const [isSpeaking, setIsSpeaking] = useState<boolean>(false)
+  const analyserRef = useRef<AnalyserNode | null>(null)
+  const audioContextRef = useRef<AudioContext | null>(null)
+
+  const checkSpeaking = useCallback(() => {
+    if (analyserRef.current) {
+      const bufferLength = analyserRef.current.frequencyBinCount
+      const dataArray = new Uint8Array(bufferLength)
+      analyserRef.current.getByteFrequencyData(dataArray)
+
+      const maxVolume = Math.max(...dataArray)
+      // NOTE: 일반적으로 30~50을 기준으로 하지만, 실제 대화를 통한 적정값 도출 필요
+      if (maxVolume > 30) {
+        setIsSpeaking(true)
+      } else {
+        setIsSpeaking(false)
+      }
+    }
+  }, [])
 
   useEffect(() => {
-    if (ref.current) ref.current.srcObject = stream
+    if (ref.current && stream) {
+      ref.current.srcObject = stream
+      audioContextRef.current = new AudioContext()
+      const source = audioContextRef.current.createMediaStreamSource(stream)
+      const analyser = audioContextRef.current.createAnalyser()
+
+      analyser.fftSize = 256
+      analyserRef.current = analyser
+
+      source.connect(analyser)
+    }
+
+    const intervalId = setInterval(checkSpeaking, 200)
+
     if (muted) setIsMuted(muted)
-  }, [stream, muted])
+
+    return () => {
+      clearInterval(intervalId)
+      if (audioContextRef.current) audioContextRef.current.close()
+    }
+  }, [stream, muted, checkSpeaking])
 
   return (
     <Container>
-      <ProfileImage src={profileImage} />
+      <ProfileImage src={profileImage} $isSpeaking={isSpeaking} />
       <AudioContainer ref={ref} muted={isMuted} autoPlay controls />
       <UserLabel>{nickname}</UserLabel>
     </Container>
