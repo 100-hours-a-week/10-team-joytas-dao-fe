@@ -97,9 +97,8 @@ export const FooterDiv = styled.div`
   height: 70px;
   border-top: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   bottom: 0;
-  padding: 0 40px;
 `
 
 export const IconDiv = styled.div`

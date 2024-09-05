@@ -14,15 +14,21 @@ import {
 import useNotifications from '../../hooks/useNotification'
 import { NotificationProps } from '../../hooks/useNotification'
 import useUserStore from '../../store/userStore'
+import left from '../../assets/images/left.webp'
+import { useNavigate } from 'react-router-dom'
 
 export default function Notification() {
   const { notificationList } = useNotifications()
   const userId = useUserStore((state) => state.userId)
+  const navigate = useNavigate()
 
   return (
     <Layout>
       <GloablContainer16>
-        <GlobalTitle>알림</GlobalTitle>
+        <GlobalTitle>
+          <img src={left} alt='left' onClick={() => navigate(-1)} />
+          알림
+        </GlobalTitle>
         <NotificationContainer>
           {notificationList.length === 0 ? (
             <GlobalBlankContainerText>

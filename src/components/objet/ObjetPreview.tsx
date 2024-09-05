@@ -64,8 +64,8 @@ function Objet({
       <ObjetContent>
         <ObjetTitle>{title}</ObjetTitle>
         <ObjetDescription>
-          {description.length > 80
-            ? description.slice(0, 80) + '...'
+          {description.length > 50
+            ? description.slice(0, 50) + '...'
             : description}
         </ObjetDescription>
       </ObjetContent>

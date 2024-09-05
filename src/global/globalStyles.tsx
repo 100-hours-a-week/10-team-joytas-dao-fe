@@ -23,6 +23,16 @@ export const GlobalTitle = styled.div`
   font-size: 20px;
   font-weight: 600;
   width: 100%;
+
+  img {
+    width: 25px;
+    height: 25px;
+    margin-right: 20px;
+
+    &:hover {
+      cursor: pointer;
+    }
+  }
 `
 
 export const GlobalSubTitle = styled.div`

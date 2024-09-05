@@ -9,7 +9,7 @@ import {
 import rocket from '../assets/lotties/rocket.json'
 import logo from '../assets/images/DAO.webp'
 import bell from '../assets/images/bell.webp'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { URL } from '../static'
 import { useState } from 'react'
 import Menu from './Menu'
@@ -19,6 +19,7 @@ import Lottie from 'lottie-react'
 export default function Header() {
   const navigate = useNavigate()
   const [menuOpen, setMenuOpen] = useState(false)
+  const pathname = useLocation().pathname
 
   return (
     <>
@@ -33,7 +34,9 @@ export default function Header() {
           <LogoImage src={logo} />
         </LogoWrapper>
         <HeaderRight>
-          <Icon src={bell} onClick={() => navigate(URL.notification)} />
+          {!pathname.includes('notification') && (
+            <Icon src={bell} onClick={() => navigate(URL.notification)} />
+          )}
           <HamburgerIcon>
             <Hamburger
               toggled={menuOpen}

@@ -9,7 +9,9 @@ export const ObjetList = styled.div`
   margin-bottom: 20px;
 
   @media (min-width: 600px) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    overflow-x: auto;
+    overflow-y: hidden;
     gap: 15px;
   }
 `
@@ -31,6 +33,7 @@ export const ObjetContainer = styled.div`
 
   @media (min-width: 600px) {
     flex-direction: column;
+    height: 290px;
   }
 `
 export const ObjetImage = styled.img`
@@ -42,8 +45,8 @@ export const ObjetImage = styled.img`
   align-self: center;
 
   @media (min-width: 600px) {
-    width: 200px;
-    height: 200px;
+    width: 150px;
+    height: 150px;
   }
 `
 
