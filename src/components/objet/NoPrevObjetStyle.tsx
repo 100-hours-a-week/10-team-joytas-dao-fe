@@ -2,19 +2,17 @@ import styled from 'styled-components'
 
 export const OuterContainer = styled.div`
   width: 100%;
-  height: 100%;
+  height: 200px;
   display: flex;
-  flex-direction: column;
   align-items: center;
+  justify-content: center;
   font-size: 15px;
   font-weight: 600;
 `
 
 export const InnerText = styled.div`
-  margin-top: 130px;
   color: rgba(255, 255, 255, 0.5);
   width: fit-content;
-  height: 100%;
   display: flex;
   flex-direction: column;
   gap: 5px;
