@@ -14,6 +14,7 @@ export const GloablContainer32 = styled.div`
   height: 625px;
   padding: 0 32px;
   box-sizing: border-box;
+  overflow-y: auto;
 `
 
 export const GlobalTitle = styled.div`
