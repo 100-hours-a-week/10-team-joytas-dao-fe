@@ -1,6 +1,6 @@
 import Layout from '../../components/Layout'
 import {
-  // MicButton,
+  MicButton,
   CallButton,
   Icon,
   MiddleContainer,
@@ -8,8 +8,8 @@ import {
 } from './ObjetCallStyles'
 // import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 // import { Avatar } from 'antd'
-// import mute from '../../assets/images/mute.webp'
-// import unmute from '../../assets/images/unmute.webp'
+import mute from '../../assets/images/mute.webp'
+import unmute from '../../assets/images/unmute.webp'
 import quitCall from '../../assets/images/quitCall.webp'
 import { useEffect, useState } from 'react'
 import {
@@ -30,7 +30,7 @@ import { APIs, URL } from '../../static'
 
 export default function ObjetCall() {
   const navigate = useNavigate()
-  // const [muted, setMuted] = useState(false)
+  const [muted, setMuted] = useState(false)
   // const [isActive, setIsActive] = useState(false)
   const { oid: objetId } = useParams()
   const [loungeId, setLoungeId] = useState(0)
@@ -110,17 +110,21 @@ export default function ObjetCall() {
 
         {!loading && loungeId !== 0 && (
           <MiddleContainer>
-            <VideoContainer objetId={Number(objetId)} loungeId={loungeId} />
+            <VideoContainer
+              muted={muted}
+              objetId={Number(objetId)}
+              loungeId={loungeId}
+            />
           </MiddleContainer>
         )}
 
         <BottomContainer>
-          {/* <MicButton>
+          <MicButton>
             <Icon
-              src={muted ? unmute : mute}
+              src={muted ? mute : unmute}
               onClick={() => setMuted(!muted)}
             />
-          </MicButton> */}
+          </MicButton>
           <CallButton onClick={() => navigate(`${URL.objet}/${objetId}`)}>
             <Icon src={quitCall} />
           </CallButton>
