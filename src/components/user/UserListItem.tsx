@@ -77,6 +77,8 @@ export default function UserListItem({ type, user }: UserListProps) {
         toast.success('유저 초대 성공 😉')
       } else if (response.status === 405) {
         toast.info('이미 라운지에 존재하는 유저입니다.')
+      } else if (response.status === 400) {
+        toast.error('해당 유저는 이미 최대 4개의 라운지에 참여 중입니다.')
       } else {
         toast.error('유저 초대 실패 🥲')
       }
