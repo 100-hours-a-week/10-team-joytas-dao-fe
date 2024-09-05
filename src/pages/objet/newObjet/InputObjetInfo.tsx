@@ -82,6 +82,16 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
     if (response.ok) {
       const responseData = await response.json()
       setUserList(responseData.data)
+
+      if (responseData.data.length <= 1) {
+        toast.error(
+          <div>
+            라운지에 속한 유저가 없습니다 😭 <br /> 유저 초대 후 다시
+            시도해주세요.
+          </div>
+        )
+        navigate(`${URL.lounge}/${loungeId}`)
+      }
     } else {
       setUserList([])
     }
