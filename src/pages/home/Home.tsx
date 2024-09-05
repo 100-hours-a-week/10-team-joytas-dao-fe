@@ -6,6 +6,7 @@ import {
   MyObjetContainer,
   MyObjetTitle,
   LottieContainer,
+  PreparingContainer,
 } from './HomeStyles'
 import ObjetPreview from '../../components/objet/ObjetPreview'
 import { useEffect, useState } from 'react'
@@ -17,7 +18,10 @@ import banner1 from '../../assets/images/banner1.webp'
 import banner2 from '../../assets/images/banner2.webp'
 import recentObjetsIcon from '../../assets/images/recentObjets.webp'
 import tripday from '../../assets/images/tripday.mp4'
+import alert from '../../assets/images/alert.webp'
+import preparing from '../../assets/lotties/preparing.json'
 import useUserStore from '../../store/userStore'
+import Lottie from 'lottie-react'
 
 export default function Home() {
   const [objets, setObjets] = useState([])
@@ -71,7 +75,6 @@ export default function Home() {
             src='https://oopy.lazyrockets.com/api/v2/notion/fileUrl?src=https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F38552da6-340d-42c1-a9a1-b181ff331f03%2F64583d5a-5694-4c0e-9180-31e58fdd001a%2F%25E1%2584%258C%25E1%2585%25A6%25E1%2584%258C%25E1%2585%25AE_(PC).mp4&blockId=8e6adf11-495d-4115-ba04-12f87e247b9f#t=0.0001'
           ></BannerVideo>
         </Carousel>
-
         <MyObjetContainer>
           <MyObjetTitle>
             <img src={recentObjetsIcon} alt='recentObjetsIcon' />
@@ -87,6 +90,17 @@ export default function Home() {
             <ObjetPreview objets={objets} />
           )}
         </MyObjetContainer>
+        <MyObjetContainer>
+          <MyObjetTitle>
+            <img src={alert} alt='recentObjetsIcon' />
+            Comming Soon !
+          </MyObjetTitle>
+          <PreparingContainer>
+            <Lottie animationData={preparing} style={{ height: '100px' }} />
+            <span>새로운 기능이 추가될 영역입니다.</span>
+          </PreparingContainer>
+        </MyObjetContainer>
+        `
       </GloablContainer16>
     </Layout>
   )

@@ -83,3 +83,14 @@ export const MyObjetTitle = styled.div`
 export const LottieContainer = styled.div`
   margin-top: 70px;
 `
+
+export const PreparingContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  span {
+    color: gray;
+  }
+`
