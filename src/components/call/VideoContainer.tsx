@@ -187,7 +187,7 @@ const VideoContainer = ({
               offerSendID: socketRef.current.id,
               offerSendNickname: nickname,
               offerReceiveID: user.socket_id,
-              offerSendProfileImage: user.profile_image,
+              offerSendProfileImage: profile_image,
             })
           } catch (e) {
             console.error(e)
