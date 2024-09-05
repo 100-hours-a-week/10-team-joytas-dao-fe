@@ -51,6 +51,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
   const [nameErrorMessage, setNammeErrorMessage] = useState('')
   const [descriptionErrorMessage, setDescriptionErrorMessage] = useState('')
   const [imageErrorMessage, setImageErrorMessage] = useState('')
+  const [isFirstRendered, setIsFirstRendered] = useState(true)
 
   const [userList, setUserList] = useState<SharedMembersProps[]>([])
 
@@ -83,7 +84,7 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
       const responseData = await response.json()
       setUserList(responseData.data)
 
-      if (responseData.data.length <= 1) {
+      if (isFirstRendered && responseData.data.length <= 1) {
         toast.error(
           <div>
             라운지에 속한 유저가 없습니다 😭 <br /> 유저 초대 후 다시
@@ -91,6 +92,10 @@ export default function InputObjetInfo({ selectedType }: InputObjetInfoProps) {
           </div>
         )
         navigate(`${URL.lounge}/${loungeId}`)
+      }
+
+      if (isFirstRendered) {
+        setIsFirstRendered(false)
       }
     } else {
       setUserList([])

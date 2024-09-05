@@ -75,11 +75,13 @@ export default function NotificationItem({
     setTimeout(async () => {
       await handleClickNotiRead()
       setIsModalVisible(false)
+      navigate(`${URL.lounge}/${detail.domain_id}`)
     }, 3000)
   }
 
   const handleClickObjetNoti = async () => {
     await handleClickNotiRead()
+    navigate(`${URL.objet}/${detail.domain_id}`)
   }
 
   const handleClickPokeNoti = async () => {
