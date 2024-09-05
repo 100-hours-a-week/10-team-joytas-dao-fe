@@ -120,7 +120,6 @@ export default function Home() {
             <span>새로운 기능이 추가될 영역입니다.</span>
           </PreparingContainer>
         </MyObjetContainer>
-        `
       </GloablContainer16>
     </Layout>
   )
