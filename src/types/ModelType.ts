@@ -13,7 +13,7 @@ export interface ObjetsProps {
 export interface Objet {
   objet_id: number
   lounge_id?: number
-  type: string
+  type: 'O0001' | 'O0002' | 'O0003'
   name: string
   description: string
   objet_image: File

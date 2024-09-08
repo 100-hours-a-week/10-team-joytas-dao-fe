@@ -7,13 +7,10 @@ import {
 } from '../ObjetStyles'
 import left from '../../../assets/images/left.webp'
 import right from '../../../assets/images/right.webp'
-import { useState, useRef, useEffect, lazy } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
-
-const ObjetModel1 = lazy(() => import('../../../assets/models/ObjetModel1'))
-const ObjetModel2 = lazy(() => import('../../../assets/models/ObjetModel2'))
-const ObjetModel3 = lazy(() => import('../../../assets/models/ObjetModel3'))
+import { ObjetModelList } from '../../../components/models/LazyModelList'
 
 interface ObjetProps {
   setSelectedType: (type: string) => void
@@ -21,21 +18,16 @@ interface ObjetProps {
 
 export default function SelectObjetType({ setSelectedType }: ObjetProps) {
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
-  const models = [Model1, Model2, Model3]
   const modelTypes = ['O0001', 'O0002', 'O0003']
 
-  const CurrentModel = models[currentModelIndex]
+  const CurrentModel = () => <Model index={currentModelIndex} />
 
   const handleLeftClick = () => {
-    setCurrentModelIndex((prevIndex) =>
-      prevIndex === 0 ? models.length - 1 : prevIndex - 1
-    )
+    setCurrentModelIndex((prevIndex) => (prevIndex === 0 ? 2 : prevIndex - 1))
   }
 
   const handleRightClick = () => {
-    setCurrentModelIndex((prevIndex) =>
-      prevIndex === models.length - 1 ? 0 : prevIndex + 1
-    )
+    setCurrentModelIndex((prevIndex) => (prevIndex === 2 ? 0 : prevIndex + 1))
   }
 
   const handleSelectClick = () => {
@@ -47,15 +39,13 @@ export default function SelectObjetType({ setSelectedType }: ObjetProps) {
       <ObjetModel>
         <Canvas
           style={{ width: '100%', height: '100%' }}
-          camera={{ position: [0, 0, 4], fov: 50 }} // 카메라 위치와 시야각(fov) 설정
+          camera={{ position: [0, 0, 4], fov: 50 }}
         >
           <ambientLight intensity={5} />
-          <CurrentModel position={new Vector3(0, 0, 0)} />
+          <CurrentModel />
         </Canvas>
       </ObjetModel>
-      <ModelIndexText>
-        {currentModelIndex + 1} / {models.length}
-      </ModelIndexText>
+      <ModelIndexText>{currentModelIndex + 1} / 3</ModelIndexText>
       <ChooseContainer style={{ marginTop: '50px' }}>
         <MoveIcon src={left} onClick={handleLeftClick} />
         <ChooseButton onClick={handleSelectClick}>선택</ChooseButton>
@@ -63,10 +53,6 @@ export default function SelectObjetType({ setSelectedType }: ObjetProps) {
       </ChooseContainer>
     </>
   )
-}
-
-interface ModelProps {
-  position: Vector3
 }
 
 function CenterModel({ children }: { children: React.ReactNode }) {
@@ -77,50 +63,14 @@ function CenterModel({ children }: { children: React.ReactNode }) {
     if (ref.current) {
       const box = new Box3().setFromObject(ref.current)
       const center = box.getCenter(new Vector3())
-      ref.current.position.sub(center) // 모델을 중심으로 이동
+      ref.current.position.sub(center)
     }
   }, [scene])
 
   return <group ref={ref}>{children}</group>
 }
 
-function Model1({ position }: ModelProps) {
-  return (
-    <group position={position}>
-      <CenterModel>
-        <RotatingModel>
-          <ObjetModel1 scale={[3.2, 3.2, 3.2]} />
-        </RotatingModel>
-      </CenterModel>
-    </group>
-  )
-}
-
-function Model2({ position }: ModelProps) {
-  return (
-    <group position={position}>
-      <CenterModel>
-        <RotatingModel>
-          <ObjetModel2 scale={[1.3, 1.3, 1.3]} />
-        </RotatingModel>
-      </CenterModel>
-    </group>
-  )
-}
-
-function Model3({ position }: ModelProps) {
-  return (
-    <group position={position}>
-      <CenterModel>
-        <RotatingModel>
-          <ObjetModel3 scale={2} />
-        </RotatingModel>
-      </CenterModel>
-    </group>
-  )
-}
-
-function RotatingModel({ children }: { children: React.ReactNode }) {
+function Model({ index }: { index: number }) {
   const ref = useRef<Group>(null)
 
   useFrame(() => {
@@ -128,6 +78,19 @@ function RotatingModel({ children }: { children: React.ReactNode }) {
       ref.current.rotation.y += 0.01
     }
   })
-
-  return <group ref={ref}>{children}</group>
+  return (
+    <group position={new Vector3(0, 0, 0)}>
+      <CenterModel>
+        <group ref={ref}>
+          {index === 0 ? (
+            <ObjetModelList.O0001 scale={3.2} />
+          ) : index === 1 ? (
+            <ObjetModelList.O0002 scale={1.3} />
+          ) : (
+            <ObjetModelList.O0003 scale={2} />
+          )}
+        </group>
+      </CenterModel>
+    </group>
+  )
 }
