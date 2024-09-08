@@ -1,7 +1,7 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
 import useUserStore from '../../store/userStore'
-import { useState, useRef, useEffect, lazy } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Layout from '../../components/Layout'
 import left from '../../assets/images/left.webp'
@@ -27,19 +27,16 @@ import {
 } from '../../global/globalStyles'
 import { RedText } from '../objet/ObjetStyles'
 import { APIs, URL } from '../../static'
-
-const LoungeModel1 = lazy(() => import('../../assets/models/LoungeModel1'))
-const LoungeModel2 = lazy(() => import('../../assets/models/LoungeModel2'))
-const LoungeModel3 = lazy(() => import('../../assets/models/LoungeModel3'))
+import { LoungeModelList } from '../../components/models/LazyModelList'
 
 export default function NewLounge() {
   const [loungeName, setLoungeName] = useState('')
   const [errorMessage, setErrorMessage] = useState('')
   const [currentModelIndex, setCurrentModelIndex] = useState(0)
   const [isClick, setIsClick] = useState(false)
-  const models = [Model1, Model2, Model3]
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
+  const modelTypes = ['L0001', 'L0002', 'L0003']
 
   useEffect(() => {
     if (inputRef.current) {
@@ -78,15 +75,11 @@ export default function NewLounge() {
   const nickname = useUserStore((state) => state.nickname)
 
   const handleLeftClick = () => {
-    setCurrentModelIndex((prevIndex) =>
-      prevIndex === 0 ? models.length - 1 : prevIndex - 1
-    )
+    setCurrentModelIndex((prevIndex) => (prevIndex === 0 ? 2 : prevIndex - 1))
   }
 
   const handleRightClick = () => {
-    setCurrentModelIndex((prevIndex) =>
-      prevIndex === models.length - 1 ? 0 : prevIndex + 1
-    )
+    setCurrentModelIndex((prevIndex) => (prevIndex === 2 ? 0 : prevIndex + 1))
   }
 
   const handleChangeName = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -97,12 +90,7 @@ export default function NewLounge() {
 
   const handleClickSelect = async () => {
     setIsClick(true)
-    const type =
-      currentModelIndex === 0
-        ? 'L0001'
-        : currentModelIndex === 1
-          ? 'L0002'
-          : 'L0003'
+    const type = modelTypes[currentModelIndex]
 
     const validation = checkLoungeNameValidation(loungeName)
 
@@ -161,7 +149,7 @@ export default function NewLounge() {
     }
   }
 
-  const CurrentModel = models[currentModelIndex]
+  const CurrentModel = () => <Model index={currentModelIndex} />
 
   return (
     <Layout>
@@ -196,12 +184,10 @@ export default function NewLounge() {
               camera={{ position: [0, 0, 4], fov: 50 }}
             >
               <ambientLight intensity={1} />
-              <CurrentModel position={new Vector3(0, 0, 0)} />
+              <CurrentModel />
             </Canvas>
           </LoungeModel>
-          <ModelIndexText>
-            {currentModelIndex + 1} / {models.length}
-          </ModelIndexText>
+          <ModelIndexText>{currentModelIndex + 1} / 3</ModelIndexText>
           <ChooseContainer>
             <MoveIcon src={left} onClick={handleLeftClick} />
             <ChooseButton
@@ -216,10 +202,6 @@ export default function NewLounge() {
       </GloablContainer16>
     </Layout>
   )
-}
-
-interface ModelProps {
-  position: Vector3
 }
 
 function CenterModel({ children }: { children: React.ReactNode }) {
@@ -237,8 +219,9 @@ function CenterModel({ children }: { children: React.ReactNode }) {
   return <group ref={ref}>{children}</group>
 }
 
-function Model1({ position }: ModelProps) {
+function Model({ index }: { index: number }) {
   const ref = useRef<Group>(null)
+  const modelScale = new Vector3(1, 1, 1)
 
   useFrame(() => {
     if (ref.current) {
@@ -247,50 +230,16 @@ function Model1({ position }: ModelProps) {
   })
 
   return (
-    <group position={position}>
+    <group position={new Vector3(0, 0, 0)}>
       <CenterModel>
         <group ref={ref}>
-          <LoungeModel1 scale={[1, 1, 1]} />
-        </group>
-      </CenterModel>
-    </group>
-  )
-}
-
-function Model2({ position }: ModelProps) {
-  const ref = useRef<Group>(null)
-
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
-    }
-  })
-
-  return (
-    <group position={position}>
-      <CenterModel>
-        <group ref={ref}>
-          <LoungeModel2 scale={[1, 1, 1]} />
-        </group>
-      </CenterModel>
-    </group>
-  )
-}
-
-function Model3({ position }: ModelProps) {
-  const ref = useRef<Group>(null)
-
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.y += 0.01 // 지속적으로 오른쪽으로 회전
-    }
-  })
-
-  return (
-    <group position={position}>
-      <CenterModel>
-        <group ref={ref}>
-          <LoungeModel3 scale={[1, 1, 1]} />
+          {index === 0 ? (
+            <LoungeModelList.L0001 scale={modelScale} />
+          ) : index === 1 ? (
+            <LoungeModelList.L0002 scale={modelScale} />
+          ) : (
+            <LoungeModelList.L0003 scale={modelScale} />
+          )}
         </group>
       </CenterModel>
     </group>

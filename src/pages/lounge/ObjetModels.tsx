@@ -1,12 +1,8 @@
 import { Text } from '@react-three/drei'
-import { lazy } from 'react'
+import { useMemo, useRef, useEffect } from 'react'
 import * as THREE from 'three'
-import { useRef, useMemo, useEffect } from 'react'
+import { ObjetModelList } from '../../components/models/LazyModelList'
 import type { RandomModelsProps } from '../../types/ModelType'
-
-const ObjetModel1 = lazy(() => import('../../assets/models/ObjetModel1'))
-const ObjetModel2 = lazy(() => import('../../assets/models/ObjetModel2'))
-const ObjetModel3 = lazy(() => import('../../assets/models/ObjetModel3'))
 
 export default function ObjetModels({
   objets,
@@ -14,10 +10,9 @@ export default function ObjetModels({
 }: RandomModelsProps) {
   const groupRef = useRef<THREE.Group>(null)
 
-  const models = useMemo(() => {
+  const modelData = useMemo(() => {
     if (!objets || objets.length === 0) return []
 
-    const availableModels = [ObjetModel1, ObjetModel2, ObjetModel3]
     const getRandomPosition = (length: number): [number, number, number] => {
       const ranges = [
         { range: 15, offset: -1 },
@@ -47,12 +42,9 @@ export default function ObjetModels({
       mesh.scale.setScalar(scaleMap[objet.type] || 1)
 
       mesh.position.set(...getRandomPosition(objets.length))
-      const ModelComponent =
-        availableModels[
-          objet.type === 'O0001' ? 0 : objet.type === 'O0002' ? 1 : 2
-        ]
 
-      mesh.position.set(...getRandomPosition(objets.length))
+      const ModelComponent = ObjetModelList[objet.type]
+
       mesh.userData = {
         id: objet.objet_id,
         lid: objet.lounge_id,
@@ -77,13 +69,13 @@ export default function ObjetModels({
   useEffect(() => {
     const group = groupRef.current
     if (group) {
-      models.forEach(({ mesh }) => group.add(mesh))
+      modelData.forEach(({ mesh }) => group.add(mesh))
     }
-  }, [models])
+  }, [modelData])
 
   return (
     <group ref={groupRef}>
-      {models.map(({ ModelComponent, mesh, nameText }, index) => (
+      {modelData.map(({ ModelComponent, mesh, nameText }, index) => (
         <mesh
           key={index}
           position={mesh.position}

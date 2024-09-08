@@ -17,7 +17,7 @@ export default function ObjetModel1(props: GroupProps) {
   ) as unknown as GLTFResultExtended
 
   return (
-    <group {...props} dispose={null}>
+    <group {...props} dispose={null} rotation={[-Math.PI / 2, 0, 0]}>
       <mesh geometry={nodes.Object_2.geometry} material={materials.mat0} />
     </group>
   )
