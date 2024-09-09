@@ -16,7 +16,7 @@ import { ObjetInfoFormProps } from '../../global/objetProps.tsx'
 import { useLocation, useParams } from 'react-router-dom'
 import { APIs } from '../../static.ts'
 
-export default function ManageObjet() {
+export default function ObjetForm() {
   const path = useLocation().pathname
   const step = path?.includes('new') ? 'create' : 'update'
 

@@ -17,7 +17,6 @@ import UserList from './pages/user/UserList'
 import ObjetCall from './pages/objet/ObjetCall'
 import ObjetDetail from './pages/objet/ObjetDetail'
 import Home from './pages/home/Home'
-import ManageObjet from './pages/objet/ManageObjet'
 import MyRoomObjet from './pages/myRoom/MyRoomObjets'
 import ObjetChatting from './pages/objet/ObjetChatting'
 import UserDetail from './pages/user/UserDetail'
@@ -25,6 +24,7 @@ import Notification from './pages/notification/Notification'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { GlobalWidth } from './global/globalStyles'
+import ObjetForm from './pages/objet/ObjetForm'
 
 const originalWarn = console.warn
 const originalError = console.error
@@ -76,9 +76,9 @@ function App() {
           <Route path={URL.newLounge} element={<NewLounge />} />
 
           {/* objets */}
-          <Route path={URL.newObjet} element={<ManageObjet />} />
+          <Route path={URL.newObjet} element={<ObjetForm />} />
           <Route path={`${URL.objet}/:oid`} element={<ObjetDetail />} />
-          <Route path={`${URL.objet}/:oid/update`} element={<ManageObjet />} />
+          <Route path={`${URL.objet}/:oid/update`} element={<ObjetForm />} />
           <Route
             path={`${URL.objet}/:oid/chatting`}
             element={<ObjetChatting />}
