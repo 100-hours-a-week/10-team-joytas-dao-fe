@@ -1,5 +1,4 @@
 import './App.css'
-import styled from 'styled-components'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { URL } from './static'
 import Login from './pages/login/Login'
@@ -23,7 +22,6 @@ import UserDetail from './pages/user/UserDetail'
 import Notification from './pages/notification/Notification'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
-import { GlobalWidth } from './global/globalStyles'
 import ObjetForm from './pages/objet/ObjetForm'
 
 const originalWarn = console.warn
@@ -51,72 +49,62 @@ console.error = (...args) => {
 function App() {
   return (
     <BrowserRouter>
-      <Main>
-        <Routes>
-          <Route path='/' element={<Navigate to={URL.main} />} />
-          <Route path={URL.main} element={<Home />} />
-          <Route path={URL.notification} element={<Notification />} />
+      <Routes>
+        <Route path='/' element={<Navigate to={URL.main} />} />
+        <Route path={URL.main} element={<Home />} />
+        <Route path={URL.notification} element={<Notification />} />
 
-          {/* auth */}
-          <Route path={URL.login} element={<Login />} />
-          <Route path={URL.privacy} element={<Privacy />} />
-          <Route path={URL.terms} element={<Terms />} />
-          <Route path={URL.withdraw} element={<UserDelete />} />
+        {/* auth */}
+        <Route path={URL.login} element={<Login />} />
+        <Route path={URL.privacy} element={<Privacy />} />
+        <Route path={URL.terms} element={<Terms />} />
+        <Route path={URL.withdraw} element={<UserDelete />} />
 
-          {/* user */}
-          <Route path={URL.firstProfile} element={<FirstProfile />} />
-          <Route path={URL.modifyProfile} element={<ModifyProfile />} />
-          <Route path={`${URL.userDetail}/:id`} element={<UserDetail />} />
-          <Route path={`${URL.lounge}/:lid/invite`} element={<UserList />} />
-          <Route path={URL.users} element={<UserList />} />
+        {/* user */}
+        <Route path={URL.firstProfile} element={<FirstProfile />} />
+        <Route path={URL.modifyProfile} element={<ModifyProfile />} />
+        <Route path={`${URL.userDetail}/:id`} element={<UserDetail />} />
+        <Route path={`${URL.lounge}/:lid/invite`} element={<UserList />} />
+        <Route path={URL.users} element={<UserList />} />
 
-          {/* lounges */}
-          <Route path={URL.lounge} element={<LoungeListPage />} />
-          <Route path={`${URL.lounge}/:lid`} element={<Lounge />} />
-          <Route path={URL.newLounge} element={<NewLounge />} />
+        {/* lounges */}
+        <Route path={URL.lounge} element={<LoungeListPage />} />
+        <Route path={`${URL.lounge}/:lid`} element={<Lounge />} />
+        <Route path={URL.newLounge} element={<NewLounge />} />
 
-          {/* objets */}
-          <Route path={URL.newObjet} element={<ObjetForm />} />
-          <Route path={`${URL.objet}/:oid`} element={<ObjetDetail />} />
-          <Route path={`${URL.objet}/:oid/update`} element={<ObjetForm />} />
-          <Route
-            path={`${URL.objet}/:oid/chatting`}
-            element={<ObjetChatting />}
-          />
-          <Route path={`${URL.objet}/:oid/call`} element={<ObjetCall />} />
-
-          {/* my room */}
-          <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
-          <Route path={URL.myRoom} element={<MyRoom />} />
-          <Route path={URL.myRoomObjet} element={<MyRoomObjet />} />
-        </Routes>
-
-        <ToastContainer
-          position='top-right'
-          autoClose={2000}
-          hideProgressBar={false}
-          newestOnTop
-          pauseOnFocusLoss
-          draggable
-          pauseOnHover
-          theme='dark'
-          limit={2}
-          closeOnClick
-          toastStyle={{
-            fontSize: '13px',
-          }}
+        {/* objets */}
+        <Route path={URL.newObjet} element={<ObjetForm />} />
+        <Route path={`${URL.objet}/:oid`} element={<ObjetDetail />} />
+        <Route path={`${URL.objet}/:oid/update`} element={<ObjetForm />} />
+        <Route
+          path={`${URL.objet}/:oid/chatting`}
+          element={<ObjetChatting />}
         />
-      </Main>
+        <Route path={`${URL.objet}/:oid/call`} element={<ObjetCall />} />
+
+        {/* my room */}
+        <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
+        <Route path={URL.myRoom} element={<MyRoom />} />
+        <Route path={URL.myRoomObjet} element={<MyRoomObjet />} />
+      </Routes>
+
+      <ToastContainer
+        position='top-right'
+        autoClose={2000}
+        hideProgressBar={false}
+        newestOnTop
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme='dark'
+        limit={2}
+        closeOnClick
+        toastStyle={{
+          fontSize: '13px',
+        }}
+      />
     </BrowserRouter>
   )
 }
-
-const Main = styled.div`
-  height: 100%;
-  margin: auto;
-  overflow: hidden;
-  background-color: black;
-  ${GlobalWidth}
-`
 
 export default App
