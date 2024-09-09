@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { useNavigate } from 'react-router-dom'
 import io from 'socket.io-client'
 import useUserStore from '../../store/userStore'
 import { Container, UserLabel, MyAudio, ProfileImage } from './VideoStyles'
 import Video from './Video'
+import { toast } from 'react-toastify'
 
 interface WebRTCUser {
   socket_id: string
@@ -47,6 +49,7 @@ const VideoContainer = ({
   const localAudioRef = useRef<HTMLAudioElement>(null)
   const localStreamRef = useRef<MediaStream>()
   const [users, setUsers] = useState<WebRTCUser[]>([])
+  const navigate = useNavigate()
 
   const token = localStorage.getItem('access_token')
   const nickname = useUserStore((state) => state.nickname)
@@ -155,7 +158,8 @@ const VideoContainer = ({
     getLocalStream()
 
     socketRef.current.on('error_message', (data: SocketError) => {
-      alert(`Error: ${data.error.message}`)
+      toast.info(data.error.message)
+      navigate(-1)
     })
 
     socketRef.current.on(
