@@ -11,14 +11,13 @@ import ModifyProfile from './pages/user/ModifyProfile'
 import UserDelete from './pages/user/UserDelete'
 import NewLounge from './pages/lounge/NewLounge'
 import CreateMyRoom from './pages/myRoom/CreateMyRoom'
-import NewObjet from './pages/objet/newObjet/NewObjet'
 import Lounge from './pages/lounge/Lounge'
 import MyRoom from './pages/myRoom/MyRoom'
 import UserList from './pages/user/UserList'
 import ObjetCall from './pages/objet/ObjetCall'
 import ObjetDetail from './pages/objet/ObjetDetail'
 import Home from './pages/home/Home'
-import UpdateObjet from './pages/objet/UpdateObjet'
+import ManageObjet from './pages/objet/ManageObjet'
 import MyRoomObjet from './pages/myRoom/MyRoomObjets'
 import ObjetChatting from './pages/objet/ObjetChatting'
 import UserDetail from './pages/user/UserDetail'
@@ -77,9 +76,9 @@ function App() {
           <Route path={URL.newLounge} element={<NewLounge />} />
 
           {/* objets */}
-          <Route path={URL.newObjet} element={<NewObjet />} />
+          <Route path={URL.newObjet} element={<ManageObjet />} />
           <Route path={`${URL.objet}/:oid`} element={<ObjetDetail />} />
-          <Route path={`${URL.objet}/:oid/update`} element={<UpdateObjet />} />
+          <Route path={`${URL.objet}/:oid/update`} element={<ManageObjet />} />
           <Route
             path={`${URL.objet}/:oid/chatting`}
             element={<ObjetChatting />}

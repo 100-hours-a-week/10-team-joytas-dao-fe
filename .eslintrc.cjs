@@ -15,5 +15,6 @@ module.exports = {
       { allowConstantExport: true },
     ],
     '@typescript-eslint/no-unused-vars': 'off',
+    'no-case-declarations': 'off', // switch-case 에서 변수 선언을 허용
   },
 }

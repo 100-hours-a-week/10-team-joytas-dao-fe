@@ -54,7 +54,7 @@ export const ObjetModel = styled.div`
 export const MiniObjetModel = styled.div`
   width: 40px;
   height: 40px;
-  margin: 70px 0 0;
+  margin: 70px 20px 0;
 `
 
 export const MoveIcon = styled.img`
@@ -94,22 +94,29 @@ export const ItemWrapper = styled.div`
   align-items: flex-start;
   margin-bottom: 8px;
   width: 100%;
-
-  @media (min-width: 600px) {
-    gap: 30px;
-  }
 `
 
 export const ItemLabel = styled.span`
   ${flexRow}
-  width: 90px;
+  min-width: 50px;
+  width: 50px;
   font-size: 13px;
   font-weight: semi-bold;
   margin: 10px 20px 0 0;
+
+  @media (min-width: 600px) {
+    width: 50px;
+  }
+
+  @media (min-width: 390px) {
+    width: 90px;
+  }
 `
 
 export const ItemInput = styled.div`
   ${flexColumn}
+  box-sizing: border-box;
+  width: 75%;
 `
 
 export const InputBox = styled.div<{
@@ -269,7 +276,7 @@ export const ChooseContainer = styled.div`
   flex-direction: row;
   gap: 20px;
   height: 40px;
-  margin: 20px auto;
+  margin: 40px auto;
   width: 100%;
 `
 
