@@ -1,20 +1,21 @@
-import { Container, Deem, Tab } from './DropdownStyles'
+import { Container, Tab } from './DropdownStyles'
 import { useParams, useNavigate } from 'react-router-dom'
-import { APIs, URL } from '../../static'
-import { useState } from 'react'
-import { toast } from 'react-toastify'
-import { DeleteLoungeModal } from '../modal/Modal'
+import { URL } from '../../static'
 
 interface MenuProps {
   onClickUpdate: () => void
   onClickDelete: () => void
 }
 
-export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
+export function LoungeDrop({
+  isOwner,
+  setIsDeleteModalVisible,
+}: {
+  isOwner: boolean
+  setIsDeleteModalVisible: (state: boolean) => void
+}) {
   const loungeId = useParams().lid || 0
   const navigate = useNavigate()
-  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
-  const [isClick, setIsClick] = useState(false)
 
   const handleClickObjetCreate = () => {
     navigate(URL.newObjet)
@@ -25,31 +26,6 @@ export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
     setIsDeleteModalVisible(true)
   }
 
-  const handleClickDelete = async () => {
-    setIsClick(true)
-    try {
-      const response = await fetch(`${APIs.loungeList}/${loungeId}`, {
-        method: 'DELETE',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (response.ok) {
-        toast.success('라운지 삭제 성공 😀')
-        navigate(URL.lounge)
-      } else if (response.status == 400) {
-        toast.error('라운지 삭제 실패 😭')
-      }
-    } catch (error) {
-      console.error('Failed to delete lounge', error)
-    } finally {
-      setIsClick(false)
-    }
-  }
-
   return (
     <Container>
       <Tab onClick={() => navigate(`${URL.lounge}/${loungeId}/invite`)}>
@@ -57,16 +33,6 @@ export function LoungeDrop({ isOwner }: { isOwner: boolean }) {
       </Tab>
       <Tab onClick={handleClickObjetCreate}>오브제 생성</Tab>
       {isOwner && <Tab onClick={handleClickDeleteButton}>라운지 삭제</Tab>}
-      {isDeleteModalVisible && (
-        <>
-          <Deem style={{ top: '-147px', right: '-38px' }} />
-          <DeleteLoungeModal
-            onClose={() => setIsDeleteModalVisible(false)}
-            handleDelete={handleClickDelete}
-            isClick={isClick}
-          />
-        </>
-      )}
     </Container>
   )
 }

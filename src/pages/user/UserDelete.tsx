@@ -9,7 +9,6 @@ import {
   TextArea,
   DetailReason,
   Button,
-  Deem,
 } from './UserDeleteStyles'
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -149,10 +148,11 @@ export default function UserDelete() {
               />
               기타
             </CheckboxLabel>
+            <RedTextLong style={{ marginTop: '15px' }}>
+              {isReasonNull ? '탈퇴 이유를 1개 이상 체크해주세요.' : null}
+            </RedTextLong>
           </CheckboxGroup>
-          <RedTextLong style={{ marginTop: '15px' }}>
-            {isReasonNull ? '탈퇴 이유를 1개 이상 체크해주세요.' : null}
-          </RedTextLong>
+
           <DetailReason>
             <SubTitle style={{ marginTop: '0px' }}>
               탈퇴 상세 이유 (선택)
@@ -166,16 +166,12 @@ export default function UserDelete() {
             <Button onClick={handleClickDeleteButton}>탈퇴하기</Button>
           </DetailReason>
         </GloablContainer32>
-        {isDeleteModalVisible && !isReasonNull && (
-          <>
-            <Deem />
-            <DeleteUserModal
-              onClose={() => setIsDeleteModalVisible(false)}
-              handleDelete={handleSubmit}
-              isClick={isClick}
-            />
-          </>
-        )}
+        <DeleteUserModal
+          isOpen={isDeleteModalVisible && !isReasonNull}
+          onClose={() => setIsDeleteModalVisible(false)}
+          handleDelete={handleSubmit}
+          isClick={isClick}
+        />
       </>
     </Layout>
   )
