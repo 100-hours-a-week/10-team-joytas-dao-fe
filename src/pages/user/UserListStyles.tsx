@@ -21,7 +21,7 @@ export const SearchUserInput = styled.input`
 export const UserListContainer = styled.div`
   width: 100%;
   margin-top: 20px;
-  height: 584px;
+  height: calc(100% - 180px);
   overflow-y: auto;
   gap: 20px;
   display: flex;

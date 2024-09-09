@@ -1,5 +1,5 @@
 import { Text } from '@react-three/drei'
-import { useMemo, useRef, useEffect } from 'react'
+import { useMemo, useRef, useEffect, Suspense } from 'react'
 import * as THREE from 'three'
 import { ObjetModelList } from '../../components/models/LazyModelList'
 import type { RandomModelsProps } from '../../types/ModelType'
@@ -39,11 +39,11 @@ export default function ObjetModels({
         O0003: 2,
       }
 
-      mesh.scale.setScalar(scaleMap[objet.type] || 1)
+      mesh.scale.setScalar(scaleMap[objet.objet_type] || 1)
 
       mesh.position.set(...getRandomPosition(objets.length))
 
-      const ModelComponent = ObjetModelList[objet.type]
+      const ModelComponent = ObjetModelList[objet.objet_type]
 
       mesh.userData = {
         id: objet.objet_id,
@@ -82,7 +82,9 @@ export default function ObjetModels({
           scale={mesh.scale}
           onClick={mesh.userData.onClick}
         >
-          <ModelComponent />
+          <Suspense fallback={null}>
+            <ModelComponent />
+          </Suspense>
           {nameText}
         </mesh>
       ))}

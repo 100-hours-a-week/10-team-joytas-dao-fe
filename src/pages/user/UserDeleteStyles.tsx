@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { GlobalWidth } from '../../global/globalStyles'
 
 export const Title = styled.div`
   color: white;
@@ -46,12 +45,15 @@ export const CheckboxInput = styled.input.attrs({ type: 'checkbox' })`
 `
 
 export const DetailReason = styled.div`
-  width: 100%;
   margin-top: 20px;
+  gap: 10px;
   height: fit-content;
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 310px;
+  margin: 20px auto 0;
 `
 
 export const TextArea = styled.textarea`
@@ -82,14 +84,4 @@ export const Button = styled.button`
   &:hover {
     background-color: rgba(255, 255, 255, 0.5);
   }
-`
-
-export const Deem = styled.div`
-  top: -675px;
-  left: -16px;
-  background-color: rgba(0, 0, 0, 0.7);
-  height: 100%;
-  z-index: 998;
-  position: relative;
-  ${GlobalWidth}
 `
