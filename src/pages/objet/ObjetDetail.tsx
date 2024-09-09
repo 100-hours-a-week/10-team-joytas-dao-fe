@@ -30,7 +30,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static'
 import { useEffect, useRef, useState } from 'react'
 import { ChatMessage } from '../../components/objet/Chat'
-import { DeleteModal } from '../../components/modal/Modal'
+import { DeleteObjetModal } from '../../components/modal/Modal'
 import { ModalBackdrop } from '../../components/modal/ModalStyles'
 import LoadingLottie from '../../components/lotties/LoadingLottie'
 import { ObjetDrop } from '../../components/dropdown/Dropdown'
@@ -335,7 +335,8 @@ export default function ObjetDetail() {
             </CommunityContainer>
           )}
           {isDeleteModalVisible && (
-            <DeleteModal
+            <DeleteObjetModal
+              isOpen={isDeleteModalVisible}
               onClose={() => setIsDeleteModalVisible(false)}
               handleDelete={handleDeleteObjet}
             />

@@ -18,6 +18,7 @@ import { LoungeDrop } from '../../components/dropdown/Dropdown'
 import useUserStore from '../../store/userStore'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
+import { DeleteLoungeModal } from '../../components/modal/Modal'
 
 export default function Lounge() {
   const { lid: loungeId } = useParams<{ lid: string }>()
@@ -29,6 +30,9 @@ export default function Lounge() {
   const [isLoading, setIsLoading] = useState(false)
   const [isDrop, setIsDrop] = useState(false)
   const [isOwner, setIsOwner] = useState(false)
+
+  const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isClick, setIsClick] = useState(false)
 
   const dropRef = useRef<HTMLDivElement>(null)
 
@@ -80,45 +84,81 @@ export default function Lounge() {
     }
   }, [isDrop])
 
+  const handleClickDelete = async () => {
+    setIsClick(true)
+    try {
+      const response = await fetch(`${APIs.loungeList}/${loungeId}`, {
+        method: 'DELETE',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (response.ok) {
+        toast.success('라운지 삭제 성공 😀')
+        navigate(URL.lounge)
+      } else if (response.status == 400) {
+        toast.error('라운지 삭제 실패 😭')
+      }
+    } catch (error) {
+      console.error('Failed to delete lounge', error)
+    } finally {
+      setIsClick(false)
+    }
+  }
+
   return (
     <Layout>
-      <GloablContainer16>
-        <TopContainer>
-          <LoungeTitle>
+      <>
+        <GloablContainer16>
+          <TopContainer>
+            <LoungeTitle>
+              {isLoading ? (
+                <Skeleton.Input
+                  active
+                  style={{
+                    backgroundColor: '#b7d1ea',
+                    opacity: '70%',
+                    width: '150px',
+                    height: '24px',
+                  }}
+                />
+              ) : (
+                loungeName
+              )}
+            </LoungeTitle>
+            <IconContainer onClick={() => setIsDrop(!isDrop)}>
+              <Icon src={menu} />
+              {isDrop && (
+                <div ref={dropRef}>
+                  <LoungeDrop
+                    setIsDeleteModalVisible={setIsDeleteModalVisible}
+                    isOwner={isOwner}
+                  />
+                </div>
+              )}
+            </IconContainer>
+          </TopContainer>
+          <GlobalSubTitle>
+            친구를 초대하고 오브제로 추억을 공유해보세요!
+          </GlobalSubTitle>
+          <Objets>
             {isLoading ? (
-              <Skeleton.Input
-                active
-                style={{
-                  backgroundColor: '#b7d1ea',
-                  opacity: '70%',
-                  width: '150px',
-                  height: '24px',
-                }}
-              />
+              <LoadingLottie />
             ) : (
-              loungeName
+              <LoungeObjets objets={objets} loungeId={Number(loungeId)} />
             )}
-          </LoungeTitle>
-          <IconContainer onClick={() => setIsDrop(!isDrop)}>
-            <Icon src={menu} />
-            {isDrop && (
-              <div ref={dropRef} onClick={(e) => e.stopPropagation()}>
-                <LoungeDrop isOwner={isOwner} />
-              </div>
-            )}
-          </IconContainer>
-        </TopContainer>
-        <GlobalSubTitle>
-          친구를 초대하고 오브제로 추억을 공유해보세요!
-        </GlobalSubTitle>
-        <Objets>
-          {isLoading ? (
-            <LoadingLottie />
-          ) : (
-            <LoungeObjets objets={objets} loungeId={Number(loungeId)} />
-          )}
-        </Objets>
-      </GloablContainer16>
+          </Objets>
+        </GloablContainer16>
+        <DeleteLoungeModal
+          isOpen={isDeleteModalVisible}
+          onClose={() => setIsDeleteModalVisible(false)}
+          handleDelete={handleClickDelete}
+          isClick={isClick}
+        />
+      </>
     </Layout>
   )
 }
