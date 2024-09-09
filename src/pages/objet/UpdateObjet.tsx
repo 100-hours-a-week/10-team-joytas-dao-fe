@@ -97,7 +97,7 @@ export default function UpdateObjet() {
             (user: SharedMembersProps) => user.user_id !== userId
           )
         )
-        setType(data.data.type)
+        setType(data.data.objet_type)
       }
     } catch (error) {
       console.error('오브제 정보 가져오기 실패: ', error)
