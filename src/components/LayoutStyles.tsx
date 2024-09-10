@@ -1,7 +1,11 @@
 import styled from 'styled-components'
 export const Main = styled.div`
   width: 100%;
-  height: 100%;
+  height: 100vh;
+
+  @media (min-width: 600px) {
+    width: 600px;
+  }
 `
 
 export const HeaderContainer = styled.div`
