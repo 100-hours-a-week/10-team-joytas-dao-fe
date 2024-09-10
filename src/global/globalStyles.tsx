@@ -2,7 +2,6 @@ import styled, { css } from 'styled-components'
 
 export const GloablContainer16 = styled.div`
   width: 100%;
-  overflow-y: auto;
   height: 100%;
   padding: 0 16px;
   box-sizing: border-box;
@@ -14,7 +13,6 @@ export const GloablContainer32 = styled.div`
   height: 100%;
   padding: 0 32px;
   box-sizing: border-box;
-  overflow-y: auto;
 `
 
 export const GlobalTitle = styled.div`

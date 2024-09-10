@@ -17,12 +17,10 @@ export const HeaderContainer = styled.div`
   box-sizing: border-box;
   height: 50px;
   position: relative;
-  top: 0px;
-  padding-left: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  @media (min-width: 600px) {
-    height: 70px;
-  }
+  /* top: 0px; */
+  padding-left: 15px;
+  /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
+  background-color: rgb(23, 23, 23);
 `
 
 export const LogoWrapper = styled.div`
@@ -43,20 +41,18 @@ export const HeaderRight = styled.div`
   box-sizing: border-box;
   display: flex;
   align-items: center;
-  right: 20px;
-  gap: 5px;
+  right: 5px;
 `
 
 export const Icon = styled.img`
   cursor: pointer;
-  width: 50px;
-  padding: 14px;
+  width: 40px;
+  padding: 12.5px;
 
   &:hover {
     transform-origin: 50% 0%;
     animation-name: shake;
     animation-duration: 2s;
-    animation-iteration-count: infinite;
     animation-delay: 0.1s;
   }
 
@@ -65,22 +61,22 @@ export const Icon = styled.img`
       transform: rotate(0deg);
     }
     10% {
-      transform: rotate(20deg);
+      transform: rotate(16deg);
     }
     20% {
-      transform: rotate(-20deg);
+      transform: rotate(-16deg);
     }
     30% {
-      transform: rotate(15deg);
+      transform: rotate(12deg);
     }
     40% {
-      transform: rotate(-15deg);
+      transform: rotate(-12deg);
     }
     50% {
-      transform: rotate(10deg);
+      transform: rotate(8deg);
     }
     60% {
-      transform: rotate(-10deg);
+      transform: rotate(-8deg);
     }
     70% {
       transform: rotate(0deg);
@@ -96,13 +92,20 @@ export const HamburgerIcon = styled.div`
 `
 
 export const FooterDiv = styled.div`
-  background-color: black;
   box-sizing: border-box;
-  height: 70px;
-  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  height: 60px;
   display: flex;
   justify-content: space-around;
+  align-items: center;
+  background-color: rgb(23, 23, 23);
+  position: fixed;
   bottom: 0;
+  width: 100%;
+
+  @media (min-width: 600px) {
+    height: 60px;
+    width: 600px;
+  }
 `
 
 export const IconDiv = styled.div`
@@ -114,27 +117,27 @@ export const IconDiv = styled.div`
 `
 
 export const IconImg = styled.img<{ $isMyRoom?: boolean }>`
-  width: 24px;
-  height: 24px;
+  width: 22px;
+  height: 22px;
   border-radius: 50%;
   object-fit: cover;
 
-  ${(props) => props.$isMyRoom && `border: 2px solid #575FFF;`}
+  ${(props) => props.$isMyRoom && `border: 1px solid white;`}
 `
 
 export const IconText = styled.div`
-  margin-top: 10px;
+  margin-top: 8px;
   color: white;
-  font-size: 10px;
+  font-size: 8px;
+
+  @media (min-width: 600px) {
+    font-size: 10px;
+  }
 `
 
 export const ChildrenDiv = styled.div`
   width: 100%;
   padding: 0 16px;
   box-sizing: border-box;
-  height: calc(100% - 120px);
-
-  @media (min-width: 600px) {
-    height: calc(100% - 140px);
-  }
+  height: calc(100% - 110px);
 `

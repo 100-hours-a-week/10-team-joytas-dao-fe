@@ -1,15 +1,12 @@
 import { FooterDiv, IconDiv, IconImg, IconText } from './LayoutStyles'
-import home from '../assets/images/footer/home.webp'
-import rocket from '../assets/images/footer/rocket.webp'
-import users from '../assets/images/footer/users.webp'
-import homePurple from '../assets/images/footer/homePurple.webp'
-import rocketPurple from '../assets/images/footer/rocketPurple.webp'
-import usersPurple from '../assets/images/footer/usersPurple.webp'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { URL } from '../static'
 import useUserStore from '../store/userStore'
 import { logEvent } from 'firebase/analytics'
 import { analytics } from '../firebase'
+import { HomeOutlined, TeamOutlined } from '@ant-design/icons'
+import lounge from '../assets/images/footer/lounge.webp'
+import loungeDark from '../assets/images/footer/loungeDark.webp'
 
 export default function Footer() {
   const navigate = useNavigate()
@@ -26,22 +23,55 @@ export default function Footer() {
   return (
     <FooterDiv>
       <IconDiv onClick={() => handleClickFooter(URL.main)}>
-        <IconImg src={pathname.includes('main') ? homePurple : home} />
-        <IconText>홈</IconText>
+        <HomeOutlined
+          style={{
+            color: pathname.includes('main') ? 'white' : '#888',
+            fontSize: '18px',
+          }}
+        />
+        <IconText
+          style={{
+            color: pathname.includes('main') ? 'white' : '#888',
+          }}
+        >
+          홈
+        </IconText>
       </IconDiv>
       <IconDiv onClick={() => handleClickFooter(URL.lounge)}>
         <IconImg
           src={
-            pathname.includes('lounge') || pathname.includes('objets')
-              ? rocketPurple
-              : rocket
+            pathname.includes('lounges') ||
+            (!pathname.includes('myRoom') && pathname.includes('objets'))
+              ? lounge
+              : loungeDark
           }
         />
-        <IconText>라운지</IconText>
+        <IconText
+          style={{
+            color:
+              pathname.includes('lounges') ||
+              (!pathname.includes('myRoom') && pathname.includes('objets'))
+                ? 'white'
+                : '#888',
+          }}
+        >
+          라운지
+        </IconText>
       </IconDiv>
       <IconDiv onClick={() => handleClickFooter(URL.users)}>
-        <IconImg src={pathname.includes('users') ? usersPurple : users} />
-        <IconText>유저</IconText>
+        <TeamOutlined
+          style={{
+            color: pathname.includes('users') ? 'white' : '#888',
+            fontSize: '18px',
+          }}
+        />
+        <IconText
+          style={{
+            color: pathname.includes('users') ? 'white' : '#888',
+          }}
+        >
+          유저
+        </IconText>
       </IconDiv>
       <IconDiv onClick={() => handleClickFooter(URL.myRoom)}>
         <IconImg
@@ -50,7 +80,13 @@ export default function Footer() {
           src={profileImage}
           $isMyRoom={pathname.includes('myRoom') ? true : false}
         />
-        <IconText>마이룸</IconText>
+        <IconText
+          style={{
+            color: pathname.includes('myRoom') ? 'white' : '#888',
+          }}
+        >
+          마이룸
+        </IconText>
       </IconDiv>
     </FooterDiv>
   )
