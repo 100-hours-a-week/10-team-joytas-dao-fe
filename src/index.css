@@ -5,6 +5,7 @@ html {
   width: 100%;
   height: 100%;
   background-color: black;
+  overflow-y: scroll;
 }
 
 body {
@@ -19,21 +20,22 @@ body {
 
 /* 스크롤바 스타일 */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 10px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent; /* 스크롤바 트랙 배경 */
+  background: black; /* 스크롤바 트랙 배경 */
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #333; /* 스크롤바 색상 */
+  background-color: #444; /* 스크롤바 색상 */
   border-radius: 10px; /* 스크롤바 둥글게 */
+  border: 3px solid black; /* 테두리를 배경색과 맞춤 */
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #555; /* 스크롤바에 마우스를 올렸을 때 색상 */
+  background-color: #666; /* 스크롤바에 마우스를 올렸을 때 색상 */
 }
 
 html,
