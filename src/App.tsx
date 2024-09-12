@@ -46,6 +46,13 @@ console.error = (...args) => {
   originalError(...args)
 }
 
+if (import.meta.env.VITE_NODE_ENV === 'production') {
+  console = window.console || {}
+  console.log = function no_console() {}
+  console.warn = function no_console() {}
+  console.error = function no_console() {}
+}
+
 function App() {
   return (
     <BrowserRouter>
