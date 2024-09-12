@@ -426,6 +426,8 @@ export const ChatContainer = styled.div`
   ${flexColumn}
   width: 100%;
   height: calc(100% - 120px);
+  padding-bottom: 60px;
+
   @media (min-width: 600px) {
     height: calc(100% - 140px);
   }

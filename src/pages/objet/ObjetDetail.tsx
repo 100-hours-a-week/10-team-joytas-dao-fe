@@ -288,52 +288,55 @@ export default function ObjetDetail() {
             <ObjetDescription>{description}</ObjetDescription>
           </ObjetDetailContainer>
           <Divider />
-          <ChattingText>| &nbsp; 채팅 미리보기</ChattingText>
-          {messagePreviews.length < 1 ? (
-            <>
-              <NoChatting>채팅 내역이 없습니다.</NoChatting>
-              <GoToBtnWrapper style={{ marginTop: '30px' }}>
-                <GoCommunityBtn
-                  text='채팅 입장'
-                  className='chattings'
-                  onClick={handleClickChat}
-                />
-                <GoCommunityBtn
-                  text='음성통화'
-                  className='call'
-                  people={callingPeople}
-                  onClick={handleClickCall}
-                />
-              </GoToBtnWrapper>
-            </>
-          ) : (
-            <CommunityContainer>
-              <ChattingsWrapper>
-                {messagePreviews.map((message, index) => (
-                  <ChatMessage
-                    userName={message.sender_name}
-                    userId={message.sender_id}
-                    profileImg={message.sender_profile_url}
-                    content={message.message}
-                    key={index}
+
+          <div style={{ paddingBottom: '80px' }}>
+            <ChattingText>| &nbsp; 채팅 미리보기</ChattingText>
+            {messagePreviews.length < 1 ? (
+              <>
+                <NoChatting>채팅 내역이 없습니다.</NoChatting>
+                <GoToBtnWrapper style={{ marginTop: '30px' }}>
+                  <GoCommunityBtn
+                    text='채팅 입장'
+                    className='chattings'
+                    onClick={handleClickChat}
                   />
-                ))}
-              </ChattingsWrapper>
-              <GoToBtnWrapper>
-                <GoCommunityBtn
-                  text='채팅 입장'
-                  className='chattings'
-                  onClick={handleClickChat}
-                />
-                <GoCommunityBtn
-                  text='음성통화'
-                  className='call'
-                  people={callingPeople}
-                  onClick={handleClickCall}
-                />
-              </GoToBtnWrapper>
-            </CommunityContainer>
-          )}
+                  <GoCommunityBtn
+                    text='음성통화'
+                    className='call'
+                    people={callingPeople}
+                    onClick={handleClickCall}
+                  />
+                </GoToBtnWrapper>
+              </>
+            ) : (
+              <CommunityContainer>
+                <ChattingsWrapper>
+                  {messagePreviews.map((message, index) => (
+                    <ChatMessage
+                      userName={message.sender_name}
+                      userId={message.sender_id}
+                      profileImg={message.sender_profile_url}
+                      content={message.message}
+                      key={index}
+                    />
+                  ))}
+                </ChattingsWrapper>
+                <GoToBtnWrapper>
+                  <GoCommunityBtn
+                    text='채팅 입장'
+                    className='chattings'
+                    onClick={handleClickChat}
+                  />
+                  <GoCommunityBtn
+                    text='음성통화'
+                    className='call'
+                    people={callingPeople}
+                    onClick={handleClickCall}
+                  />
+                </GoToBtnWrapper>
+              </CommunityContainer>
+            )}
+          </div>
           {isDeleteModalVisible && (
             <DeleteObjetModal
               isOpen={isDeleteModalVisible}
