@@ -70,8 +70,9 @@ export const ModifyButton = styled.label`
   align-items: center;
   justify-content: center;
   z-index: 10;
-  top: 65px;
-  left: 50px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 `
 
 export const NicknameContainer = styled.div`
@@ -152,6 +153,7 @@ export const DeleteButton = styled.div`
   width: fit-content;
   margin: 10px auto;
   font-size: 10px;
+  padding-bottom: 90px;
 `
 
 export const ImageInput = styled.input`
