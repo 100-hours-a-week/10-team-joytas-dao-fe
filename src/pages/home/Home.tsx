@@ -110,7 +110,11 @@ export default function Home() {
             <ObjetPreview objets={objets} />
           )}
         </MyObjetContainer>
-        <MyObjetContainer>
+        <MyObjetContainer
+          style={{
+            paddingBottom: '70px',
+          }}
+        >
           <MyObjetTitle>
             <img src={alert} alt='recentObjetsIcon' />
             Comming Soon !
