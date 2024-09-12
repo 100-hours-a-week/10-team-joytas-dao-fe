@@ -140,6 +140,7 @@ export const ContainerSubTitle = styled.div`
 export const OnBoarding = styled.div`
   width: 100%;
   height: calc(100% - 280px);
+  max-height: 450px;
   margin-top: 35px;
   overflow-x: auto;
 
@@ -156,17 +157,24 @@ export const CardList = styled.div`
   gap: 16px;
   height: 100%;
   width: fit-content;
+  overflow-y: hidden;
   padding-right: 32px;
 `
 
 export const Card = styled.div`
-  width: 326px;
+  width: 250px;
   height: fit-content;
   border-radius: 20px;
   background-color: black;
+  border: 0.1px solid #5f5f5f;
+  overflow-y: hidden;
 
   @media (min-width: 564px) {
     width: 500px;
+  }
+
+  @media (min-width: 400px) {
+    width: 326px;
   }
 `
 
@@ -212,7 +220,7 @@ export const MiddleContainer2 = styled.div`
   padding: 30px 0 0;
   box-sizing: border-box;
   background-color: black;
-  height: 100vh;
+  height: 80vh;
 `
 
 export const CardDescription = styled.div`
@@ -229,19 +237,6 @@ export const CardDescription = styled.div`
   }
   @media (min-width: 564px) {
     font-size: 20px;
-  }
-`
-
-export const CardModelImageContainer = styled.div`
-  display: flex;
-  width: 100%;
-`
-
-export const CardModelImage = styled.img`
-  width: 170px;
-
-  @media (min-width: 564px) {
-    width: 270px;
   }
 `
 

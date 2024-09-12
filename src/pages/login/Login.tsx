@@ -18,8 +18,6 @@ import {
   CardTitle,
   CardButton,
   CardImage,
-  CardModelImage,
-  CardModelImageContainer,
   BottomContainer,
 } from './LoginStyles'
 import { Link } from 'react-router-dom'
@@ -32,8 +30,6 @@ import card2 from '../../assets/images/card2.png'
 import card3 from '../../assets/images/card3.png'
 import card4 from '../../assets/images/card4.png'
 import card5 from '../../assets/images/card5.png'
-import card6 from '../../assets/images/card6.png'
-import card7 from '../../assets/images/card7.png'
 import scrollIcon from '../../assets/images/scrollIcon.png'
 
 export default function Login() {
@@ -100,16 +96,6 @@ export default function Login() {
           <br /> DAO로 여러분은 추억을 <strong>새롭게 체험</strong>합니다.
         </CardDescription>
         <CardButton onClick={handleClickLogIn}>체험하러 가기</CardButton>
-        <CardModelImageContainer
-          style={{ marginTop: '20px', justifyContent: 'flex-start' }}
-        >
-          <CardModelImage src={card6} />
-        </CardModelImageContainer>
-        <CardModelImageContainer
-          style={{ marginTop: '-80px', justifyContent: 'flex-end' }}
-        >
-          <CardModelImage src={card7} />
-        </CardModelImageContainer>
       </MiddleContainer2>
       <BottomContainer>
         <img src={logo} />
