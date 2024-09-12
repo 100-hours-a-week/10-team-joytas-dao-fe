@@ -106,6 +106,7 @@ export const CreateBtn = styled.button`
   color: white;
   background-color: rgba(255, 255, 255, 0.3);
   font-size: 14px;
+  margin-bottom: 80px;
 `
 export const ObjetWrapper = styled.button`
   display: flex;

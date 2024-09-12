@@ -3,7 +3,6 @@ import {
   BtnContainer,
   CreateBtn,
   MyRoomList,
-  MyRoomName,
   MyRoomPreviewWrapper,
   MyRoomThumbnail,
   StyledGloablContainer16,
@@ -99,7 +98,6 @@ export default function CreateMyRoom() {
               <ambientLight intensity={1} />
               <group rotation-y={-Math.PI / 2}>{selectedModel?.model}</group>
             </Canvas>
-            <MyRoomName>{selectedModel?.name}</MyRoomName>
           </MyRoomPreviewWrapper>
         </StyledGloablContainer16>
         <MyRoomList>
