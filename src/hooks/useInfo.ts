@@ -2,8 +2,10 @@ import { useNavigate } from 'react-router-dom'
 import type { Profile } from '../types/ProfileType'
 import useUserStore from '../store/userStore'
 import { APIs, URL } from '../static'
+import { useState } from 'react'
 
 export const useUserInfo = () => {
+  const [isLogin, setIsLogin] = useState(false)
   const navigate = useNavigate()
 
   const { updateId, updateNickname, updateProfileImage } = useUserStore()
@@ -27,6 +29,7 @@ export const useUserInfo = () => {
         })
 
         if (reissueResponse.ok) {
+          setIsLogin(true)
           const reissueData = await reissueResponse.json()
           localStorage.setItem('access_token', reissueData.data.access_token)
 
@@ -38,18 +41,22 @@ export const useUserInfo = () => {
             },
           })
         } else {
+          setIsLogin(false)
           throw new Error('Failed to reissue token')
         }
       }
 
       if (!response.ok) {
+        navigate(URL.login)
         throw new Error('Failed to fetch profile')
       }
 
+      setIsLogin(true)
       const responseData = await response.json()
       return responseData.data
     } catch (error) {
       console.error('Failed to fetch profile', error)
+      setIsLogin(false)
       navigate(URL.login)
     }
   }
@@ -70,5 +77,5 @@ export const useUserInfo = () => {
     }
   }
 
-  return { getProfile }
+  return { isLogin, getProfile }
 }
