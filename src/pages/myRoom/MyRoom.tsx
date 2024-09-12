@@ -1,9 +1,7 @@
-import { lazy } from 'react'
 import Layout from '../../components/Layout.js'
 import {
   Icon,
   IconWithBorder,
-  MyRoomName,
   MyRoomPreviewWrapper,
   MyRoomTitleInput,
   ObjetWrapper,
@@ -13,25 +11,22 @@ import {
 } from './MyRoomStyles.tsx'
 import { toast } from 'react-toastify'
 import { Skeleton } from 'antd'
-import { Canvas, useFrame } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import { Canvas } from '@react-three/fiber'
 import editIcon from '../../assets/images/edit.webp'
 import closeIcon from '../../assets/images/close.webp'
 import checkIcon from '../../assets/images/check.webp'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import {
   modelList,
   MyRoomModel,
   roomConfigs,
 } from '../../global/myRoomModels.js'
 import { GloablContainer16 } from '../../global/globalStyles.tsx'
-import { Group } from 'three'
 import { useNavigate } from 'react-router-dom'
 import { APIs, URL } from '../../static.ts'
 import LoadingLottie from '../../components/lotties/LoadingLottie.tsx'
 import useUserStore from '../../store/userStore.ts'
-
-const ObjetModel1 = lazy(() => import('../../assets/models/ObjetModel1.tsx'))
+import { OrbitControls } from '@react-three/drei'
 
 export default function MyRoom() {
   const [myRoomId, setMyRoomId] = useState()
@@ -199,34 +194,10 @@ export default function MyRoom() {
         </MyRoomPreviewWrapper>
 
         <ObjetWrapper onClick={handleNavigate}>
-          {isLoading ? (
-            <LoadingLottie />
-          ) : (
-            <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
-              <OrbitControls enableZoom={false} />
-              <ambientLight intensity={1} />
-              <RenderObjet />
-            </Canvas>
-          )}
-          <MyRoomName>내 오브제 조회</MyRoomName>
+          <div>내 오브제 조회</div>
         </ObjetWrapper>
+        <div style={{ height: '80px' }} />
       </GloablContainer16>
     </Layout>
-  )
-}
-
-function RenderObjet() {
-  const ref = useRef<Group>(null)
-
-  useFrame(() => {
-    if (ref.current) {
-      ref.current.rotation.y += 0.01
-    }
-  })
-
-  return (
-    <group ref={ref} rotation-y={-Math.PI / 2}>
-      <ObjetModel1 scale={[3, 3, 3]} />
-    </group>
   )
 }

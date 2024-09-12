@@ -69,7 +69,6 @@ export const MyRoomPreviewWrapper = styled.div`
   flex-direction: column;
   margin-top: 40px;
   height: 310px;
-  margin-bottom: 20px;
   cursor: pointer;
 `
 
@@ -108,20 +107,42 @@ export const CreateBtn = styled.button`
   background-color: rgba(255, 255, 255, 0.3);
   font-size: 14px;
 `
-
-export const ObjetWrapper = styled.div`
+export const ObjetWrapper = styled.button`
   display: flex;
+  margin: 0 auto;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  margin-top: 60px;
-  width: 100%;
-  height: 100px;
-  margin-bottom: 20px;
+  background-color: black;
+  border: 1px solid #2b3c4a;
+  width: 150px;
+  border-radius: 20px;
+  height: 40px;
 
-  color: white;
+  div {
+    font-size: 12px;
+    color: white;
+  }
 
-  cursor: pointer;
+  @keyframes jelly {
+    25% {
+      transform: scale(0.9, 1.1);
+    }
+
+    50% {
+      transform: scale(1.1, 0.9);
+    }
+
+    75% {
+      transform: scale(0.95, 1.05);
+    }
+  }
+
+  &:hover {
+    background-color: #2b3c4a;
+    opacity: 0.9;
+    animation: jelly 0.5s;
+  }
 `
 
 export const MyRoomIconContainer = styled.div`
