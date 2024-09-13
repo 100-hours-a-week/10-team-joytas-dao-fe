@@ -46,7 +46,7 @@ export function ChatMessage({
         <ChatContents>
           <UserName>{userName}</UserName>
           <ContentsAndDatetime>
-            <div className='contents'>{content}</div>
+            <div className='contents isOther'>{content}</div>
             <div className='datetime'>{extractHourMinute(datetime)}</div>
           </ContentsAndDatetime>
         </ChatContents>

@@ -3,15 +3,17 @@ import styled from 'styled-components'
 export const Chat = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: flex-start;
   color: white;
-  gap: 10px;
+  gap: 7px;
+  margin: 3px 0;
 
   img {
     width: 30px;
     height: 30px;
     object-fit: cover;
     border-radius: 50%;
+    margin-top: 7px;
   }
 `
 
@@ -41,7 +43,7 @@ export const ChatContents = styled.div`
   flex-direction: column;
   width: 90%;
   padding: 6px;
-  gap: 5px;
+  gap: 9px;
 
   .preview {
     white-space: nowrap;
@@ -58,14 +60,13 @@ export const UserName = styled.span`
 export const ContentsAndDatetime = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: self-end;
+  align-items: flex-end;
   gap: 7px;
   margin-right: 10px;
 
   .contents {
     font-size: 12px;
     max-width: 180px;
-    border: 0.3px solid #d9d9d9;
     border-radius: 15px;
     padding: 10px;
 
@@ -73,8 +74,10 @@ export const ContentsAndDatetime = styled.div`
     white-space: pre-wrap;
 
     &.isMine {
-      border: none;
       background-color: #007aff;
+    }
+    &.isOther {
+      background-color: #666;
     }
   }
 
@@ -82,7 +85,7 @@ export const ContentsAndDatetime = styled.div`
     color: #b3b3b3;
     width: fit-content;
     font-size: 10px;
-    bottom: 0;
+    margin-bottom: 2px;
     white-space: pre-wrap;
   }
 `
