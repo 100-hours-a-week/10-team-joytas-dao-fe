@@ -9,7 +9,7 @@ export const NotificationContainer = styled.div`
   overflow-y: auto;
   box-sizing: border-box;
   margin-top: 20px;
-  padding-bottom: 20px;
+  padding-bottom: 80px;
 `
 
 export const NotificationGroup = styled.div`
