@@ -20,7 +20,7 @@ export const MyChat = styled.div`
   flex-direction: row;
   justify-content: end;
   align-items: baseline;
-  margin: 10px 0;
+  margin: 8px 0;
 
   .contents {
     text-align: right;
@@ -30,7 +30,7 @@ export const MyChat = styled.div`
 export const EnterAlert = styled.div`
   display: flex;
   justify-content: center;
-  margin: 8px 0;
+  margin: 10px 0;
 
   font-size: 12px;
   color: #b3b3b3;
@@ -60,22 +60,28 @@ export const ContentsAndDatetime = styled.div`
   flex-direction: row;
   align-items: self-end;
   gap: 7px;
+  margin-right: 10px;
 
   .contents {
     font-size: 12px;
     max-width: 180px;
     border: 0.3px solid #d9d9d9;
-    border-radius: 10px;
-    padding: 7px;
+    border-radius: 15px;
+    padding: 10px;
 
     word-break: break-word;
     white-space: pre-wrap;
+
+    &.isMine {
+      border: none;
+      background-color: #007aff;
+    }
   }
 
   .datetime {
     color: #b3b3b3;
-    width: 55px;
-    font-size: 7px;
+    width: fit-content;
+    font-size: 10px;
     bottom: 0;
     white-space: pre-wrap;
   }

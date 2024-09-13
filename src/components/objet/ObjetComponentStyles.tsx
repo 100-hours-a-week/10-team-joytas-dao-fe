@@ -12,7 +12,6 @@ export const ObjetList = styled.div`
     grid-template-columns: repeat(4, 1fr);
     overflow-x: auto;
     overflow-y: hidden;
-    gap: 15px;
   }
 `
 
