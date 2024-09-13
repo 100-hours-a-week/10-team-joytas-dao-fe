@@ -6,7 +6,7 @@ import {
   MyChat,
   UserName,
 } from './ChatStyles'
-import { formatDatetime } from '../../utils/formatDatetime'
+import { extractHourMinute } from '../../utils/formatDatetime'
 import useUserStore from '../../store/userStore'
 
 interface ChattingProps {
@@ -27,26 +27,27 @@ export function ChatMessage({
   profileImg,
   content,
   datetime,
-}: ChattingProps) {
+  innerRef,
+}: ChattingProps & { innerRef?: React.Ref<HTMLDivElement> }) {
   const myUserId = useUserStore((state) => state.userId)
   const isMyChat = userId === myUserId
 
   return datetime ? (
     isMyChat ? (
-      <MyChat>
+      <MyChat ref={innerRef}>
         <ContentsAndDatetime>
-          <div className='datetime'>{formatDatetime(datetime)}</div>
-          <div className='contents'>{content}</div>
+          <div className='datetime'>{extractHourMinute(datetime)}</div>
+          <div className='contents isMine'>{content}</div>
         </ContentsAndDatetime>
       </MyChat>
     ) : (
-      <Chat>
+      <Chat ref={innerRef}>
         <img src={profileImg} alt='profile' />
         <ChatContents>
           <UserName>{userName}</UserName>
           <ContentsAndDatetime>
             <div className='contents'>{content}</div>
-            <div className='datetime'>{formatDatetime(datetime)}</div>
+            <div className='datetime'>{extractHourMinute(datetime)}</div>
           </ContentsAndDatetime>
         </ChatContents>
       </Chat>

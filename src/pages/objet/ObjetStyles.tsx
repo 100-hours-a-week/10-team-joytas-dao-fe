@@ -492,3 +492,16 @@ export const NoChatting = styled.div`
   padding-left: 25px;
   color: rgba(255, 255, 255, 0.4);
 `
+
+export const ChattingGroupByDate = styled.div`
+  ${flexColumn}
+  width: 100%;
+  margin-top: 20px;
+`
+
+export const ChattingDate = styled.div`
+  ${flexCenter}
+  width: 100%;
+  color: white;
+  font-size: 12px;
+`

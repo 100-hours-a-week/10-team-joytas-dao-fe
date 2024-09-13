@@ -146,12 +146,11 @@ export default function ObjetDetail() {
 
       if (chatRes.ok) {
         const data = await chatRes.json()
-
         setChatToken(data.data.room_token)
 
         // - 채팅방 미리보기 가져오기
         const chatPreviewRes = await fetch(
-          `${APIs.chat}/${data.data.room_token}/messages?all=false`,
+          `${APIs.chat}/${data.data.room_token}/messages/recent`,
           {
             method: 'GET',
             credentials: 'include',
@@ -164,7 +163,7 @@ export default function ObjetDetail() {
 
         if (chatPreviewRes.ok) {
           const chatPreviewData = await chatPreviewRes.json()
-          setMessagePreviews(chatPreviewData.data)
+          setMessagePreviews(chatPreviewData.data.messages)
         }
       }
 
