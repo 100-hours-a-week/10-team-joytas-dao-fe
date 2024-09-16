@@ -222,7 +222,9 @@ export default function ObjetInfoForm({
       !isDescriptionChanged &&
       !isImageChanged
     ) {
-      toast.info('변경된 내용이 없습니다.')
+      if (path === 'update') {
+        toast.info('변경된 내용이 없습니다.')
+      }
       return
     }
 
