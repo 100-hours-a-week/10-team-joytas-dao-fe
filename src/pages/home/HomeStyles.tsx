@@ -21,28 +21,16 @@ export const Nickname = styled.div`
   color: rgba(255, 204, 0);
 `
 
-export const Banner = styled.div`
-  background-color: grey;
-  width: 100%;
-  display: flex;
-  object-fit: cover;
-  align-items: center;
-  justify-content: center;
-  height: 200px;
-`
-
 export const BannerImage = styled.img`
   background-color: grey;
   width: 100%;
-  height: 180px;
   display: flex;
   object-fit: cover;
   align-items: center;
   justify-content: center;
-  aspect-ratio: 1.9;
 
   @media (min-width: 600px) {
-    height: 250px;
+    height: 280px;
   }
 `
 
