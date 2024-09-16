@@ -36,8 +36,7 @@ export function InputItem({
         <RedText
           style={{
             marginTop: '10px',
-            width: '218px',
-            height: className === 'name' ? '23px' : '12px',
+            height: '20px',
           }}
         >
           {helperText}

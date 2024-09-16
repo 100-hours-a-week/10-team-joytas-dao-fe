@@ -10,7 +10,7 @@ import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Group } from 'three'
 import { objetList } from '../../global/objetModels.tsx'
-import SelectObjetType from './newObjet/SelectObjetType.tsx'
+import SelectObjetType from '../../components/objet/SelectObjetType.tsx'
 import ObjetInfoForm from '../../components/objet/ObjetInputForm.tsx'
 import { ObjetInfoFormProps } from '../../global/objetProps.tsx'
 import { useLocation, useParams } from 'react-router-dom'
@@ -53,9 +53,8 @@ export default function ObjetForm() {
 
       if (response.ok) {
         const data = await response.json()
-
         setObjetInfo(data.data)
-        setSelectedType(data.data.type)
+        setSelectedType(data.data.objet_type)
       }
     } catch (error) {
       console.error('오브제 정보 가져오기 실패: ', error)
@@ -76,7 +75,7 @@ export default function ObjetForm() {
             {isSelected && (
               <Canvas camera={{ position: [0, 0, 4], fov: 50 }}>
                 <OrbitControls enableZoom={false} enableRotate={false} />
-                <ambientLight intensity={1} />
+                <ambientLight intensity={1.7} />
                 <RenderObjet type={selectedType} />
               </Canvas>
             )}
@@ -113,8 +112,15 @@ function RenderObjet({ type }: ObjetInfoFormProps) {
     }
   })
 
+  const scale: [number, number, number] =
+    type === 'O0001'
+      ? [1, 1, 1]
+      : type === 'O0002'
+        ? [3.5, 3.5, 3.5]
+        : [48, 48, 48]
+
   return (
-    <group ref={ref} rotation-y={-Math.PI / 2}>
+    <group ref={ref} rotation-y={-Math.PI / 2} scale={scale}>
       {model}
     </group>
   )

@@ -26,8 +26,7 @@ export const validateName = (
   if (!name || name.length < 2 || name.length > 10) {
     return {
       isValid: false,
-      errorMessage:
-        '오브제 이름은 최소 2글자, 최대 10글자까지 작성 가능합니다.',
+      errorMessage: '오브제 이름은 최소 2글자, 최대 10글자 작성 가능합니다.',
     }
   }
   return { isValid: true, errorMessage: '' }
@@ -36,7 +35,12 @@ export const validateName = (
 export const validateDescription = (
   description: string
 ): { isValid: boolean; errorMessage: string } => {
-  if (description.length > 200) {
+  if (description.length < 2) {
+    return {
+      isValid: false,
+      errorMessage: '오브제 설명은 최소 2글자 이상 작성해주세요.',
+    }
+  } else if (description.length > 200) {
     return {
       isValid: false,
       errorMessage: '오브제 설명은 최대 200글자까지 작성 가능합니다.',

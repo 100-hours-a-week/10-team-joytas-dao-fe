@@ -4,13 +4,13 @@ import {
   ChooseContainer,
   MoveIcon,
   ChooseButton,
-} from '../ObjetStyles'
-import left from '../../../assets/images/left.webp'
-import right from '../../../assets/images/right.webp'
+} from '../../pages/objet/ObjetStyles'
+import left from '../../assets/images/left.webp'
+import right from '../../assets/images/right.webp'
 import { useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
-import { ObjetModelList } from '../../../components/models/LazyModelList'
+import { ObjetModelList } from '../models/LazyModelList'
 
 interface ObjetProps {
   setSelectedType: (type: string) => void

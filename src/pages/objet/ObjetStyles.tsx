@@ -52,9 +52,9 @@ export const ObjetModel = styled.div`
 `
 
 export const MiniObjetModel = styled.div`
-  width: 40px;
-  height: 40px;
-  margin: 70px 20px 0;
+  width: 50px;
+  height: 45px;
+  margin: 50px 10px 0;
 `
 
 export const MoveIcon = styled.img`
@@ -132,7 +132,6 @@ export const InputBox = styled.div<{
     if (props.img && props.className !== 'updateImg') return 'auto'
     return '40px'
   }};
-  ${(props) => props.className === 'member' && 'margin-bottom: 30px;'}
   ${(props) => props.img && 'position: relative;'}
 
   input,
@@ -238,8 +237,13 @@ export const TagWrapper = styled.div`
   display: flex;
   margin-top: 8px;
   overflow-x: scroll;
-  width: 220px;
+  overflow-y: hidden;
+  width: 230px;
   height: 32px;
+
+  @media (min-width: 600px) {
+    width: 400px;
+  }
 `
 
 export const Icon = styled.img`
@@ -276,7 +280,7 @@ export const ChooseContainer = styled.div`
   flex-direction: row;
   gap: 20px;
   height: 40px;
-  margin: 40px auto;
+  margin: 40px auto 60px;
   width: 100%;
 `
 
