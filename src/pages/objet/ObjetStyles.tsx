@@ -280,7 +280,7 @@ export const ChooseContainer = styled.div`
   flex-direction: row;
   gap: 20px;
   height: 40px;
-  margin: 40px auto;
+  margin: 40px auto 60px;
   width: 100%;
 `
 

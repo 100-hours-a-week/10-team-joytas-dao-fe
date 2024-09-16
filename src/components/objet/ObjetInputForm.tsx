@@ -141,6 +141,7 @@ export default function ObjetInfoForm({
       { user_id: Number(option.key), nickname: option.value as string },
     ])
     setMentionValue('')
+    setMemberErrorMessage('')
   }
 
   const handleTagClose = (removedTag: string) => {
@@ -177,7 +178,7 @@ export default function ObjetInfoForm({
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
 
-    if (file && validateImage(file)) {
+    if (file && validateImage(file).isValid) {
       setImage(file)
 
       const reader = new FileReader()
@@ -189,7 +190,10 @@ export default function ObjetInfoForm({
       reader.readAsDataURL(file)
 
       setImageValid(true)
+      setImageErrorMessage('')
       setIsImageChanged(true)
+    } else if (file) {
+      setImageErrorMessage(validateImage(file).errorMessage)
     }
   }
 
@@ -241,6 +245,8 @@ export default function ObjetInfoForm({
     setIsLoading(true)
 
     try {
+      let receivedImageUrl
+
       if (image && isImageChanged) {
         const formData = new FormData()
         formData.append('file', image)
@@ -260,8 +266,7 @@ export default function ObjetInfoForm({
         }
 
         const imageResponseData = await imageResponse.json()
-        const imageUrl = imageResponseData.data.image_url
-        setImageUrl(imageUrl)
+        receivedImageUrl = imageResponseData.data.image_url
       }
 
       let response
@@ -271,7 +276,7 @@ export default function ObjetInfoForm({
           type,
           name,
           description,
-          imageUrl,
+          receivedImageUrl || imageUrl,
           sharedMembers
         )
       } else if (path === 'update') {
@@ -279,7 +284,7 @@ export default function ObjetInfoForm({
           Number(objetId),
           name,
           description,
-          imageUrl,
+          receivedImageUrl || imageUrl,
           sharedMembers
         )
       }
