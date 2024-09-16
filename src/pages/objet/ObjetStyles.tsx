@@ -52,9 +52,9 @@ export const ObjetModel = styled.div`
 `
 
 export const MiniObjetModel = styled.div`
-  width: 40px;
-  height: 40px;
-  margin: 70px 20px 0;
+  width: 50px;
+  height: 45px;
+  margin: 50px 10px 0;
 `
 
 export const MoveIcon = styled.img`
