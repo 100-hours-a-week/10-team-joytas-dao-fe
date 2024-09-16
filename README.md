@@ -40,7 +40,7 @@
 
   
 ### 사용 기술 및 tools
-- React, Typescript, Styled-Components, Zustand, WebRTC, Stomp 
+- React, Typescript, Styled-Components, Zustand, WebRTC, Stomp, Three.js
 <br/>
 
 ## 🖥️ 서비스 화면
