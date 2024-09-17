@@ -10,9 +10,11 @@ interface MenuProps {
 export function LoungeDrop({
   isOwner,
   setIsDeleteModalVisible,
+  setIsWithdrawModalVisible,
 }: {
   isOwner: boolean
   setIsDeleteModalVisible: (state: boolean) => void
+  setIsWithdrawModalVisible: (state: boolean) => void
 }) {
   const loungeId = useParams().lid || 0
   const navigate = useNavigate()
@@ -26,13 +28,21 @@ export function LoungeDrop({
     setIsDeleteModalVisible(true)
   }
 
+  const handleClickWithdrawButton = () => {
+    setIsWithdrawModalVisible(true)
+  }
+
   return (
     <Container>
       <Tab onClick={() => navigate(`${URL.lounge}/${loungeId}/invite`)}>
         유저 초대
       </Tab>
       <Tab onClick={handleClickObjetCreate}>오브제 생성</Tab>
-      {isOwner && <Tab onClick={handleClickDeleteButton}>라운지 삭제</Tab>}
+      {isOwner ? (
+        <Tab onClick={handleClickDeleteButton}>라운지 삭제</Tab>
+      ) : (
+        <Tab onClick={handleClickWithdrawButton}>라운지 탈퇴</Tab>
+      )}
     </Container>
   )
 }

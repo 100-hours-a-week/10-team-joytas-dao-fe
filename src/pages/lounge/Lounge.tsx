@@ -18,7 +18,10 @@ import { LoungeDrop } from '@components/dropdown/Dropdown'
 import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { DeleteLoungeModal } from '@components/modal/Modal'
+import {
+  DeleteLoungeModal,
+  WithDrawLoungeModal,
+} from '@components/modal/Modal'
 
 export default function Lounge() {
   const { lid: loungeId } = useParams<{ lid: string }>()
@@ -32,6 +35,7 @@ export default function Lounge() {
   const [isOwner, setIsOwner] = useState(false)
 
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isWithdrawModalVisible, setIsWithdrawModalVisible] = useState(false)
   const [isClick, setIsClick] = useState(false)
 
   const dropRef = useRef<HTMLDivElement>(null)
@@ -109,6 +113,31 @@ export default function Lounge() {
     }
   }
 
+  const handleClickWithdraw = async () => {
+    setIsClick(true)
+    try {
+      const response = await fetch(`${APIs.loungeList}/${loungeId}/withdraw`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+      })
+
+      if (response.ok) {
+        toast.success('라운지 탈퇴 성공 😀')
+        navigate(URL.lounge)
+      } else {
+        toast.error('라운지 탈퇴 실패 😭')
+      }
+    } catch (error) {
+      console.error('Failed to withdraw lounge', error)
+    } finally {
+      setIsClick(false)
+    }
+  }
+
   return (
     <Layout>
       <>
@@ -135,6 +164,7 @@ export default function Lounge() {
                 <div ref={dropRef}>
                   <LoungeDrop
                     setIsDeleteModalVisible={setIsDeleteModalVisible}
+                    setIsWithdrawModalVisible={setIsWithdrawModalVisible}
                     isOwner={isOwner}
                   />
                 </div>
@@ -156,6 +186,12 @@ export default function Lounge() {
           isOpen={isDeleteModalVisible}
           onClose={() => setIsDeleteModalVisible(false)}
           handleDelete={handleClickDelete}
+          isClick={isClick}
+        />{' '}
+        <WithDrawLoungeModal
+          isOpen={isWithdrawModalVisible}
+          onClose={() => setIsDeleteModalVisible(false)}
+          handleDelete={handleClickWithdraw}
           isClick={isClick}
         />
       </>
