@@ -1,4 +1,4 @@
-import Layout from '../../components/Layout.js'
+import Layout from '@components/Layout.js'
 import {
   Icon,
   IconWithBorder,
@@ -12,20 +12,16 @@ import {
 import { toast } from 'react-toastify'
 import { Skeleton } from 'antd'
 import { Canvas } from '@react-three/fiber'
-import editIcon from '../../assets/images/edit.webp'
-import closeIcon from '../../assets/images/close.webp'
-import checkIcon from '../../assets/images/check.webp'
+import editIcon from '@images/edit.webp'
+import closeIcon from '@images/close.webp'
+import checkIcon from '@images/check.webp'
 import { useEffect, useState } from 'react'
-import {
-  modelList,
-  MyRoomModel,
-  roomConfigs,
-} from '../../global/myRoomModels.js'
-import { GloablContainer16 } from '../../global/globalStyles.tsx'
+import { modelList, MyRoomModel, roomConfigs } from '@global/myRoomModels.js'
+import { GloablContainer16 } from '@global/globalStyles.tsx'
 import { useNavigate } from 'react-router-dom'
-import { APIs, URL } from '../../static.ts'
-import LoadingLottie from '../../components/lotties/LoadingLottie.tsx'
-import useUserStore from '../../store/userStore.ts'
+import { APIs, URL } from '@/static'
+import LoadingLottie from '@components/lotties/LoadingLottie.tsx'
+import useUserStore from '@store/userStore.ts'
 import { OrbitControls } from '@react-three/drei'
 
 export default function MyRoom() {

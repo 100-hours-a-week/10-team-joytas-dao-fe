@@ -1,6 +1,6 @@
-import Layout from '../../components/Layout'
+import Layout from '@components/Layout'
 import LoungeObjets from '../lounge/LoungeObjets'
-import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
+import { GloablContainer16, GlobalSubTitle } from '@global/globalStyles'
 import {
   IconContainer,
   LoungeTitle,
@@ -9,11 +9,11 @@ import {
 } from '../lounge/LoungeStyles'
 import { Icon } from './MyRoomStyles'
 import { useEffect, useState } from 'react'
-import MoreImg from '../../assets/images/more.webp'
-import { ModalBackdrop } from '../../components/modal/ModalStyles'
-import { LoungeListModal } from '../../components/modal/Modal'
-import { APIs } from '../../static'
-import LoadingLottie from '../../components/lotties/LoadingLottie'
+import MoreImg from '@assets/images/more.webp'
+import { ModalBackdrop } from '@components/modal/ModalStyles'
+import { LoungeListModal } from '@components/modal/Modal'
+import { APIs } from '@/static'
+import LoadingLottie from '@components/lotties/LoadingLottie'
 
 interface Lounge {
   lounge_id: number

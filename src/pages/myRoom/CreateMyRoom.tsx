@@ -1,4 +1,4 @@
-import Layout from '../../components/Layout.js'
+import Layout from '@components/Layout.js'
 import {
   BtnContainer,
   CreateBtn,
@@ -10,12 +10,12 @@ import {
 import { Canvas } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { useEffect, useState } from 'react'
-import { modelList, MyRoomModel } from '../../global/myRoomModels.js'
-import { GlobalSubTitle, GlobalTitle } from '../../global/globalStyles.tsx'
-import { APIs, URL } from '../../static.ts'
+import { modelList, MyRoomModel } from '@global/myRoomModels.js'
+import { GlobalSubTitle, GlobalTitle } from '@global/globalStyles.tsx'
+import { APIs, URL } from '@/static'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import useUserStore from '../../store/userStore.ts'
+import useUserStore from '@store/userStore.ts'
 
 export default function CreateMyRoom() {
   const [selectedModelType, setSelectedModelType] = useState('R0001')

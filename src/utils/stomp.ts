@@ -1,5 +1,5 @@
 import { Client, StompSubscription } from '@stomp/stompjs'
-import { APIs } from '../static'
+import { APIs } from '@/static'
 
 export const stompClient = new Client({
   brokerURL: `${APIs.stomp}/ws/init`,

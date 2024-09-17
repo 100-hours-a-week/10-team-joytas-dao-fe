@@ -7,22 +7,22 @@ import {
   ObjetImgPreview,
   TagWrapper,
   UploadButton,
-} from '../../pages/objet/ObjetStyles'
+} from '@pages/objet/ObjetStyles'
 import { Tag, Mentions } from 'antd'
 import { CloseCircleOutlined } from '@ant-design/icons'
 import type { MentionsProps } from 'antd'
 import { OptionProps } from 'antd/es/mentions'
-import { APIs, URL } from '../../static'
+import { APIs, URL } from '@/static'
 import { useNavigate, useParams } from 'react-router-dom'
 import LoadingLottie from '../lotties/LoadingLottie'
-import useUserStore from '../../store/userStore'
+import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
-import { ObjetInfoFormProps, SharedMembersProps } from '../../global/objetProps'
+import { ObjetInfoFormProps, SharedMembersProps } from '@global/objetProps'
 import {
   validateDescription,
   validateImage,
   validateName,
-} from '../../utils/validation'
+} from '@utils/validation'
 
 export default function ObjetInfoForm({
   path,

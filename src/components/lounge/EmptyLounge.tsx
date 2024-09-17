@@ -1,10 +1,10 @@
 import { Canvas } from '@react-three/fiber'
 import { Text } from '@react-three/drei'
 import { Vector3 } from 'three'
-import { Deem } from '../../pages/lounge/LoungeStyles'
+import { Deem } from '@pages/lounge/LoungeStyles'
 import LoungeModel from './LoungeModel'
 import { useNavigate } from 'react-router-dom'
-import { URL } from '../../static'
+import { URL } from '@/static'
 
 export default function EmptyLounge() {
   const navigate = useNavigate()

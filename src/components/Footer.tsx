@@ -1,12 +1,12 @@
 import { FooterDiv, IconDiv, IconImg, IconText } from './LayoutStyles'
 import { useNavigate, useLocation } from 'react-router-dom'
-import { URL } from '../static'
-import useUserStore from '../store/userStore'
+import { URL } from '@/static'
+import useUserStore from '@store/userStore'
 import { logEvent } from 'firebase/analytics'
 import { analytics } from '../firebase'
 import { HomeOutlined, TeamOutlined } from '@ant-design/icons'
-import lounge from '../assets/images/footer/lounge.webp'
-import loungeDark from '../assets/images/footer/loungeDark.webp'
+import lounge from '@images/footer/lounge.webp'
+import loungeDark from '@images/footer/loungeDark.webp'
 
 export default function Footer() {
   const navigate = useNavigate()

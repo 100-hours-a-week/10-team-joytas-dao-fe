@@ -1,12 +1,12 @@
 import { MainTitle, ModifyConfirmButton, DeleteButton } from './ProfileStyles'
-import ProfileImageUploader from '../../components/user/ProfileImageUploader'
-import NicknameInputField from '../../components/user/NicknameInputField'
-import Layout from '../../components/Layout'
+import ProfileImageUploader from '@components/user/ProfileImageUploader'
+import NicknameInputField from '@components/user/NicknameInputField'
+import Layout from '@components/Layout'
 import { useNavigate } from 'react-router-dom'
-import { APIs, URL } from '../../static'
+import { APIs, URL } from '@/static'
 import { useState, useEffect } from 'react'
-import { checkNicknameDuplicate } from '../../utils/validation'
-import useUserStore from '../../store/userStore'
+import { checkNicknameDuplicate } from '@utils/validation'
+import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
 
 export default function ModifyProfile() {

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { GlobalWidth } from '../global/globalStyles'
+import { GlobalWidth } from '@global/globalStyles'
 
 export const MenuContainer = styled.div`
   height: 100%;

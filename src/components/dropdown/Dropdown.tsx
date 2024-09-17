@@ -1,6 +1,6 @@
 import { Container, Tab } from './DropdownStyles'
 import { useParams, useNavigate } from 'react-router-dom'
-import { URL } from '../../static'
+import { URL } from '@/static'
 
 interface MenuProps {
   onClickUpdate: () => void

@@ -1,5 +1,5 @@
-import Layout from '../../components/Layout'
-import { GloablContainer32 } from '../../global/globalStyles'
+import Layout from '@components/Layout'
+import { GloablContainer32 } from '@global/globalStyles'
 import {
   Title,
   SubTitle,
@@ -14,9 +14,9 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { RedTextLong } from '../lounge/LoungeStyles'
 import { RedText } from '../objet/ObjetStyles'
-import { APIs, URL } from '../../static'
-import useUserStore from '../../store/userStore'
-import { DeleteUserModal } from '../../components/modal/Modal'
+import { APIs, URL } from '@/static'
+import useUserStore from '@store/userStore'
+import { DeleteUserModal } from '@components/modal/Modal'
 import { toast } from 'react-toastify'
 
 export default function UserDelete() {

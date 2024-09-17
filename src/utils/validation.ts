@@ -1,5 +1,5 @@
-import { SharedMembersProps } from '../global/objetProps'
-import { APIs } from '../static'
+import { SharedMembersProps } from '@global/objetProps'
+import { APIs } from '@/static'
 
 export const checkNicknameDuplicate = async (
   nickname: string

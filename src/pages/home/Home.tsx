@@ -1,5 +1,5 @@
-import Layout from '../../components/Layout'
-import { GloablContainer16 } from '../../global/globalStyles'
+import Layout from '@components/Layout'
+import { GloablContainer16 } from '@global/globalStyles'
 import {
   BannerImage,
   MyObjetContainer,
@@ -7,20 +7,20 @@ import {
   LottieContainer,
   PreparingContainer,
 } from './HomeStyles'
-import ObjetPreview from '../../components/objet/ObjetPreview'
+import ObjetPreview from '@components/objet/ObjetPreview'
 import { useEffect, useState } from 'react'
-import { APIs } from '../../static'
-import LoadingLottie from '../../components/lotties/LoadingLottie'
-import NoPrevObjet from '../../components/objet/NoPrevObjet'
+import { APIs } from '@/static'
+import LoadingLottie from '@components/lotties/LoadingLottie'
+import NoPrevObjet from '@components/objet/NoPrevObjet'
 import { Carousel } from 'antd'
-import banner1 from '../../assets/images/banner/banner1.png'
-import banner2 from '../../assets/images/banner/banner2.png'
-import banner3 from '../../assets/images/banner/banner3.png'
-import banner4 from '../../assets/images/banner/banner4.png'
-import recentObjetsIcon from '../../assets/images/recentObjets.webp'
-import alert from '../../assets/images/alert.webp'
-import preparing from '../../assets/lotties/preparing.json'
-import useUserStore from '../../store/userStore'
+import banner1 from '@images/banner/banner1.png'
+import banner2 from '@images/banner/banner2.png'
+import banner3 from '@images/banner/banner3.png'
+import banner4 from '@images/banner/banner4.png'
+import recentObjetsIcon from '@images/recentObjets.webp'
+import alert from '@images/alert.webp'
+import preparing from '@assets/lotties/preparing.json'
+import useUserStore from '@store/userStore'
 import Lottie from 'lottie-react'
 
 export default function Home() {

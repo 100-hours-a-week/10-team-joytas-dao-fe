@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
-import type { Profile } from '../types/ProfileType'
-import useUserStore from '../store/userStore'
-import { APIs, URL } from '../static'
+import type { Profile } from '@/types/ProfileType'
+import useUserStore from '@store/userStore'
+import { APIs, URL } from '@/static'
 import { useState } from 'react'
 
 export const useUserInfo = () => {

@@ -1,19 +1,19 @@
-import { NotificationProps } from '../../hooks/useNotification'
+import { NotificationProps } from '@hooks/useNotification'
 import {
   NotiDatetime,
   NotificationItemContainer,
   NotiContents,
   TypeImg,
-} from '../../pages/notification/NotificationStyles'
-import { extractTime } from '../../utils/formatDatetime'
-import TagImg from '../../assets/images/tag.webp'
-import PokeImg from '../../assets/images/poke.webp'
-import InviteImg from '../../assets/images/loungeInvite.webp'
+} from '@pages/notification/NotificationStyles'
+import { extractTime } from '@utils/formatDatetime'
+import TagImg from '@images/tag.webp'
+import PokeImg from '@images/poke.webp'
+import InviteImg from '@images/loungeInvite.webp'
 import { ModalBackdrop } from '../modal/ModalStyles'
 import { useState } from 'react'
 import { ConfirmNotificationModal } from '../modal/Modal'
 import { useNavigate } from 'react-router-dom'
-import { APIs, URL } from '../../static'
+import { APIs, URL } from '@/static'
 import { toast } from 'react-toastify'
 
 export default function NotificationItem({

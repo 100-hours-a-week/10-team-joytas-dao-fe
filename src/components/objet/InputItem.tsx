@@ -4,7 +4,7 @@ import {
   ItemLabel,
   ItemWrapper,
   RedText,
-} from '../../pages/objet/ObjetStyles'
+} from '@pages/objet/ObjetStyles'
 
 interface ItemProps {
   label: string

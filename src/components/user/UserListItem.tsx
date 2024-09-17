@@ -7,10 +7,10 @@ import {
   ProfileNickname,
   InviteButton,
   Icon,
-} from '../../pages/user/UserListStyles'
-import PickImg from '../../assets/images/pick.webp'
+} from '@pages/user/UserListStyles'
+import PickImg from '@images/pick.webp'
 import { useNavigate, useParams } from 'react-router-dom'
-import { URL, APIs } from '../../static'
+import { URL, APIs } from '@/static'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
 
