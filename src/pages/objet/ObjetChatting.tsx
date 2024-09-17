@@ -1,5 +1,5 @@
-import Layout from '../../components/Layout'
-import { GloablContainer16 } from '../../global/globalStyles'
+import Layout from '@components/Layout'
+import { GloablContainer16 } from '@global/globalStyles'
 import {
   CallSubTitle,
   CallTitle,
@@ -17,21 +17,17 @@ import {
   RightContainer,
   TopContainer,
 } from './ObjetStyles'
-import { AlertUserEnter, ChatMessage } from '../../components/objet/Chat'
-import SendImg from '../../assets/images/send.webp'
-import LeaveImg from '../../assets/images/leave.webp'
+import { AlertUserEnter, ChatMessage } from '@components/objet/Chat'
+import SendImg from '@images/send.webp'
+import LeaveImg from '@images/leave.webp'
 import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
-import useObjetStore from '../../store/objetStore'
-import {
-  connectToRoom,
-  disconnectFromRoom,
-  sendMessage,
-} from '../../utils/stomp'
-import { APIs } from '../../static'
-import useUserStore from '../../store/userStore'
+import useObjetStore from '@store/objetStore'
+import { connectToRoom, disconnectFromRoom, sendMessage } from '@utils/stomp'
+import { APIs } from '@/static'
+import useUserStore from '@store/userStore'
 import { CalendarOutlined } from '@ant-design/icons'
-import { useIntersectionObserver } from '../../hooks/useIntersectionObserver'
+import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
 
 interface Message {
   id: string

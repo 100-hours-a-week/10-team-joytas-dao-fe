@@ -7,10 +7,10 @@ import {
   CategoryList,
   Category,
 } from './MenuStyles'
-import { URL, APIs } from '../static'
+import { URL, APIs } from '@/static'
 import { useNavigate } from 'react-router-dom'
 import { useState } from 'react'
-import useUserStore from '../store/userStore'
+import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
 
 export default function Menu() {

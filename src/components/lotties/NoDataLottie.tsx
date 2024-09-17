@@ -1,6 +1,6 @@
 import Lottie from 'lottie-react'
 import styled from 'styled-components'
-import noData from '../../assets/lotties/noData.json'
+import noData from '@assets/lotties/noData.json'
 
 export const LottieContainer = styled.div`
   margin: 0 auto;

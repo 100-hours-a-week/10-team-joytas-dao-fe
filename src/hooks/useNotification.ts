@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { APIs } from '../static'
+import { APIs } from '@/static'
 
 export interface NotificationProps {
   notification_id: number

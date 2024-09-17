@@ -1,11 +1,11 @@
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
-import useUserStore from '../../store/userStore'
+import useUserStore from '@store/userStore'
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Layout from '../../components/Layout'
-import left from '../../assets/images/left.webp'
-import right from '../../assets/images/right.webp'
+import Layout from '@components/Layout'
+import left from '@assets/images/left.webp'
+import right from '@assets/images/right.webp'
 import { toast } from 'react-toastify'
 import {
   Input,
@@ -24,10 +24,10 @@ import {
   GloablContainer16,
   GlobalSubTitle,
   GlobalTitle,
-} from '../../global/globalStyles'
+} from '@global/globalStyles'
 import { RedText } from '../objet/ObjetStyles'
-import { APIs, URL } from '../../static'
-import { LoungeModelList } from '../../components/models/LazyModelList'
+import { APIs, URL } from '@/static'
+import { LoungeModelList } from '@components/models/LazyModelList'
 
 export default function NewLounge() {
   const [loungeName, setLoungeName] = useState('')

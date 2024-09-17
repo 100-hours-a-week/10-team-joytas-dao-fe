@@ -21,16 +21,16 @@ import {
   BottomContainer,
 } from './LoginStyles'
 import { Link } from 'react-router-dom'
-import { URL } from '../../static'
-import { KAKAO_AUTH } from '../../static'
-import universe from '../../assets/images/DAO.mp4'
-import logo from '../../assets/images/DAO.webp'
-import card1 from '../../assets/images/card1.png'
-import card2 from '../../assets/images/card2.png'
-import card3 from '../../assets/images/card3.png'
-import card4 from '../../assets/images/card4.png'
-import card5 from '../../assets/images/card5.png'
-import scrollIcon from '../../assets/images/scrollIcon.png'
+import { URL } from '@/static'
+import { KAKAO_AUTH } from '@/static'
+import universe from '@images/DAO.mp4'
+import logo from '@images/DAO.webp'
+import card1 from '@images/card1.png'
+import card2 from '@images/card2.png'
+import card3 from '@images/card3.png'
+import card4 from '@images/card4.png'
+import card5 from '@images/card5.png'
+import scrollIcon from '@images/scrollIcon.png'
 
 export default function Login() {
   const handleClickLogIn = () => {

@@ -1,21 +1,21 @@
-import Layout from '../../components/Layout'
-import NotificationItem from '../../components/notification/NotificationItem'
+import Layout from '@components/Layout'
+import NotificationItem from '@components/notification/NotificationItem'
 import {
   GloablContainer16,
   GlobalBlankContainerText,
   GlobalTitle,
-} from '../../global/globalStyles'
+} from '@global/globalStyles'
 import {
   NotificationContainer,
   NotificationDate,
   NotificationGroup,
   StyledHr,
 } from './NotificationStyles'
-import { NotificationProps } from '../../hooks/useNotification'
-import useUserStore from '../../store/userStore'
-import left from '../../assets/images/left.webp'
+import { NotificationProps } from '@hooks/useNotification'
+import useUserStore from '@store/userStore'
+import left from '@assets/images/left.webp'
 import { useNavigate } from 'react-router-dom'
-import { APIs } from '../../static'
+import { APIs } from '@/static'
 import { useState, useCallback, useRef, useEffect } from 'react'
 
 export default function Notification() {

@@ -1,17 +1,15 @@
-import Layout from '../../components/Layout'
+import Layout from '@components/Layout'
 import {
   GloablContainer16,
   GlobalSubTitle,
   GlobalTitle,
-} from '../../global/globalStyles'
+} from '@global/globalStyles'
 import { LoungeList } from './LoungeStyles'
 import { Suspense, lazy } from 'react'
-import LoadingLottie from '../../components/lotties/LoadingLottie'
-import rocket from '../../assets/images/rocket.webp'
+import LoadingLottie from '@components/lotties/LoadingLottie'
+import rocket from '@images/rocket.webp'
 
-const LoungeContainer = lazy(
-  () => import('../../components/lounge/LoungeContainer')
-)
+const LoungeContainer = lazy(() => import('@components/lounge/LoungeContainer'))
 
 export default function LoungeListPage() {
   return (

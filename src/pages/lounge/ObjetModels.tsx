@@ -1,8 +1,8 @@
 import { Text } from '@react-three/drei'
 import { useMemo, useRef, useEffect, Suspense } from 'react'
 import * as THREE from 'three'
-import { ObjetModelList } from '../../components/models/LazyModelList'
-import type { RandomModelsProps } from '../../types/ModelType'
+import { ObjetModelList } from '@components/models/LazyModelList'
+import type { RandomModelsProps } from '@/types/ModelType'
 
 export default function ObjetModels({
   objets,

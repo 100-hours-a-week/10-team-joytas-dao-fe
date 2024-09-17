@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import io from 'socket.io-client'
-import useUserStore from '../../store/userStore'
+import useUserStore from '@store/userStore'
 import { Container, UserLabel, MyAudio, ProfileImage } from './VideoStyles'
 import Video from './Video'
 import { toast } from 'react-toastify'

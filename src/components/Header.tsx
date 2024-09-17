@@ -6,11 +6,11 @@ import {
   HamburgerIcon,
   LogoWrapper,
 } from './LayoutStyles'
-import rocket from '../assets/lotties/rocket.json'
-import logo from '../assets/images/DAO.webp'
-import bell from '../assets/images/bell.webp'
+import rocket from '@assets/lotties/rocket.json'
+import logo from '@assets/images/DAO.webp'
+import bell from '@assets/images/bell.webp'
 import { useLocation, useNavigate } from 'react-router-dom'
-import { URL } from '../static'
+import { URL } from '@/static'
 import { useState } from 'react'
 import Menu from './Menu'
 import { Squash as Hamburger } from 'hamburger-react'

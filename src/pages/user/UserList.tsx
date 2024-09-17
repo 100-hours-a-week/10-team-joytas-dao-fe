@@ -1,20 +1,20 @@
 import { useLocation } from 'react-router-dom'
-import Layout from '../../components/Layout'
-import UserListItem from '../../components/user/UserListItem'
+import Layout from '@components/Layout'
+import UserListItem from '@components/user/UserListItem'
 import {
   GloablContainer16,
   GlobalBlankContainerText,
-} from '../../global/globalStyles'
+} from '@global/globalStyles'
 import {
   FullContainerForToast,
   SearchTitle,
   SearchUserInput,
   UserListContainer,
 } from './UserListStyles'
-import LoadingLottie from '../../components/lotties/LoadingLottie'
-import { APIs } from '../../static'
+import LoadingLottie from '@components/lotties/LoadingLottie'
+import { APIs } from '@/static'
 import { useEffect, useRef, useState } from 'react'
-import useUserStore from '../../store/userStore'
+import useUserStore from '@store/userStore'
 
 interface SearhUser {
   user_id: number
