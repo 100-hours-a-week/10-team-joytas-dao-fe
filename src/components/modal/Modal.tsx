@@ -90,6 +90,33 @@ export function DeleteLoungeModal({
   )
 }
 
+export function WithDrawLoungeModal({
+  isOpen,
+  isClick,
+  onClose,
+  handleDelete,
+}: DeleteProps) {
+  return (
+    <Modal
+      title='정말 탈퇴하시겠습니까?'
+      open={isOpen}
+      onOk={handleDelete}
+      onCancel={onClose}
+      confirmLoading={isClick}
+      footer={[
+        <Button key='back' onClick={onClose}>
+          취소
+        </Button>,
+        <Button key='delete' onClick={handleDelete}>
+          탈퇴
+        </Button>,
+      ]}
+    >
+      <span>탈퇴한 라운지에 초대시 재가입이 가능합니다.</span>
+    </Modal>
+  )
+}
+
 export function DeleteUserModal({
   isOpen,
   isClick,
