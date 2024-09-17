@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import Layout from '../../components/Layout'
+import Layout from '@components/Layout'
 import {
   TopContainer,
   IconContainer,
@@ -8,17 +8,17 @@ import {
   Icon,
 } from './LoungeStyles'
 import { Skeleton } from 'antd'
-import menu from '../../assets/images/menu.webp'
+import menu from '@images/menu.webp'
 import LoungeObjets from './LoungeObjets'
-import { GloablContainer16, GlobalSubTitle } from '../../global/globalStyles'
+import { GloablContainer16, GlobalSubTitle } from '@global/globalStyles'
 import { useParams } from 'react-router-dom'
-import { APIs, URL } from '../../static'
-import LoadingLottie from '../../components/lotties/LoadingLottie'
-import { LoungeDrop } from '../../components/dropdown/Dropdown'
-import useUserStore from '../../store/userStore'
+import { APIs, URL } from '@/static'
+import LoadingLottie from '@components/lotties/LoadingLottie'
+import { LoungeDrop } from '@components/dropdown/Dropdown'
+import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
 import { useNavigate } from 'react-router-dom'
-import { DeleteLoungeModal } from '../../components/modal/Modal'
+import { DeleteLoungeModal } from '@components/modal/Modal'
 
 export default function Lounge() {
   const { lid: loungeId } = useParams<{ lid: string }>()

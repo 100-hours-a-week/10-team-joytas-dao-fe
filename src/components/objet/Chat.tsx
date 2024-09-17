@@ -6,8 +6,8 @@ import {
   MyChat,
   UserName,
 } from './ChatStyles'
-import { extractHourMinute } from '../../utils/formatDatetime'
-import useUserStore from '../../store/userStore'
+import { extractHourMinute } from '@utils/formatDatetime'
+import useUserStore from '@store/userStore'
 
 interface ChattingProps {
   userName: string

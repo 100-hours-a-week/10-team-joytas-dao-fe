@@ -1,4 +1,4 @@
-import { URL } from '../../static'
+import { URL } from '@/static'
 import {
   ObjetContainer,
   ObjetDescription,

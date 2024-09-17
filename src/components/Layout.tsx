@@ -2,14 +2,14 @@ import Header from './Header'
 import Footer from './Footer'
 import { Main, ChildrenDiv } from './LayoutStyles'
 import { useEffect } from 'react'
-import { useUserInfo } from '../hooks/useInfo'
+import { useUserInfo } from '@hooks/useInfo'
 import { EventSourcePolyfill, NativeEventSource } from 'event-source-polyfill'
-import { APIs } from '../static'
-import useUserStore from '../store/userStore'
+import { APIs } from '@/static'
+import useUserStore from '@store/userStore'
 import {
   NotificationProps,
   ConnectNotificationProps,
-} from '../hooks/useNotification'
+} from '@hooks/useNotification'
 import { toast } from 'react-toastify'
 
 interface LayoutStyles {

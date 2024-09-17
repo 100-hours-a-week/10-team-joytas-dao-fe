@@ -1,4 +1,4 @@
-import Layout from '../../components/Layout'
+import Layout from '@components/Layout'
 import {
   MicButton,
   CallButton,
@@ -8,9 +8,9 @@ import {
 } from './ObjetCallStyles'
 // import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 // import { Avatar } from 'antd'
-import mute from '../../assets/images/mute.webp'
-import unmute from '../../assets/images/unmute.webp'
-import quitCall from '../../assets/images/quitCall.webp'
+import mute from '@images/mute.webp'
+import unmute from '@images/unmute.webp'
+import quitCall from '@images/quitCall.webp'
 import { useEffect, useState } from 'react'
 import {
   ObjetCallContainer,
@@ -24,9 +24,9 @@ import {
   // Active,
   Name,
 } from './ObjetStyles'
-import VideoContainer from '../../components/call/VideoContainer'
+import VideoContainer from '@components/call/VideoContainer'
 import { useParams, useNavigate } from 'react-router-dom'
-import { APIs, URL } from '../../static'
+import { APIs, URL } from '@/static'
 
 export default function ObjetCall() {
   const navigate = useNavigate()

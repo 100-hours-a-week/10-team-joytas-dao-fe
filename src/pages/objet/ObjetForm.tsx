@@ -1,20 +1,20 @@
-import Layout from '../../components/Layout.tsx'
+import Layout from '@components/Layout.tsx'
 import { Container, MiniObjetModel, UpperContainer } from './ObjetStyles.tsx'
 import {
   GloablContainer16,
   GlobalSubTitle,
   GlobalTitle,
-} from '../../global/globalStyles.tsx'
+} from '@global/globalStyles.tsx'
 import { useEffect, useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Group } from 'three'
-import { objetList } from '../../global/objetModels.tsx'
-import SelectObjetType from '../../components/objet/SelectObjetType.tsx'
-import ObjetInfoForm from '../../components/objet/ObjetInputForm.tsx'
-import { ObjetInfoFormProps } from '../../global/objetProps.tsx'
+import { objetList } from '@global/objetModels.tsx'
+import SelectObjetType from '@components/objet/SelectObjetType.tsx'
+import ObjetInfoForm from '@components/objet/ObjetInputForm.tsx'
+import { ObjetInfoFormProps } from '@global/objetProps.tsx'
 import { useLocation, useParams } from 'react-router-dom'
-import { APIs } from '../../static.ts'
+import { APIs } from '@/static'
 
 export default function ObjetForm() {
   const path = useLocation().pathname

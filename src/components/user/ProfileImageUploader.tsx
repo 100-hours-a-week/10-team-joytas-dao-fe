@@ -6,9 +6,9 @@ import {
   ModifyButton,
   ProfileTitle,
   NoProfile,
-} from '../../pages/user/ProfileStyles'
-import { RedTextLong } from '../../pages/lounge/LoungeStyles'
-import { RedText } from '../../pages/objet/ObjetStyles'
+} from '@pages/user/ProfileStyles'
+import { RedTextLong } from '@pages/lounge/LoungeStyles'
+import { RedText } from '@pages/objet/ObjetStyles'
 
 interface ProfileImageUploaderProps {
   profile: File | null

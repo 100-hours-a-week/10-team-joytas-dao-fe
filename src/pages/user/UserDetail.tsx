@@ -1,15 +1,15 @@
 import { Canvas } from '@react-three/fiber'
-import Layout from '../../components/Layout'
-import UserListItem from '../../components/user/UserListItem'
-import { GloablContainer16 } from '../../global/globalStyles'
+import Layout from '@components/Layout'
+import UserListItem from '@components/user/UserListItem'
+import { GloablContainer16 } from '@global/globalStyles'
 import { MyRoomName, MyRoomPreviewWrapper } from '../myRoom/MyRoomStyles'
 import { OrbitControls } from '@react-three/drei'
-import { modelList, MyRoomModel } from '../../global/myRoomModels'
+import { modelList, MyRoomModel } from '@global/myRoomModels'
 import { MyRoomContainer } from './UserListStyles'
 import { useEffect, useState } from 'react'
-import { APIs } from '../../static'
+import { APIs } from '@/static'
 import { useParams } from 'react-router-dom'
-import LoadingLottie from '../../components/lotties/LoadingLottie'
+import LoadingLottie from '@components/lotties/LoadingLottie'
 
 export default function UserDetail() {
   const userId = Number(useParams().id)

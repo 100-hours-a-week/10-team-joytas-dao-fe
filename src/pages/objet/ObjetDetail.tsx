@@ -1,6 +1,6 @@
 // import { Avatar } from 'antd'
-import Layout from '../../components/Layout'
-import { GloablContainer16 } from '../../global/globalStyles'
+import Layout from '@components/Layout'
+import { GloablContainer16 } from '@global/globalStyles'
 import {
   TopContainer,
   LeftContainer,
@@ -24,18 +24,18 @@ import {
   NoChatting,
 } from './ObjetStyles'
 // import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
-import MenuImg from '../../assets/images/menu.webp'
-import GoCommunityBtn from '../../components/objet/GoCommunityBtn'
+import MenuImg from '@images/menu.webp'
+import GoCommunityBtn from '@components/objet/GoCommunityBtn'
 import { useParams, useNavigate } from 'react-router-dom'
-import { APIs, URL } from '../../static'
+import { APIs, URL } from '@/static'
 import { useEffect, useRef, useState } from 'react'
-import { ChatMessage } from '../../components/objet/Chat'
-import { DeleteObjetModal } from '../../components/modal/Modal'
-import { ModalBackdrop } from '../../components/modal/ModalStyles'
-import LoadingLottie from '../../components/lotties/LoadingLottie'
-import { ObjetDrop } from '../../components/dropdown/Dropdown'
-import useUserStore from '../../store/userStore'
-import useObjetStore from '../../store/objetStore'
+import { ChatMessage } from '@components/objet/Chat'
+import { DeleteObjetModal } from '@components/modal/Modal'
+import { ModalBackdrop } from '@components/modal/ModalStyles'
+import LoadingLottie from '@components/lotties/LoadingLottie'
+import { ObjetDrop } from '@components/dropdown/Dropdown'
+import useUserStore from '@store/userStore'
+import useObjetStore from '@store/objetStore'
 import { toast } from 'react-toastify'
 
 interface Message {

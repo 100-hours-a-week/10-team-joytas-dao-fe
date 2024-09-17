@@ -4,9 +4,9 @@ import {
   ChooseContainer,
   MoveIcon,
   ChooseButton,
-} from '../../pages/objet/ObjetStyles'
-import left from '../../assets/images/left.webp'
-import right from '../../assets/images/right.webp'
+} from '@pages/objet/ObjetStyles'
+import left from '@images/left.webp'
+import right from '@images/right.webp'
 import { useState, useRef, useEffect } from 'react'
 import { Canvas, useFrame, useThree } from '@react-three/fiber'
 import { Vector3, Group, Box3 } from 'three'
