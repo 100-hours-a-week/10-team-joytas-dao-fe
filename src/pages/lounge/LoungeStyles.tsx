@@ -80,6 +80,7 @@ export const ChooseContainer = styled.div`
   gap: 20px;
   height: 40px;
   margin: 30px auto;
+  padding-bottom: 80px;
 `
 
 export const MoveIcon = styled.img`
@@ -141,6 +142,7 @@ export const LoungeTitle = styled.div`
 `
 
 export const Objets = styled.div`
+  border: 0.1px solid gray;
   display: flex;
   margin-top: 30px;
   width: 100%;

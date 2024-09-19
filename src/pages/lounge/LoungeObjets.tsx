@@ -6,7 +6,7 @@ import NoDataLottie from '@components/lotties/NoDataLottie'
 import { NoDataContainer, InnerText, GoObjetButton } from './LoungeStyles'
 import { useNavigate } from 'react-router-dom'
 import { URL } from '@/static'
-import type { ObjetsProps, Objet } from '@types/ModelType'
+import type { ObjetsProps, Objet } from '@/types/ModelType'
 import ObjetModels from './ObjetModels'
 import { toast } from 'react-toastify'
 
@@ -115,7 +115,7 @@ export default function LoungeObjets({ objets, loungeId }: ObjetsProps) {
   }
 
   return (
-    <Canvas>
+    <Canvas style={{ border: '0.1px solid gray' }}>
       <LoungeCanvas objets={objets} />
     </Canvas>
   )
