@@ -46,7 +46,7 @@ export const APIs = {
   nickname: `${BACK_HOST}/api/v1/users/validate?nickname`,
   logout: `${BACK_HOST}/api/v1/auth/logout`,
   userInfo: `${BACK_HOST}/api/v1/users`,
-  withdraw: `${BACK_HOST}/api/v1/auth/withdraw`,
+  withdraw: `${BACK_HOST}/api/v1/users/withdraw`,
   modifyProfile: `${BACK_HOST}/api/v1/users/profile`,
   searchUser: `${BACK_HOST}/api/v1/users/search`,
 
