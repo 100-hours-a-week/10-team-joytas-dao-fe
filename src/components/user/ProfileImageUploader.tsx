@@ -30,10 +30,9 @@ export default function ProfileImageUploader({
     const file = event.target.files?.[0]
 
     if (file) {
-      // 파일 크기 체크 (1MB = 1 * 1024 * 1024 bytes)
-      const maxSizeInMB = 1
+      const maxSizeInMB = 25
       if (file.size > maxSizeInMB * 1024 * 1024) {
-        setImageError('파일 크기가 1MB를 초과할 수 없습니다.')
+        setImageError('파일 크기가 25MB를 초과할 수 없습니다.')
         return
       }
 

@@ -52,10 +52,10 @@ export const validateDescription = (
 export const validateImage = (
   file: File
 ): { isValid: boolean; errorMessage: string } => {
-  if (file.size > 1 * 1024 * 1024) {
+  if (file.size > 25 * 1024 * 1024) {
     return {
       isValid: false,
-      errorMessage: '이미지 파일은 최대 1MB까지 첨부 가능합니다.',
+      errorMessage: '이미지 파일은 최대 25MB까지 첨부 가능합니다.',
     }
   }
   return { isValid: true, errorMessage: '' }
