@@ -6,8 +6,6 @@ import {
   MiddleContainer,
   BottomContainer,
 } from './ObjetCallStyles'
-// import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
-// import { Avatar } from 'antd'
 import mute from '@images/mute.webp'
 import unmute from '@images/unmute.webp'
 import quitCall from '@images/quitCall.webp'
@@ -20,8 +18,6 @@ import {
   CallTitle,
   CallSubTitle,
   ObjetMaker,
-  // ObjetActive,
-  // Active,
   Name,
 } from './ObjetStyles'
 import VideoContainer from '@components/call/VideoContainer'
@@ -31,7 +27,6 @@ import { APIs, URL } from '@/static'
 export default function ObjetCall() {
   const navigate = useNavigate()
   const [muted, setMuted] = useState(false)
-  // const [isActive, setIsActive] = useState(false)
   const { oid: objetId } = useParams()
   const [loungeId, setLoungeId] = useState(0)
   const [creator, setCreator] = useState('')
@@ -67,11 +62,6 @@ export default function ObjetCall() {
     fetchData()
   }, [])
 
-  // TODO: delete me
-  // useEffect(() => {
-  //   setIsActive(true)
-  // }, [])
-
   return (
     <Layout>
       <ObjetCallContainer>
@@ -82,30 +72,9 @@ export default function ObjetCall() {
               <ObjetMaker>
                 만든이 <Name>{creator}</Name>
               </ObjetMaker>
-              {/* <ObjetActive>
-                실시간 <Active $isActive={isActive} />
-              </ObjetActive> */}
             </CallSubTitle>
           </LeftContainer>
-          <RightContainer>
-            {/* <Avatar.Group
-              max={{
-                count: 3,
-                style: { color: '#f56a00', backgroundColor: '#fde3cf' },
-              }}
-            >
-              <Avatar src='https://api.dicebear.com/7.x/miniavs/svg?seed=2' />
-              <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-              <Avatar
-                style={{ backgroundColor: '#87d068' }}
-                icon={<UserOutlined />}
-              />
-              <Avatar
-                style={{ backgroundColor: '#1677ff' }}
-                icon={<AntDesignOutlined />}
-              />
-            </Avatar.Group> */}
-          </RightContainer>
+          <RightContainer></RightContainer>
         </TopContainer>
 
         {!loading && loungeId !== 0 && (

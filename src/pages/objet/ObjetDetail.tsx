@@ -1,4 +1,3 @@
-// import { Avatar } from 'antd'
 import Layout from '@components/Layout'
 import { GloablContainer16 } from '@global/globalStyles'
 import {
@@ -8,8 +7,6 @@ import {
   CallTitle,
   CallSubTitle,
   ObjetMaker,
-  // ObjetActive,
-  // Active,
   Name,
   ObjetDetailContainer,
   ObjetImg,
@@ -23,7 +20,6 @@ import {
   Divider,
   NoChatting,
 } from './ObjetStyles'
-// import { AntDesignOutlined, UserOutlined } from '@ant-design/icons'
 import MenuImg from '@images/menu.webp'
 import GoCommunityBtn from '@components/objet/GoCommunityBtn'
 import { useParams, useNavigate } from 'react-router-dom'
@@ -63,7 +59,6 @@ export default function ObjetDetail() {
 
   const [messagePreviews, setMessagePreviews] = useState<Message[]>([])
   const [callingPeople, setCallingPeople] = useState(0)
-  // const [isActive, setIsActive] = useState(false)
   const [creatorId, setCreatorId] = useState(0)
 
   const setChatToken = useObjetStore((state) => state.setChatToken)
@@ -126,7 +121,6 @@ export default function ObjetDetail() {
       setDescription(data.data.description)
       setImageUrl(data.data.objet_image)
       setCallingPeople(data.data.calling_user_num)
-      // setIsActive(data.data.is_active)
       setCreatorId(data.data.user_id)
 
       setObjetName(data.data.name)
@@ -166,8 +160,6 @@ export default function ObjetDetail() {
           setMessagePreviews(chatPreviewData.data.messages)
         }
       }
-
-      // TODO: 오브제 viewers 정보 가져오기
     } catch (error) {
       console.error('오브제 정보 가져오기 실패: ', error)
     } finally {
@@ -232,30 +224,9 @@ export default function ObjetDetail() {
                 <ObjetMaker>
                   만든이 <Name>{creator}</Name>
                 </ObjetMaker>
-                {/* <ObjetActive>
-                  실시간 <Active $isActive={isActive} />
-                </ObjetActive> */}
               </CallSubTitle>
             </LeftContainer>
             <RightContainer>
-              {/* <Avatar.Group
-                max={{
-                  count: 3,
-                  style: { color: '#f56a00', backgroundColor: '#fde3cf' },
-                }}
-              >
-                <Avatar src='https://api.dicebear.com/7.x/miniavs/svg?seed=2' />
-                <Avatar style={{ backgroundColor: '#f56a00' }}>K</Avatar>
-                <Avatar
-                  style={{ backgroundColor: '#87d068' }}
-                  icon={<UserOutlined />}
-                />
-                <Avatar
-                  style={{ backgroundColor: '#1677ff' }}
-                  icon={<AntDesignOutlined />}
-                />
-              </Avatar.Group> */}
-
               {loggedInUserId === creatorId && (
                 <>
                   <IconContainer>
