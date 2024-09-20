@@ -1,8 +1,4 @@
-import Layout from '@components/Layout'
-import { GloablContainer16 } from '@global/globalStyles'
 import {
-  CreatedInfo,
-  CallTitle,
   ChatContainer,
   ChatInput,
   ChatInputBox,
@@ -10,18 +6,9 @@ import {
   ChatsWrapper,
   ChattingDate,
   ChattingGroupByDate,
-  Icon,
-  LeftContainer,
-  Name,
-  ObjetMaker,
-  RightContainer,
-  TopContainer,
-  ObjetDate,
 } from './ObjetStyles'
 import { AlertUserEnter, ChatMessage } from '@components/objet/Chat'
 import SendImg from '@images/send.webp'
-import LeaveImg from '@images/leave.webp'
-import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import useObjetStore from '@store/objetStore'
 import { connectToRoom, disconnectFromRoom, sendMessage } from '@utils/stomp'
@@ -29,7 +16,6 @@ import { APIs } from '@/static'
 import useUserStore from '@store/userStore'
 import { CalendarOutlined } from '@ant-design/icons'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
-import { extractYearMonthDate } from '@/utils/formatDatetime'
 
 interface Message {
   id: string
@@ -42,15 +28,12 @@ interface Message {
 }
 
 export default function ObjetChatting() {
-  const navigate = useNavigate()
+  const chatToken = useObjetStore((state) => state.chatToken)
+  const myUserId = useUserStore((state) => state.userId)
+  const myNickname = useUserStore((state) => state.nickname)
+
   const [messageInput, setMessageInput] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
-
-  const userId = useUserStore((state) => state.userId)
-  const userNickname = useUserStore((state) => state.nickname)
-  const objetName = useObjetStore((state) => state.objetName)
-  const chatToken = useObjetStore((state) => state.chatToken)
-  const creator = useObjetStore((state) => state.objetCreatorNickname)
 
   const chatRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(true)
@@ -72,7 +55,7 @@ export default function ObjetChatting() {
   useEffect(() => {
     const fetchMessages = async () => {
       if (chatToken) {
-        connectToRoom(userId, userNickname, chatToken, handleIncomingMessage)
+        connectToRoom(myUserId, myNickname, chatToken, handleIncomingMessage)
       }
 
       await getMessages()
@@ -183,48 +166,26 @@ export default function ObjetChatting() {
     const messageToSend = messageInput.trim()
     if (!messageToSend) return
 
-    sendMessage(userId, chatToken, messageToSend)
+    sendMessage(myUserId, chatToken, messageToSend)
     setMessageInput('')
     scrollToBottom()
   }
 
-  const handleLeaveChat = () => {
-    disconnectFromRoom(chatToken)
-    navigate(-1)
-  }
-
   return (
-    <Layout>
-      <GloablContainer16>
-        <TopContainer>
-          <LeftContainer>
-            <CallTitle>{objetName}</CallTitle>
-            <CreatedInfo>
-              <ObjetMaker>
-                <Name>{creator}</Name>
-              </ObjetMaker>
-            </CreatedInfo>
-          </LeftContainer>
-          <RightContainer>
-            <Icon className='leave' src={LeaveImg} onClick={handleLeaveChat} />
-          </RightContainer>
-        </TopContainer>
-        <ChatContainer>
-          <ChatsWrapper ref={chatRef}>
-            {renderChattingList(messages, firstMessageRef)}
-          </ChatsWrapper>
-          <ChatInputBox>
-            <ChatInput
-              placeholder='채팅을 입력해주세요.'
-              value={messageInput}
-              onChange={(e) => setMessageInput(e.target.value)}
-              onKeyDown={handleKeyDown}
-            />
-            <ChatSendButton src={SendImg} onClick={handleSendMessage} />
-          </ChatInputBox>
-        </ChatContainer>
-      </GloablContainer16>
-    </Layout>
+    <ChatContainer>
+      <ChatsWrapper ref={chatRef}>
+        {renderChattingList(messages, firstMessageRef)}
+      </ChatsWrapper>
+      <ChatInputBox>
+        <ChatInput
+          placeholder='채팅을 입력해주세요.'
+          value={messageInput}
+          onChange={(e) => setMessageInput(e.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+        <ChatSendButton src={SendImg} onClick={handleSendMessage} />
+      </ChatInputBox>
+    </ChatContainer>
   )
 }
 
