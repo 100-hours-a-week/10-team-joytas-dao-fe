@@ -16,13 +16,15 @@ import {
   LeftContainer,
   RightContainer,
   CallTitle,
-  CallSubTitle,
+  CreatedInfo,
   ObjetMaker,
   Name,
+  ObjetDate,
 } from './ObjetStyles'
 import VideoContainer from '@components/call/VideoContainer'
 import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '@/static'
+import { extractYearMonthDate } from '@/utils/formatDatetime'
 
 export default function ObjetCall() {
   const navigate = useNavigate()
@@ -31,6 +33,8 @@ export default function ObjetCall() {
   const [loungeId, setLoungeId] = useState(0)
   const [creator, setCreator] = useState('')
   const [name, setName] = useState('')
+  const [createdAt, setCreatedAt] = useState('')
+
   const [loading, setLoading] = useState(true)
 
   const fetchData = async () => {
@@ -50,6 +54,7 @@ export default function ObjetCall() {
         setCreator(data.data.nickname)
         setName(data.data.name)
         setLoungeId(data.data.lounge_id)
+        setCreatedAt(data.data.created_at)
       }
     } catch (error) {
       console.error('오브제 정보 가져오기 실패: ', error)
@@ -68,11 +73,12 @@ export default function ObjetCall() {
         <TopContainer>
           <LeftContainer>
             <CallTitle>{name}</CallTitle>
-            <CallSubTitle>
+            <CreatedInfo>
               <ObjetMaker>
-                만든이 <Name>{creator}</Name>
+                <Name>{creator}</Name>
               </ObjetMaker>
-            </CallSubTitle>
+              |<ObjetDate>{extractYearMonthDate(createdAt)}</ObjetDate>
+            </CreatedInfo>
           </LeftContainer>
           <RightContainer></RightContainer>
         </TopContainer>

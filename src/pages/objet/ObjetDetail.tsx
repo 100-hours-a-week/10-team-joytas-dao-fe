@@ -5,7 +5,7 @@ import {
   LeftContainer,
   RightContainer,
   CallTitle,
-  CallSubTitle,
+  CreatedInfo,
   ObjetMaker,
   Name,
   ObjetDetailContainer,
@@ -19,6 +19,7 @@ import {
   ChattingText,
   Divider,
   NoChatting,
+  ObjetDate,
 } from './ObjetStyles'
 import MenuImg from '@images/menu.webp'
 import GoCommunityBtn from '@components/objet/GoCommunityBtn'
@@ -33,6 +34,7 @@ import { ObjetDrop } from '@components/dropdown/Dropdown'
 import useUserStore from '@store/userStore'
 import useObjetStore from '@store/objetStore'
 import { toast } from 'react-toastify'
+import { extractYearMonthDate } from '@/utils/formatDatetime'
 
 interface Message {
   id: string
@@ -56,6 +58,7 @@ export default function ObjetDetail() {
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [imageUrl, setImageUrl] = useState('')
+  const [createdAt, setCreatedAt] = useState('')
 
   const [messagePreviews, setMessagePreviews] = useState<Message[]>([])
   const [callingPeople, setCallingPeople] = useState(0)
@@ -122,6 +125,7 @@ export default function ObjetDetail() {
       setImageUrl(data.data.objet_image)
       setCallingPeople(data.data.calling_user_num)
       setCreatorId(data.data.user_id)
+      setCreatedAt(data.data.created_at)
 
       setObjetName(data.data.name)
       setObjetCreatorNickname(data.data.nickname)
@@ -220,11 +224,12 @@ export default function ObjetDetail() {
           <TopContainer>
             <LeftContainer>
               <CallTitle>{name}</CallTitle>
-              <CallSubTitle>
+              <CreatedInfo>
                 <ObjetMaker>
-                  만든이 <Name>{creator}</Name>
+                  <Name>{creator}</Name>
                 </ObjetMaker>
-              </CallSubTitle>
+                |<ObjetDate>{extractYearMonthDate(createdAt)}</ObjetDate>
+              </CreatedInfo>
             </LeftContainer>
             <RightContainer>
               {loggedInUserId === creatorId && (

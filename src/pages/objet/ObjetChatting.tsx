@@ -1,7 +1,7 @@
 import Layout from '@components/Layout'
 import { GloablContainer16 } from '@global/globalStyles'
 import {
-  CallSubTitle,
+  CreatedInfo,
   CallTitle,
   ChatContainer,
   ChatInput,
@@ -16,6 +16,7 @@ import {
   ObjetMaker,
   RightContainer,
   TopContainer,
+  ObjetDate,
 } from './ObjetStyles'
 import { AlertUserEnter, ChatMessage } from '@components/objet/Chat'
 import SendImg from '@images/send.webp'
@@ -28,6 +29,7 @@ import { APIs } from '@/static'
 import useUserStore from '@store/userStore'
 import { CalendarOutlined } from '@ant-design/icons'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
+import { extractYearMonthDate } from '@/utils/formatDatetime'
 
 interface Message {
   id: string
@@ -48,7 +50,7 @@ export default function ObjetChatting() {
   const userNickname = useUserStore((state) => state.nickname)
   const objetName = useObjetStore((state) => state.objetName)
   const chatToken = useObjetStore((state) => state.chatToken)
-  const creatorNickname = useObjetStore((state) => state.objetCreatorNickname)
+  const creator = useObjetStore((state) => state.objetCreatorNickname)
 
   const chatRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(true)
@@ -197,11 +199,11 @@ export default function ObjetChatting() {
         <TopContainer>
           <LeftContainer>
             <CallTitle>{objetName}</CallTitle>
-            <CallSubTitle>
+            <CreatedInfo>
               <ObjetMaker>
-                만든이 <Name>{creatorNickname}</Name>
+                <Name>{creator}</Name>
               </ObjetMaker>
-            </CallSubTitle>
+            </CreatedInfo>
           </LeftContainer>
           <RightContainer>
             <Icon className='leave' src={LeaveImg} onClick={handleLeaveChat} />
