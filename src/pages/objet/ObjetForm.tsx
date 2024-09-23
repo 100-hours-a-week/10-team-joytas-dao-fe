@@ -42,7 +42,7 @@ export default function ObjetForm() {
 
   const fetchObjetData = async () => {
     try {
-      const response = await fetch(`${APIs.objet}/${objetId}`, {
+      const objetDataResponse = await fetch(`${APIs.objet}/${objetId}`, {
         method: 'GET',
         credentials: 'include',
         headers: {
@@ -51,10 +51,33 @@ export default function ObjetForm() {
         },
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        setObjetInfo(data.data)
+      if (objetDataResponse.ok) {
+        const data = await objetDataResponse.json()
         setSelectedType(data.data.objet_type)
+
+        const sharersResponse = await fetch(
+          `${APIs.objet}/${objetId}/sharers`,
+          {
+            method: 'GET',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            },
+          }
+        )
+
+        if (sharersResponse.ok) {
+          const sharers = await sharersResponse.json()
+
+          setObjetInfo({
+            lounge_id: data.data.lounge_id,
+            name: data.data.name,
+            description: data.data.description,
+            sharers: sharers.data.sharers,
+            objet_image: data.data.objet_image,
+          })
+        }
       }
     } catch (error) {
       console.error('오브제 정보 가져오기 실패: ', error)

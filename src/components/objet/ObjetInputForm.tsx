@@ -54,15 +54,15 @@ export default function ObjetInfoForm({
   const [descriptionValid, setDescriptionValid] = useState(false)
   const [imageValid, setImageValid] = useState(false)
 
-  const [mentionValue, setMentionValue] = useState<string>('')
-  const [isFirstRender, setIsFirstRender] = useState(true)
+  const [mentionValue, setMentionValue] = useState('')
 
-  const [memberErrorMessage, setMemberErrorMessage] = useState('')
   const [nameErrorMessage, setNameErrorMessage] = useState('')
   const [descriptionErrorMessage, setDescriptionErrorMessage] = useState('')
   const [imageErrorMessage, setImageErrorMessage] = useState('')
 
-  const [isMentionChanged, setIsMentionChanged] = useState(false)
+  const [isMentionChanged, setIsMentionChanged] = useState(
+    path === 'create' ? true : false
+  )
   const [isNameChanged, setIsNameChanged] = useState(false)
   const [isDescriptionChanged, setIsDescriptionChanged] = useState(false)
   const [isImageChanged, setIsImageChanged] = useState(false)
@@ -73,7 +73,8 @@ export default function ObjetInfoForm({
       setName(name)
       setDescription(description)
       setImageUrl(objet_image)
-      setSharedMembers(sharers.filter((user) => user.user_id !== userId))
+      sharers &&
+        setSharedMembers(sharers.filter((user) => user.user_id !== userId))
       setLoungeId(lounge_id)
 
       setNameValid(true)
@@ -98,23 +99,12 @@ export default function ObjetInfoForm({
         if (response.ok) {
           const responseData = await response.json()
           setUserList(responseData.data)
-
-          if (isFirstRender && responseData.data.length <= 1) {
-            toast.error(
-              <div>
-                라운지에 속한 유저가 없습니다 😭 <br /> 유저 초대 후 다시
-                시도해주세요.
-              </div>
-            )
-            navigate(`${URL.lounge}/${loungeId}`)
-          }
-          setIsFirstRender(false)
         }
       } catch (error) {
         setUserList([])
       }
     },
-    [loungeId, navigate, isFirstRender]
+    [loungeId, navigate]
   )
 
   const onMentionSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
@@ -130,9 +120,11 @@ export default function ObjetInfoForm({
   }
 
   const onMentionChange = async (value: string) => {
-    setMentionValue(value || '@')
+    setMentionValue(value)
     setIsMentionChanged(true)
-    fetchUsers(value.slice(1))
+    if (value.includes('@')) {
+      fetchUsers(value.slice(1))
+    }
   }
 
   const onMentionSelect = (option: OptionProps) => {
@@ -141,7 +133,6 @@ export default function ObjetInfoForm({
       { user_id: Number(option.key), nickname: option.value as string },
     ])
     setMentionValue('')
-    setMemberErrorMessage('')
   }
 
   const handleTagClose = (removedTag: string) => {
@@ -205,11 +196,6 @@ export default function ObjetInfoForm({
   }
 
   const handleSubmitForm = async () => {
-    if (sharedMembers.length === 0) {
-      setMemberErrorMessage('오브제 멤버를 최소 1명 이상 추가해주세요.')
-    } else {
-      setMemberErrorMessage('')
-    }
     if (name === '') {
       setNameErrorMessage('오브제 이름을 입력해주세요.')
     }
@@ -232,12 +218,7 @@ export default function ObjetInfoForm({
       return
     }
 
-    if (
-      sharedMembers.length === 0 ||
-      !nameValid ||
-      !descriptionValid ||
-      !imageValid
-    ) {
+    if (!nameValid || !descriptionValid || !imageValid) {
       return
     }
 
@@ -333,7 +314,7 @@ export default function ObjetInfoForm({
               onSearch={onMentionSearch}
               onSelect={(option) => onMentionSelect(option as OptionProps)}
               onChange={(value) => onMentionChange(value)}
-              value={mentionValue || undefined}
+              value={mentionValue}
               options={userList
                 .filter(
                   (user) =>
@@ -363,7 +344,6 @@ export default function ObjetInfoForm({
             </TagWrapper>
           </>
         }
-        helperText={memberErrorMessage}
       />
       <InputItem
         label='오브제 이름'

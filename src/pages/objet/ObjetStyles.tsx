@@ -194,6 +194,7 @@ export const RedText = styled.div`
   font-size: 10px;
   color: #d41313;
   text-align: start;
+  margin-left: 4px;
 `
 
 export const UploadButton = styled.button`
