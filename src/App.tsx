@@ -23,6 +23,7 @@ import Notification from '@pages/notification/Notification'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import ObjetForm from '@pages/objet/ObjetForm'
+import Objet from './pages/objet/Objet'
 
 const originalWarn = console.warn
 const originalError = console.error
@@ -81,14 +82,15 @@ function App() {
 
         {/* objets */}
         <Route path={URL.newObjet} element={<ObjetForm />} />
-        <Route path={`${URL.objet}/:oid`} element={<ObjetDetail />} />
+        <Route path={`${URL.objet}/:oid`} element={<Objet />}>
+          <Route index element={<ObjetDetail />} />
+          <Route
+            path={`${URL.objet}/:oid/chatting`}
+            element={<ObjetChatting />}
+          />
+          <Route path={`${URL.objet}/:oid/call`} element={<ObjetCall />} />
+        </Route>
         <Route path={`${URL.objet}/:oid/update`} element={<ObjetForm />} />
-        <Route
-          path={`${URL.objet}/:oid/chatting`}
-          element={<ObjetChatting />}
-        />
-        <Route path={`${URL.objet}/:oid/call`} element={<ObjetCall />} />
-
         {/* my room */}
         <Route path={URL.createMyRoom} element={<CreateMyRoom />} />
         <Route path={URL.myRoom} element={<MyRoom />} />

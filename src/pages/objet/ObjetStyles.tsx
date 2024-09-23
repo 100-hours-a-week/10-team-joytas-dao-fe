@@ -299,7 +299,7 @@ export const TopContainer = styled.div`
 `
 
 export const LeftContainer = styled.div`
-  width: fit-content;
+  width: 100%;
 `
 
 export const RightContainer = styled.div`
@@ -323,11 +323,11 @@ export const CallTitle = styled.div`
   color: white;
 `
 
-export const CallSubTitle = styled.div`
+export const CreatedInfo = styled.div`
   ${flexRow}
   align-items: center;
-  gap: 20px;
-  color: white;
+  gap: 10px;
+  color: gray;
   margin-top: 10px;
   font-size: 12px;
 `
@@ -341,9 +341,11 @@ export const Name = styled.div`
   color: gray;
 `
 
-export const ObjetActive = styled.div`
+export const ObjetDate = styled.div`
   ${flexCenter}
   gap: 10px;
+  color: gray;
+  margin-right: 20px;
 `
 
 export const Active = styled.div<{ $isActive: boolean }>`

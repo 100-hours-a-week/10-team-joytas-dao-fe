@@ -1,3 +1,12 @@
+export const extractYearMonthDate = (datetime: string) => {
+  const dateObj = new Date(datetime)
+  const year = dateObj.getFullYear()
+  const month = dateObj.getMonth() + 1
+  const date = dateObj.getDate()
+
+  return `${year}년 ${month}월 ${date}일`
+}
+
 export const extractHourMinute = (datetime: string) => {
   const dateObj = new Date(datetime)
   const hours = dateObj.getHours()
