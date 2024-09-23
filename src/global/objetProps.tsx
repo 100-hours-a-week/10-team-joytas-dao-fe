@@ -5,7 +5,6 @@ export interface ObjetInfoFormProps {
     lounge_id: number
     name: string
     description: string
-    image_url: string
     sharers: SharedMembersProps[]
     objet_image: string
   }

@@ -27,7 +27,9 @@ export function InputItem({
     <ItemWrapper>
       <ItemLabel>
         {label}
-        <RedText>*</RedText>
+        {className !== 'member' && (
+          <RedText style={{ fontSize: '15px' }}>*</RedText>
+        )}
       </ItemLabel>
       <ItemInput>
         <InputBox className={className} longtext={longtext} img={img}>
