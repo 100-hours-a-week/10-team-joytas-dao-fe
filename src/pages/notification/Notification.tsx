@@ -16,71 +16,61 @@ import useUserStore from '@store/userStore'
 import left from '@assets/images/left.webp'
 import { useNavigate } from 'react-router-dom'
 import { APIs } from '@/static'
-import { useState, useCallback, useRef, useEffect } from 'react'
+import { useQuery } from 'react-query'
+import axios from 'axios'
+import { useState, useEffect, useRef } from 'react'
+
+const fetchNotifications = async (cursor: number | null = null) => {
+  const response = await axios.get(
+    cursor ? `${APIs.notification}?cursor=${cursor}` : APIs.notification,
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    }
+  )
+  return response.data
+}
 
 export default function Notification() {
   const userId = useUserStore((state) => state.userId)
   const navigate = useNavigate()
-  const [notificationList, setNotificationList] = useState<NotificationProps[]>(
-    []
-  )
-  const observer = useRef<IntersectionObserver>()
+
+  const [notifications, setNotifications] = useState<NotificationProps[]>([])
+  const [cursor, setCursor] = useState<number | null>(null)
   const [hasNext, setHasNext] = useState(true)
-  const [cursor, setCursor] = useState(0)
-  const [isLoading, setIsLoading] = useState(false)
+  const [isFetching, setIsFetching] = useState(false)
+
   const targetRef = useRef<HTMLDivElement | null>(null)
+  const observer = useRef<IntersectionObserver>()
 
-  const fetchNotifications = async (cursor?: number) => {
-    try {
-      const response = await fetch(
-        cursor
-          ? `${APIs.notification}?cursor=${cursor}`
-          : `${APIs.notification}`,
-        {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        }
-      )
+  const { isLoading, refetch } = useQuery(
+    ['notifications', cursor],
+    () => fetchNotifications(cursor),
+    {
+      enabled: false,
+      onSuccess: (data) => {
+        setNotifications((prev) => [...prev, ...data.data])
+        setHasNext(data.has_next)
+        setCursor(data.next_cursor)
+      },
+    }
+  )
 
-      if (response.ok) {
-        const responseData = await response.json()
-        if (!cursor) {
-          setNotificationList(responseData.data)
-        }
-        setHasNext(responseData.has_next)
-        setCursor(responseData.next_cursor)
-        return responseData
-      }
-    } catch (error) {
-      console.error('Failed to fetch notifications', error)
+  const loadMoreNotifications = async () => {
+    if (hasNext && !isFetching) {
+      setIsFetching(true)
+      await refetch()
+      setIsFetching(false)
     }
   }
 
-  const loadMoreNotifications = useCallback(async () => {
-    setIsLoading(true)
-    try {
-      const newNotifications = await fetchNotifications(cursor)
-      setNotificationList((prev) => [...prev, ...newNotifications.data])
-      setHasNext(newNotifications.has_next)
-      setCursor(newNotifications.next_cursor)
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setIsLoading(false)
-    }
-  }, [cursor, hasNext])
-
-  useEffect(() => {
-    fetchNotifications()
-  }, [])
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {
       const target = entries[0]
-      if (target.isIntersecting && hasNext && !isLoading) {
+      if (target.isIntersecting && hasNext && !isFetching) {
         loadMoreNotifications()
       }
     }
@@ -88,7 +78,6 @@ export default function Notification() {
     if (observer.current) observer.current.disconnect()
 
     observer.current = new IntersectionObserver(handleObserver)
-
     if (targetRef.current) {
       observer.current.observe(targetRef.current)
     }
@@ -96,7 +85,11 @@ export default function Notification() {
     return () => {
       if (observer.current) observer.current.disconnect()
     }
-  }, [loadMoreNotifications, hasNext, isLoading])
+  }, [loadMoreNotifications, hasNext, isFetching])
+
+  useEffect(() => {
+    refetch()
+  }, [])
 
   return (
     <Layout>
@@ -106,18 +99,18 @@ export default function Notification() {
           알림
         </GlobalTitle>
         <NotificationContainer>
-          {notificationList.length === 0 ? (
+          {isLoading && notifications.length === 0 ? (
             <GlobalBlankContainerText>
               알림이 없습니다.
             </GlobalBlankContainerText>
           ) : (
             <RenderNotificationList
-              notificationList={notificationList}
+              notificationList={notifications}
               userId={userId}
             />
           )}
           <div ref={targetRef} style={{ height: '10px', width: '10px' }} />
-          {isLoading && <p>Loading...</p>}
+          {isFetching && <p>Loading more...</p>}
         </NotificationContainer>
       </GloablContainer16>
     </Layout>

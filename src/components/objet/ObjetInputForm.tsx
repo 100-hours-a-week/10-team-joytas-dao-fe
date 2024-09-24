@@ -23,6 +23,7 @@ import {
   validateImage,
   validateName,
 } from '@utils/validation'
+import axios from 'axios'
 
 export default function ObjetInfoForm({
   path,
@@ -86,25 +87,21 @@ export default function ObjetInfoForm({
   const fetchUsers = useCallback(
     async (searchValue: string) => {
       try {
-        const response = await fetch(
+        const response = await axios.get(
           `${APIs.loungeList}/${loungeId}/search?nickname=${searchValue}`,
           {
-            credentials: 'include',
             headers: {
-              'Content-Type': 'application/json',
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
+            withCredentials: true,
           }
         )
-        if (response.ok) {
-          const responseData = await response.json()
-          setUserList(responseData.data)
-        }
+        setUserList(response.data.data)
       } catch (error) {
         setUserList([])
       }
     },
-    [loungeId, navigate]
+    [loungeId]
   )
 
   const onMentionSearch: MentionsProps['onSearch'] = (_, newPrefix) => {
@@ -195,100 +192,123 @@ export default function ObjetInfoForm({
     }
   }
 
-  const handleSubmitForm = async () => {
-    if (name === '') {
-      setNameErrorMessage('오브제 이름을 입력해주세요.')
-    }
-    if (description === '') {
-      setDescriptionErrorMessage('오브제 설명을 입력해주세요.')
-    }
-    if (!imageUrl) {
-      setImageErrorMessage('오브제 이미지를 첨부해주세요.')
-    }
+  const uploadImage = async (image: File) => {
+    const formData = new FormData()
+    formData.append('file', image)
+    const response = await axios.post(APIs.uploadImage, formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    })
+    return response.data.data.image_url
+  }
 
+  const createObjet = async (
+    loungeId: number,
+    type: string,
+    name: string,
+    description: string,
+    imageUrl: string,
+    sharedMembers: SharedMembersProps[]
+  ) => {
+    return axios.post(
+      APIs.objet,
+      {
+        lounge_id: Number(loungeId),
+        type,
+        name,
+        description,
+        objet_image: imageUrl,
+        sharers: sharedMembers.map((member) => member.user_id),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    )
+  }
+
+  const updateObjet = async (
+    objetId: number,
+    name: string,
+    description: string,
+    imageUrl: string,
+    sharedMembers: SharedMembersProps[]
+  ) => {
+    return axios.patch(
+      `${APIs.objet}/${objetId}`,
+      {
+        name,
+        description,
+        objet_image: imageUrl,
+        sharers: sharedMembers.map((member) => member.user_id),
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      }
+    )
+  }
+
+  const handleSubmitForm = async () => {
+    if (name === '') setNameErrorMessage('오브제 이름을 입력해주세요.')
+    if (description === '')
+      setDescriptionErrorMessage('오브제 설명을 입력해주세요.')
+    if (!imageUrl) setImageErrorMessage('오브제 이미지를 첨부해주세요.')
     if (
       !isMentionChanged &&
       !isNameChanged &&
       !isDescriptionChanged &&
       !isImageChanged
     ) {
-      if (path === 'update') {
-        toast.info('변경된 내용이 없습니다.')
-      }
+      if (path === 'update') toast.info('변경된 내용이 없습니다.')
       return
     }
-
-    if (!nameValid || !descriptionValid || !imageValid) {
-      return
-    }
+    if (!nameValid || !descriptionValid || !imageValid) return
 
     setIsClick(true)
     setIsLoading(true)
 
     try {
-      let receivedImageUrl
-
-      if (image && isImageChanged) {
-        const formData = new FormData()
-        formData.append('file', image)
-
-        const imageResponse = await fetch(APIs.uploadImage, {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-          body: formData,
-        })
-
-        if (!imageResponse.ok) {
-          toast.error('오브제 이미지 업로드 실패 😭')
-          return
-        }
-
-        const imageResponseData = await imageResponse.json()
-        receivedImageUrl = imageResponseData.data.image_url
-      }
+      let receivedImageUrl =
+        image && isImageChanged ? await uploadImage(image) : imageUrl
 
       let response
       if (path === 'create') {
-        response = await PostObjet(
+        response = await createObjet(
           Number(loungeId),
           type,
           name,
           description,
-          receivedImageUrl || imageUrl,
+          receivedImageUrl,
           sharedMembers
         )
       } else if (path === 'update') {
-        response = await PatchObjet(
+        response = await updateObjet(
           Number(objetId),
           name,
           description,
-          receivedImageUrl || imageUrl,
+          receivedImageUrl,
           sharedMembers
         )
       }
 
-      if (response && !response.ok) {
+      if (response?.status !== 201) {
         toast.error(`${text} 실패 😭`)
         return
       }
 
-      if (path === 'create') {
-        const objetResponseData = response ? await response.json() : null
-        const newObjetId = objetResponseData.data.objet_id
-
-        toast.success(`${text} 성공 🪐`)
-        navigate(`${URL.objet}/${newObjetId}`, {
-          replace: true,
-        })
-      } else {
-        toast.success(`${text} 성공 🪐`)
-        navigate(`${URL.objet}/${objetId}`, {
-          replace: true,
-        })
-      }
+      toast.success(`${text} 성공 🪐`)
+      navigate(`${URL.objet}/${response?.data.data.objet_id || objetId}`, {
+        replace: true,
+      })
     } catch (error) {
       console.error(`${text} 실패: `, error)
     } finally {
@@ -427,57 +447,4 @@ export default function ObjetInfoForm({
       </ChooseContainer>
     </>
   )
-}
-
-async function PostObjet(
-  loungeId: number,
-  type: string,
-  name: string,
-  description: string,
-  imageUrl: string,
-  sharedMembers: SharedMembersProps[]
-) {
-  const response = await fetch(APIs.objet, {
-    method: 'POST',
-    credentials: 'include',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      lounge_id: Number(loungeId),
-      type: type,
-      name,
-      description,
-      objet_image: imageUrl,
-      sharers: sharedMembers.map((member) => member.user_id),
-    }),
-  })
-
-  return response
-}
-
-async function PatchObjet(
-  objetId: number,
-  name: string,
-  description: string,
-  imageUrl: string,
-  sharedMembers: SharedMembersProps[]
-) {
-  const response = await fetch(`${APIs.objet}/${objetId}`, {
-    method: 'PATCH',
-    credentials: 'include',
-    headers: {
-      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      name,
-      description,
-      objet_image: imageUrl,
-      sharers: sharedMembers.map((member) => member.user_id),
-    }),
-  })
-
-  return response
 }

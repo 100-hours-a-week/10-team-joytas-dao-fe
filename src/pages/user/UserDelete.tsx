@@ -18,6 +18,8 @@ import { APIs, URL } from '@/static'
 import useUserStore from '@store/userStore'
 import { DeleteUserModal } from '@components/modal/Modal'
 import { toast } from 'react-toastify'
+import axios from 'axios'
+import { useMutation } from 'react-query'
 
 export default function UserDelete() {
   const navigate = useNavigate()
@@ -60,38 +62,48 @@ export default function UserDelete() {
     }
   }
 
-  const handleSubmit = async () => {
-    setIsClick(true)
-    try {
-      const trueReasons = (
-        Object.keys(reasons) as Array<keyof typeof reasons>
-      ).filter((key) => reasons[key])
+  // 회원탈퇴 API 호출
+  const deleteUser = async () => {
+    const trueReasons = (
+      Object.keys(reasons) as Array<keyof typeof reasons>
+    ).filter((key) => reasons[key])
 
-      const response = await fetch(APIs.withdraw, {
-        method: 'POST',
-        credentials: 'include',
+    const response = await axios.post(
+      APIs.withdraw,
+      {
+        detail,
+        reason: trueReasons,
+      },
+      {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          detail,
-          reason: trueReasons,
-        }),
-      })
-
-      if (response.ok) {
-        toast.success('회원탈퇴 성공 🥺')
-        localStorage.removeItem('access_token')
-        logout()
-        navigate(URL.login)
+        withCredentials: true,
       }
-    } catch (error) {
+    )
+    return response.data
+  }
+
+  const mutation = useMutation(deleteUser, {
+    onSuccess: () => {
+      toast.success('회원탈퇴 성공 🥺')
+      localStorage.removeItem('access_token')
+      logout()
+      navigate(URL.login)
+    },
+    onError: (error) => {
       console.error('Failed to withdraw user', error)
       toast.error('회원탈퇴 실패 😭')
-    } finally {
+    },
+    onSettled: () => {
       setIsClick(false)
-    }
+    },
+  })
+
+  const handleSubmit = () => {
+    setIsClick(true)
+    mutation.mutate()
   }
 
   return (

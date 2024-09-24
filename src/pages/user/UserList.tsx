@@ -15,21 +15,31 @@ import LoadingLottie from '@components/lotties/LoadingLottie'
 import { APIs } from '@/static'
 import { useEffect, useRef, useState } from 'react'
 import useUserStore from '@store/userStore'
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
-interface SearhUser {
+interface SearchUser {
   user_id: number
   user_status: string
   profile_url: string
   nickname: string
 }
 
+const searchUsers = async (nickname: string): Promise<SearchUser[]> => {
+  const response = await axios.get(`${APIs.searchUser}?nickname=${nickname}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    withCredentials: true,
+  })
+
+  return response.data.data
+}
+
 export default function UserList() {
   const type = useLocation().pathname.split('/')[1] as 'lounges' | 'users'
-  const [isLoading, setIsLoading] = useState(false)
-  const [userList, setUserList] = useState<SearhUser[]>([])
   const [searchUser, setSearchUser] = useState('')
   const userId = useUserStore((state) => state.userId)
-
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
   useEffect(() => {
@@ -38,31 +48,16 @@ export default function UserList() {
     }
   }, [])
 
-  const handleChangeUser = async (input: string) => {
-    setIsLoading(true)
-    setSearchUser(input)
-    try {
-      const response = await fetch(`${APIs.searchUser}?nickname=${input}`, {
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      const responseData = await response.json()
-
-      if (!response.ok || responseData.data.length === 0) {
-        setUserList([])
-      }
-
-      setUserList(responseData.data)
-    } catch (error) {
-      console.error('유저 검색 실패', error)
-    } finally {
-      setIsLoading(false)
+  const { data: userList = [], isLoading } = useQuery(
+    ['searchUser', searchUser],
+    () => searchUsers(searchUser),
+    {
+      enabled: !!searchUser,
+      onError: (error) => {
+        console.error('유저 검색 실패', error)
+      },
     }
-  }
+  )
 
   return (
     <Layout>
@@ -78,7 +73,7 @@ export default function UserList() {
             value={searchUser}
             placeholder='검색할 유저 닉네임을 입력해주세요!'
             maxLength={10}
-            onChange={(e) => handleChangeUser(e.target.value)}
+            onChange={(e) => setSearchUser(e.target.value)}
           />
           {isLoading ? (
             <LoadingLottie />

@@ -16,6 +16,33 @@ import { APIs, URL } from '@/static'
 import { useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import useUserStore from '@store/userStore.ts'
+import axios from 'axios'
+import { useQuery, useMutation } from 'react-query'
+
+const checkIfGenerated = async (userId: number) => {
+  const response = await axios.get(`${APIs.myRoom}?user_id=${userId}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    withCredentials: true,
+  })
+  return response
+}
+
+const createMyRoom = async (selectedModelType: string) => {
+  const response = await axios.post(
+    APIs.myRoom,
+    { type: selectedModelType },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    }
+  )
+  return response
+}
 
 export default function CreateMyRoom() {
   const [selectedModelType, setSelectedModelType] = useState('R0001')
@@ -23,26 +50,10 @@ export default function CreateMyRoom() {
   const userId = useUserStore((state) => state.userId)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    checkIfGenerated()
-  }, [])
-
-  useEffect(() => {
-    setSelectedModel(
-      modelList.find((model) => model.type === selectedModelType)
-    )
-  }, [selectedModelType])
-
-  const checkIfGenerated = async () => {
-    try {
-      const response = await fetch(`${APIs.myRoom}?user_id=${userId}`, {
-        credentials: 'include',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (response.ok) {
+  // 마이룸 생성 여부를 체크하는 쿼리
+  useQuery(['checkMyRoom', userId], () => checkIfGenerated(userId), {
+    onSuccess: (response) => {
+      if (response.status === 200) {
         toast.info(
           <>
             이미 마이룸을 생성하셨습니다. <br /> 마이룸으로 이동합니다. 🪐
@@ -50,32 +61,30 @@ export default function CreateMyRoom() {
         )
         navigate(URL.myRoom)
       }
-    } catch (error) {
+    },
+    onError: (error) => {
       console.error('마이룸 정보 조회 오류: ', error)
-    }
-  }
+    },
+  })
 
-  const handleCreate = async () => {
-    try {
-      const response = await fetch(APIs.myRoom, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: JSON.stringify({ type: selectedModelType }),
-      })
+  const mutation = useMutation(() => createMyRoom(selectedModelType), {
+    onSuccess: () => {
+      toast.success('마이룸 생성 성공 🪐')
+      navigate(URL.myRoom)
+    },
+    onError: () => {
+      toast.error('마이룸 생성 실패 😭')
+    },
+  })
 
-      if (response.ok) {
-        toast.success('마이룸 생성 성공 🪐')
-        navigate(URL.myRoom)
-      } else {
-        toast.error('마이룸 생성 실패 😭')
-      }
-    } catch (error) {
-      console.error('마이룸 생성 오류: ', error)
-    }
+  useEffect(() => {
+    setSelectedModel(
+      modelList.find((model) => model.type === selectedModelType)
+    )
+  }, [selectedModelType])
+
+  const handleCreate = () => {
+    mutation.mutate()
   }
 
   return (

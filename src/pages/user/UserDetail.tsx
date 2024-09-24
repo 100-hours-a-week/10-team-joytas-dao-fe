@@ -6,21 +6,23 @@ import { MyRoomName, MyRoomPreviewWrapper } from '../myRoom/MyRoomStyles'
 import { OrbitControls } from '@react-three/drei'
 import { modelList, MyRoomModel } from '@global/myRoomModels'
 import { MyRoomContainer } from './UserListStyles'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { APIs } from '@/static'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import LoadingLottie from '@components/lotties/LoadingLottie'
+import axios from 'axios'
+import { useQuery } from 'react-query'
+import { toast } from 'react-toastify'
 
 export default function UserDetail() {
+  const navigate = useNavigate()
   const userId = Number(useParams().id)
 
   const [userNickname, setUserNickname] = useState('')
   const [userProfileUrl, setUserProfileUrl] = useState('')
   const [userStatus, setUserStatus] = useState('')
-
   const [myRoomName, setMyRoomName] = useState('')
   const [myRoomModel, setMyRoomModel] = useState<MyRoomModel>(modelList[0])
-  const [isLoading, setIsLoading] = useState(true)
 
   const profile = {
     user_id: userId,
@@ -29,60 +31,71 @@ export default function UserDetail() {
     user_status: userStatus,
   }
 
-  useEffect(() => {
-    fetchMyRoomInfo()
-  }, [userId])
+  const fetchUserInfo = async () => {
+    const userResponse = await axios.get(`${APIs.userInfo}/${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    })
+    return userResponse.data.data
+  }
 
   const fetchMyRoomInfo = async () => {
-    try {
-      const userRes = await fetch(`${APIs.userInfo}/${userId}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (userRes.ok) {
-        const userResData = await userRes.json()
-
-        setUserNickname(userResData.data.nickname)
-        setUserProfileUrl(userResData.data.profile_url)
-        setUserStatus(userResData.data.user_status)
-
-        const response = await fetch(`${APIs.myRoom}?user_id=${userId}`, {
-          credentials: 'include',
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        })
-
-        const responseData = await response.json()
-
-        setMyRoomName(
-          responseData.data.my_room_name
-            ? responseData.data.my_room_name
-            : profile.nickname + '의 마이룸'
-        )
-        setMyRoomModel(modelList[responseData.data.type.split('R000')[1] - 1])
-      } else {
-        console.error('유저 정보 조회 오류: ', userRes)
-      }
-    } catch (error) {
-      console.error('마이룸 정보 조회 오류: ', error)
-    } finally {
-      setIsLoading(false)
-    }
+    const response = await axios.get(`${APIs.myRoom}?user_id=${userId}`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    })
+    return response.data.data
   }
+
+  const { isLoading: isUserLoading } = useQuery(
+    ['userInfo', userId],
+    fetchUserInfo,
+    {
+      onSuccess: (data) => {
+        setUserNickname(data.nickname)
+        setUserProfileUrl(data.profile_url)
+        setUserStatus(data.user_status)
+      },
+      onError: (error) => {
+        console.error('유저 정보 조회 오류: ', error)
+      },
+    }
+  )
+
+  const { isLoading: isMyRoomLoading } = useQuery(
+    ['myRoomInfo', userId],
+    fetchMyRoomInfo,
+    {
+      onSuccess: (data) => {
+        setMyRoomName(
+          data.my_room_name ? data.my_room_name : profile.nickname + '의 마이룸'
+        )
+        setMyRoomModel(modelList[data.type.split('R000')[1] - 1])
+      },
+      onError: (error) => {
+        console.error('마이룸 정보 조회 오류: ', error)
+        toast.error('해당 유저의 마이룸이 존재하지 않습니다 🥲')
+        navigate(-1)
+      },
+    }
+  )
 
   return (
     <Layout>
       <GloablContainer16>
         <div style={{ height: '80px' }} />
-        <UserListItem type='userDetail' user={profile} />
+        {isUserLoading ? (
+          <LoadingLottie />
+        ) : (
+          <UserListItem type='userDetail' user={profile} />
+        )}
         <MyRoomContainer>
           <MyRoomPreviewWrapper>
-            {isLoading ? (
+            {isMyRoomLoading ? (
               <LoadingLottie />
             ) : (
               <>

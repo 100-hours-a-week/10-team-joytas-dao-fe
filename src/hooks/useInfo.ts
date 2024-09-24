@@ -1,81 +1,86 @@
 import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
 import type { Profile } from '@/types/ProfileType'
 import useUserStore from '@store/userStore'
 import { APIs, URL } from '@/static'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 export const useUserInfo = () => {
   const [isLogin, setIsLogin] = useState(false)
   const navigate = useNavigate()
-
   const { updateId, updateNickname, updateProfileImage } = useUserStore()
 
   const fetchProfile = async (): Promise<Profile | undefined> => {
     try {
-      let response = await fetch(APIs.profile, {
-        credentials: 'include',
+      const response = await axios.get(APIs.profile, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
+        withCredentials: true,
       })
 
-      if (response.status === 401) {
-        const reissueResponse = await fetch(APIs.reissueToken, {
-          method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        })
+      return response.data.data
+    } catch (error) {
+      if (axios.isAxiosError(error) && error.response?.status === 401) {
+        try {
+          const reissueResponse = await axios.post(
+            APIs.reissueToken,
+            {},
+            {
+              withCredentials: true,
+            }
+          )
 
-        if (reissueResponse.ok) {
-          setIsLogin(true)
-          const reissueData = await reissueResponse.json()
-          localStorage.setItem('access_token', reissueData.data.access_token)
+          const newAccessToken = reissueResponse.data.data.access_token
+          localStorage.setItem('access_token', newAccessToken)
 
-          // 새로운 토큰으로 프로필 재요청
-          response = await fetch(APIs.profile, {
-            credentials: 'include',
+          const retryResponse = await axios.get(APIs.profile, {
             headers: {
-              Authorization: `Bearer ${reissueData.data.access_token}`,
+              Authorization: `Bearer ${newAccessToken}`,
             },
+            withCredentials: true,
           })
-        } else {
+
+          setIsLogin(true)
+          return retryResponse.data.data
+        } catch (reissueError) {
+          console.error('Failed to reissue token:', reissueError)
           setIsLogin(false)
           throw new Error('Failed to reissue token')
         }
-      }
-
-      if (!response.ok) {
+      } else {
+        console.error('Failed to fetch profile:', error)
+        setIsLogin(false)
         navigate(URL.login)
         throw new Error('Failed to fetch profile')
       }
-
-      setIsLogin(true)
-      const responseData = await response.json()
-      return responseData.data
-    } catch (error) {
-      console.error('Failed to fetch profile', error)
-      setIsLogin(false)
-      navigate(URL.login)
     }
   }
 
   const getProfile = async () => {
-    const profile = await fetchProfile()
+    setIsLogin(false)
+    try {
+      const profile = await fetchProfile()
 
-    if (profile?.user_status === 'ACTIVE_FIRST_LOGIN') {
-      navigate(URL.firstProfile)
-    }
-
-    if (profile) {
-      updateNickname(profile.nickname)
-      updateProfileImage(profile.profile_url)
-      updateId(profile.user_id)
-    } else {
-      navigate(URL.login)
+      if (profile?.user_status === 'ACTIVE_FIRST_LOGIN') {
+        navigate(URL.firstProfile)
+        setIsLogin(true)
+      } else if (profile) {
+        updateNickname(profile.nickname)
+        updateProfileImage(profile.profile_url)
+        updateId(profile.user_id)
+        setIsLogin(true)
+      } else {
+        navigate(URL.login)
+      }
+    } catch (error) {
+      console.error('Error getting profile:', error)
     }
   }
+
+  useEffect(() => {
+    getProfile()
+  }, [])
 
   return { isLogin, getProfile }
 }

@@ -5,7 +5,7 @@ import {
   GlobalSubTitle,
   GlobalTitle,
 } from '@global/globalStyles.tsx'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { OrbitControls } from '@react-three/drei'
 import { Group } from 'three'
@@ -15,6 +15,8 @@ import ObjetInfoForm from '@components/objet/ObjetInputForm.tsx'
 import { ObjetInfoFormProps } from '@global/objetProps.tsx'
 import { useLocation, useParams } from 'react-router-dom'
 import { APIs } from '@/static'
+import { useQuery } from 'react-query'
+import axios from 'axios'
 
 export default function ObjetForm() {
   const path = useLocation().pathname
@@ -23,66 +25,51 @@ export default function ObjetForm() {
   const { oid } = useParams()
   const objetId = step === 'update' ? oid : 0
 
-  const [isSelected, setIsSelected] = useState(false)
   const [selectedType, setSelectedType] = useState('')
 
-  const [objetInfo, setObjetInfo] = useState<ObjetInfoFormProps['objetInfo']>()
+  const isSelected = selectedType !== ''
 
-  useEffect(() => {
-    if (step === 'update') {
-      fetchObjetData()
-    }
-  }, [])
-
-  useEffect(() => {
-    if (selectedType !== '') {
-      setIsSelected(true)
-    }
-  }, [selectedType])
-
-  const fetchObjetData = async () => {
-    try {
-      const objetDataResponse = await fetch(`${APIs.objet}/${objetId}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (objetDataResponse.ok) {
-        const data = await objetDataResponse.json()
-        setSelectedType(data.data.objet_type)
-
-        const sharersResponse = await fetch(
-          `${APIs.objet}/${objetId}/sharers`,
+  const { data: objetInfo, isLoading: isObjetLoading } = useQuery(
+    ['objetInfo', objetId],
+    async () => {
+      if (step === 'update') {
+        const { data: objetData } = await axios.get(
+          `${APIs.objet}/${objetId}`,
           {
-            method: 'GET',
-            credentials: 'include',
             headers: {
-              'Content-Type': 'application/json',
               Authorization: `Bearer ${localStorage.getItem('access_token')}`,
             },
+            withCredentials: true,
           }
         )
 
-        if (sharersResponse.ok) {
-          const sharers = await sharersResponse.json()
+        const { data: sharersData } = await axios.get(
+          `${APIs.objet}/${objetId}/sharers`,
+          {
+            headers: {
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            },
+            withCredentials: true,
+          }
+        )
 
-          setObjetInfo({
-            lounge_id: data.data.lounge_id,
-            name: data.data.name,
-            description: data.data.description,
-            sharers: sharers.data.sharers,
-            objet_image: data.data.objet_image,
-          })
+        return {
+          lounge_id: objetData.data.lounge_id,
+          name: objetData.data.name,
+          description: objetData.data.description,
+          sharers: sharersData.data.sharers,
+          objet_image: objetData.data.objet_image,
+          objet_type: objetData.data.objet_type,
         }
       }
-    } catch (error) {
-      console.error('오브제 정보 가져오기 실패: ', error)
+    },
+    {
+      enabled: step === 'update',
+      onSuccess: (data) => {
+        setSelectedType(data?.objet_type || '')
+      },
     }
-  }
+  )
 
   return (
     <Layout>
@@ -113,11 +100,13 @@ export default function ObjetForm() {
               <SelectObjetType setSelectedType={setSelectedType} />
             )
           ) : (
-            <ObjetInfoForm
-              path='update'
-              type={selectedType}
-              objetInfo={objetInfo}
-            />
+            !isObjetLoading && (
+              <ObjetInfoForm
+                path='update'
+                type={selectedType}
+                objetInfo={objetInfo}
+              />
+            )
           )}
         </Container>
       </GloablContainer16>
