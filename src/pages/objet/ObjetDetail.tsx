@@ -33,7 +33,11 @@ interface Message {
 export default function ObjetDetail() {
   const objetId = useParams().oid
   const objetContext = useObjetContext()
-  const { description, imageUrl, callingPeople } = objetContext || {}
+  const {
+    description,
+    objet_image: imageUrl,
+    callingPeople,
+  } = objetContext || {}
 
   const setChatToken = useObjetStore((state) => state.setChatToken)
   const navigate = useNavigate()
