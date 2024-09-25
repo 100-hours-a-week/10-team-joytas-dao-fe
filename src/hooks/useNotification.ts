@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react'
 import { APIs } from '@/static'
+import axios from 'axios'
+import { useQuery } from 'react-query'
 
 export interface NotificationProps {
   notification_id: number
@@ -20,36 +21,31 @@ export interface ConnectNotificationProps {
   message: string
 }
 
-const useNotifications = () => {
-  const [notificationList, setNotificationList] = useState<NotificationProps[]>(
-    []
-  )
+const fetchNotifications = async (): Promise<NotificationProps[]> => {
+  const response = await axios.get(APIs.notification, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    withCredentials: true,
+  })
 
-  useEffect(() => {
-    fetchData()
-  }, [])
-
-  const fetchData = async () => {
-    try {
-      const response = await fetch(`${APIs.notification}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (response.ok) {
-        const responseData = await response.json()
-        setNotificationList(responseData.data)
-      }
-    } catch (error) {
-      console.error('Failed to fetch notifications', error)
-    }
+  if (response.status === 200) {
+    return response.data.data
+  } else {
+    throw new Error('Failed to fetch notifications')
   }
+}
 
-  return { notificationList }
+const useNotifications = () => {
+  const {
+    data: notificationList = [],
+    error,
+    isLoading,
+  } = useQuery('notifications', fetchNotifications, {
+    retry: 1,
+  })
+
+  return { notificationList, error, isLoading }
 }
 
 export default useNotifications

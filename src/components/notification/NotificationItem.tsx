@@ -15,6 +15,8 @@ import { ConfirmNotificationModal } from '../modal/Modal'
 import { useNavigate } from 'react-router-dom'
 import { APIs, URL } from '@/static'
 import { toast } from 'react-toastify'
+import axios from 'axios'
+import { useMutation } from 'react-query'
 
 export default function NotificationItem({
   notification_id,
@@ -35,6 +37,32 @@ export default function NotificationItem({
   const [isModalVisible, setIsModalVisible] = useState(false)
   const navigate = useNavigate()
 
+  const markNotificationAsRead = async (notification_id: number) => {
+    const response = await axios.patch(
+      `${APIs.notification}/${notification_id}/read`,
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        withCredentials: true,
+      }
+    )
+
+    if (!response.status || response.status !== 200) {
+      throw new Error('알림 읽기 실패')
+    }
+
+    return response
+  }
+
+  const notificationReadMutation = useMutation(markNotificationAsRead, {
+    onError: () => {
+      toast.error('알림을 읽지 못했어요 🥹 이따가 다시 시도해주세요!')
+    },
+  })
+
   let text = ''
   switch (type) {
     case 'N0001':
@@ -47,46 +75,22 @@ export default function NotificationItem({
       text = `${sender.nickname}님이 콕 찔렀습니다.`
   }
 
-  const handleClickNotiRead = async () => {
-    try {
-      const readRes = await fetch(
-        `${APIs.notification}/${notification_id}/read`,
-        {
-          method: 'PATCH',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        }
-      )
-
-      if (!readRes.ok) {
-        toast.error('알림을 읽지 못했어요 🥹 이따가 다시 시도해주세요!')
-      }
-    } catch (error) {
-      console.error('알림 클릭 실패', error)
-    }
-  }
-
   const handleClickLoungeNoti = async () => {
     setIsModalVisible(true)
-
     setTimeout(async () => {
-      await handleClickNotiRead()
+      await notificationReadMutation.mutateAsync(notification_id)
       setIsModalVisible(false)
       navigate(`${URL.lounge}/${detail.domain_id}`)
     }, 3000)
   }
 
   const handleClickObjetNoti = async () => {
-    await handleClickNotiRead()
+    await notificationReadMutation.mutateAsync(notification_id)
     navigate(`${URL.objet}/${detail.domain_id}`)
   }
 
   const handleClickPokeNoti = async () => {
-    await handleClickNotiRead()
-    console.log(sender.user_id)
+    await notificationReadMutation.mutateAsync(notification_id)
     navigate(`${URL.userDetail}/${sender.user_id}`)
   }
 

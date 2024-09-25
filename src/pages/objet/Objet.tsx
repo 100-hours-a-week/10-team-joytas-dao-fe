@@ -15,7 +15,7 @@ import {
 import MenuImg from '@images/menu.webp'
 import { useParams, useNavigate, useLocation, Outlet } from 'react-router-dom'
 import { APIs, URL } from '@/static'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import { DeleteObjetModal } from '@components/modal/Modal'
 import { ModalBackdrop } from '@components/modal/ModalStyles'
 import { ObjetDrop } from '@components/dropdown/Dropdown'
@@ -26,25 +26,16 @@ import { extractYearMonthDate } from '@utils/formatDatetime'
 import LeaveImg from '@images/leave.webp'
 import { disconnectFromRoom } from '@utils/stomp'
 import { ObjetContext } from '@utils/objetContext'
+import { useQuery, useMutation } from 'react-query'
+import axios from 'axios'
 
 export default function Objet() {
   const path = useLocation().pathname
   const isObjetDetail = path.includes('objet')
   const isChatting = path.includes('chatting')
-  const [isLoading, setIsLoading] = useState(true)
 
   const objetId = useParams().oid
   const myUserId = useUserStore((state) => state.userId)
-  const [objetData, setObjetData] = useState({
-    creator: '',
-    creatorId: 0,
-    name: '',
-    description: '',
-    imageUrl: '',
-    createdAt: '',
-    callingPeople: 0,
-    loungeId: 0,
-  })
 
   const dropRef = useRef<HTMLDivElement>(null)
   const [isDropVisible, setIsDropVisible] = useState(false)
@@ -53,63 +44,48 @@ export default function Objet() {
   const navigate = useNavigate()
   const chatToken = useObjetStore((state) => state.chatToken)
 
-  useEffect(() => {
-    if (isObjetDetail) fetchData()
-  }, [path])
-
-  const fetchData = async () => {
-    try {
-      const objRes = await fetch(`${APIs.objet}/${objetId}`, {
-        method: 'GET',
-        credentials: 'include',
+  const { data: objetData, isLoading } = useQuery(
+    ['objetData', objetId],
+    async () => {
+      const response = await axios.get(`${APIs.objet}/${objetId}`, {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
+        withCredentials: true,
       })
 
-      if (!objRes.ok) {
-        toast.error('해당 오브제를 찾을수 없습니다 😅')
+      return response.data.data
+    },
+    {
+      onError: () => {
+        toast.error('해당 오브제를 찾을 수 없습니다 😅')
         navigate(`${URL.lounge}`)
-      }
-
-      const data = await objRes.json()
-      setObjetData({
-        creator: data.data.owner.nickname,
-        creatorId: data.data.owner.user_id,
-        name: data.data.name,
-        description: data.data.description,
-        imageUrl: data.data.objet_image,
-        createdAt: data.data.created_at,
-        callingPeople: data.data.calling_user_num,
-        loungeId: data.data.lounge_id,
-      })
-    } catch (error) {
-      console.error('오브제 정보 가져오기 실패: ', error)
-    } finally {
-      setIsLoading(false)
+      },
     }
-  }
+  )
 
-  const handleDeleteObjet = async () => {
-    try {
-      const response = await fetch(`${APIs.objet}/${objetId}`, {
-        method: 'DELETE',
-        credentials: 'include',
+  const mutation = useMutation(
+    async () => {
+      await axios.delete(`${APIs.objet}/${objetId}`, {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
+        withCredentials: true,
       })
-
-      if (!response.ok) {
+    },
+    {
+      onSuccess: () => {
+        toast.success('오브제 삭제 성공 🪐')
+        navigate(`${URL.lounge}/${objetData.loungeId}`)
+      },
+      onError: () => {
         toast.error('오브제 삭제 실패 😭')
-      }
-      toast.success('오브제 삭제 성공 🪐')
-      navigate(`${URL.lounge}/${objetData.loungeId}`)
-    } catch (error) {
-      console.error('오브제 삭제 실패: ', error)
+      },
     }
+  )
+
+  const handleDeleteObjet = () => {
+    mutation.mutate()
   }
 
   const handleLeaveChat = () => {
@@ -150,17 +126,17 @@ export default function Objet() {
               <CallTitle>{objetData.name}</CallTitle>
               <CreatedInfo>
                 <ObjetMaker>
-                  <Name>{objetData.creator}</Name>
+                  <Name>{objetData.owner.nickname}</Name>
                 </ObjetMaker>
                 |
                 <ObjetDate>
-                  {extractYearMonthDate(objetData.createdAt)}
+                  {extractYearMonthDate(objetData.created_at)}
                 </ObjetDate>
               </CreatedInfo>
             </LeftContainer>
             <RightContainer>
               {isObjetDetail &&
-              myUserId === objetData.creatorId &&
+              myUserId === objetData.owner.user_id &&
               !isChatting ? (
                 <>
                   <IconContainer>

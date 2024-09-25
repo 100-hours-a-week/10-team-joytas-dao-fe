@@ -12,12 +12,13 @@ import {
 import GoCommunityBtn from '@components/objet/GoCommunityBtn'
 import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '@/static'
-import { useEffect, useState } from 'react'
 import { ChatMessage } from '@components/objet/Chat'
 import LoadingLottie from '@components/lotties/LoadingLottie'
 import useObjetStore from '@store/objetStore'
 import { toast } from 'react-toastify'
 import { useObjetContext } from '@/utils/objetContext'
+import { useQuery } from 'react-query'
+import axios from 'axios'
 
 interface Message {
   id: string
@@ -34,55 +35,44 @@ export default function ObjetDetail() {
   const objetContext = useObjetContext()
   const { description, imageUrl, callingPeople } = objetContext || {}
 
-  const [isLoading, setIsLoading] = useState(true)
-  const [messagePreviews, setMessagePreviews] = useState<Message[]>([])
   const setChatToken = useObjetStore((state) => state.setChatToken)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    fetchData()
-  }, [objetId])
-
-  const fetchData = async () => {
-    try {
-      // - 채팅방 토큰 가져오기
-      const chatRes = await fetch(`${APIs.chat}/${objetId}/room-token`, {
-        method: 'GET',
-        credentials: 'include',
+  const { data: chatData, isLoading: isChatLoading } = useQuery(
+    ['chatData', objetId],
+    async () => {
+      const chatRes = await axios.get(`${APIs.chat}/${objetId}/room-token`, {
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
+        withCredentials: true,
       })
 
-      if (chatRes.ok) {
-        const data = await chatRes.json()
-        setChatToken(data.data.room_token)
+      setChatToken(chatRes.data.data.room_token)
 
-        // - 채팅방 미리보기 가져오기
-        const chatPreviewRes = await fetch(
-          `${APIs.chat}/${data.data.room_token}/messages/recent`,
-          {
-            method: 'GET',
-            credentials: 'include',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            },
-          }
-        )
-
-        if (chatPreviewRes.ok) {
-          const chatPreviewData = await chatPreviewRes.json()
-          setMessagePreviews(chatPreviewData.data.messages)
+      const chatPreviewRes = await axios.get(
+        `${APIs.chat}/${chatRes.data.data.room_token}/messages/recent`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          withCredentials: true,
         }
+      )
+
+      return {
+        roomToken: chatRes.data.data.room_token,
+        messages: chatPreviewRes.data.data.messages,
       }
-    } catch (error) {
-      console.error('오브제 정보 가져오기 실패: ', error)
-    } finally {
-      setIsLoading(false)
+    },
+    {
+      onError: (error) => {
+        console.error('오브제 정보 가져오기 실패: ', error)
+        toast.error('오브제 정보를 가져오지 못했습니다.')
+      },
     }
-  }
+  )
 
   const handleClickChat = async () => {
     setChatToken(useObjetStore.getState().chatToken)
@@ -97,7 +87,7 @@ export default function ObjetDetail() {
     }
   }
 
-  if (isLoading) {
+  if (isChatLoading) {
     return (
       <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
         <LoadingLottie />
@@ -115,7 +105,7 @@ export default function ObjetDetail() {
 
       <div style={{ paddingBottom: '80px' }}>
         <ChattingText>| &nbsp; 채팅 미리보기</ChattingText>
-        {messagePreviews.length < 1 ? (
+        {chatData?.messages.length < 1 ? (
           <>
             <NoChatting>채팅 내역이 없습니다.</NoChatting>
             <GoToBtnWrapper style={{ marginTop: '30px' }}>
@@ -135,7 +125,7 @@ export default function ObjetDetail() {
         ) : (
           <CommunityContainer>
             <ChattingsWrapper>
-              {messagePreviews.map((message, index) => (
+              {chatData?.messages.map((message: Message, index: number) => (
                 <ChatMessage
                   userName={message.sender_name}
                   userId={message.sender_id}

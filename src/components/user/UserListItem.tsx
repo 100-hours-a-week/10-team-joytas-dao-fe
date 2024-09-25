@@ -13,6 +13,8 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { URL, APIs } from '@/static'
 import { useState } from 'react'
 import { toast } from 'react-toastify'
+import { useMutation } from 'react-query'
+import axios from 'axios'
 
 interface UserListProps {
   type: string
@@ -24,6 +26,35 @@ interface UserListProps {
   }
 }
 
+// axios로 API 요청 처리 함수
+const pokeUser = async (user_id: number) => {
+  const response = await axios.post(
+    APIs.poke,
+    { user_id },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    }
+  )
+  return response
+}
+
+const inviteUser = async (user_id: number, lounge_id: number) => {
+  const response = await axios.post(
+    APIs.invite,
+    { user_id, lounge_id },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    }
+  )
+  return response
+}
+
 export default function UserListItem({ type, user }: UserListProps) {
   const loungeId = useParams().lid || 0
   const navigate = useNavigate()
@@ -33,60 +64,51 @@ export default function UserListItem({ type, user }: UserListProps) {
     navigate(`${URL.userDetail}/${user.user_id}`)
   }
 
-  const handleClickPoke = async () => {
-    setIsClick(true)
-    try {
-      const response = await fetch(APIs.poke, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: JSON.stringify({ user_id: user.user_id }),
-      })
-
-      if (response.ok) {
-        toast.success(`${user.nickname} 콕 찌르기 성공 😊`)
-      } else if (response.status === 400) {
+  const pokeMutation = useMutation(() => pokeUser(user.user_id), {
+    onSuccess: () => {
+      toast.success(`${user.nickname} 콕 찌르기 성공 😊`)
+    },
+    onError: (error: any) => {
+      if (error.response?.status === 400) {
         toast.info(`3시간에 한번씩만 찌를 수 있어요 🙂`)
       } else {
         toast.error('콕 찌르기 실패 🥲')
       }
-    } catch (error) {
-      console.error(error)
-    } finally {
+    },
+    onSettled: () => {
       setIsClick(false)
+    },
+  })
+
+  const inviteMutation = useMutation(
+    () => inviteUser(user.user_id, Number(loungeId)),
+    {
+      onSuccess: () => {
+        toast.success('유저 초대 성공 😉')
+      },
+      onError: (error: any) => {
+        if (error.response?.status === 405) {
+          toast.info('이미 라운지에 존재하는 유저입니다.')
+        } else if (error.response?.status === 400) {
+          toast.error('해당 유저는 이미 최대 4개의 라운지에 참여 중입니다.')
+        } else {
+          toast.error('유저 초대 실패 🥲')
+        }
+      },
+      onSettled: () => {
+        setIsClick(false)
+      },
     }
+  )
+
+  const handleClickPoke = () => {
+    setIsClick(true)
+    pokeMutation.mutate()
   }
 
-  const handleClickInvite = async () => {
+  const handleClickInvite = () => {
     setIsClick(true)
-    try {
-      const response = await fetch(APIs.invite, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: JSON.stringify({ user_id: user.user_id, lounge_id: loungeId }),
-      })
-
-      if (response.ok) {
-        toast.success('유저 초대 성공 😉')
-      } else if (response.status === 405) {
-        toast.info('이미 라운지에 존재하는 유저입니다.')
-      } else if (response.status === 400) {
-        toast.error('해당 유저는 이미 최대 4개의 라운지에 참여 중입니다.')
-      } else {
-        toast.error('유저 초대 실패 🥲')
-      }
-    } catch (error) {
-      console.error(error)
-    } finally {
-      setIsClick(false)
-    }
+    inviteMutation.mutate()
   }
 
   return (

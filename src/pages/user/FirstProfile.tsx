@@ -6,9 +6,20 @@ import { useNavigate } from 'react-router-dom'
 import ProfileImageUploader from '@components/user/ProfileImageUploader'
 import { checkNicknameDuplicate } from '@utils/validation'
 import NicknameInputField from '@components/user/NicknameInputField'
-import { useEffect } from 'react'
 import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
+import axios from 'axios'
+import { useMutation, useQuery } from 'react-query'
+
+const fetchUserProfile = async () => {
+  const response = await axios.get(APIs.profile, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    withCredentials: true,
+  })
+  return response.data.data
+}
 
 export default function FirstProfile() {
   const [profile, setProfile] = useState<File | null>(null)
@@ -23,28 +34,22 @@ export default function FirstProfile() {
 
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      const response = await fetch(APIs.profile, {
-        credentials: 'include',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (response.ok) {
-        const responseData = await response.json()
-        if (responseData.data.user_status !== 'ACTIVE_FIRST_LOGIN') {
+  const { isLoading: isProfileLoading } = useQuery(
+    'userProfile',
+    fetchUserProfile,
+    {
+      onSuccess: (data) => {
+        if (data.user_status !== 'ACTIVE_FIRST_LOGIN') {
           toast.info('이미 프로필을 설정했습니다 😊')
           navigate(-1)
         }
-      }
+      },
+      onError: (error) => {
+        console.error('유저 정보 불러오기 실패: ', error)
+      },
     }
+  )
 
-    fetchUserInfo()
-  }, [])
-
-  // 닉네임 유효성 검사 함수
   const validateNickname = async (nickname: string): Promise<boolean> => {
     const lengthValid = nickname.length >= 2 && nickname.length <= 10
     const pattern = /^[가-힣a-zA-Z]+$/
@@ -71,61 +76,71 @@ export default function FirstProfile() {
     return true
   }
 
+  const uploadProfileImage = useMutation(
+    async (): Promise<string | undefined> => {
+      const formData = new FormData()
+      formData.append('file', profile as File)
+
+      const response = await axios.post(APIs.uploadImage, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        withCredentials: true,
+      })
+
+      return response.data.data.image_url
+    }
+  )
+
+  const updateProfile = useMutation(
+    async (imageUrl: string) => {
+      await axios.patch(
+        APIs.modifyProfile,
+        { nickname, profile_url: imageUrl },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          withCredentials: true,
+        }
+      )
+    },
+    {
+      onSuccess: () => {
+        updateProfileImage(profileUrl)
+        updateNickname(nickname)
+        toast.success('프로필 변경 성공 🪐')
+        navigate(URL.main)
+      },
+      onError: (error) => {
+        console.error('프로필 변경 실패: ', error)
+        toast.error('프로필 변경 실패 😭')
+      },
+      onSettled: () => {
+        setIsClick(false)
+      },
+    }
+  )
+
   const handleClickStart = async () => {
     if (profile && nickname) {
       setIsClick(true)
       const isValidate = await validateNickname(nickname)
       if (isValidate) {
         try {
-          const formData = new FormData()
-          formData.append('file', profile)
-
-          const imageResponse = await fetch(APIs.uploadImage, {
-            method: 'POST',
-            credentials: 'include',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-            },
-            body: formData,
-          })
-
-          if (!imageResponse.ok) {
+          const uploadedProfileUrl = await uploadProfileImage.mutateAsync()
+          if (!uploadedProfileUrl) {
             toast.error('프로필 이미지 변경 실패 😭')
             return
           }
 
-          const imageResponseData = await imageResponse.json()
-          const profileUrl = imageResponseData?.data?.image_url
-
-          updateProfileImage(profileUrl)
-
-          try {
-            const updateResponse = await fetch(APIs.modifyProfile, {
-              method: 'PATCH',
-              credentials: 'include',
-              headers: {
-                Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify({ nickname, profile_url: profileUrl }),
-            })
-
-            if (!updateResponse.ok) {
-              toast.error('프로필 변경 실패 😭')
-              return
-            }
-
-            updateNickname(nickname)
-            toast.success('프로필 변경 성공 🪐')
-            navigate(URL.main)
-          } catch (error) {
-            console.error('Error:', error)
-          }
+          updateProfile.mutate(uploadedProfileUrl)
         } catch (error) {
-          console.error('Error:', error)
-        } finally {
+          console.error('Error: ', error)
           setIsClick(false)
         }
+      } else {
+        setIsClick(false)
       }
     }
   }
@@ -156,7 +171,7 @@ export default function FirstProfile() {
       />
 
       <ButtonContainer className='home' onClick={handleClickStart}>
-        <Button disabled={isStartButtonDisabled}>
+        <Button disabled={isStartButtonDisabled || isProfileLoading}>
           <span className='ok'>START</span>
         </Button>
         <span className='ok'>START</span>

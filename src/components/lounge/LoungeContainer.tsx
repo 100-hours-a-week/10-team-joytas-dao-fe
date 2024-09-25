@@ -1,4 +1,4 @@
-import { Suspense, useEffect, useState } from 'react'
+import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
 import { Vector3 } from 'three'
 import { useNavigate } from 'react-router-dom'
@@ -9,49 +9,37 @@ import { analytics } from '../../firebase'
 import LoungeModel from './LoungeModel'
 import type { LoungeProps } from '@/types/LoungeType'
 import EmptyLounge from './EmptyLounge'
+import { useQuery } from 'react-query'
+import axios from 'axios'
+
+const getLoungeList = async (): Promise<LoungeProps[]> => {
+  const response = await axios.get(APIs.loungeList, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    withCredentials: true,
+  })
+
+  if (response.status !== 200) {
+    throw new Error('Failed to fetch lounge list')
+  }
+
+  return response.data.data
+}
 
 export default function LoungeContainer() {
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(false)
-  const [loungeList, setLoungeList] = useState<LoungeProps[]>([])
 
-  const getLoungeList = async () => {
-    setIsLoading(true)
-    try {
-      const response = await fetch(APIs.loungeList, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-      if (response.ok) {
-        const responseData = await response.json()
-        return responseData.data
-      } else {
-        throw new Error('Failed to fetch lounge list')
-      }
-    } catch (error) {
+  const {
+    data: loungeList = [],
+    isLoading,
+    isError,
+  } = useQuery('loungeList', getLoungeList, {
+    retry: 1,
+    onError: (error) => {
       console.error('Failed to fetch lounge list', error)
-    } finally {
-      setIsLoading(false)
-    }
-  }
-
-  useEffect(() => {
-    const fetchAndSetLoungeList = async () => {
-      const loungeList = await getLoungeList()
-      if (loungeList) {
-        setLoungeList(loungeList)
-      }
-    }
-    fetchAndSetLoungeList()
-  }, [])
-
-  if (isLoading) return <LoadingLottie />
-
-  if (loungeList.length === 0) return <EmptyLounge />
+    },
+  })
 
   const modelLocationWithNew = [
     new Vector3(0.9, 1.4, 0),
@@ -80,6 +68,10 @@ export default function LoungeContainer() {
     })
     navigate(`${URL.lounge}/${lid}`)
   }
+
+  if (isLoading) return <LoadingLottie />
+
+  if (isError || loungeList.length === 0) return <EmptyLounge />
 
   return (
     <Suspense fallback={<LoadingLottie />}>

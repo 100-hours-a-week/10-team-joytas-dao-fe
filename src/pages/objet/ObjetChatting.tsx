@@ -16,6 +16,7 @@ import { APIs } from '@/static'
 import useUserStore from '@store/userStore'
 import { CalendarOutlined } from '@ant-design/icons'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
+import axios from 'axios'
 
 interface Message {
   id: string
@@ -76,19 +77,16 @@ export default function ObjetChatting() {
 
   const getMessages = async () => {
     try {
-      const response = await fetch(`${APIs.chat}/${chatToken}/messages`, {
-        method: 'GET',
-        credentials: 'include',
+      const response = await axios.get(`${APIs.chat}/${chatToken}/messages`, {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
+        withCredentials: true,
       })
 
-      if (response.ok) {
-        const data = await response.json()
-        setMessages(data.data.messages)
-        setHasMore(data.data.has_next)
+      if (response.status === 200) {
+        setMessages(response.data.data.messages)
+        setHasMore(response.data.data.has_next)
       }
     } catch (error) {
       console.error('채팅방 전체 메시지 불러오기 실패', error)
@@ -106,23 +104,19 @@ export default function ObjetChatting() {
 
     try {
       setLoading(true)
-      const response = await fetch(
+      const response = await axios.get(
         `${APIs.chat}/${chatToken}/messages?cursorId=${lastMessageId}&limit=20`,
         {
-          method: 'GET',
-          credentials: 'include',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
           },
+          withCredentials: true,
         }
       )
 
-      if (response.ok) {
-        const data = await response.json()
-
-        setMessages((prev) => [...data.data.messages, ...prev])
-        setHasMore(data.data.has_next)
+      if (response.status === 200) {
+        setMessages((prev) => [...response.data.data.messages, ...prev])
+        setHasMore(response.data.data.has_next)
 
         setTimeout(() => {
           if (chatRef.current) {

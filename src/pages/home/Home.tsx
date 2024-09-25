@@ -8,7 +8,6 @@ import {
   PreparingContainer,
 } from './HomeStyles'
 import ObjetPreview from '@components/objet/ObjetPreview'
-import { useEffect, useState } from 'react'
 import { APIs } from '@/static'
 import LoadingLottie from '@components/lotties/LoadingLottie'
 import NoPrevObjet from '@components/objet/NoPrevObjet'
@@ -22,37 +21,26 @@ import alert from '@images/alert.webp'
 import preparing from '@assets/lotties/preparing.json'
 import useUserStore from '@store/userStore'
 import Lottie from 'lottie-react'
+import axios from 'axios'
+import { useQuery } from 'react-query'
+
+const fetchObjetPreviews = async () => {
+  const response = await axios.get(APIs.objetPreview, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    withCredentials: true,
+  })
+  return response.data.data
+}
 
 export default function Home() {
-  const [objets, setObjets] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
   const userId = useUserStore((state) => state.userId)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setIsLoading(true)
-        const response = await fetch(APIs.objetPreview, {
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        })
-
-        if (response.ok) {
-          const responseData = await response.json()
-          setObjets(responseData.data)
-        }
-      } catch (error) {
-        console.error('Failed to fetch objet preview', error)
-      } finally {
-        setIsLoading(false)
-      }
-    }
-
-    fetchData()
-  }, [userId])
+  const { data: objets = [], isLoading } = useQuery(
+    ['objets', userId],
+    fetchObjetPreviews
+  )
 
   return (
     <Layout style={{ padding: '0px' }}>
@@ -77,7 +65,7 @@ export default function Home() {
             <LottieContainer>
               <LoadingLottie />
             </LottieContainer>
-          ) : objets?.length === 0 || !objets ? (
+          ) : objets?.length === 0 ? (
             <NoPrevObjet />
           ) : (
             <ObjetPreview objets={objets} />
@@ -90,7 +78,7 @@ export default function Home() {
         >
           <MyObjetTitle>
             <img src={alert} alt='recentObjetsIcon' />
-            Comming Soon !
+            Coming Soon !
           </MyObjetTitle>
           <PreparingContainer>
             <Lottie animationData={preparing} style={{ height: '100px' }} />

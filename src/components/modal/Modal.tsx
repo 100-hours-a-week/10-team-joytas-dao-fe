@@ -30,7 +30,7 @@ interface LoungeListProps {
   onClose: () => void
   handleSelectLounge: (loungeId: number) => void
   selectedLounge: number
-  lounges: Lounge[]
+  lounges: Lounge[] | undefined
 }
 
 interface NotiProps {
@@ -171,7 +171,7 @@ export function LoungeListModal({
     <LoungeListModalContainer>
       <LoungeListModalTitle>라운지 목록</LoungeListModalTitle>
       <LoungeListModalContents>
-        {lounges.map((lounge) => (
+        {lounges?.map((lounge) => (
           <LoungeListModalItem
             key={lounge.lounge_id}
             className={selectedLoungeId === lounge.lounge_id ? 'selected' : ''}

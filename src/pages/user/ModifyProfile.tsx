@@ -8,6 +8,8 @@ import { useState, useEffect } from 'react'
 import { checkNicknameDuplicate } from '@utils/validation'
 import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
+import axios from 'axios'
+import { useMutation } from 'react-query'
 
 export default function ModifyProfile() {
   const [profile, setProfile] = useState<File | null>(null)
@@ -24,66 +26,6 @@ export default function ModifyProfile() {
 
   const navigate = useNavigate()
 
-  const handleClickConfirm = async () => {
-    let imageUrl = profileUrl
-    setIsClickUpdate(true)
-    if (profile) {
-      const formData = new FormData()
-      formData.append('file', profile)
-
-      const imageResponse = await fetch(APIs.uploadImage, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: formData,
-      })
-
-      if (!imageResponse.ok) {
-        toast.error('프로필 이미지 변경 실패 😭')
-        return
-      }
-
-      const imageResponseData = await imageResponse.json()
-      imageUrl = imageResponseData.data.image_url
-      setProfileUrl(imageResponseData?.data?.image_url)
-    }
-
-    if (imageUrl && nickname) {
-      const isValidate = await validateNickname(nickname)
-      if (isValidate) {
-        try {
-          const updateResponse = await fetch(APIs.modifyProfile, {
-            method: 'PATCH',
-            credentials: 'include',
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ nickname, profile_url: imageUrl }),
-          })
-
-          if (!updateResponse.ok) {
-            toast.error('프로필 변경 실패 😭')
-          }
-          updateProfileImage(profileUrl)
-          updateNickname(nickname)
-          toast.success('프로필 변경 성공 🪐')
-          navigate(URL.main)
-        } catch (error) {
-          console.error('Error:', error)
-        }
-      }
-    }
-    setIsClickUpdate(false)
-  }
-
-  const handleClickDelete = () => {
-    navigate(URL.withdraw)
-  }
-
-  // 닉네임 유효성 검사 함수
   const validateNickname = async (nickname: string): Promise<boolean> => {
     const lengthValid = nickname.length >= 2 && nickname.length <= 10
     const pattern = /^[가-힣a-zA-Z]+$/
@@ -112,7 +54,79 @@ export default function ModifyProfile() {
     return true
   }
 
-  // 프로필 초기 로드
+  const uploadProfileImage = async (): Promise<string | undefined> => {
+    const formData = new FormData()
+    formData.append('file', profile as File)
+
+    const response = await axios.post(APIs.uploadImage, formData, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    })
+
+    return response.data.data.image_url
+  }
+
+  const updateProfile = async (imageUrl: string) => {
+    const response = await axios.patch(
+      APIs.modifyProfile,
+      { nickname, profile_url: imageUrl },
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        withCredentials: true,
+      }
+    )
+    return response.data
+  }
+
+  const mutation = useMutation(
+    async () => {
+      let imageUrl = profileUrl
+      if (profile) {
+        const uploadedImageUrl = await uploadProfileImage()
+        if (uploadedImageUrl) {
+          imageUrl = uploadedImageUrl
+          setProfileUrl(uploadedImageUrl)
+        } else {
+          throw new Error('프로필 이미지 변경 실패')
+        }
+      }
+      await updateProfile(imageUrl)
+    },
+    {
+      onSuccess: () => {
+        updateProfileImage(profileUrl)
+        updateNickname(nickname)
+        toast.success('프로필 변경 성공 🪐')
+        navigate(URL.main)
+      },
+      onError: (error) => {
+        console.error('프로필 변경 실패:', error)
+        toast.error('프로필 변경 실패 😭')
+      },
+      onSettled: () => {
+        setIsClickUpdate(false)
+      },
+    }
+  )
+
+  const handleClickConfirm = async () => {
+    setIsClickUpdate(true)
+    const isValid = await validateNickname(nickname)
+    if (isValid) {
+      mutation.mutate()
+    } else {
+      setIsClickUpdate(false)
+    }
+  }
+
+  const handleClickDelete = () => {
+    navigate(URL.withdraw)
+  }
+
   useEffect(() => {
     setNickname(userNickname)
     setProfileUrl(userProfileImage)

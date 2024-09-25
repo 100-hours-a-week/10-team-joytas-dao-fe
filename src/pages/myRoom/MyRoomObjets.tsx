@@ -8,12 +8,14 @@ import {
   TopContainer,
 } from '../lounge/LoungeStyles'
 import { Icon } from './MyRoomStyles'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import MoreImg from '@assets/images/more.webp'
 import { ModalBackdrop } from '@components/modal/ModalStyles'
 import { LoungeListModal } from '@components/modal/Modal'
 import { APIs } from '@/static'
 import LoadingLottie from '@components/lotties/LoadingLottie'
+import { useQuery } from 'react-query'
+import axios from 'axios'
 
 interface Lounge {
   lounge_id: number
@@ -23,10 +25,6 @@ interface Lounge {
 
 export default function MyRoomObjet() {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [objets, setObjets] = useState([])
-  const [lounges, setLounges] = useState<Lounge[]>([])
-  const [isLoading, setIsLoading] = useState(true)
-  const [isObjetsLoading, setIsObjetsLoading] = useState(true)
   const [selectedLounge, setSelectedLounge] = useState<Lounge>({
     lounge_id: 0,
     name: '전체',
@@ -34,113 +32,75 @@ export default function MyRoomObjet() {
   })
   const [loungeId, setLoungeId] = useState(0)
 
-  useEffect(() => {
-    fetchObjetsAll()
-    fetchLounge()
-  }, [])
-
-  const fetchObjetsAll = async () => {
-    setIsObjetsLoading(true)
-
-    try {
-      const response = await fetch(`${APIs.objet}/me`, {
-        method: 'GET',
-        credentials: 'include',
+  const fetchLoungeObjets = async (loungeId: number) => {
+    if (loungeId === 0) {
+      const response = await axios.get(`${APIs.objet}/me`, {
         headers: {
-          'Content-Type': 'application/json',
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
         },
+        withCredentials: true,
       })
-      if (response.ok) {
-        const responseData = await response.json()
-        setObjets(responseData.data)
-      }
-    } catch (error) {
-      console.error('마이룸 전체 오브제 조회 실패', error)
-    } finally {
-      setIsObjetsLoading(false)
-    }
-  }
-
-  const fetchObjetsByLounge = async (loungeId: number) => {
-    if (loungeId === 0) {
-      // 전체
-      fetchObjetsAll()
-      return
-    }
-    setIsObjetsLoading(true)
-
-    try {
-      const response = await fetch(
-        `${APIs.objet}?lounge_id=${loungeId}&sharer=true`,
+      return response.data.data
+    } else {
+      const response = await axios.get(
+        `${APIs.objet}?lounge_id=${loungeId}&is_owner=true`,
         {
-          method: 'GET',
-          credentials: 'include',
           headers: {
-            'Content-Type': 'application/json',
             Authorization: `Bearer ${localStorage.getItem('access_token')}`,
           },
+          withCredentials: true,
         }
       )
-      if (response.ok) {
-        const responseData = await response.json()
-        setObjets(responseData.data)
-      }
-    } catch (error) {
-      console.error('마이룸 라운지별 오브제 조회 실패', error)
-    } finally {
-      setIsObjetsLoading(false)
+      return response.data.data
     }
   }
 
-  const fetchLounge = async () => {
-    try {
-      const response = await fetch(`${APIs.loungeList}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-      })
-
-      if (response.ok) {
-        const responseData = await response.json()
-
-        setLounges([
-          { lounge_id: 0, name: '전체', type: '전체' },
-          ...responseData.data,
-        ])
-      }
-    } catch (error) {
-      console.error('Failed to fetch lounge', error)
-    } finally {
-      setIsLoading(false)
-    }
+  const fetchLounges = async () => {
+    const response = await axios.get(APIs.loungeList, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    })
+    return [{ lounge_id: 0, name: '전체', type: '전체' }, ...response.data.data]
   }
+
+  const {
+    data: objets,
+    isLoading: isObjetsLoading,
+    refetch: refetchObjets,
+  } = useQuery(['objets', loungeId], () => fetchLoungeObjets(loungeId), {
+    enabled: true,
+  })
+
+  const { data: lounges, isLoading: isLoungesLoading } = useQuery<Lounge[]>(
+    'lounges',
+    () => fetchLounges()
+  )
 
   const handleSelectLounge = (loungeId: number) => {
     setIsModalOpen(false)
-    const selectedLounge = lounges.find(
-      (lounge) => lounge.lounge_id === loungeId
+    const selected = lounges?.find(
+      (lounge: Lounge) => lounge.lounge_id === loungeId
     )
-    if (selectedLounge) {
-      setSelectedLounge(selectedLounge)
-      fetchObjetsByLounge(loungeId)
+    if (selected) {
+      setSelectedLounge(selected)
       setLoungeId(loungeId)
+      refetchObjets()
+    }
+
+    if (isLoungesLoading) {
+      return (
+        <Layout>
+          <div
+            style={{ display: 'flex', height: '100%', alignItems: 'center' }}
+          >
+            <LoadingLottie />
+          </div>
+        </Layout>
+      )
     }
   }
-
-  if (isLoading) {
-    return (
-      <Layout>
-        <div style={{ display: 'flex', height: '100%', alignItems: 'center' }}>
-          <LoadingLottie />
-        </div>
-      </Layout>
-    )
-  }
-
   return (
     <Layout>
       <>
@@ -159,10 +119,15 @@ export default function MyRoomObjet() {
             </IconContainer>
           </TopContainer>
           <GlobalSubTitle>나에게 전달된 오브제를 확인해보세요!</GlobalSubTitle>
-          {!isObjetsLoading && (
+          {!isObjetsLoading && objets ? (
             <Objets>
-              <LoungeObjets objets={objets} loungeId={loungeId} />
+              <LoungeObjets
+                objets={objets}
+                loungeId={selectedLounge.lounge_id}
+              />
             </Objets>
+          ) : (
+            <LoadingLottie />
           )}
 
           {isModalOpen && (

@@ -28,6 +28,32 @@ import {
 import { RedText } from '../objet/ObjetStyles'
 import { APIs, URL } from '@/static'
 import { LoungeModelList } from '@components/models/LazyModelList'
+import axios from 'axios'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+
+const fetchLoungeList = async () => {
+  const response = await axios.get(APIs.loungeList, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+    },
+    withCredentials: true,
+  })
+  return response.data.data
+}
+
+const createLounge = async (loungeName: string, type: string) => {
+  const response = await axios.post(
+    APIs.loungeList,
+    { name: loungeName, type },
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    }
+  )
+  return response.data.data
+}
 
 export default function NewLounge() {
   const [loungeName, setLoungeName] = useState('')
@@ -37,42 +63,43 @@ export default function NewLounge() {
   const navigate = useNavigate()
   const inputRef = useRef<HTMLInputElement>(null)
   const modelTypes = ['L0001', 'L0002', 'L0003']
+  const nickname = useUserStore((state) => state.nickname)
+  const queryClient = useQueryClient()
+
+  useQuery('lounges', fetchLoungeList, {
+    onSuccess: (data) => {
+      if (data.length >= 4) {
+        toast.error('라운지 갯수 제한(최대 4개) 🥹')
+        navigate(URL.lounge)
+      }
+    },
+    onError: (error) => {
+      console.error('Failed to fetch lounge list', error)
+    },
+  })
+
+  const mutation = useMutation(
+    () => createLounge(loungeName, modelTypes[currentModelIndex]),
+    {
+      onSuccess: (data) => {
+        toast.success('라운지 생성 성공 🪐')
+        queryClient.invalidateQueries('lounges')
+        navigate(`${URL.lounge}/${data.lounge_id}`, { replace: true })
+      },
+      onError: () => {
+        toast.error('라운지 생성 실패 😭')
+      },
+      onSettled: () => {
+        setIsClick(false)
+      },
+    }
+  )
 
   useEffect(() => {
     if (inputRef.current) {
       inputRef.current.focus()
     }
   }, [])
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await fetch(APIs.loungeList, {
-          method: 'GET',
-          credentials: 'include',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-        })
-        if (response.ok) {
-          const responseData = await response.json()
-          if (responseData.data.length >= 4) {
-            toast.error('라운지 갯수 제한(최대 4개) 🥹')
-            navigate(URL.lounge)
-          }
-        } else {
-          throw new Error('Failed to fetch lounge list')
-        }
-      } catch (error) {
-        console.error('Failed to fetch lounge list', error)
-      }
-    }
-
-    fetchData()
-  }, [])
-
-  const nickname = useUserStore((state) => state.nickname)
 
   const handleLeftClick = () => {
     setCurrentModelIndex((prevIndex) => (prevIndex === 0 ? 2 : prevIndex - 1))
@@ -88,42 +115,11 @@ export default function NewLounge() {
     checkLoungeNameValidation(name)
   }
 
-  const handleClickSelect = async () => {
+  const handleClickSelect = () => {
     setIsClick(true)
-    const type = modelTypes[currentModelIndex]
-
     const validation = checkLoungeNameValidation(loungeName)
-
-    if (!validation) {
-      return null
-    }
-
-    try {
-      const response = await fetch(APIs.loungeList, {
-        method: 'POST',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-        },
-        body: JSON.stringify({
-          name: loungeName,
-          type,
-        }),
-      })
-
-      if (response.ok) {
-        toast.success('라운지 생성 성공 🪐')
-        const responseData = await response.json()
-        const loungeId = responseData.data.lounge_id
-        navigate(`${URL.lounge}/${loungeId}`, { replace: true })
-      } else {
-        toast.error('라운지 생성 실패 😭')
-      }
-    } catch (error) {
-      console.error('Error: ', error)
-    } finally {
-      setIsClick(false)
+    if (validation) {
+      mutation.mutate() // 라운지 생성 요청
     }
   }
 
