@@ -16,5 +16,10 @@ export interface Objet {
   objet_type: 'O0001' | 'O0002' | 'O0003'
   name: string
   description: string
-  objet_image: File
+  created_at?: string
+  objet_image: string
+  owner?: {
+    nickname: string
+    profile_image: string
+  }
 }

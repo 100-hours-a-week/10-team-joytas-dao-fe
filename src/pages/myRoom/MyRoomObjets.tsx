@@ -16,6 +16,8 @@ import { APIs } from '@/static'
 import LoadingLottie from '@components/lotties/LoadingLottie'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import { useMediaQuery } from '@uidotdev/usehooks'
+import MobileLoungeObjets from '../lounge/MobileLoungeObjets'
 
 interface Lounge {
   lounge_id: number
@@ -24,6 +26,7 @@ interface Lounge {
 }
 
 export default function MyRoomObjet() {
+  const isMobile = useMediaQuery('only screen and (max-width : 425px)')
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedLounge, setSelectedLounge] = useState<Lounge>({
     lounge_id: 0,
@@ -120,11 +123,18 @@ export default function MyRoomObjet() {
           </TopContainer>
           <GlobalSubTitle>나에게 전달된 오브제를 확인해보세요!</GlobalSubTitle>
           {!isObjetsLoading && objets ? (
-            <Objets>
-              <LoungeObjets
-                objets={objets}
-                loungeId={selectedLounge.lounge_id}
-              />
+            <Objets style={{ alignItems: `${isMobile && 'flex-start'}` }}>
+              {isMobile ? (
+                <MobileLoungeObjets
+                  objets={objets || []}
+                  loungeId={Number(selectedLounge.lounge_id)}
+                />
+              ) : (
+                <LoungeObjets
+                  objets={objets || []}
+                  loungeId={Number(selectedLounge.lounge_id)}
+                />
+              )}
             </Objets>
           ) : (
             <LoadingLottie />

@@ -17,6 +17,8 @@ import LoadingLottie from '@components/lotties/LoadingLottie'
 import { LoungeDrop } from '@components/dropdown/Dropdown'
 import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
+import { useMediaQuery } from '@uidotdev/usehooks'
+import MobileLoungeObjets from './MobileLoungeObjets'
 import { DeleteLoungeModal, WithDrawLoungeModal } from '@components/modal/Modal'
 import axios from 'axios'
 import { useQuery, useMutation, useQueryClient } from 'react-query'
@@ -28,6 +30,19 @@ const fetchLounge = async (loungeId: string) => {
     },
     withCredentials: true,
   })
+  return response.data.data
+}
+
+const fetchLoungeObjets = async (loungeId: string) => {
+  const response = await axios.get(
+    `${APIs.objet}?lounge_id=${loungeId}&is_owner=false`,
+    {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      },
+      withCredentials: true,
+    }
+  )
   return response.data.data
 }
 
@@ -57,6 +72,7 @@ const withdrawLounge = async (loungeId: string) => {
 
 export default function Lounge() {
   const { lid: loungeId } = useParams<{ lid: string }>()
+  const isMobile = useMediaQuery('only screen and (max-width : 425px)')
   const navigate = useNavigate()
   const userId = useUserStore((state) => state.userId)
   const queryClient = useQueryClient()
@@ -74,6 +90,16 @@ export default function Lounge() {
       onError: () => {
         toast.error('해당 라운지를 찾을 수 없습니다 😅')
         navigate(`${URL.lounge}`)
+      },
+    }
+  )
+
+  const { data: objets } = useQuery(
+    ['loungeObjet', loungeId],
+    () => fetchLoungeObjets(loungeId!),
+    {
+      onError: () => {
+        toast.error('해당 라운지의 오브제가 없습니다 😅')
       },
     }
   )
@@ -160,14 +186,16 @@ export default function Lounge() {
           <GlobalSubTitle>
             친구를 초대하고 오브제로 추억을 공유해보세요!
           </GlobalSubTitle>
-          <Objets>
+          <Objets style={{ alignItems: `${isMobile && 'flex-start'}` }}>
             {isLoading ? (
               <LoadingLottie />
-            ) : (
-              <LoungeObjets
-                objets={loungeData?.objets || []}
+            ) : isMobile ? (
+              <MobileLoungeObjets
+                objets={objets || []}
                 loungeId={Number(loungeId)}
               />
+            ) : (
+              <LoungeObjets objets={objets || []} loungeId={Number(loungeId)} />
             )}
           </Objets>
         </GloablContainer16>
