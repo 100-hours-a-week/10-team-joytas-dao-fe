@@ -23,7 +23,11 @@ export default function Layout({
   style?: LayoutStyles
   children: JSX.Element
 }) {
-  const { isLogin, getProfile } = useUserInfo()
+  const { getProfile } = useUserInfo()
+
+  useEffect(() => {
+    getProfile()
+  }, [])
 
   const userId = useUserStore((state) => state.userId)
   const eventSource = EventSourcePolyfill || NativeEventSource
@@ -64,17 +68,11 @@ export default function Layout({
     }
   }, [])
 
-  useEffect(() => {
-    getProfile()
-  }, [isLogin])
-
   return (
-    isLogin && (
-      <Main>
-        <Header />
-        <ChildrenDiv style={style}>{children}</ChildrenDiv>
-        <Footer />
-      </Main>
-    )
+    <Main>
+      <Header />
+      <ChildrenDiv style={style}>{children}</ChildrenDiv>
+      <Footer />
+    </Main>
   )
 }

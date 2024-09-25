@@ -3,10 +3,8 @@ import axios from 'axios'
 import type { Profile } from '@/types/ProfileType'
 import useUserStore from '@store/userStore'
 import { APIs, URL } from '@/static'
-import { useState, useEffect } from 'react'
 
 export const useUserInfo = () => {
-  const [isLogin, setIsLogin] = useState(false)
   const navigate = useNavigate()
   const { updateId, updateNickname, updateProfileImage } = useUserStore()
 
@@ -41,46 +39,33 @@ export const useUserInfo = () => {
             withCredentials: true,
           })
 
-          setIsLogin(true)
           return retryResponse.data.data
-        } catch (reissueError) {
-          console.error('Failed to reissue token:', reissueError)
-          setIsLogin(false)
-          throw new Error('Failed to reissue token')
+        } catch (error) {
+          navigate(URL.login)
+          return
         }
-      } else {
-        console.error('Failed to fetch profile:', error)
-        setIsLogin(false)
-        navigate(URL.login)
-        throw new Error('Failed to fetch profile')
       }
     }
   }
 
   const getProfile = async () => {
-    setIsLogin(false)
     try {
       const profile = await fetchProfile()
 
       if (profile?.user_status === 'ACTIVE_FIRST_LOGIN') {
         navigate(URL.firstProfile)
-        setIsLogin(true)
       } else if (profile) {
         updateNickname(profile.nickname)
         updateProfileImage(profile.profile_url)
         updateId(profile.user_id)
-        setIsLogin(true)
       } else {
         navigate(URL.login)
       }
     } catch (error) {
       console.error('Error getting profile:', error)
+      navigate(URL.login)
     }
   }
 
-  useEffect(() => {
-    getProfile()
-  }, [])
-
-  return { isLogin, getProfile }
+  return { getProfile }
 }
