@@ -26,7 +26,6 @@ import ObjetForm from '@pages/objet/ObjetForm'
 import Objet from './pages/objet/Objet'
 
 const originalWarn = console.warn
-const originalError = console.error
 
 console.warn = (...args) => {
   if (args[0].includes('<StyleSheetManager shouldForwardProp={...}>')) {
@@ -44,7 +43,6 @@ console.error = (...args) => {
   ) {
     return
   }
-  originalError(...args)
 }
 
 if (import.meta.env.VITE_NODE_ENV === 'production') {
