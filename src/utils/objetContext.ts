@@ -5,7 +5,7 @@ interface ObjetData {
   creatorId: number
   name: string
   description: string
-  imageUrl: string
+  objet_image: string
   createdAt: string
   callingPeople: number
   loungeId: number
