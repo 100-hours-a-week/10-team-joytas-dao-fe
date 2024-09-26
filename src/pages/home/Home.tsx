@@ -12,10 +12,10 @@ import { APIs } from '@/static'
 import LoadingLottie from '@components/lotties/LoadingLottie'
 import NoPrevObjet from '@components/objet/NoPrevObjet'
 import { Carousel } from 'antd'
-import banner1 from '@images/banner/banner1.png'
-import banner2 from '@images/banner/banner2.png'
-import banner3 from '@images/banner/banner3.png'
-import banner4 from '@images/banner/banner4.png'
+import banner1 from '@images/banner/banner1.webp'
+import banner2 from '@images/banner/banner2.webp'
+import banner3 from '@images/banner/banner3.webp'
+import banner4 from '@images/banner/banner4.webp'
 import recentObjetsIcon from '@images/recentObjets.webp'
 import alert from '@images/alert.webp'
 import preparing from '@assets/lotties/preparing.json'
@@ -52,9 +52,9 @@ export default function Home() {
           style={{ cursor: 'pointer' }}
         >
           <BannerImage src={banner1} />
-          <BannerImage src={banner2} />
-          <BannerImage src={banner3} />
-          <BannerImage src={banner4} />
+          <BannerImage loading='lazy' src={banner2} />
+          <BannerImage loading='lazy' src={banner3} />
+          <BannerImage loading='lazy' src={banner4} />
         </Carousel>
         <MyObjetContainer>
           <MyObjetTitle>
