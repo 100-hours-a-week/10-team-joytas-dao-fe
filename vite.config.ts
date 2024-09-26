@@ -2,6 +2,8 @@ import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { fileURLToPath, URL } from 'url'
+import { imagetools } from 'vite-imagetools'
+import compression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -11,6 +13,8 @@ export default defineConfig({
       org: 'erica-z3',
       project: 'dao-fe',
     }),
+    imagetools(),
+    compression({ algorithm: 'gzip' }),
   ],
   resolve: {
     alias: {
