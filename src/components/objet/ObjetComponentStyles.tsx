@@ -1,17 +1,59 @@
 import styled from 'styled-components'
 
-export const ObjetList = styled.div`
+export const ObjetPreviewContainer = styled.div`
   width: 100%;
   padding: 0 32px;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  position: relative;
+`
+
+export const IconContainer = styled.div`
+  width: 80px;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+
+  &.right {
+    right: 20px;
+    background: linear-gradient(90deg, transparent, black);
+    justify-content: end;
+  }
+
+  &.left {
+    left: 20px;
+    background: linear-gradient(270deg, transparent, black);
+    justify-content: start;
+  }
+`
+
+export const MoveIcon = styled.img`
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 0.5;
+  }
+`
+
+export const ObjetList = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
   gap: 10px;
   margin-bottom: 20px;
 
   @media (min-width: 600px) {
-    grid-template-columns: repeat(4, 1fr);
-    overflow-x: auto;
+    flex-direction: row;
+    overflow-x: scroll;
     overflow-y: hidden;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
   }
 `
 
@@ -31,10 +73,12 @@ export const ObjetContainer = styled.div`
   }
 
   @media (min-width: 600px) {
+    width: 170px;
     flex-direction: column;
     height: 290px;
   }
 `
+
 export const ObjetImage = styled.img`
   width: 100px;
   height: 100px;

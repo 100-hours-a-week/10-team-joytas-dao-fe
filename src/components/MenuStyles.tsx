@@ -11,9 +11,6 @@ export const MenuContainer = styled.div`
   background-color: black;
   width: 100%;
   ${GlobalWidth}
-  @media (min-width: 600px) {
-    margin-top: -70px;
-  }
 `
 
 export const TopContainer = styled.div`

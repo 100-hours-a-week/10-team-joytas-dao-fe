@@ -115,6 +115,15 @@ export const TopContainer = styled.div`
   }
 `
 
+export const GradientOverlay = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(transparent 60%, #181817 100%);
+`
+
 export const MiddleContainer = styled.div`
   padding: 30px 0 0;
   box-sizing: border-box;

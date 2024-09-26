@@ -3,11 +3,8 @@ import styled from 'styled-components'
 export const Container = styled.div`
   padding: 20px 20px 0;
   margin: 0 auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   box-sizing: border-box;
-  overflow-y: auto; /* 세로 스크롤이 필요할 경우를 대비하여 추가 */
-  max-height: 784px; /* 페이지 높이에 맞게 최대 높이 설정 */
+  padding: 20px;
 `
 
 export const Title = styled.div`
@@ -55,6 +52,7 @@ export const HeaderDiv = styled.div`
 
 export const BackImg = styled.img`
   width: 20px;
+  cursor: pointer;
 `
 
 export const List = styled.ul`

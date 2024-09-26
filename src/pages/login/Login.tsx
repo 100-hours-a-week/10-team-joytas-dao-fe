@@ -19,6 +19,7 @@ import {
   CardButton,
   CardImage,
   BottomContainer,
+  GradientOverlay,
 } from './LoginStyles'
 import { Link } from 'react-router-dom'
 import { URL } from '@/static'
@@ -40,7 +41,8 @@ export default function Login() {
   return (
     <Main>
       <TopContainer>
-        <video style={{}} autoPlay muted loop playsInline src={universe} />
+        <GradientOverlay />
+        <video autoPlay muted loop playsInline src={universe} />
         <Logo>
           <img src={logo} alt='logo' style={{ width: '300px' }} />
           <Mini>"Digital Archive of Our Memories"</Mini>
