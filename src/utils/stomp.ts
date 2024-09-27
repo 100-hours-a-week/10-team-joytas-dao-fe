@@ -4,7 +4,7 @@ import { APIs } from '@/static'
 export const stompClient = new Client({
   brokerURL: `${APIs.stomp}/ws/init`,
 
-  // // YOU CAN DEBUG BY UNCOMMENTING THIS LINE
+  // YOU CAN DEBUG BY UNCOMMENTING THIS LINE
   // debug: function (str) {
   //   console.log(str)
   // },
@@ -14,9 +14,8 @@ let subscription: StompSubscription | null = null
 let isConnected = false
 
 export function connectToRoom(
-  id: number,
-  nickname: string,
   roomToken: string,
+  onEnter: () => void,
   onMessageReceived: (message: string) => void
 ) {
   if (isConnected) {
@@ -28,7 +27,7 @@ export function connectToRoom(
 
     const subscribeToRoom = () => {
       subscription = stompClient.subscribe(
-        `/sub/chat-rooms/${roomToken}/messages`,
+        `/sub/chat-rooms/${roomToken}`,
         (message) => {
           onMessageReceived(message.body)
         }
@@ -45,13 +44,7 @@ export function connectToRoom(
       subscribeToRoom()
 
       // 채팅방 입장
-      stompClient.publish({
-        destination: `/pub/chat-rooms/${roomToken}/enter`,
-        body: JSON.stringify({
-          sender_name: nickname,
-          sender_id: id,
-        }),
-      })
+      onEnter()
     }
   }
 
@@ -70,24 +63,12 @@ export function connectToRoom(
   }
 }
 
-export function sendMessage(id: number, roomToken: string, message: string) {
-  stompClient.publish({
-    destination: `/pub/chat-rooms/${roomToken}/messages`,
-    body: JSON.stringify({
-      sender_id: id,
-      message: message,
-    }),
-  })
-}
-
-export function disconnectFromRoom(roomToken: string) {
+export function disconnectFromRoom(onExit: () => void) {
   if (subscription) {
     subscription.unsubscribe()
     subscription = null
 
-    stompClient.publish({
-      destination: `/pub/chat-rooms/${roomToken}/exit`,
-    })
+    onExit()
   }
 
   stompClient.deactivate()

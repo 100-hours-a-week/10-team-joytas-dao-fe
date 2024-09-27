@@ -20,11 +20,9 @@ import { DeleteObjetModal } from '@components/modal/Modal'
 import { ModalBackdrop } from '@components/modal/ModalStyles'
 import { ObjetDrop } from '@components/dropdown/Dropdown'
 import useUserStore from '@store/userStore'
-import useObjetStore from '@store/objetStore'
 import { toast } from 'react-toastify'
 import { extractYearMonthDate } from '@utils/formatDatetime'
 import LeaveImg from '@images/leave.webp'
-import { disconnectFromRoom } from '@utils/stomp'
 import { ObjetContext } from '@utils/objetContext'
 import { useQuery, useMutation } from 'react-query'
 import axios from 'axios'
@@ -42,7 +40,6 @@ export default function Objet() {
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
 
   const navigate = useNavigate()
-  const chatToken = useObjetStore((state) => state.chatToken)
 
   const { data: objetData, isLoading } = useQuery(
     ['objetData', objetId],
@@ -61,6 +58,23 @@ export default function Objet() {
         toast.error('해당 오브제를 찾을 수 없습니다 😅')
         navigate(`${URL.lounge}`)
       },
+    }
+  )
+
+  const { data: callingPeople } = useQuery(
+    ['callingPeople', objetId],
+    async () => {
+      const response = await axios.get(
+        `${APIs.objet}/${objetId}/call/participants`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          withCredentials: true,
+        }
+      )
+
+      return response.data.data.calling_user_num
     }
   )
 
@@ -89,7 +103,6 @@ export default function Objet() {
   }
 
   const handleLeaveChat = () => {
-    disconnectFromRoom(chatToken)
     navigate(`${URL.objet}/${objetId}`)
   }
 
@@ -170,7 +183,7 @@ export default function Objet() {
             </RightContainer>
           </TopContainer>
 
-          <ObjetContext.Provider value={objetData}>
+          <ObjetContext.Provider value={{ objetData, callingPeople }}>
             <Outlet />
           </ObjetContext.Provider>
 
