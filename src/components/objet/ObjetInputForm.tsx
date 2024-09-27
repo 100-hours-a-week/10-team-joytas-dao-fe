@@ -24,6 +24,7 @@ import {
   validateName,
 } from '@utils/validation'
 import axios from 'axios'
+import { convertImageToWebP } from '@utils/convertImage'
 
 export default function ObjetInfoForm({
   path,
@@ -193,15 +194,27 @@ export default function ObjetInfoForm({
   }
 
   const uploadImage = async (image: File) => {
-    const formData = new FormData()
-    formData.append('file', image)
-    const response = await axios.post(APIs.uploadImage, formData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-      withCredentials: true,
-    })
-    return response.data.data.image_url
+    try {
+      const webpImageBlob = await convertImageToWebP(image)
+
+      const formData = new FormData()
+      formData.append(
+        'file',
+        new File([webpImageBlob], 'image.webp', { type: 'image/webp' })
+      )
+
+      const response = await axios.post(APIs.uploadImage, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        withCredentials: true,
+      })
+
+      return response.data.data.image_url
+    } catch (error) {
+      console.error('Image upload failed:', error)
+      throw error
+    }
   }
 
   const createObjet = async (

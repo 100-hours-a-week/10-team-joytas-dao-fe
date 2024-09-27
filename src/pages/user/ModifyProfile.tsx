@@ -10,6 +10,7 @@ import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useMutation } from 'react-query'
+import { convertImageToWebP } from '@/utils/convertImage' // convertImageToWebP 함수 import
 
 export default function ModifyProfile() {
   const [profile, setProfile] = useState<File | null>(null)
@@ -54,19 +55,30 @@ export default function ModifyProfile() {
     return true
   }
 
-  const uploadProfileImage = async (): Promise<string | undefined> => {
-    const formData = new FormData()
-    formData.append('file', profile as File)
+  const uploadProfileImage = useMutation(
+    async (): Promise<string | undefined> => {
+      if (!profile) {
+        throw new Error('Profile image is not selected')
+      }
 
-    const response = await axios.post(APIs.uploadImage, formData, {
-      headers: {
-        Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-      },
-      withCredentials: true,
-    })
+      const webpImageBlob = await convertImageToWebP(profile)
 
-    return response.data.data.image_url
-  }
+      const formData = new FormData()
+      formData.append(
+        'file',
+        new File([webpImageBlob], 'image.webp', { type: 'image/webp' })
+      )
+
+      const response = await axios.post(APIs.uploadImage, formData, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        withCredentials: true,
+      })
+
+      return response.data.data.image_url
+    }
+  )
 
   const updateProfile = async (imageUrl: string) => {
     const response = await axios.patch(
@@ -86,7 +98,7 @@ export default function ModifyProfile() {
     async () => {
       let imageUrl = profileUrl
       if (profile) {
-        const uploadedImageUrl = await uploadProfileImage()
+        const uploadedImageUrl = await uploadProfileImage.mutateAsync()
         if (uploadedImageUrl) {
           imageUrl = uploadedImageUrl
           setProfileUrl(uploadedImageUrl)

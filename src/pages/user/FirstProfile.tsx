@@ -10,6 +10,7 @@ import useUserStore from '@store/userStore'
 import { toast } from 'react-toastify'
 import axios from 'axios'
 import { useMutation, useQuery } from 'react-query'
+import { convertImageToWebP } from '@/utils/convertImage'
 
 const fetchUserProfile = async () => {
   const response = await axios.get(APIs.profile, {
@@ -78,8 +79,17 @@ export default function FirstProfile() {
 
   const uploadProfileImage = useMutation(
     async (): Promise<string | undefined> => {
+      if (!profile) {
+        throw new Error('Profile image is not selected')
+      }
+
+      const webpImageBlob = await convertImageToWebP(profile)
+
       const formData = new FormData()
-      formData.append('file', profile as File)
+      formData.append(
+        'file',
+        new File([webpImageBlob], 'image.webp', { type: 'image/webp' })
+      )
 
       const response = await axios.post(APIs.uploadImage, formData, {
         headers: {
