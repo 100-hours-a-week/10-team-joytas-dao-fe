@@ -47,6 +47,7 @@ export const HeaderRight = styled.div`
 export const Icon = styled.img`
   cursor: pointer;
   width: 40px;
+  height: fit-content;
   padding: 12.5px;
 
   &:hover {

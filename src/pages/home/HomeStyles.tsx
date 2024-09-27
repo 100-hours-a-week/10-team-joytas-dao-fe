@@ -23,6 +23,7 @@ export const Nickname = styled.div`
 
 export const BannerImage = styled.img`
   background-color: grey;
+  height: fit-content;
   width: 100%;
   display: flex;
   object-fit: cover;
