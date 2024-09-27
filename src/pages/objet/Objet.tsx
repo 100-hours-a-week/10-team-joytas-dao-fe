@@ -76,7 +76,7 @@ export default function Objet() {
     {
       onSuccess: () => {
         toast.success('오브제 삭제 성공 🪐')
-        navigate(`${URL.lounge}/${objetData.loungeId}`)
+        navigate(`${URL.lounge}/${objetData.lounge_id}`)
       },
       onError: () => {
         toast.error('오브제 삭제 실패 😭')
