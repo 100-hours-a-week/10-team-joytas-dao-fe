@@ -51,10 +51,10 @@ export default function Home() {
           autoplaySpeed={3500}
           style={{ cursor: 'pointer' }}
         >
-          <BannerImage src={banner1} />
-          <BannerImage loading='lazy' src={banner2} />
-          <BannerImage loading='lazy' src={banner3} />
-          <BannerImage loading='lazy' src={banner4} />
+          <BannerImage fetchPriority='high' src={banner1} />
+          <BannerImage src={banner2} />
+          <BannerImage src={banner3} />
+          <BannerImage src={banner4} />
         </Carousel>
         <MyObjetContainer>
           <MyObjetTitle>
