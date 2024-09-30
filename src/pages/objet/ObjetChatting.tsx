@@ -10,13 +10,12 @@ import {
 import { AlertUserEnter, ChatMessage } from '@components/objet/Chat'
 import SendImg from '@images/send.webp'
 import { useEffect, useRef, useState } from 'react'
-import useObjetStore from '@store/objetStore'
-import { connectToRoom, disconnectFromRoom, sendMessage } from '@utils/stomp'
+import { connectToRoom, disconnectFromRoom } from '@utils/stomp'
 import { APIs } from '@/static'
-import useUserStore from '@store/userStore'
 import { CalendarOutlined } from '@ant-design/icons'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
 import axios from 'axios'
+import useObjetStore from '@/store/objetStore'
 
 interface Message {
   id: string
@@ -30,15 +29,12 @@ interface Message {
 
 export default function ObjetChatting() {
   const chatToken = useObjetStore((state) => state.chatToken)
-  const myUserId = useUserStore((state) => state.userId)
-  const myNickname = useUserStore((state) => state.nickname)
-
   const [messageInput, setMessageInput] = useState('')
   const [messages, setMessages] = useState<Message[]>([])
-
   const chatRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(true)
   const [hasMore, setHasMore] = useState(false)
+  const [isAtBottom, setIsAtBottom] = useState(true)
 
   const { ref: firstMessageRef } = useIntersectionObserver(
     async (entry, observer) => {
@@ -56,7 +52,7 @@ export default function ObjetChatting() {
   useEffect(() => {
     const fetchMessages = async () => {
       if (chatToken) {
-        connectToRoom(myUserId, myNickname, chatToken, handleIncomingMessage)
+        connectToRoom(chatToken, handleEnterChat, handleIncomingMessage)
       }
 
       await getMessages()
@@ -71,7 +67,8 @@ export default function ObjetChatting() {
     }
 
     return () => {
-      disconnectFromRoom(chatToken)
+      disconnectFromRoom(handleLeaveChat)
+      scrollToBottom()
     }
   }, [])
 
@@ -122,7 +119,7 @@ export default function ObjetChatting() {
           if (chatRef.current) {
             const nextScrollHeight = chatRef.current.scrollHeight
             chatRef.current.scrollTop =
-              nextScrollHeight - prevScrollHeight + prevScrollTop - 20
+              nextScrollHeight - prevScrollHeight + prevScrollTop
           }
         }, 0)
       }
@@ -147,22 +144,88 @@ export default function ObjetChatting() {
   }
 
   useEffect(() => {
-    if (messages.length <= 21) {
+    if (!chatRef.current) return
+
+    setIsAtBottom(chatRef.current.scrollTop >= chatRef.current.clientHeight)
+    console.log('isAtBottom', isAtBottom)
+
+    if (messages.length <= 21 || isAtBottom) {
+      // 21(채팅 20개 + 입장 문구)
       scrollToBottom()
     }
   }, [messages])
+
+  const handleEnterChat = async () => {
+    try {
+      await axios.post(
+        `${APIs.chat}/chat/greet`,
+        {
+          message: null,
+          type: 'ENTER',
+          room_token: chatToken,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          withCredentials: true,
+        }
+      )
+    } catch (error) {
+      console.error('채팅방 입장 실패', error)
+    }
+  }
 
   const handleIncomingMessage = (message: string) => {
     setMessages((prev) => [...prev, JSON.parse(message)])
   }
 
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     const messageToSend = messageInput.trim()
     if (!messageToSend) return
 
-    sendMessage(myUserId, chatToken, messageToSend)
+    if (chatToken) {
+      await axios.post(
+        `${APIs.chat}/chat`,
+        {
+          message: messageToSend,
+          type: 'TALK',
+          room_token: chatToken,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          withCredentials: true,
+        }
+      )
+    }
     setMessageInput('')
     scrollToBottom()
+  }
+
+  const handleLeaveChat = async () => {
+    try {
+      await axios.post(
+        `${APIs.chat}/chat/greet`,
+        {
+          message: null,
+          type: 'LEAVE',
+          room_token: chatToken,
+        },
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          withCredentials: true,
+        }
+      )
+    } catch (error) {
+      console.error('채팅방 퇴장 실패', error)
+    }
   }
 
   return (

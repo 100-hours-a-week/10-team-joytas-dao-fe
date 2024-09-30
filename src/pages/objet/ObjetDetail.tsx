@@ -14,11 +14,11 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { APIs, URL } from '@/static'
 import { ChatMessage } from '@components/objet/Chat'
 import LoadingLottie from '@components/lotties/LoadingLottie'
-import useObjetStore from '@store/objetStore'
 import { toast } from 'react-toastify'
 import { useObjetContext } from '@/utils/objetContext'
 import { useQuery } from 'react-query'
 import axios from 'axios'
+import useObjetStore from '@/store/objetStore'
 
 interface Message {
   id: string
@@ -33,11 +33,7 @@ interface Message {
 export default function ObjetDetail() {
   const objetId = useParams().oid
   const objetContext = useObjetContext()
-  const {
-    description,
-    objet_image: imageUrl,
-    callingPeople,
-  } = objetContext || {}
+  const { objetData, callingPeople } = objetContext || {}
 
   const setChatToken = useObjetStore((state) => state.setChatToken)
   const navigate = useNavigate()
@@ -79,7 +75,6 @@ export default function ObjetDetail() {
   )
 
   const handleClickChat = async () => {
-    setChatToken(useObjetStore.getState().chatToken)
     navigate(`${URL.objet}/${objetId}/chatting`)
   }
 
@@ -102,8 +97,10 @@ export default function ObjetDetail() {
   return (
     <>
       <ObjetDetailContainer>
-        <ObjetImg src={imageUrl} />
-        <ObjetDescription>{description}</ObjetDescription>
+        <ObjetImg src={objetData ? objetData.objet_image : ''} />
+        <ObjetDescription>
+          {objetData && objetData.description}
+        </ObjetDescription>
       </ObjetDetailContainer>
       <Divider />
 
@@ -121,7 +118,7 @@ export default function ObjetDetail() {
               <GoCommunityBtn
                 text='음성통화'
                 className='call'
-                people={callingPeople}
+                people={callingPeople || 0}
                 onClick={handleClickCall}
               />
             </GoToBtnWrapper>

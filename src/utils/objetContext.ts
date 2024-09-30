@@ -1,15 +1,21 @@
 import { createContext, useContext } from 'react'
 
 interface ObjetData {
-  creator: string
-  creatorId: number
+  owner: {
+    user_id: number
+    nickname: string
+  }
   name: string
   description: string
   objet_image: string
-  createdAt: string
-  callingPeople: number
+  created_at: string
   lounge_id: number
 }
 
-export const ObjetContext = createContext<ObjetData | null>(null)
+interface ObjetContextType {
+  objetData: ObjetData
+  callingPeople: number
+}
+
+export const ObjetContext = createContext<ObjetContextType | null>(null)
 export const useObjetContext = () => useContext(ObjetContext)
