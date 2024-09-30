@@ -20,7 +20,8 @@ export default function ObjetCall() {
   const { oid: objetId } = useParams()
 
   const objetContext = useObjetContext()
-  const { lounge_id: loungeId } = objetContext || {}
+  const { objetData: { lounge_id: loungeId = 0 } = {} } = objetContext || {}
+
   return (
     <>
       {loungeId !== 0 && (

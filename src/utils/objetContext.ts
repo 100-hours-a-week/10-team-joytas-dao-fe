@@ -14,10 +14,7 @@ interface ObjetData {
 
 interface ObjetContextType {
   objetData: ObjetData
-  chatToken?: string
   callingPeople: number
-  lounge_id: number
-  setChatToken: (token: string) => void
 }
 
 export const ObjetContext = createContext<ObjetContextType | null>(null)
