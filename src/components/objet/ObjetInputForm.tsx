@@ -57,6 +57,7 @@ export default function ObjetInfoForm({
   const [imageValid, setImageValid] = useState(false)
 
   const [mentionValue, setMentionValue] = useState('')
+  const [isAllSelected, setIsAllSelected] = useState(false)
 
   const [nameErrorMessage, setNameErrorMessage] = useState('')
   const [descriptionErrorMessage, setDescriptionErrorMessage] = useState('')
@@ -82,8 +83,21 @@ export default function ObjetInfoForm({
       setNameValid(true)
       setDescriptionValid(true)
       setImageValid(true)
+
+      if (userList.length === 0) {
+        setIsAllSelected(true)
+      }
     }
   }, [objetInfo])
+
+  useEffect(() => {
+    if (userList.length === 0) {
+      // 전체 멤버 선택했던 경우
+      setIsAllSelected(true)
+    } else if (sharedMembers.length < userList.length) {
+      setIsAllSelected(false)
+    }
+  }, [sharedMembers, userList])
 
   const fetchUsers = useCallback(
     async (searchValue: string) => {
@@ -126,10 +140,15 @@ export default function ObjetInfoForm({
   }
 
   const onMentionSelect = (option: OptionProps) => {
-    setSharedMembers((prevMembers) => [
-      ...prevMembers,
-      { user_id: Number(option.key), nickname: option.value as string },
-    ])
+    if (option.key === 'all') {
+      setSharedMembers(userList.filter((user) => user.user_id !== userId))
+      setIsAllSelected(true)
+    } else {
+      setSharedMembers((prevMembers) => [
+        ...prevMembers,
+        { user_id: Number(option.key), nickname: option.value as string },
+      ])
+    }
     setMentionValue('')
   }
 
@@ -290,7 +309,7 @@ export default function ObjetInfoForm({
     setIsLoading(true)
 
     try {
-      let receivedImageUrl =
+      const receivedImageUrl =
         image && isImageChanged ? await uploadImage(image) : imageUrl
 
       let response
@@ -331,6 +350,23 @@ export default function ObjetInfoForm({
     }
   }
 
+  const filteredUsers = isAllSelected
+    ? []
+    : [
+        { value: 'everyone', key: 'all', label: 'everyone' },
+        ...userList
+          .filter(
+            (user) =>
+              user.user_id !== userId &&
+              !sharedMembers.some((member) => member.user_id === user.user_id)
+          )
+          .map((user) => ({
+            value: user.nickname,
+            key: user.user_id.toString(),
+            label: user.nickname,
+          })),
+      ]
+
   if (isLoading) {
     return <LoadingLottie />
   }
@@ -348,19 +384,7 @@ export default function ObjetInfoForm({
               onSelect={(option) => onMentionSelect(option as OptionProps)}
               onChange={(value) => onMentionChange(value)}
               value={mentionValue}
-              options={userList
-                .filter(
-                  (user) =>
-                    user.user_id !== userId &&
-                    !sharedMembers.some(
-                      (member) => member.user_id === user.user_id
-                    )
-                )
-                .map((user) => ({
-                  value: user.nickname,
-                  key: user.user_id.toString(),
-                  label: user.nickname,
-                }))}
+              options={filteredUsers}
             />
             <TagWrapper>
               {sharedMembers.map((member) => (

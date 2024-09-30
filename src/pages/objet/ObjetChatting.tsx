@@ -150,7 +150,6 @@ export default function ObjetChatting() {
     console.log('isAtBottom', isAtBottom)
 
     if (messages.length <= 21 || isAtBottom) {
-      // 21(채팅 20개 + 입장 문구)
       scrollToBottom()
     }
   }, [messages])
