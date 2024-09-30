@@ -34,6 +34,7 @@ export default function ObjetChatting() {
   const chatRef = useRef<HTMLDivElement>(null)
   const [loading, setLoading] = useState(true)
   const [hasMore, setHasMore] = useState(false)
+  const [isAtBottom, setIsAtBottom] = useState(true)
 
   const { ref: firstMessageRef } = useIntersectionObserver(
     async (entry, observer) => {
@@ -67,6 +68,7 @@ export default function ObjetChatting() {
 
     return () => {
       disconnectFromRoom(handleLeaveChat)
+      scrollToBottom()
     }
   }, [])
 
@@ -117,7 +119,7 @@ export default function ObjetChatting() {
           if (chatRef.current) {
             const nextScrollHeight = chatRef.current.scrollHeight
             chatRef.current.scrollTop =
-              nextScrollHeight - prevScrollHeight + prevScrollTop - 20
+              nextScrollHeight - prevScrollHeight + prevScrollTop
           }
         }, 0)
       }
@@ -142,7 +144,13 @@ export default function ObjetChatting() {
   }
 
   useEffect(() => {
-    if (messages.length <= 21) {
+    if (!chatRef.current) return
+
+    setIsAtBottom(chatRef.current.scrollTop >= chatRef.current.clientHeight)
+    console.log('isAtBottom', isAtBottom)
+
+    if (messages.length <= 21 || isAtBottom) {
+      // 21(채팅 20개 + 입장 문구)
       scrollToBottom()
     }
   }, [messages])
