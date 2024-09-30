@@ -8,7 +8,7 @@ interface ObjetData {
   objet_image: string
   createdAt: string
   callingPeople: number
-  loungeId: number
+  lounge_id: number
 }
 
 export const ObjetContext = createContext<ObjetData | null>(null)
