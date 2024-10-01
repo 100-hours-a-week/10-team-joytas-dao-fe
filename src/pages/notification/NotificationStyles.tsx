@@ -41,7 +41,7 @@ export const NotificationItemContainer = styled.div<{ $isRead: boolean }>`
   width: 100%;
   padding: 15px 0;
 
-  opacity: ${(props) => (props.$isRead ? 0.7 : 1)};
+  opacity: ${(props) => (props.$isRead ? 0.5 : 0.9)};
   cursor: ${(props) => (props.$isRead ? 'default' : 'pointer')};
   pointer-events: ${(props) => (props.$isRead ? 'none' : 'auto')};
 
@@ -78,4 +78,5 @@ export const NotiContents = styled.span`
 export const NotiDatetime = styled.span`
   font-size: 8px;
   color: #6a6a6a;
+  width: 6%;
 `

@@ -9,35 +9,6 @@ const positionCenter = css`
   transform: translate(-50%, -50%);
 `
 
-export const DeleteModalContainer = styled.div`
-  ${positionCenter}
-  display: flex;
-  width: 270px;
-  border-radius: 12px;
-  background-color: #fff;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 10px;
-  color: black;
-`
-
-export const DeleteModalTitle = styled.div`
-  font-size: 18px;
-  font-weight: bold;
-  line-height: 28px;
-  margin-bottom: 10px;
-`
-
-export const DeleteModalContents = styled.div`
-  span {
-    font-size: 15px;
-    font-weight: 300;
-    line-height: 24px;
-    text-align: center;
-    display: block;
-  }
-`
-
 export const ModalButtonContainer = styled.div`
   display: flex;
   flex-direction: row;
