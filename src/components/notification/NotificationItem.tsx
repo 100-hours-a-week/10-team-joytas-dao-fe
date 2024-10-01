@@ -80,6 +80,23 @@ export default function NotificationItem({
     setTimeout(async () => {
       await notificationReadMutation.mutateAsync(notification_id)
       setIsModalVisible(false)
+
+      const response = await axios.patch(
+        `${APIs.loungeList}/${detail.domain_id}/invite/accept`,
+        {},
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+          },
+          withCredentials: true,
+        }
+      )
+
+      if (!response.status || response.status !== 200) {
+        toast.error('라운지 초대 수락에 실패했습니다. 다시 시도해주세요.')
+      }
+
       navigate(`${URL.lounge}/${detail.domain_id}`)
     }, 3000)
   }
