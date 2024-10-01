@@ -39,6 +39,7 @@ const searchUsers = async (nickname: string): Promise<SearchUser[]> => {
 export default function UserList() {
   const type = useLocation().pathname.split('/')[1] as 'lounges' | 'users'
   const [searchUser, setSearchUser] = useState('')
+  const [debouncedSearchUser, setDebouncedSearchUser] = useState('')
   const userId = useUserStore((state) => state.userId)
   const searchInputRef = useRef<HTMLInputElement | null>(null)
 
@@ -48,11 +49,21 @@ export default function UserList() {
     }
   }, [])
 
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setDebouncedSearchUser(searchUser)
+    }, 200)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [searchUser])
+
   const { data: userList = [], isLoading } = useQuery(
-    ['searchUser', searchUser],
-    () => searchUsers(searchUser),
+    ['searchUser', debouncedSearchUser],
+    () => searchUsers(debouncedSearchUser),
     {
-      enabled: !!searchUser,
+      enabled: !!debouncedSearchUser,
       onError: (error) => {
         console.error('유저 검색 실패', error)
       },
