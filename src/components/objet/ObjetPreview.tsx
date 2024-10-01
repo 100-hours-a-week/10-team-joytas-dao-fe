@@ -14,6 +14,7 @@ import { useNavigate } from 'react-router-dom'
 import { useEffect, useRef, useState } from 'react'
 import leftCircle from '../../assets/images/leftCircle.webp'
 import rightCircle from '../../assets/images/rightCircle.webp'
+import { useMediaQuery } from '@uidotdev/usehooks'
 
 interface ObjetProps {
   objet_id: number
@@ -32,6 +33,7 @@ export default function ObjetPreview({
 }: ObjetPreviewProps): JSX.Element | null {
   const listRef = useRef<HTMLDivElement>(null)
   const [scrollState, setScrollState] = useState<'left' | 'right'>('right')
+  const isMobile = useMediaQuery('only screen and (max-width : 425px)')
 
   const handleScroll = () => {
     const { current } = listRef
@@ -90,7 +92,7 @@ export default function ObjetPreview({
         })}
       </ObjetList>
 
-      {objets.length > 3 && innerWidth >= 600 && (
+      {objets.length > 3 && !isMobile && (
         <>
           {scrollState === 'right' && (
             <IconContainer className='right'>
