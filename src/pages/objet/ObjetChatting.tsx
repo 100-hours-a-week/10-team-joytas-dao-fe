@@ -147,7 +147,6 @@ export default function ObjetChatting() {
     if (!chatRef.current) return
 
     setIsAtBottom(chatRef.current.scrollTop >= chatRef.current.clientHeight)
-    console.log('isAtBottom', isAtBottom)
 
     if (messages.length <= 21 || isAtBottom) {
       scrollToBottom()
