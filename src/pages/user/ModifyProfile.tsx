@@ -13,15 +13,16 @@ import { useMutation } from 'react-query'
 import { convertImageToWebP } from '@/utils/convertImage' // convertImageToWebP 함수 import
 
 export default function ModifyProfile() {
+  const userNickname = useUserStore((state) => state.nickname)
+  const userProfileImage = useUserStore((state) => state.profileImage)
+
   const [profile, setProfile] = useState<File | null>(null)
   const [profileUrl, setProfileUrl] = useState('')
   const [imageError, setImageError] = useState('')
-  const [nickname, setNickname] = useState('')
+  const [nickname, setNickname] = useState(userNickname)
   const [nicknameError, setNicknameError] = useState('')
   const [isClickUpdate, setIsClickUpdate] = useState(false)
 
-  const userNickname = useUserStore((state) => state.nickname)
-  const userProfileImage = useUserStore((state) => state.profileImage)
   const updateProfileImage = useUserStore((state) => state.updateProfileImage)
   const updateNickname = useUserStore((state) => state.updateNickname)
 

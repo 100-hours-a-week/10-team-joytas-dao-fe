@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import {
   NicknameContainer,
   NicknameInput,
@@ -20,10 +20,22 @@ export default function NicknameInputField({
   setNickname,
   validateNickname,
 }: NicknameInputFieldProps) {
+  const [debouncedNickname, setDebouncedNickname] = useState(nickname)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      validateNickname(debouncedNickname)
+    }, 200)
+
+    return () => {
+      clearTimeout(handler)
+    }
+  }, [debouncedNickname])
+
   const handleNicknameChange = (event: ChangeEvent<HTMLInputElement>) => {
     const newNickname = event.target.value
     setNickname(newNickname)
-    validateNickname(newNickname)
+    setDebouncedNickname(newNickname)
   }
 
   return (
