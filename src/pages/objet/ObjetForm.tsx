@@ -64,6 +64,7 @@ export default function ObjetForm() {
       }
     },
     {
+      retry: 1,
       enabled: step === 'update',
       onSuccess: (data) => {
         setSelectedType(data?.objet_type || '')

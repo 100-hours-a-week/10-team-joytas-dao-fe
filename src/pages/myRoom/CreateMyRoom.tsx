@@ -52,6 +52,7 @@ export default function CreateMyRoom() {
 
   // 마이룸 생성 여부를 체크하는 쿼리
   useQuery(['checkMyRoom', userId], () => checkIfGenerated(userId), {
+    retry: 1,
     onSuccess: (response) => {
       if (response.status === 200) {
         toast.info(

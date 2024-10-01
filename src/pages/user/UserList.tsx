@@ -63,6 +63,7 @@ export default function UserList() {
     ['searchUser', debouncedSearchUser],
     () => searchUsers(debouncedSearchUser),
     {
+      retry: 1,
       enabled: !!debouncedSearchUser,
       onError: (error) => {
         console.error('유저 검색 실패', error)

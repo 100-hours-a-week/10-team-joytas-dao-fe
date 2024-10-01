@@ -87,6 +87,7 @@ export default function Lounge() {
     ['lounge', loungeId],
     () => fetchLounge(loungeId!),
     {
+      retry: 1,
       onError: () => {
         toast.error('해당 라운지를 찾을 수 없습니다 😅')
         navigate(`${URL.lounge}`)
@@ -98,6 +99,7 @@ export default function Lounge() {
     ['loungeObjet', loungeId],
     () => fetchLoungeObjets(loungeId!),
     {
+      retry: 1,
       onError: () => {
         toast.error('해당 라운지의 오브제가 없습니다 😅')
       },

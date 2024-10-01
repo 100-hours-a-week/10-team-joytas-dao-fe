@@ -18,7 +18,7 @@ import { useNavigate } from 'react-router-dom'
 import { APIs } from '@/static'
 import { useQuery } from 'react-query'
 import axios from 'axios'
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useCallback } from 'react'
 
 const fetchNotifications = async (cursor: number | null = null) => {
   const response = await axios.get(
@@ -50,6 +50,7 @@ export default function Notification() {
     ['notifications', cursor],
     () => fetchNotifications(cursor),
     {
+      retry: 1,
       enabled: false,
       onSuccess: (data) => {
         setNotifications((prev) => [...prev, ...data.data])
@@ -59,13 +60,13 @@ export default function Notification() {
     }
   )
 
-  const loadMoreNotifications = async () => {
+  const loadMoreNotifications = useCallback(async () => {
     if (hasNext && !isFetching) {
       setIsFetching(true)
       await refetch()
       setIsFetching(false)
     }
-  }
+  }, [hasNext, isFetching, refetch])
 
   useEffect(() => {
     const handleObserver = (entries: IntersectionObserverEntry[]) => {

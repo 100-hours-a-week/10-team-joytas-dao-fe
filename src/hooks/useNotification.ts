@@ -43,6 +43,9 @@ const useNotifications = () => {
     isLoading,
   } = useQuery('notifications', fetchNotifications, {
     retry: 1,
+    onError: (error) => {
+      console.error('Failed to fetch notifications', error)
+    },
   })
 
   return { notificationList, error, isLoading }

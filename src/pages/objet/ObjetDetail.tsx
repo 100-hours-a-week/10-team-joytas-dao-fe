@@ -67,6 +67,7 @@ export default function ObjetDetail() {
       }
     },
     {
+      retry: 1,
       onError: (error) => {
         console.error('오브제 정보 가져오기 실패: ', error)
         toast.error('오브제 정보를 가져오지 못했습니다.')

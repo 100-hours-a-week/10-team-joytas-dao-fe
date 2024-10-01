@@ -39,6 +39,7 @@ export default function FirstProfile() {
     'userProfile',
     fetchUserProfile,
     {
+      retry: 1,
       onSuccess: (data) => {
         if (data.user_status !== 'ACTIVE_FIRST_LOGIN') {
           toast.info('이미 프로필을 설정했습니다 😊')

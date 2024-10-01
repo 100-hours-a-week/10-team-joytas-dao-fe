@@ -70,6 +70,7 @@ export default function MyRoom() {
     ['myRoom', userId],
     () => fetchMyRoomInfo(userId),
     {
+      retry: 1,
       onSuccess: (data) => {
         setMyRoomNameForChange(
           data?.my_room_name ? data.my_room_name : userNickname + '의 마이룸'
