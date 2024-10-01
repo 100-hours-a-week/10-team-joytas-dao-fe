@@ -66,6 +66,7 @@ export default function LoungeContainer() {
       content_type: 'lounge',
       lounge_id: lid,
     })
+    localStorage.setItem('loungeId', String(lid))
     navigate(`${URL.lounge}/${lid}`)
   }
 
