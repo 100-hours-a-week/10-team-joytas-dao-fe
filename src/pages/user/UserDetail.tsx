@@ -55,6 +55,7 @@ export default function UserDetail() {
     ['userInfo', userId],
     fetchUserInfo,
     {
+      retry: 1,
       onSuccess: (data) => {
         setUserNickname(data.nickname)
         setUserProfileUrl(data.profile_url)
@@ -70,6 +71,7 @@ export default function UserDetail() {
     ['myRoomInfo', userId],
     fetchMyRoomInfo,
     {
+      retry: 1,
       onSuccess: (data) => {
         setMyRoomName(
           data.my_room_name ? data.my_room_name : profile.nickname + '의 마이룸'

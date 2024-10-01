@@ -35,6 +35,7 @@ export default function LoungeContainer() {
     isLoading,
     isError,
   } = useQuery('loungeList', getLoungeList, {
+    retry: 1,
     onError: (error) => {
       console.error('Failed to fetch lounge list', error)
     },

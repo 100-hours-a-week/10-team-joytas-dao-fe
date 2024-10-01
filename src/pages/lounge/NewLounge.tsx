@@ -67,6 +67,7 @@ export default function NewLounge() {
   const queryClient = useQueryClient()
 
   useQuery('lounges', fetchLoungeList, {
+    retry: 1,
     onSuccess: (data) => {
       if (data.length >= 4) {
         toast.error('라운지 갯수 제한(최대 4개) 🥹')

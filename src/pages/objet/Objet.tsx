@@ -54,6 +54,7 @@ export default function Objet() {
       return response.data.data
     },
     {
+      retry: 1,
       onError: () => {
         toast.error('해당 오브제를 찾을 수 없습니다 😅')
         navigate(`${URL.lounge}`)
@@ -75,6 +76,12 @@ export default function Objet() {
       )
 
       return response.data.data.calling_user_num
+    },
+    {
+      retry: 1,
+      onError: () => {
+        console.error('Failed to fetch calling people')
+      },
     }
   )
 

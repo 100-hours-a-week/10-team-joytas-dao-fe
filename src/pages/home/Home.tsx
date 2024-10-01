@@ -39,7 +39,13 @@ export default function Home() {
 
   const { data: objets = [], isLoading } = useQuery(
     ['objets', userId],
-    fetchObjetPreviews
+    fetchObjetPreviews,
+    {
+      retry: 1,
+      onError: (error) => {
+        console.error('Failed to fetch objets', error)
+      },
+    }
   )
 
   return (

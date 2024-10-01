@@ -73,12 +73,22 @@ export default function MyRoomObjet() {
     isLoading: isObjetsLoading,
     refetch: refetchObjets,
   } = useQuery(['objets', loungeId], () => fetchLoungeObjets(loungeId), {
+    retry: 1,
     enabled: true,
+    onError: (error) => {
+      console.error('Failed to fetch objets', error)
+    },
   })
 
   const { data: lounges, isLoading: isLoungesLoading } = useQuery<Lounge[]>(
     'lounges',
-    () => fetchLounges()
+    fetchLounges,
+    {
+      retry: 1,
+      onError: (error) => {
+        console.error('Failed to fetch lounges', error)
+      },
+    }
   )
 
   const handleSelectLounge = (loungeId: number) => {
