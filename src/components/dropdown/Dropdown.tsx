@@ -21,7 +21,6 @@ export function LoungeDrop({
 
   const handleClickObjetCreate = () => {
     navigate(URL.newObjet)
-    localStorage.setItem('loungeId', loungeId.toString())
   }
 
   const handleClickDeleteButton = () => {

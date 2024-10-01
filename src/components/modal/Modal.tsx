@@ -1,7 +1,5 @@
 import { useState } from 'react'
 import {
-  DeleteModalContainer,
-  DeleteModalContents,
   LoungeListModalContainer,
   LoungeListModalContents,
   LoungeListModalItem,
@@ -9,7 +7,6 @@ import {
   ModalButton,
   ModalButtonContainer,
 } from './ModalStyles'
-import LoadingLottie from '../lotties/LoadingLottie'
 import { toast } from 'react-toastify'
 import { Modal, Button } from 'antd'
 
@@ -35,8 +32,7 @@ interface LoungeListProps {
 
 interface NotiProps {
   onClose: () => void
-  isLoading: boolean
-  handleConfirm: () => void
+  onConfirm: () => void
 }
 
 export function DeleteObjetModal({
@@ -193,23 +189,24 @@ export function LoungeListModal({
   )
 }
 
-export function ConfirmNotificationModal({
-  onClose,
-  isLoading,
-  // handleConfirm,
-}: NotiProps) {
+export function ConfirmNotificationModal({ onClose, onConfirm }: NotiProps) {
   return (
-    <DeleteModalContainer>
-      <DeleteModalContents>
-        <span>라운지 초대에 수락하셨습니다.</span>
-        <span>3초 후 라운지로 이동합니다.</span>
-        {isLoading && <LoadingLottie />}
-        <ModalButtonContainer className='refuse'>
-          <ModalButton className='cancel' onClick={onClose}>
-            취소
-          </ModalButton>
-        </ModalButtonContainer>
-      </DeleteModalContents>
-    </DeleteModalContainer>
+    <Modal
+      title='라운지 초대에 수락하시겠습니까?'
+      open={true}
+      onOk={onConfirm}
+      onCancel={onClose}
+      footer={[
+        <Button key='back' onClick={onClose}>
+          취소
+        </Button>,
+        <Button key='confirm' onClick={onConfirm}>
+          수락
+        </Button>,
+      ]}
+    >
+      <span>수락 시 라운지로 이동합니다.</span> <br />
+      <span>수락 이후에도 라운지를 탈퇴할 수 있습니다.</span>
+    </Modal>
   )
 }

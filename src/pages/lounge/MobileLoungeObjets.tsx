@@ -28,7 +28,6 @@ export default function MobileLoungeObjets({
       toast.info('라운지를 선택 후 오브제를 생성해주세요 🙂')
       navigate(URL.lounge)
     } else {
-      localStorage.setItem('loungeId', loungeId.toString())
       navigate(URL.newObjet)
     }
   }

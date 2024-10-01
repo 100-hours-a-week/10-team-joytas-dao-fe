@@ -16,7 +16,7 @@ import { useNavigate } from 'react-router-dom'
 import { APIs, URL } from '@/static'
 import { toast } from 'react-toastify'
 import axios from 'axios'
-import { useMutation } from 'react-query'
+import { useMutation, useQueryClient } from 'react-query'
 
 export default function NotificationItem({
   notification_id,
@@ -36,6 +36,7 @@ export default function NotificationItem({
   }
   const [isModalVisible, setIsModalVisible] = useState(false)
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const markNotificationAsRead = async (notification_id: number) => {
     const response = await axios.patch(
@@ -58,6 +59,9 @@ export default function NotificationItem({
   }
 
   const notificationReadMutation = useMutation(markNotificationAsRead, {
+    onSuccess: () => {
+      queryClient.invalidateQueries('notifications')
+    },
     onError: () => {
       toast.error('알림을 읽지 못했어요 🥹 이따가 다시 시도해주세요!')
     },
@@ -75,30 +79,32 @@ export default function NotificationItem({
       text = `${sender.nickname}님이 콕 찔렀습니다.`
   }
 
-  const handleClickLoungeNoti = async () => {
-    setIsModalVisible(true)
-    setTimeout(async () => {
-      await notificationReadMutation.mutateAsync(notification_id)
-      setIsModalVisible(false)
+  const handleAcceptLoungeNoti = async () => {
+    await notificationReadMutation.mutateAsync(notification_id)
+    setIsModalVisible(false)
 
-      const response = await axios.patch(
-        `${APIs.loungeList}/${detail.domain_id}/invite/accept`,
-        {},
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
-          },
-          withCredentials: true,
-        }
-      )
-
-      if (!response.status || response.status !== 200) {
-        toast.error('라운지 초대 수락에 실패했습니다. 다시 시도해주세요.')
+    const response = await axios.patch(
+      `${APIs.loungeList}/${detail.domain_id}/invite/accept`,
+      {},
+      {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+        },
+        withCredentials: true,
       }
+    )
 
-      navigate(`${URL.lounge}/${detail.domain_id}`)
-    }, 3000)
+    if (!response.status || response.status !== 200) {
+      toast.error('라운지 초대 수락에 실패했습니다. 다시 시도해주세요.')
+    }
+
+    navigate(`${URL.lounge}/${detail.domain_id}`)
+  }
+
+  const handleDeclineLoungeNoti = async () => {
+    await notificationReadMutation.mutateAsync(notification_id)
+    setIsModalVisible(false)
   }
 
   const handleClickObjetNoti = async () => {
@@ -118,7 +124,7 @@ export default function NotificationItem({
       <NotificationItemContainer
         onClick={() => {
           type === 'N0001'
-            ? handleClickLoungeNoti()
+            ? setIsModalVisible(true)
             : type === 'N0002'
               ? handleClickObjetNoti()
               : handleClickPokeNoti()
@@ -132,9 +138,8 @@ export default function NotificationItem({
 
       {isModalVisible && (
         <ConfirmNotificationModal
-          onClose={() => setIsModalVisible(false)}
-          isLoading={true}
-          handleConfirm={() => console.log('confirm')}
+          onClose={handleDeclineLoungeNoti}
+          onConfirm={handleAcceptLoungeNoti}
         ></ConfirmNotificationModal>
       )}
     </>
