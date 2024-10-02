@@ -47,6 +47,7 @@ export default function ObjetInfoForm({
   const [userList, setUserList] = useState<SharedMembersProps[]>([])
 
   const [sharedMembers, setSharedMembers] = useState<SharedMembersProps[]>([])
+  const [originalSharer, setOriginalSharer] = useState<SharedMembersProps[]>([])
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [image, setImage] = useState<File | null>(null)
@@ -73,6 +74,7 @@ export default function ObjetInfoForm({
   useEffect(() => {
     if (objetInfo) {
       const { name, description, objet_image, sharers, lounge_id } = objetInfo
+      setOriginalSharer(sharers.filter((user) => user.user_id !== userId))
       setName(name)
       setDescription(description)
       setImageUrl(objet_image)
@@ -156,6 +158,9 @@ export default function ObjetInfoForm({
     setSharedMembers((prevMembers) =>
       prevMembers.filter((member) => member.nickname !== removedTag)
     )
+    if (originalSharer !== sharedMembers) {
+      setIsMentionChanged(true)
+    }
   }
 
   const handleInputChange = (field: string, value: string) => {
