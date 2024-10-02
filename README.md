@@ -6,6 +6,8 @@
 <img src="https://img.shields.io/badge/amazonaws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white">
 </div>
 
+
+
 ## 🔖 프로젝트 소개
 ### 개요
 - DAO는 추억을 3D 모델을 통해 사람들과 공유하는 커뮤니티입니다.
@@ -15,7 +17,7 @@
 
 ### 개발 인원 및 기간
 
-- 개발기간 :  2024-07-23 ~ 2024-09-05, 현재 고도화 단계
+- 개발기간 :  2024-07-23 ~, 현재 고도화 단계
 - 개발 인원
   <table style="text-align: center;">
     <tr>
@@ -30,17 +32,17 @@
       <td>박재영</td>
     </tr>
     <tr>
-      <td><a href="https://github.com/junseoparkk">프로필</a></td>
-      <td><a href="https://github.com/JiHongKim98">프로필</a></td>
-      <td><a href="https://github.com/jjikky">프로필</a></td>
-      <td><a href="https://github.com/erica0321">프로필</a></td>
-      <td><a href="https://github.com/yoouung">프로필</a></td>
+      <td><a href="https://github.com/junseoparkk"><img src="https://avatars.githubusercontent.com/u/98972385?v=4"/></a></td>
+      <td><a href="https://github.com/JiHongKim98"><img src="https://avatars.githubusercontent.com/u/144337839?v=4" /></a></td>
+      <td><a href="https://github.com/jjikky"><img src="https://avatars.githubusercontent.com/u/59151187?v=4"/></a></td>
+      <td><a href="https://github.com/erica0321"><img src="https://avatars.githubusercontent.com/u/81230764?v=4" /></a></td>
+      <td><a href="https://github.com/yoouung"><img src="https://avatars.githubusercontent.com/u/78146904?v=4" /></a></td>
     </tr>
   </table>
 
   
 ### 사용 기술 및 tools
-- React, Typescript, Styled-Components, Zustand, WebRTC, Stomp, Three.js
+- React, Typescript, Styled-Components, React-Query, Zustand, WebRTC, Stomp, Three.js
 <br/>
 
 ## 🖥️ 서비스 화면
@@ -75,10 +77,12 @@
 <br />
 
 ## 🚧 트러블 슈팅
-
+🧷 [웹 메모리 사용량 증가 이슈](https://flash-inch-968.notion.site/34f3c50a41684ef8adeab0a6d1637839?pvs=4)
 
 <br/>
 
 ## 💬 프로젝트 후기
+👥 노현아
+<div>프로젝트에서 가장 큰 어려움은 3D 모델과 실시간 통화 기능을 구현하는 과정에서 웹 브라우저의 메모리 사용량이 급격히 증가한 문제였습니다. 특히 Three.js를 사용해 복잡한 3D 모델을 렌더링하는 과정에서 메모리 사용량이 최대 6.1GB에 도달했고, 그로 인해 웹 페이지가 버벅거리며 사용자 경험이 크게 저하되는 상황을 겪었습니다. 이러한 문제는 프로젝트의 성능과 사용자 만족도에 직접적인 영향을 미치는 큰 도전이었습니다. <br/> 문제 해결을 위해 3D 모델의 최적화와 효율적인 자원 관리를 중점적으로 고민했습니다. 먼저, <strong>lazy loading</strong>을 도입하여 3D 모델을 한 번에 로드하는 대신 필요할 때만 불러오도록 개선했고, 로딩 중에는 다른 UI를 먼저 보여줘 사용자가 기다리는 시간을 최소화했습니다. 또한, 상태가 자주 변하지 않는 컴포넌트에 <strong>useMemo</strong> 훅을 적용해 불필요한 렌더링을 방지했습니다. 이러한 최적화 작업을 통해 메모리 사용량을 500MB 내외로 줄이고, 웹 페이지의 성능을 크게 향상시킬 수 있었습니다. <br/> 저는 복잡한 기술 스택에서 성능 최적화의 중요성을 배웠으며, 사용자 경험을 개선하기 위해 효율적인 자원 관리와 최적화 방법을 적극적으로 적용하며 현재 프로젝트를 고도화하고 있습니다.</div>
 
 <br/>
