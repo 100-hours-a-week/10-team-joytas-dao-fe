@@ -40,10 +40,8 @@ export const NotificationItemContainer = styled.div<{ $isRead: boolean }>`
   align-items: center;
   width: 100%;
   padding: 15px 0;
-
+  cursor: pointer;
   opacity: ${(props) => (props.$isRead ? 0.5 : 0.9)};
-  cursor: ${(props) => (props.$isRead ? 'default' : 'pointer')};
-  pointer-events: ${(props) => (props.$isRead ? 'none' : 'auto')};
 
   &:hover {
     background-color: #2d2d2d;
