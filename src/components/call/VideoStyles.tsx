@@ -50,12 +50,20 @@ export const UserLabel = styled.p`
   margin-top: 100px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
   font-size: 12px;
   @media (min-width: 500px) {
     margin-top: 140px;
     font-size: 14px;
   }
+`
+
+export const MuteButton = styled.img`
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  padding: 2px;
+  border: 0.5px solid gray;
 `
 
 export const MyAudio = styled.audio`
