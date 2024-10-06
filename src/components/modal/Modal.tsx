@@ -37,6 +37,7 @@ interface NotiProps {
 
 export function DeleteObjetModal({
   isOpen,
+  isClick,
   onClose,
   handleDelete,
 }: DeleteProps) {
@@ -50,7 +51,7 @@ export function DeleteObjetModal({
         <Button key='back' onClick={onClose}>
           취소
         </Button>,
-        <Button key='delete' onClick={handleDelete}>
+        <Button key='delete' disabled={isClick} onClick={handleDelete}>
           삭제
         </Button>,
       ]}
@@ -76,7 +77,7 @@ export function DeleteLoungeModal({
         <Button key='back' onClick={onClose}>
           취소
         </Button>,
-        <Button key='delete' onClick={handleDelete}>
+        <Button key='delete' disabled={isClick} onClick={handleDelete}>
           삭제
         </Button>,
       ]}
@@ -103,7 +104,7 @@ export function WithDrawLoungeModal({
         <Button key='back' onClick={onClose}>
           취소
         </Button>,
-        <Button key='delete' onClick={handleDelete}>
+        <Button key='delete' disabled={isClick} onClick={handleDelete}>
           탈퇴
         </Button>,
       ]}
@@ -130,7 +131,7 @@ export function DeleteUserModal({
         <Button key='back' onClick={onClose}>
           취소
         </Button>,
-        <Button key='delete' onClick={handleDelete}>
+        <Button key='delete' disabled={isClick} onClick={handleDelete}>
           확인
         </Button>,
       ]}
