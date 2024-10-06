@@ -4,7 +4,10 @@ import {
   AudioContainer,
   UserLabel,
   ProfileImage,
+  MuteButton,
 } from './VideoStyles'
+import volumeOff from '@images/volumeOff.png'
+import volumeOn from '@images/volumeOn.png'
 
 interface Props {
   nickname: string
@@ -20,6 +23,8 @@ const Video = ({ profileImage, nickname, stream, muted }: Props) => {
   const analyserRef = useRef<AnalyserNode | null>(null)
   const audioContextRef = useRef<AudioContext | null>(null)
 
+  const [isUserMuted, setIsUserMuted] = useState<boolean>(false)
+
   const checkSpeaking = useCallback(() => {
     if (analyserRef.current) {
       const bufferLength = analyserRef.current.frequencyBinCount
@@ -28,13 +33,20 @@ const Video = ({ profileImage, nickname, stream, muted }: Props) => {
 
       const maxVolume = Math.max(...dataArray)
       // NOTE: 일반적으로 30~50을 기준으로 하지만, 실제 대화를 통한 적정값 도출 필요
-      if (maxVolume > 30) {
+      if (maxVolume > 20) {
         setIsSpeaking(true)
       } else {
         setIsSpeaking(false)
       }
     }
   }, [])
+
+  const toggleMuteUser = useCallback(() => {
+    setIsUserMuted((prevState) => !prevState)
+    stream.getAudioTracks().forEach((track) => {
+      track.enabled = !track.enabled
+    })
+  }, [stream])
 
   useEffect(() => {
     if (ref.current && stream) {
@@ -63,7 +75,13 @@ const Video = ({ profileImage, nickname, stream, muted }: Props) => {
     <Container>
       <ProfileImage src={profileImage} $isSpeaking={isSpeaking} />
       <AudioContainer ref={ref} muted={isMuted} autoPlay controls />
-      <UserLabel>{nickname}</UserLabel>
+      <UserLabel>
+        {nickname}
+        <MuteButton
+          onClick={toggleMuteUser}
+          src={isUserMuted ? volumeOff : volumeOn}
+        />
+      </UserLabel>
     </Container>
   )
 }
