@@ -38,6 +38,7 @@ export default function Objet() {
   const dropRef = useRef<HTMLDivElement>(null)
   const [isDropVisible, setIsDropVisible] = useState(false)
   const [isDeleteModalVisible, setIsDeleteModalVisible] = useState(false)
+  const [isDeleteClick, setisDeleteClick] = useState(false)
 
   const navigate = useNavigate()
 
@@ -87,6 +88,7 @@ export default function Objet() {
 
   const mutation = useMutation(
     async () => {
+      setisDeleteClick(true)
       await axios.delete(`${APIs.objet}/${objetId}`, {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('access_token')}`,
@@ -101,6 +103,10 @@ export default function Objet() {
       },
       onError: () => {
         toast.error('오브제 삭제 실패 😭')
+      },
+      onSettled: () => {
+        setIsDeleteModalVisible(false)
+        setisDeleteClick(false)
       },
     }
   )
@@ -196,6 +202,7 @@ export default function Objet() {
 
           {isDeleteModalVisible && (
             <DeleteObjetModal
+              isClick={isDeleteClick}
               isOpen={isDeleteModalVisible}
               onClose={() => setIsDeleteModalVisible(false)}
               handleDelete={handleDeleteObjet}
