@@ -2,8 +2,12 @@ import styled from 'styled-components'
 
 export const ObjetPreviewContainer = styled.div`
   width: 100%;
-  padding: 0 32px;
+  padding: 0 32px 60px;
   position: relative;
+
+  @media (min-width: 600px) {
+    padding: 0 32px;
+  }
 `
 
 export const IconContainer = styled.div`
