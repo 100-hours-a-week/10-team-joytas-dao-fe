@@ -60,6 +60,19 @@ export const validateImage = (
   return { isValid: true, errorMessage: '' }
 }
 
+export const validateEmail = (
+  email: string
+): { isValid: boolean; errorMessage: string } => {
+  const emailRegExp = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+  if (!emailRegExp.test(email)) {
+    return {
+      isValid: false,
+      errorMessage: '이메일 형식이 올바르지 않습니다.',
+    }
+  }
+  return { isValid: true, errorMessage: '' }
+}
+
 export const validateForm = (
   sharedMembers: SharedMembersProps[],
   name: string,
