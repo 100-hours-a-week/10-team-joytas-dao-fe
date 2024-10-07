@@ -9,7 +9,6 @@ export const MenuContainer = styled.div`
   margin-top: -50px;
   z-index: 1000;
   background-color: black;
-  width: 100%;
   ${GlobalWidth}
 `
 

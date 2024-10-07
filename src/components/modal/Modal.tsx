@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  InquiryInput,
   LoungeListModalContainer,
   LoungeListModalContents,
   LoungeListModalItem,
@@ -31,6 +32,16 @@ interface LoungeListProps {
 }
 
 interface NotiProps {
+  onClose: () => void
+  onConfirm: () => void
+}
+
+interface InquiryProps {
+  isClick: boolean
+  email: string
+  contents: string
+  setEmail: (email: string) => void
+  setContents: (contents: string) => void
   onClose: () => void
   onConfirm: () => void
 }
@@ -208,6 +219,51 @@ export function ConfirmNotificationModal({ onClose, onConfirm }: NotiProps) {
     >
       <span>수락 시 라운지로 이동합니다.</span> <br />
       <span>수락 이후에도 라운지를 탈퇴할 수 있습니다.</span>
+    </Modal>
+  )
+}
+
+export function InquiryModal({
+  isClick,
+  email,
+  contents,
+  setEmail,
+  setContents,
+  onClose,
+  onConfirm,
+}: InquiryProps) {
+  return (
+    <Modal
+      title='1:1 문의하기'
+      open={true}
+      onOk={onConfirm}
+      onCancel={onClose}
+      footer={[
+        <Button key='back' onClick={onClose}>
+          취소
+        </Button>,
+        <Button key='confirm' disabled={isClick} onClick={onConfirm}>
+          문의하기
+        </Button>,
+      ]}
+      style={{ padding: '10px' }}
+    >
+      <span style={{ fontWeight: 'bold' }}>이메일</span>
+      <InquiryInput
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        className='email'
+        placeholder='답변을 받을 이메일을 입력해주세요.'
+        maxLength={30}
+      />
+      <span style={{ fontWeight: 'bold' }}>문의 내용</span>
+      <InquiryInput
+        value={contents}
+        onChange={(e) => setContents(e.target.value)}
+        className='contents'
+        placeholder='문의 내용을 입력해주세요. 최대 300자까지 입력 가능합니다.'
+        maxLength={300}
+      />
     </Modal>
   )
 }

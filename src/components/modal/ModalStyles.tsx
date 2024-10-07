@@ -105,3 +105,23 @@ export const ModalBackdrop = styled.div`
   position: fixed;
   z-index: 5;
 `
+
+export const InquiryInput = styled.textarea`
+  width: 100%;
+  border-radius: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+  border: 1px solid #d9d9d9;
+  resize: none;
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+
+  &.email {
+    margin-top: 10px;
+    height: 40px;
+  }
+  &.contents {
+    height: 150px;
+    margin: 10px 0;
+  }
+`
