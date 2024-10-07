@@ -6,6 +6,7 @@ import {
   MyObjetTitle,
   LottieContainer,
   PreparingContainer,
+  PreparingItem,
 } from './HomeStyles'
 import ObjetPreview from '@components/objet/ObjetPreview'
 import { APIs } from '@/static'
@@ -17,12 +18,10 @@ import banner2 from '@images/banner/banner2.webp'
 import banner3 from '@images/banner/banner3.webp'
 import banner4 from '@images/banner/banner4.webp'
 import recentObjetsIcon from '@images/recentObjets.webp'
-import alert from '@images/alert.webp'
-import preparing from '@assets/lotties/preparing.json'
 import useUserStore from '@store/userStore'
-import Lottie from 'lottie-react'
 import axios from 'axios'
 import { useQuery } from 'react-query'
+import { useEffect, useRef } from 'react'
 
 const fetchObjetPreviews = async () => {
   const response = await axios.get(APIs.objetPreview, {
@@ -37,6 +36,24 @@ const fetchObjetPreviews = async () => {
 export default function Home() {
   const userId = useUserStore((state) => state.userId)
 
+  const items = [
+    <>
+      친구 추가 기능이 <br /> 추가될 예정이에요!
+    </>,
+    <>
+      마이룸 수정 기능이 <br /> 추가될 예정이에요!
+    </>,
+    <>
+      좋아요 기능이 <br /> 추가될 예정이에요!
+    </>,
+    <>
+      라운지 신청 기능이 <br /> 추가될 예정이에요!
+    </>,
+    <>
+      여러 개의 이미지 첨부 기능이 <br /> 추가될 예정이에요!
+    </>,
+  ]
+
   const { data: objets = [], isLoading } = useQuery(
     ['objets', userId],
     fetchObjetPreviews,
@@ -47,6 +64,31 @@ export default function Home() {
       },
     }
   )
+
+  const preparingRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const container = preparingRef.current
+    let scrollAmount = 0
+
+    const scrollInterval = setInterval(() => {
+      if (container) {
+        scrollAmount += 1
+        container.scrollLeft += 1
+
+        if (
+          container.scrollLeft >=
+          container.scrollWidth - container.clientWidth
+        ) {
+          container.scrollLeft = 0
+        }
+      }
+    }, 20)
+
+    return () => {
+      clearInterval(scrollInterval)
+    }
+  }, [])
 
   return (
     <Layout style={{ padding: '0px' }}>
@@ -77,20 +119,11 @@ export default function Home() {
             <ObjetPreview objets={objets} />
           )}
         </MyObjetContainer>
-        <MyObjetContainer
-          style={{
-            paddingBottom: '70px',
-          }}
-        >
-          <MyObjetTitle>
-            <img src={alert} alt='recentObjetsIcon' />
-            Coming Soon !
-          </MyObjetTitle>
-          <PreparingContainer>
-            <Lottie animationData={preparing} style={{ height: '100px' }} />
-            <span>새로운 기능이 추가될 영역입니다.</span>
-          </PreparingContainer>
-        </MyObjetContainer>
+        <PreparingContainer ref={preparingRef}>
+          {[...items, ...items].map((item, index) => (
+            <PreparingItem key={index}>{item}</PreparingItem>
+          ))}
+        </PreparingContainer>
       </GloablContainer16>
     </Layout>
   )

@@ -83,12 +83,37 @@ export const LottieContainer = styled.div`
 
 export const PreparingContainer = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  justify-content: center;
-  margin-bottom: 50px;
+  gap: 10px;
+  height: 50px;
+  padding: 25px 0 100px 0;
+  max-width: 600px;
+  overflow: hidden;
+  white-space: nowrap;
 
-  span {
-    color: gray;
+  @media (max-width: 599px) {
+    display: none;
   }
+
+  @media (min-height: 860px) {
+    position: absolute;
+    bottom: 70px;
+    padding: 0;
+    height: 80px;
+  }
+`
+
+export const PreparingItem = styled.div`
+  display: flex;
+  align-items: center;
+  flex: 0 0 auto;
+  justify-content: center;
+  text-align: center;
+  height: 50px;
+  width: 190px;
+  border-radius: 10px;
+  border: 0.1px solid #505050;
+  color: #505050;
+  font-size: 13px;
 `
