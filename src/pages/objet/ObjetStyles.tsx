@@ -1,4 +1,5 @@
 import styled, { css } from 'styled-components'
+import sendImg from '@images/send.webp'
 
 // 공통 스타일
 
@@ -463,17 +464,17 @@ export const ChatInput = styled.input`
   box-sizing: border-box;
 `
 
-export const ChatSendButton = styled.img`
+export const ChatSendButton = styled.button`
   position: absolute;
   right: 20px;
   top: 50%;
   opacity: 0.5;
 
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
 
   transform: translateY(-50%);
-  cursor: pointer;
+  background: url(${sendImg}) no-repeat;
 
   &:hover {
     opacity: 1;

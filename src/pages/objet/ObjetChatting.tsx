@@ -8,7 +8,6 @@ import {
   ChattingGroupByDate,
 } from './ObjetStyles'
 import { AlertUserEnter, ChatMessage } from '@components/objet/Chat'
-import SendImg from '@images/send.webp'
 import { useEffect, useRef, useState } from 'react'
 import { connectToRoom, disconnectFromRoom } from '@utils/stomp'
 import { APIs } from '@/static'
@@ -16,6 +15,7 @@ import { CalendarOutlined } from '@ant-design/icons'
 import { useIntersectionObserver } from '@hooks/useIntersectionObserver'
 import axios from 'axios'
 import useObjetStore from '@/store/objetStore'
+import { toast } from 'react-toastify'
 
 interface Message {
   id: string
@@ -35,6 +35,7 @@ export default function ObjetChatting() {
   const [loading, setLoading] = useState(true)
   const [hasMore, setHasMore] = useState(false)
   const [isAtBottom, setIsAtBottom] = useState(true)
+  const [shouldWait, setShouldWait] = useState(false)
 
   const { ref: firstMessageRef } = useIntersectionObserver(
     async (entry, observer) => {
@@ -180,25 +181,39 @@ export default function ObjetChatting() {
   }
 
   const handleSendMessage = async () => {
+    if (shouldWait) return
+
     const messageToSend = messageInput.trim()
     if (!messageToSend) return
 
     if (chatToken) {
-      await axios.post(
-        `${APIs.chat}/chat`,
-        {
-          message: messageToSend,
-          type: 'TALK',
-          room_token: chatToken,
-        },
-        {
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+      try {
+        await axios.post(
+          `${APIs.chat}/chat`,
+          {
+            message: messageToSend,
+            type: 'TALK',
+            room_token: chatToken,
           },
-          withCredentials: true,
+          {
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: `Bearer ${localStorage.getItem('access_token')}`,
+            },
+            withCredentials: true,
+          }
+        )
+      } catch (error) {
+        if (axios.isAxiosError(error) && error.response?.status === 429) {
+          setShouldWait(true)
+
+          toast.info('잠시만요! 메시지를 전송하는 중입니다.')
+
+          setTimeout(() => {
+            setShouldWait(false)
+          }, 2000)
         }
-      )
+      }
     }
     setMessageInput('')
     scrollToBottom()
@@ -238,7 +253,7 @@ export default function ObjetChatting() {
           onChange={(e) => setMessageInput(e.target.value)}
           onKeyDown={handleKeyDown}
         />
-        <ChatSendButton src={SendImg} onClick={handleSendMessage} />
+        <ChatSendButton onClick={handleSendMessage} disabled={shouldWait} />
       </ChatInputBox>
     </ChatContainer>
   )
