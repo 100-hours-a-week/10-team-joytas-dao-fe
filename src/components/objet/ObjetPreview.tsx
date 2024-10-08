@@ -33,7 +33,7 @@ export default function ObjetPreview({
 }: ObjetPreviewProps): JSX.Element | null {
   const listRef = useRef<HTMLDivElement>(null)
   const [scrollState, setScrollState] = useState<'left' | 'right'>('right')
-  const isMobile = useMediaQuery('only screen and (max-width : 425px)')
+  const isMobile = useMediaQuery('only screen and (max-width : 599px)')
 
   const handleScroll = () => {
     const { current } = listRef
