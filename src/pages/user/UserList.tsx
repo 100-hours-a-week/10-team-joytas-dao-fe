@@ -32,8 +32,7 @@ const searchUsers = async (nickname: string): Promise<SearchUser[]> => {
     },
     withCredentials: true,
   })
-
-  return response.data.data
+  return response.data.data.users
 }
 
 export default function UserList() {
