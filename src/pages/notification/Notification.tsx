@@ -53,9 +53,9 @@ export default function Notification() {
       retry: 1,
       enabled: false,
       onSuccess: (data) => {
-        setNotifications((prev) => [...prev, ...data.data])
-        setHasNext(data.has_next)
-        setCursor(data.next_cursor)
+        setNotifications((prev) => [...prev, ...data.data.notifications])
+        setHasNext(data.data.has_next)
+        setCursor(data.data.next_cursor)
       },
     }
   )

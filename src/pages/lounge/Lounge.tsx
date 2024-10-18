@@ -43,7 +43,7 @@ const fetchLoungeObjets = async (loungeId: string) => {
       withCredentials: true,
     }
   )
-  return response.data.data
+  return response.data.data.objets
 }
 
 const deleteLounge = async (loungeId: string) => {

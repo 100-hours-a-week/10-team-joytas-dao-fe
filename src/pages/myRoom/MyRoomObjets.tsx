@@ -54,7 +54,7 @@ export default function MyRoomObjet() {
           withCredentials: true,
         }
       )
-      return response.data.data
+      return response.data.data.objets
     }
   }
 
